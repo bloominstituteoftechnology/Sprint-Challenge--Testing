@@ -27,11 +27,15 @@
 
 ## DOCUMENTATION GOES HERE
 
+```
 <!-- THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR INFO AND PUT IT HERE. -->
+```
 
 ## TESTS
 
+```
 <!-- I have already manually tested this API for you. All you have to do is write Unit tests to ensure that the end points do what they're supposed to do -->
+```
 
 ### Write a test for the "POST" method
 
