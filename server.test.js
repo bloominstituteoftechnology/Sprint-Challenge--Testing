@@ -30,7 +30,6 @@ describe("Games", () => {
     // each time this hook runs, you should save a document to your db
     // by saving the document you'll be able to use it in each of your `it` blocks
     let gameId = null;
-    let myGame = null;
     const myGame = new Game({
       name: "yasins awesome game",
       date: Date.now,
