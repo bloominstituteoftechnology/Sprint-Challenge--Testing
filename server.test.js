@@ -1,18 +1,18 @@
-const mongoose = require('mongoose');
-const chai = require('chai');
+const mongoose = require("mongoose");
+const chai = require("chai");
 const { expect } = chai;
-const sinon = require('sinon');
+const sinon = require("sinon");
 
-const Game = require('./models');
+const Game = require("./models");
 
-describe('Games', () => {
+describe("Games", () => {
   before(done => {
     mongoose.Promise = global.Promise;
-    mongoose.connect('mongodb://localhost/test');
+    mongoose.connect("mongodb://localhost/test");
     const db = mongoose.connection;
-    db.on('error', () => console.error.bind(console, 'connection error'));
-    db.once('open', () => {
-      console.log('we are connected');
+    db.on("error", () => console.error.bind(console, "connection error"));
+    db.once("open", () => {
+      console.log("we are connected");
       done();
     });
   });
@@ -20,7 +20,7 @@ describe('Games', () => {
   after(done => {
     mongoose.connection.db.dropDatabase(() => {
       mongoose.connection.close(done);
-      console.log('we are disconnected');
+      console.log("we are disconnected");
     });
   });
   // declare some global variables for use of testing
@@ -29,9 +29,31 @@ describe('Games', () => {
     // write a beforeEach hook that will populate your test DB with data
     // each time this hook runs, you should save a document to your db
     // by saving the document you'll be able to use it in each of your `it` blocks
+    let gameId = null;
+    let myGame = null;
+    const myGame = new Game({
+      name: "yasins awesome game",
+      date: Date.now,
+      genre: "RPG"
+    });
+    myGame
+      .save()
+      .then(game => {
+        myGame = game;
+        gameId = game._id;
+        done();
+      })
+      .catch(err => {
+        console.error(err);
+        done();
+      });
   });
   afterEach(done => {
     // simply remove the collections from your DB.
+    game.remove({}, err => {
+      if (err) console.error(err);
+      done();
+    });
   });
 
   // test the POST here
