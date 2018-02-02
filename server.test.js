@@ -10,6 +10,8 @@ chai.use(chaiHTTP);
 
 describe('Games', () => {
   before(done => {
+    let gameId = null;
+    let testGame = null;
     mongoose.Promise = global.Promise;
     mongoose.connect('mongodb://localhost/test');
     const db = mongoose.connection;
@@ -28,17 +30,16 @@ describe('Games', () => {
   });
   // declare some global variables for use of testing
   // hint - these wont be constants because you'll need to override them.
-  let title, date, genre;
   beforeEach(done => {
     // write a beforeEach hook that will populate your test DB with data
     // each time this hook runs, you should save a document to your db
     // by saving the document you'll be able to use it in each of your `it` blocks
-    let testGame = new Game({
+    const myGame = new Game({
       title: 'Contra',
       date: 'August 1984',
       genre: 'action',
     });
-    testGame
+    myGame
       .save()
       .then(game => {
         testGame = game;
@@ -59,7 +60,7 @@ describe('Games', () => {
   });
 
   // test the POST here
-  describe('[POST /api/game/create', () => {
+  describe('[POST] /api/game/create', () => {
     it('should add a new game', done => {
       const myGame = {
         title: 'Contra',
@@ -95,6 +96,22 @@ describe('Games', () => {
   });
 
   // test the GET here
+  describe('[GET] api/game/get', () => {
+    it('should return all bands', done => {
+      chai
+        .request(server)
+        .get('/api/game/get')
+        .end((err, res) => {
+          if (err) {
+            throw new Error(err);
+            done();
+          }
+          expect(res.body[0].title).to.eql(testGame.title);
+          expect(res.body[0]._id).to.equal(gameId.toString());
+          done();
+        });
+    });
+  });
 
   // test the PUT here
 
