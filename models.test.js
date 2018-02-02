@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
-const Game = require('./models');
-
 const chai = require('chai');
 const { expect } = chai;
 const sinon = require('sinon');
 
-describe('Games', () => {
+const Game = require('./models');
+
+describe('NESGames Model', () => {
   before(done => {
     mongoose.Promise = global.Promise;
     mongoose.connect('mongodb://localhost/test');
