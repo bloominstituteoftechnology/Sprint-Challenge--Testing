@@ -18,7 +18,10 @@
 
 + Test Driven Development
     + what is the point
-    + what are my thought about this approach
+    The point of Test Driven Development is to change the way in which code is written, to avoid errors/needs for edits and rewrites/get it right the first time. The way this is done is by changing the order in which code and tests are done. Historically, it was 1. think, 2. write code, 3. write tests for code. TDD pushes the idea of 1. think, 2. write tests, 3. write code. The reason this makes sense is that by writing tests, you are outlining what exactly your code needs to do. This way, when you write your code you have a fleshed out path to take with writing your code.
+        + Think about how an author might approach a novel. She could start writing a scene that is in her head, with a decent idea of how the novel will progress. Or she could sit down and outline out exactly how the plot will progress. The character is trapped in the burning factory after the final showdown. The character needs to escape. How will the character escape? Answering those questions early means that when the author goes to write, she already knows what she needs to write---though not specifically how to write it. 
+    + I think this is a better way to write code. I think it solves a problem of the fact that step 1 is often ignored altogether. TDD forces a person to think more deeply about what their code will do and how before starting to type out code, because it is impossible to write tests when you have no idea what your end result will look like
+    + I think this is hard for my cohort because we were often encouraged not to look at our tests and to write code, then test afterwards. So at this point we are completely changing gears by writing tests first and then writing code to answer it. Likely this is a common way to learn, but I wonder if it is the most effective way to learn
 
 
 3. What is a spy in sinon? How do we use it to effectively test a callback?
