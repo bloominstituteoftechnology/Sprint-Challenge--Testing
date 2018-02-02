@@ -120,5 +120,16 @@ describe('Games', () => {
           done();
         });
     });
+    it('should delete the game by given id from req.body', done => {
+      chai
+        .request(server)
+        .delete('/api/game/destroy/:id')
+        .send({ id: gameId })
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.body.success).to.eql(`${gameTitle} was removed from the DB`);
+          done();
+        });
+    })
   });
 });
