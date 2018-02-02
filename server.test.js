@@ -103,7 +103,7 @@ expect(res.data[0].foo).to.equal(bar.foo);
 
 
 // test the PUT here
-describe(`[PUT] /api/game/create`, () => {
+describe(`[PUT] /api/game/update`, () => {
   it('Should login a user and return it', (done) => {
     const user = {
       title: 'California Games',
@@ -111,7 +111,7 @@ describe(`[PUT] /api/game/create`, () => {
       date: 'June 1987'
     };
     chai.request(app)
-      .post('/api/game/create')
+      .post('/api/game/update')
       .send(user)
       .end((err, res) => {
         if (err) {
@@ -128,7 +128,7 @@ describe(`[PUT] /api/game/create`, () => {
 
 // --- Stretch Problem ---
 // Test the DELETE here
-describe(`[DELETE] /api/game/create`, () => {
+describe(`[DELETE] /api/game/delete`, () => {
   it('Should login a user and return it', (done) => {
     const user = {
       title: 'California Games',
@@ -136,7 +136,7 @@ describe(`[DELETE] /api/game/create`, () => {
       date: 'June 1987'
     };
     chai.request(app)
-      .post('/api/game/create')
+      .post('/api/game/delete')
       .send(user)
       .end((err, res) => {
         if (err) {
