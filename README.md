@@ -51,6 +51,15 @@ This will add a new game with the information provided with the request body.
 | genre    | String     | Yes      |
 | date     | String     | Yes      |
 
+#### Sample Response
+```json
+{
+    "_id": "5a74aeb63281202baff38a06",
+    "title": "California Games",
+    "genre": "Sports",
+    "__v": 0
+}
+```
 <br />
 
 ## Get All Games
@@ -59,6 +68,18 @@ This will return an array of all games that are stored in the database.
 | Endpoint           | Method |
 | ------------------ | ------ |
 | `/api/game/get`    | GET    |
+
+#### Sample Response
+```json
+[
+    {
+        "_id": "5a74aeb63281202baff38a06",
+        "title": "California Games",
+        "genre": "Sports",
+        "__v": 0
+    }
+]
+```
 
 <br />
 
@@ -75,6 +96,15 @@ This will update the `title` of the game, for which the `id` is provided.
 | id       | String     | Yes      |
 | title    | String     | Yes      |
 
+#### Sample Response
+```json
+{
+    "_id": "5a74aeb63281202baff38a06",
+    "title": "Hunger Games",
+    "genre": "Sports",
+    "__v": 0
+}
+```
 <br />
 
 ## Delete Game
@@ -87,6 +117,12 @@ This will remove all entries that are referenced to a specific game by id.
 
 *Note*: `:id` in the endpoint URL must be replaced by a valid **id** of a Game.
 
+#### Sample Response
+```json
+{
+    "success": "Hunger Games was removed from the DB"
+}
+```
 <br />
 <br />
 
