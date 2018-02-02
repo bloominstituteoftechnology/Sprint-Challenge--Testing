@@ -36,6 +36,45 @@
   THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
 ```
 
+## [POST] - Create a new game
+
+`POST /api/game/create`
+
+**Parameters:**
+
+|  Field  |   Type   |                 Description                  |
+| :-----: | :------: | :------------------------------------------: |
+| `title` | `String` |      **Required.** The new games title.      |
+| `date`  | `String` |       **Required.** The date created.        |
+| `genre` | `String` | **Required.** The genre the game falls into. |
+
+## [GET] - Returns all games
+
+`GET /api/game/get`
+
+## [PUT] - updates a games' info
+
+`PUT /api/game/update`
+
+**Parameters:**
+
+|  Field  |   Type   |            Description             |
+| :-----: | :------: | :--------------------------------: |
+| `title` | `String` | **Required.** The new games title. |
+|  `id`   | `String` |       **Required.** The ID.        |
+
+## [DELETE] - Deletes a game
+
+`DELETE /api/game/destroy/:id`
+
+**Parameters:**
+
+_the id can be passed as a param or in the request body_
+
+| Field |   Type   |        Description         |
+| :---: | :------: | :------------------------: |
+| `id`  | `String` | **Required.** The game ID. |
+
 ## TESTS
 
 * I have already manually tested this API for you.
