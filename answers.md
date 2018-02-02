@@ -3,7 +3,7 @@
 *Answer* before, after, beforeEach, and afterEach are _hooks_ - which are functions that are designed to set up preconditions and assist in pinpointing errors in tests. 
 
 _*before*_ is run one time before all tests within a `describe`  
-_*after*_  is run one time after all the tests in a `describe`.
+_*after*_  is run one time after all the tests in a `describe`.  
 _*beforeEach*_ is run multiple times, before each test in a `describe`.
 *_afterEach_* is run multiple times, after each test in a `describe`.
 
