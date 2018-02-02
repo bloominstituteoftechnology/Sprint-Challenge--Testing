@@ -25,16 +25,16 @@ describe("Games", () => {
   });
   // declare some global variables for use of testing
   // hint - these wont be constants because you'll need to override them.
+  let myGame = new Game({
+    name: "yasins awesome game",
+    date: Date.now,
+    genre: "RPG"
+  });
   beforeEach(done => {
     // write a beforeEach hook that will populate your test DB with data
     // each time this hook runs, you should save a document to your db
     // by saving the document you'll be able to use it in each of your `it` blocks
-    let gameId = null;
-    const myGame = new Game({
-      name: "yasins awesome game",
-      date: Date.now,
-      genre: "RPG"
-    });
+
     myGame
       .save()
       .then(game => {
