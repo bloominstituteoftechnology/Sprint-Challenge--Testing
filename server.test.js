@@ -65,29 +65,13 @@ describe('Games', () => {
       .post('/api/game/create')
       .send(myGame)
       .end((err,res) => {
+        if(err) {
+          throw new Error(err)
+        }
         expect(res.status).to.equal(200);
         expect(res.body.title).to.equal('BrainGames');
         done();
       });
-    });
-    it('should send back 422 upon bad data', done => {
-      const myGame = {
-        title: 'BrainGames',
-        genre:'Academic',
-        releaseDate:'November 2005'
-    };
-    chai
-    .request(server)
-    .post('/api/game/create')
-    .send(myGame)
-    .end((err,res) => {
-      if (err) {
-      expect(err.status).to.equal(422);
-      const { error } = err.response.body;
-      expect(error).to.eql('Invaild input data sent to server');
-      done();
-      }
-    });  
     });
   });
 
