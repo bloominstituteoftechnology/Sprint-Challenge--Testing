@@ -73,7 +73,20 @@ describe('Games', () => {
   });
 
   // test the GET here
-
+  describe(`[GET] /api/game/get`, () => {
+    it('should give all the games', done => {
+      chai
+        .request(server)
+        .get('/api/game/get')
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.body).to.be.an('array');
+          expect(res.body.length).to.eql(1);
+          expect(res.body[0].title).to.eql('WOW');
+          done();
+        });
+    });
+  });
   // test the PUT here
 
   // --- Stretch Problem ---
