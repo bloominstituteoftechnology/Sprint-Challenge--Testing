@@ -196,5 +196,24 @@ describe('Games', () => {
           done();
         });
     });
+
+    it('should give an error if id is not provided', done => {
+      chai
+        .request(server)
+        .delete('/api/game/destroy/1111')
+        .end((err, res) => {
+          expect(err.response.body.error).to.eql('Cannot find game by that id');
+          done();
+        });
+    });
+    it('should give an error if id is not provided', done => {
+      chai
+        .request(server)
+        .delete('/api/game/destroy/')
+        .end((err, res) => {
+          expect(err.response.body.error).to.eql('You need to give me an ID');
+          done();
+        });
+    });
   });
 });
