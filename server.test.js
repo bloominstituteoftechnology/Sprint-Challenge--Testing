@@ -29,18 +29,19 @@ describe('Games', () => {
   });
   // declare some global variables for use of testing
   // hint - these wont be constants because you'll need to override them.
-  let tempTitle = null;
-  let tempId = null;
-  let testGame = new Game ({
-    title: 'Five Nights at Freddys',
-    genre: 'Horror', 
-    releaseDate: 'yesterday'
-  });
+
 
   beforeEach(done => {
     // write a beforeEach hook that will populate your test DB with data
     // each time this hook runs, you should save a document to your db
     // by saving the document you'll be able to use it in each of your `it` blocks
+    let tempTitle = null;
+    let tempId = null;
+    let testGame = new Game ({
+      title: 'Five Nights at Freddys',
+      genre: 'Horror', 
+      releaseDate: 'yesterday'
+    });
     testGame
       .save()
       .then(savedGame => {
@@ -114,7 +115,6 @@ describe('Games', () => {
   describe('PUT /api/games/update', () => {
     it('should return an error code 422 and message if no item is found that matches', () => {
       const gameUpdate = {
-        id: tempId,
         title: 'Updated Name'
       }
       chai
@@ -124,7 +124,7 @@ describe('Games', () => {
         .end((error, res) => {
           if (error) {
             expect(error.status).to.equal(422);
-            expect(res.body.error).to.equal('Cannot find game by that id');
+            expect(res.body.error).to.equal('Must Provide a title && Id');
           }
         });
     });
