@@ -3,12 +3,12 @@
 
 ##Q1
 ----
-#####
+###
 1a. In Mocha, what are the differences between `before`, `after`, `beforeEach`, and `afterEach`? 
 
 I feel like I answered this below
 
-#####
+###
 1b. When do they run?
 
 * `before` is run once before all the tests in a describe.
@@ -16,7 +16,7 @@ I feel like I answered this below
 * `beforeEach` is run before _each_ test in a describe.
 * `afterEach` is run after _each_ test.
 
-#####
+###
 1c. What are they used for?
 
 * `before` is used to take control from the original methods.
@@ -26,7 +26,7 @@ I feel like I answered this below
 
 ##Q2
 ----
-##### 
+### 
 1a. What is the point of test driven development?
 
 To write a failing test case first, followed by adding just enough code to their application to make the test pass, but no more than that. Then as soon as the test passes, you write a new failing test and repeat the cycle.
