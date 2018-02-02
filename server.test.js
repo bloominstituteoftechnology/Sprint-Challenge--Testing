@@ -36,67 +36,112 @@ describe('Games', () => {
     genre: 'Horror', 
     releaseDate: 'yesterday'
   });
-  testGame
-    .save()
-    .then(game => {
-      tempTitle = game.title;
-      tempId = game.id;
-      done();
-    })
-    .catch(error => {
-      console.log(error);
-      done(error);
-    })
 
   beforeEach(done => {
     // write a beforeEach hook that will populate your test DB with data
     // each time this hook runs, you should save a document to your db
     // by saving the document you'll be able to use it in each of your `it` blocks
     testGame
-      .save((error, savedGame) => {
-        if (error) {
-          console.log(error);
-          done(error);
-        }
+      .save()
+      .then(savedGame => {
+        tempTitle = savedGame._title;
+        tempId = savedGame._id;
+        done();
+      })
+      .catch(error => {
+        console.error(error);
         done();
       });
   });
   afterEach(done => {
     // simply remove the collections from your DB.
+    tempTitle = null;
+    tempId = null;
     Game
       .remove({}, error => {
-        if (error) console.log(error);
+        if (error) console.error(error);
         done();
       });
   });
 
   // test the POST here
   describe('POST /api/games/create', () => {
-    it('should return an error code 422 and message if data is invalid', () => {
-      const newGame = new Game ({
+    it('should return a code 200 and message if data is added to db', () => {
+      const newGame = {
         title: 'cheese',
         genre: 'food',
         releaseDate: 'tomorrow'
-      });
+      };
       chai.request(server)
         .post('/api/game/create')
         .send(newGame)
-        .end((error, addedGame) => {
+        .end((error, res) => {
           if (error) return console.log(error);
-          expect(addedGame.title).to.equal('cheese');
-          done();
+          expect(res.status).to.equal(200);
         });
     });
-    it('should return a game if correctly added to the database', () => {
-      expect(3+4).to.equal(17);
+    it('should return an error code 422 if data is invalid', () => {
+      const newGame = {
+        breakfast: 'french toast',
+        mapleSyrup: 'hell yeah'
+      };
+      chai.request(server)
+        .post('/api/game/create')
+        .send(newGame)
+        .end((error, res) => {
+          if (error) {
+            expect(error.status).to.equal(422);
+            //expect(res.body.error).to.equal('error message something');
+          }
+        });
     });
   });
 
   // test the GET here
-  describe('GET /api/games/get', () => {});
+  describe('GET /api/games/get', () => {
+    it('should return all items in DB', () => {
+      chai
+        .request(server)
+        .get('/api/game/get')
+        .end((error, res) => {
+          //if (error) return console.error(error);
+          // expect(res.body.length).to.equal(2);
+        });
+    });
+  });
 
   // test the PUT here
-  describe('PUT /api/games/update', () => {});
+  describe('PUT /api/games/update', () => {
+    it('should return an error code 422 and message if no item is found that matches', () => {
+      const gameUpdate = {
+        id: tempId,
+        title: 'Updated Name'
+      }
+      chai
+        .request(server)
+        .put('/api/game/update')
+        .send(gameUpdate)
+        .end((error, res) => {
+          if (error) {
+            expect(error.status).to.equal(422);
+            expect(res.body.error).to.equal('Cannot find game by that id');
+          }
+        });
+    });
+    it('should correctly update an item in the db', () => {
+      const gameUpdate = {
+        id: tempId,
+        title: 'Updated Name'
+      }
+      chai
+        .request(server)
+        .put('/api/game/update')
+        .send(gameUpdate)
+        .end((error, res) => {
+          expect(res.status).to.equal(200);
+        });
+    });
+  });
 
   // --- Stretch Problem ---
   // Test the DELETE here
