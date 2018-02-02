@@ -86,10 +86,9 @@ describe('Games', () => {
           done();
         }
         expect(res.status).to.equal(200)
-        expect(res.body[0].title).to.equal(testGame.title);
-        expect(res.body[0].genre).to.equal(testGame.genre);
-        expect(res.body[0].releaseDate).to.equal(testGame.releaseDate);
-        expect(res.body[0]._id).to.equal(gameId.toString());
+        expect(res.body[0].title).to.eql('BrainGamea');
+        expect(res.body[0].genre).to.eql('Academic');
+        expect(res.body[0].releaseDate).to.eql('November 2005');
         done();
       });
     });
