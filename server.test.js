@@ -71,6 +71,21 @@ describe('Games', () => {
           done();
         });
     });
+
+    it('should give an error when the game does not have title', done => {
+      const gameData = {
+        genre: 'Real-time strategy',
+        date: '2003'
+      };
+      chai
+        .request(server)
+        .post('/api/game/create')
+        .send(gameData)
+        .end((err, res) => {
+          expect(err.response.body.error).to.eql('Error saving data to the DB');
+          done();
+        });
+    });
   });
 
   // test the GET here
