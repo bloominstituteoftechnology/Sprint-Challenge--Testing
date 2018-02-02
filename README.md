@@ -34,7 +34,7 @@
 
 # Games API
 This is a CRUD API, built for maintaining records of Game events.  
-HTTP API requests are sent, and responses are received in JSON format.
+HTTP API requests are sent, and corresponding responses are received in JSON format only.
 
 ## Create Game
 This will add a new game with the information provided with the request body.
@@ -61,7 +61,7 @@ This will return an array of all games that are stored in the database.
 
 <br />
 
-## Upate Game
+## Update Game
 This will update the `title` of the game, for which the `id` is provided.
 
 | Endpoint           | Method |

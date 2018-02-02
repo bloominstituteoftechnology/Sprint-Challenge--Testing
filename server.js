@@ -83,6 +83,7 @@ server.delete('/api/game/destroy/:id', (req, res) => {
       res.json({ error: 'Cannot find game by that id' });
       return;
     }
+    res.status(202);
     res.json({ success: `${removedGame.title} was removed from the DB` });
   });
 });
