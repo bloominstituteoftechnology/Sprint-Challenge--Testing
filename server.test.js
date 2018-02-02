@@ -33,28 +33,32 @@ describe('Games', () => {
     // write a beforeEach hook that will populate your test DB with data
     // each time this hook runs, you should save a document to your db
     // by saving the document you'll be able to use it in each of your `it` blocks
-    const myGame = new Game({
-      title: 'myGame',
-      date: '1998',
-      genre: 'classic'
+    let testGame = null; 
+    let testId = null;
+    beforeEach[done => {
+      const myGame = new Game({
+        title: 'myGame',
+        date: '1998',
+        genre: 'classic'
     });
-    myGame.save()
+      myGame
+      .save()
       .then(game => {
         testGame = game;
         gameId = game._id;
         done();
       })
-      .catch(game => {
-        testGame = game;
-        gameId = game._id;
+      .catch(err => {
+        console.error(err);
         done();
       });
   });
-
-});
   afterEach(done => {
   // simply remove the collections from your DB.
-  game = remove Game();
+    Game.remove({}, err => {
+      if (err) console.error(err);
+      done();
+    });
 });
 
 // test the POST here
@@ -140,8 +144,8 @@ describe(`[DELETE] /api/game/delete`, () => {
       genre: 'Sports',
       date: 'June 1987'
     };
-    chai.request(app)
-      .post('/api/game/delete')
+    chai.request(server)
+      .delete('/api/game/destroy/gameId')
       .send(user)
       .end((err, res) => {
         if (err) {
