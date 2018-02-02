@@ -66,6 +66,32 @@ describe('Games', () => {
     });
   });
   // test the PUT here
+  describe('[PUT] /api/game/update', () => {
+    it('should update the title of a game', async () => {
+      const game = await Game.findOne().exec();
+      expect(game.title).toBe('Donkey Kong');
+      const updatedGame = {id: game._id, title: 'Donkey Kong Country'};
+      const response = await request(server).put('/api/game/update').send(updatedGame);
+      expect(response.status).toBe(200);
+      expect(response.body.title).toBe('Donkey Kong Country');
+      expect(response.body.error).toBeUndefined();
+    });
+    it('should return an error with a bad request body', async () => {
+      const game = await Game.findOne().exec();
+      const badRequest = { id: game.id }; // no title field
+      const response = await request(server).put('/api/game/update').send(badRequest);
+      expect(response.status).toEqual(422);
+      expect(response.body.error).toBe('Must Provide a title && Id');
+      expect(response.body.title).toBeUndefined();
+    });
+    it('should return an error with an invalid id', async () => {
+      const badRequest = { id: 'jdfjjkbnuohu', title: 'Donkey Kong' };
+      const response = await request(server).put('/api/game/update').send(badRequest);
+      expect(response.status).toEqual(422);
+      expect(response.body.error).toBe('Cannot find game by that id');
+      expect(response.body.title).toBeUndefined();
+    });
+  });
   // --- Stretch Problem ---
   // Test the DELETE here
 });
