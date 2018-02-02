@@ -92,8 +92,7 @@ describe('Games', () => {
   // test the PUT here
 
   describe('[PUT] /api/game/update', () => {
-    it(`should retrieve a list of Games from MongoDB`, done => {
-      let foundGame = {};
+    it(`should Update a Game on MongoDB`, done => {
       const testObject = { title: 'California Games Updated', genre: 'Super Sports', date: 'June 1990' };
       // console.log(testObject2);
       // console.log(putObject);
@@ -121,5 +120,24 @@ describe('Games', () => {
   });
   // --- Stretch Problem ---
   // Test the DELETE here
-
+  describe('[DELETE] /api/game/destroy/:id', () => {
+    it(`should Delete a Game from MongoDB`, done => {
+      Game.find({}, (err, foundGames) => {
+        if (err) return;
+        const destroyId = foundGames[0]._id;
+        chai.request(server)
+          .delete(`/api/game/destroy/${destroyId}`)
+          .end((err, res) => {
+            if (err) {
+              console.log(err.response.text);
+              done();
+            }
+            // console.log(res.body);
+            expect(res.status).to.equal(200);
+            expect(res.body.success).to.equal(`${foundGames[0].title} was removed from the DB`);
+            return done();
+          });
+      });
+    });
+  });
 });
