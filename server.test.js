@@ -27,7 +27,7 @@ describe('Games', () => {
     });
   });
   let gameId = null;
-  let testBand = null;
+  let testGame = null;
   beforeEach(done => {
     const myGame =  new Game({
       title: 'BrainGames',
