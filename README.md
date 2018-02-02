@@ -11,8 +11,12 @@
 ## Questions - Self Study - You can exercise your Google-Fu for this and any other _Sprint Challenge_ in the future.
 
 1. In Mocha, what are the differences between `before` `after` `beforeEach` `afterEach`? When do they run? What are they used for?
+  - `before` and `after` will run hooks before/after all tests are run. `beforeEach` and `afterEach` will run hooks before/after each individual test.
+  - These hooks are normally used to initialize / remove connections and mock data.
 1. What is the point of Test Driven Development? What do you personally think about this approach?
+  - Test driven development ensures that changes to your codebase won't break other sections of the code and (usually) allows for faster development because the specific requirements are laid out in the tests.
 1. What is a `spy` in `sinon`? How do we use it to effectively test a `callback`?
+  - A sinon spy attaches to a callback function (or mocks a callback) and ensures that the callback is being called properly (e.g. the callback is called once for each element in an array or the callback is executed on specific elements of an array).
 
 ## Initializing Project -
 
