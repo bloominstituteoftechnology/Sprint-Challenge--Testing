@@ -33,7 +33,49 @@
 ## DOCUMENTATION GOES HERE
 
 ```
-  THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
+ # Jason's API
+
+Here you found the documentation for my api! I am excited to show you the ins and outs of how to interface with my API. This API is all about games produced for the Nintendo Entertainment System. _NOTE_ that interfacing with my API will bring much joy and satisfaction.
+
+## Port - Location for all endpoints to interface with our power rangers is `http://localhost:5050`
+
+## [POST] `api/game/create`
+
+| Endpoint      | Type | data |
+| ------------- | :--: | ---: |
+| /api/game/ | post | json |
+
+#### Example:   
+* Fields marked with an asterisk are required. Everything else is supplimental information about the games.  
+
+```JSON
+{
+    "title":"Contra",
+    "date":"1984",
+    "genre": "Action"
+}```
+
+
+## [GET] `/api/game/get`
+
+| Endpoint      |     Type      |  data |
+| ------------- | :-----------: | ----: |
+| /api/game/get   |     get     | json  |
+
+
+## [UPDATE] `/api/game/update`
+
+| Endpoint      |     Type      |  data |
+| -------------  | :-----------: | ----: |
+|/api/game/update|    update     | json |
+
+
+## [DELETE] `/api/game/destroy/:id`
+
+|    Endpoint        |     Type      |  data |
+| -------------        | :---------: | ----: |
+| /api/game/destroy/:id      | delete| NA |
+
 ```
 
 ## TESTS

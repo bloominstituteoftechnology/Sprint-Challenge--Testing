@@ -4,7 +4,7 @@
 
 _*before*_ is run one time before all tests within a `describe`  
 _*after*_  is run one time after all the tests in a `describe`.  
-_*beforeEach*_ is run multiple times, before each test in a `describe`.
+_*beforeEach*_ is run multiple times, before each test in a `describe`.  
 *_afterEach_* is run multiple times, after each test in a `describe`.
 
 2. What is the point of Test Driven Development? What do you personally think about this approach?
