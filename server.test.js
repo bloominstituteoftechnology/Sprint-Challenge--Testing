@@ -23,8 +23,15 @@ describe('Games', () => {
       console.log('we are disconnected');
     });
   });
+  let myGame = new Game({
+ + name: "game",
+    +    date: Date.now,
+    +    genre: "RPG"
+    +  });
+```
   // declare some global variables for use of testing
   // hint - these wont be constants because you'll need to override them.
+
   beforeEach(done => {
     // write a beforeEach hook that will populate your test DB with data
     // each time this hook runs, you should save a document to your db
@@ -46,14 +53,27 @@ describe('Games', () => {
 
   // test the POST here
   server.post
+  {
+  title: 'California Games',
+  genre: 'Sports',
+  date: 'June 1987'
+}
+```
 
-  // test the GET here
-  server.get
+// test the GET here
+server.get
 
-  // test the PUT here
-  server.put
+  ```
+expect(res.data[0].foo).to.equal(bar.foo);
+```
 
-  // --- Stretch Problem ---
-  // Test the DELETE here
-  server.delete
+// test the PUT here
+server.put
+
+  * Just like in class, send up the information you want changed on the server via the`req.body`.
+* You can send up the Id and the Server will be using that to
+// --- Stretch Problem ---
+// Test the DELETE here
+server.delete
+DELETE can take an ID off of the route parameter, or off of the req.body.It's your choice.
 });
