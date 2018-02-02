@@ -50,8 +50,8 @@ describe('Games', () => {
 
   // test the POST here
   server.post('Games', (req, res) => {
-    const movie = new Game(req.body);
-    movie.save((err, newGame) => {
+    const game = new Game(req.body);
+    game.save((err, newGame) => {
       if (err) return res.send(err);
       res.send(newGame);
     });
@@ -64,7 +64,7 @@ describe('Games', () => {
 
   // test the PUT here
   server.put('Games', (req, res) => {
-    Game.findById(req.body.id, (err, movies) => {
+    Game.findById(req.body.id, (err, games) => {
       games.title = req.body.title;
       games.save((err, updatedGame) => {
         if (err) return res.send(err);
