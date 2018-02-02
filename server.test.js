@@ -53,7 +53,7 @@ describe('Games', () => {
     });
   });
 
-  describe(`[POST]/game`, () => {
+  describe(`[POST]/api/game/create`, () => {
     it('should add a new game', done => {
       const myGame = {
           title: 'BrainGames',
@@ -62,7 +62,7 @@ describe('Games', () => {
       };
       chai
       .request(server)
-      .post('/game')
+      .post('/api/game/create')
       .send(myGame)
       .end((err,res) => {
         expect(res.status).to.equal(200);
@@ -78,7 +78,7 @@ describe('Games', () => {
     };
     chai
     .request(server)
-    .post('/game')
+    .post('/api/game/create')
     .send(myGame)
     .end((err,res) => {
       if (err) {
@@ -91,11 +91,11 @@ describe('Games', () => {
     });
   });
 
-  describe(`[GET]/game`, () => {
+  describe(`[GET]/api/game/get`, () => {
     it('should get all the games', done => {
       chai
       .request(server)
-      .get('/game')
+      .get('api/game/get')
       .end ((err, res) => {
         if (err) {
           throw new Error(err);
@@ -108,7 +108,7 @@ describe('Games', () => {
     });
     });
 
-  describe(`[PUT]/game`, () => {
+  describe(`[PUT]/api/game/update`, () => {
     it('should update a game given id', done => {
       const gameUpdate = {
         id: gameId,
@@ -116,7 +116,7 @@ describe('Games', () => {
       };
       chai
       .request(server)
-      .put(`/game`)
+      .put(`/api/game/update`)
       .send(gameUpdate)
       .end((err, res) => {
         if(err) {
@@ -134,13 +134,13 @@ describe('Games', () => {
       };
       chai
       .request(server)
-      .put('/game')
+      .put('/api/game/update')
       .send(gameUpdate)
       .end((err, res) => {
         if (err) {
           expect(err.status).to.equal(422);
           const { error } = err.response.body;
-          expect(error).to.eql('Game not found by that id');
+          expect(error).to.eql('Cannot find game by that id');
         }
         done();
       });
@@ -148,17 +148,17 @@ describe('Games', () => {
   });
 
   // --- Stretch Problem ---
-  describe(`[DELETE]/game/:id`, () => {
+  describe(`[DELETE]/api/game/destroy/:id`, () => {
     it('should remove game by id', done => {
       chai
       .request(server)
-      .delete(`/game/${gameId}`)
+      .delete(`/api/game/destroy/${gameId}`)
       .end((err,res) => {
         if(err) {
           throw new Error(err);
           done();
         }
-        expect(res.text).to.equal('success');
+        expect(res.text).to.equal(' {"success":"BrainGames was removed from the DB"}');
         Game.findById(gameId, (err, deletedGame) => {
           if(err) {
             throw new Error(err);
