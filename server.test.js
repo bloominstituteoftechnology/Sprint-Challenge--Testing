@@ -89,9 +89,24 @@ describe('Games', () => {
       }
     });  
     });
-  })
+  });
 
-  // test the GET here
+  describe(`[GET]/game`, () => {
+    it('should get all the games', done => {
+      chai
+      .request(server)
+      .get('/game')
+      .end ((err, res) => {
+        if (err) {
+          throw new Error(err);
+          done();
+        }
+        expect(res.body[0].title).to.equal(testGame.title);
+        expect(res.body[0]._id).to.equal(gameId.toString());
+        done();
+      });
+    });
+    });
 
   // test the PUT here
 
