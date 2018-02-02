@@ -1,6 +1,4 @@
 const mongoose = require('mongoose');
-const chai = require('chai');
-const { expect } = chai;
 const sinon = require('sinon');
 const server = require('./server');
 const Game = require('./models');
