@@ -32,8 +32,68 @@
 
 ## DOCUMENTATION GOES HERE
 
+# Games API
+
+This is the documentation for our awesome games API! Using this API might increase nostaliga of great times you use to have as a kid, or perhaps still do as a big kid:)
+
+## Port - Location for all EndPoints to interface with the games API is: http://localhost:5050/api/game
+
+## [POST]
+
+| Endpoint | Type | data |
+| :------: | :--: | :--- |
+| /create  | Post | JSON |
+
+### Expected data format:
+
 ```
-  THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
+{
+  "title" : "Game Title",
+  "data"  : "June 4th, 1990",
+  "genre": "Action"
+}
+```
+
+## [GET] - Retrieve all games
+
+| Endpoint | Type | data |
+| :------: | :--: | :--- |
+|   /get   | Get  | JSON |
+
+## [PUT]
+
+| Endpoint | Type | data |
+| :------: | :--: | :--- |
+| /update  | Put  | JSON |
+
+### Expected data format:
+
+```
+{
+  "id"    : "game_id"
+  "title" : "New Title",
+
+}
+```
+
+## [DELETE]
+
+| Endpoint |  Type  | data |
+| :------: | :----: | :--- |
+| /delete  | Delete | JSON |
+
+### options (params or body)
+
+## As Params
+
+`/api/game/delete/:id`
+
+## Body
+
+```
+{
+  "id" : "game_id"
+}
 ```
 
 ## TESTS
