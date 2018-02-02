@@ -63,22 +63,51 @@ describe("Games", () => {
   // test the POST here
 
   // test the GET here
-  it("should get all bands", done => {
-    chai
-      .request(server)
-      .get("/api/game/get")
-      .end((err, res) => {
-        if (err) {
-          console.log(err);
+  describe("[GET] /api/game/get", () => {
+    it("should get all bands", done => {
+      chai
+        .request(server)
+        .get("/api/game/get")
+        .end((err, res) => {
+          if (err) {
+            console.log(err);
+            done();
+          }
+          expect(res.status).to.equal(200);
+          expect(res.body[0].title).to.equal("yasins awesome game");
           done();
-        }
-        expect(res.status).to.equal(200);
-        expect(res.body[0].title).to.equal("yasins awesome game");
-        done();
-      });
+        });
+    });
   });
   // test the PUT here
-
+  describe("[PUT] /api/game/update", () => {
+    it("should update a game", done => {
+      let returnedGame = {};
+      Game.find({}, (err, games) => {
+        if (err) return;
+        let returnedGame = games[0];
+        const updatedGame = {
+          id: returnedGame._id,
+          title: "whateverName",
+          genre: returnedGame.genre,
+          date: returnedGame.date
+        };
+        chai
+          .request(server)
+          .put("/api/game/update")
+          .send(updatedGame)
+          .end((err, res) => {
+            if (err) {
+              console.log(err);
+              done();
+            }
+            expect(res.status).to.equal(200);
+            expect(res.body.title).to.equal("whateverName");
+            done();
+          });
+      });
+    });
+  });
   // --- Stretch Problem ---
   // Test the DELETE here
 });
