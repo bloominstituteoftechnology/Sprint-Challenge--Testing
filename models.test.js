@@ -2,21 +2,17 @@ const sinon = require('sinon');
 const Game = require('./models');
 const mongoose = require('mongoose');
 describe('NESGames Model', () => {
-  beforeAll(done => {
+  beforeAll(()=> {
     mongoose.Promise = global.Promise;
-    mongoose.connect('mongodb://localhost/test');
+    const conn = mongoose.connect('mongodb://localhost/test');
     const db = mongoose.connection;
     db.on('error', () => console.error.bind(console, 'connection error'));
-    db.once('open', () => {
-      console.log('we are connected');
-      done();
-    });
+    return conn;
   });
 
   afterAll(done => {
     mongoose.connection.db.dropDatabase(() => {
       mongoose.connection.close(done);
-      console.log('we are disconnected');
     });
   });
 
