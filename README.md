@@ -35,6 +35,210 @@
 ```
   THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
 ```
+# GAME API OVERVIEW
+This describes the resources that make up the **GAME** REST API.
+# Schema
+All API access is over HTTP, and accessed from `http://localhost:5050/`. All data is sent and received as JSON.
+## [GET] Retrieve all the games
+Return a collection of games
+
+| Endpoint | HTTP Method | URL Params | Data Params | Return Data Type |
+|:----:|:----:|:----:|
+| /api/game/get | [GET] | None | None | JSON |
+
+**Data Params Example**
+None
+
+**Sample Call:**
+```
+axios.get('/api/game/get')
+  .then(games => console.log(games));
+```
+## Response:
+
+| Type | Status | Description |
+|:----:|:----:|:----:|
+| Success | 200 | Game Array |
+
+**Response example:**
+```
+[
+  {
+    title: "WOW",
+    genre: "Real-time strategy",
+    data: "2004"
+  },
+  {
+    ...
+  },
+  ...
+]
+```
+| Type | Status | Description |
+|:----:|:----:|:----:|
+| Fail | 500 | Failure message |
+
+**Response example:**
+```
+{
+  error: "Something really bad happened"
+}
+```
+## [POST] Create a game
+Return newly created game
+
+| Endpoint | HTTP Method | URL Params | Data Params | Return Data Type |
+|:----:|:----:|:----:|
+| /api/game/create | [POST] | None | New game data | JSON |
+
+**Data Params Example**
+```
+{
+  title: "WOW",
+  genre: "Real-time strategy",
+  date: "2004"
+}
+```
+
+**Sample Call:**
+```
+axios.post('/api/game/create', { title: [String], genre: [String], date: [String] })
+  .then(newGame => console.log(newGame));
+```
+## Response:
+
+| Type | Status | Description |
+|:----:|:----:|:----:|
+| Success | 201 | Newly created game |
+
+**Response example:**
+```
+{
+  title: "WOW",
+  genre: "Real-time strategy",
+  data: "2004"
+}
+```
+| Type | Status | Description |
+|:----:|:----:|:----:|
+| Fail | 422 | Failure message |
+
+**Response example:**
+```
+{
+  error: "Error saving data to the DB", message: [error object]
+}
+```
+
+## [PUT] Update a game title by id
+Return updated game
+
+| Endpoint | HTTP Method | URL Params | Data Params | Return Data Type |
+|:----:|:----:|:----:|:----:|:----:|
+| /api/game/update | [PUT] | None | Update game title | JSON |
+
+**Data Params Example**
+```
+{
+  id: [Mongo ObjectID],
+  title: "WOW"
+}
+```
+
+**Sample Call:**
+```
+axios.put('/api/game/update', { id: [Mongo ObjectID], title: [String] })
+  .then(newGame => console.log(newGame));
+```
+## Response:
+
+| Type | Status | Description |
+|:----:|:----:|:----:|
+| Success | 200 | Updated game |
+
+**Response example:**
+```
+{
+  title: "WOW",
+  genre: "Real-time strategy",
+  data: "2004"
+}
+```
+| Type | Status | Description |
+|:----:|:----:|:----:|
+| Fail | 422 | Game not found |
+
+**Response example:**
+```
+{
+  error: "Cannot find game by that id"
+}
+```
+| Type | Status | Description |
+|:----:|:----:|:----:|
+| Fail | 500 | Game update failed |
+
+**Response example:**
+```
+{
+  error: "Something really bad happened"
+}
+```
+
+## [DELETE] Delete a game by id
+Return removed game title
+
+| Endpoint | HTTP Method | URL Params | Data Params | Return Data Type |
+|:----:|:----:|:----:|:----:|:----:|
+| /api/game/destroy/:id | [PUT] | Game id/None | Game id/None | JSON |
+
+**Data Params Example**
+```
+{
+  id: [Mongo ObjectID]
+}
+```
+
+**Sample Call:**
+```
+axios.put('/api/game/destroy/[game id]')
+  .then(removedGame => console.log([removed message]));
+
+axios.put('/api/game/destroy/:id', { id: [game id] })
+  .then(removedGame => console.log([removed message]));
+```
+## Response:
+
+| Type | Status | Description |
+|:----:|:----:|:----:|
+| Success | 200 | Removed game |
+
+**Response example:**
+```
+{
+  success: `[removed game title] was removed from the DB`
+}
+```
+| Type | Status | Description |
+|:----:|:----:|:----:|
+| Fail | 422 | No game id |
+
+**Response example:**
+```
+{
+  error: 'You need to give me an ID'
+}
+```
+| Type | Status | Description |
+|:----:|:----:|:----:|
+| Fail | 422 | Game not found |
+
+**Response example:**
+```
+{
+  error: 'Cannot find game by that id'
+}
+```
 
 ## TESTS
 

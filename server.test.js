@@ -130,6 +130,6 @@ describe('Games', () => {
           expect(res.body.success).to.eql(`${gameTitle} was removed from the DB`);
           done();
         });
-    })
+    });
   });
 });
