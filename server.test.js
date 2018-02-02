@@ -171,4 +171,41 @@ describe('Games', () => {
 
   // --- Stretch Problem ---
   // Test the DELETE here
+  describe('[DELETE] /api/game/destroy/:id', () => {
+    it('should delete game when given proper id', done => {
+      const deleteGame = {
+        id: gameId,
+      };
+      chai
+        .request(server)
+        .delete('/api/game/destroy/:id')
+        .send(deleteGame)
+        .end((err, res) => {
+          if (err) {
+            throw new Error(err);
+            done();
+          }
+          expect(res.status).to.equal(200);
+          const { success } = JSON.parse(res.res.text);
+          expect(success).to.equal('Contra was removed from the DB');
+          done();
+        });
+    });
+
+    // it('should send error when id is not found', done => {
+    //   const deleteGame = {
+    //     id: 2,
+    //   };
+    //   chai
+    //     .request(server)
+    //     .delete('/api/game/destroy/:id')
+    //     .send(deleteGame)
+    //     .send((err, res) => {
+    //       if (err) {
+    //         expect(err.status).to.equal(422);
+    //       }
+    //       done();
+    //     });
+    // });
+  });
 });
