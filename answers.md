@@ -27,8 +27,9 @@
 3. What is a spy in sinon? How do we use it to effectively test a callback?
 
 + Sinon Spy - 
-    + what it is
-    + how it tests a callback
+    + A Sinon Spy mocks a callback function to allow the developer to see what a function will do before it happens. This test double allows the developer to peek at what a function will do and return before it is executed, so we can work with data before it goes through.
+    + it records arguments, return value, 'this' value and any errors thrown
+    + If we are not testing the callback itself, but rather that the callback is called, we can make a totally anonymous spy function
+    + if you send arguments to sinon spy, (object, method), the spy will wrap the method---it will perform as if it were the method you send, however it will still make a record of the data listed above
 + Sinon Stub
-    + what it is
-    + how it effectively tests a callback
+    + A stub acts a little bit differently. It can have a forced outcome that you can alter, so you can test for multiple cases and outcomes
