@@ -1,7 +1,5 @@
 # Assessing your Testing Fu
 
-<!-- TODO = SET UP TEST FOR SERVER, BEFORE AFTER, BEFOREEACH AFTER EACH, ESSAY Q's,  -->
-
 * Keep Calm! Test On!
 * Now that you're familiar with the concepts of testing, your goal is to write documentation and tests for an API that is already in production. (This happens a lot :))
 * Answers to your written questions will be recorded in _Answers.md_
@@ -12,7 +10,9 @@
 
 ## Questions - Self Study - You can exercise your Google-Fu for this and any other _Sprint Challenge_ in the future.
 
-1.
+1. In Mocha, what are the differences between `before` `after` `beforeEach` `afterEach`? When do they run? What are they used for?
+1. What is the point of Test Driven Development? What do you personally think about this approach?
+1. What is a `spy` in `sinon`? How do we use it to effectively test a `callback`?
 
 ## Initializing Project -
 
@@ -20,27 +20,27 @@
 * `cd` into your forked local copy.
 * notice there is a `package.json` file included. We have included all of the dev-dependencies that you'll need to build your project.
 * run `npm install` to download all the dependencies you need for this project.
-* run `npm test` to start your tests in.
+* run `npm test` to start your tests.
 * Keep an active log of your changes by `commiting` and `pushing` often.
 * Write all of your tests in the `server.test.js` file. This is where you're going to be doing your API mocking/testing.
-* Once you're done writing all the tests, push your commits to your fork and submit a Pull-Request
+* Once you're done writing all the tests, push your commits to your fork and submit a Pull-Request.
 
 ## Project Description
 
-* You're going to be writing the documentation and the tests for a CRUD API
+* You're going to be writing the documentation and the tests for a CRUD API.
 * The API itself is really simple. You're task is to peek at the endpoints found in the `server.js` file and write docs for each one, then write the tests for the end points.
 
 ## DOCUMENTATION GOES HERE
 
 ```
-  <!-- THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API. -->
+  THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
 ```
 
 ## TESTS
 
-```
-<!-- I have already manually tested this API for you. All you have to do is write Unit tests to ensure that the end points do what they're supposed to do. THERE IS NO NEED TO NPM START. BUT YOU'LL WANT TO ENSURE THAT YOU HAVE A MONGO INSTANCE UP AND RUNNING -->
-```
+* I have already manually tested this API for you.
+* All you have to do is write Unit tests to ensure that the end points do what they're supposed to do.
+* THERE IS NO NEED TO NPM START. BUT YOU'LL WANT TO ENSURE THAT YOU HAVE A `MONGO` INSTANCE UP AND RUNNING.
 
 ### Write a test for the "POST" method
 
