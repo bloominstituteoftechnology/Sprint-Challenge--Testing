@@ -23,19 +23,37 @@ describe('Games', () => {
       console.log('we are disconnected');
     });
   });
+  let gameTitle;
+  let gameGenre;
+  let gameDate;
   // declare some global variables for use of testing
   // hint - these wont be constants because you'll need to override them.
   beforeEach(done => {
+    const theGame = new Game({
+      title: 'Skykid',
+      genre: 'arcade',
+      date: '1987'
+    })
+    theGame.save((error, game) =>{
+      if (error) return done(error)
+      gameTitle = game.title;
+      gameGenre = game.genre;
+      gameDate = game.date;
+      done()
+    })
     // write a beforeEach hook that will populate your test DB with data
     // each time this hook runs, you should save a document to your db
     // by saving the document you'll be able to use it in each of your `it` blocks
   });
   afterEach(done => {
-    // simply remove the collections from your DB.
+    Game.remove((error)=> {
+      if (error) return done(error)
+      done()
+    })
   });
 
   // test the POST here
-
+  describe(`[POST]`)
   // test the GET here
 
   // test the PUT here
