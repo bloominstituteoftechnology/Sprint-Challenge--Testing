@@ -32,9 +32,41 @@
 
 ## DOCUMENTATION GOES HERE
 
-```
-  THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
-```
+# Game API
+This is an API about Video Games. In this documentation you will be shown how to interface with this API.
+
+***
+## Port Location for all endpoints to interface with our Games is :
+`http://localhost:5050`
+***
+
+### HTTP requests:
+* POST - creates a game
+* GET - reads or *gets* a game or list of games
+* PUT- updates a game
+* DELETE- removes a game
+
+### [POST]
+| Endpoint | Type | Data |
+|---|---|---|
+| api/game/create |post | json
+
+
+### [GET]
+| Endpoint | Type | Data |
+|---|---|---|
+| api/game/get |get | json
+
+### [PUT]
+| Endpoint | Type | Data |
+|---|---|---|
+| api/game/update |put | json
+
+### [DELETE]
+| Endpoint | Type | Data |
+|---|---|---|
+| api/game/destroy/:id |post | json
+
 
 ## TESTS
 

@@ -85,6 +85,7 @@ describe('Games', () => {
           throw new Error(err);
           done();
         }
+        expect(res.ststus).to.equal(200);
         expect(res.body[0].title).to.equal(testGame.title);
         expect(res.body[0]._id).to.equal(gameId.toString());
         done();
