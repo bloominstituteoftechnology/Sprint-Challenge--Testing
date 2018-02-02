@@ -131,4 +131,7 @@ describe("Games", () => {
   });
   // --- Stretch Problem ---
   // Test the DELETE here
+  describe("[DELETE] /api/game/destroy/:id", () => {
+    it("should delete a game", done => {});
+  });
 });
