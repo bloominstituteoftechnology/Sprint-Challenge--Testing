@@ -120,6 +120,35 @@ describe('Games', () => {
           done();
         });
     });
+
+    it('should give an error if title is missing', done => {
+      const update = {
+        id: gameId
+      };
+      chai
+        .request(server)
+        .put('/api/game/update')
+        .send(update)
+        .end((err, res) => {
+          expect(err.response.body.error).to.eql('Must Provide a title && Id');
+          done();
+        });
+    });
+
+    it('should give an error if game is not found by given id', done => {
+      const update = {
+        id: 1,
+        title: 'WOW'
+      };
+      chai
+        .request(server)
+        .put('/api/game/update')
+        .send(update)
+        .end((err, res) => {
+          expect(err.response.body.error).to.eql('Cannot find game by that id');
+          done();
+        });
+    });
   });
 
   // --- Stretch Problem ---
@@ -143,6 +172,27 @@ describe('Games', () => {
         .end((err, res) => {
           if (err) return done(err);
           expect(res.body.success).to.eql(`${gameTitle} was removed from the DB`);
+          done();
+        });
+    });
+
+    it('should give an error if id is not provided via req.body', done => {
+      chai
+        .request(server)
+        .delete('/api/game/destroy/:id')
+        .send({})
+        .end((err, res) => {
+          expect(err.response.body.error).to.eql('Cannot find game by that id');
+          done();
+        });
+    });
+
+    it('should give an error if id is not provided via req.params', done => {
+      chai
+        .request(server)
+        .delete(`/api/game/destroy/${{}}`)
+        .end((err, res) => {
+          expect(err.response.body.error).to.eql('Cannot find game by that id');
           done();
         });
     });
