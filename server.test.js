@@ -88,6 +88,23 @@ describe('Games', () => {
     });
   });
   // test the PUT here
+  describe(`[PUT] /api/game/update`, () => {
+    it('should update the game title by given id and new title', done => {
+      const update = {
+        id: gameId,
+        title: 'World of WarCraft'
+      };
+      chai
+        .request(server)
+        .put('/api/game/update')
+        .send(update)
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.body.title).to.eql('World of WarCraft');
+          done();
+        });
+    });
+  });
 
   // --- Stretch Problem ---
   // Test the DELETE here
