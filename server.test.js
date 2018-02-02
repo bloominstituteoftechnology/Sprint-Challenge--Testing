@@ -45,14 +45,12 @@ describe('Games', () => {
       const response = await request(server).post('/api/game/create').send(gameRequest);
       expect(response.status).toEqual(200);
       expect(response.body.title).toBe('Super Mario Bros.');
-      expect(response.body.error).toBeUndefined();
     });
     it('should return an error with a bad request body', async () => {
       const badRequest = { title: 'Super Mario Bros' }; // no date or genre field
       const response = await request(server).post('/api/game/create').send(badRequest);
       expect(response.status).toEqual(422);
       expect(typeof response.body.error).toBe('string');
-      expect(response.body.title).toBeUndefined();
     });
   });
   // test the GET here
@@ -74,7 +72,6 @@ describe('Games', () => {
       const response = await request(server).put('/api/game/update').send(updatedGame);
       expect(response.status).toBe(200);
       expect(response.body.title).toBe('Donkey Kong Country');
-      expect(response.body.error).toBeUndefined();
     });
     it('should return an error with a bad request body', async () => {
       const game = await Game.findOne().exec();
@@ -82,16 +79,45 @@ describe('Games', () => {
       const response = await request(server).put('/api/game/update').send(badRequest);
       expect(response.status).toEqual(422);
       expect(response.body.error).toBe('Must Provide a title && Id');
-      expect(response.body.title).toBeUndefined();
     });
     it('should return an error with an invalid id', async () => {
       const badRequest = { id: 'jdfjjkbnuohu', title: 'Donkey Kong' };
       const response = await request(server).put('/api/game/update').send(badRequest);
       expect(response.status).toEqual(422);
       expect(response.body.error).toBe('Cannot find game by that id');
-      expect(response.body.title).toBeUndefined();
     });
   });
   // --- Stretch Problem ---
   // Test the DELETE here
+  describe('[DELETE] /api/game/destroy/:id', () => {
+    it('should delete a game if given an id in the URL params', async () => {
+      const game = await Game.findOne().exec();
+      const response = await request(server).delete(`/api/game/destroy/${game._id}`);
+      expect(response.status).toBe(200);
+      expect((await Game.findById(game._id))).toBeNull();
+    });
+    it('should delete a game if given an id in the request body', async () => {
+      const game = await Game.findOne().exec();
+      const requestBody = { id: game._id };
+      const response = await request(server).delete(`/api/game/destroy/`).send(requestBody);
+      expect(response.status).toBe(200);
+      expect((await Game.findById(game._id))).toBeNull();
+    });
+    it('should return an error with an invalid id in the URL param', async () => {
+      const response = await request(server).delete(`/api/game/destroy/abcdefg`);
+      expect(response.status).toEqual(422);
+      expect(response.body.error).toBe('Cannot find game by that id');
+    });
+    it('should return an error with an invalid id in the request body', async () => {
+      const badRequest = { id: 'abcdefg' };
+      const response = await request(server).delete(`/api/game/destroy/`).send(badRequest);
+      expect(response.status).toEqual(422);
+      expect(response.body.error).toBe('Cannot find game by that id');
+    });
+    it('should return an error if no id is specified', async () => {
+      const response = await request(server).delete(`/api/game/destroy/`);
+      expect(response.status).toEqual(422);
+      expect(response.body.error).toBe('You need to give me an ID');
+    });
+  });
 });
