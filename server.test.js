@@ -140,7 +140,7 @@ describe('Games', () => {
         if (err) {
           expect(err.status).to.equal(422);
           const { error } = err.response.body;
-          expect(error).to.eql('Game not ofund by that id');
+          expect(error).to.eql('Game not found by that id');
         }
         done();
       });
@@ -148,5 +148,26 @@ describe('Games', () => {
   });
 
   // --- Stretch Problem ---
-  // Test the DELETE here
+  describe(`[DELETE]/game/:id`, () => {
+    it('should remove game by id', done => {
+      chai
+      .request(server)
+      .delete(`/game/${gameId}`)
+      .end((err,res) => {
+        if(err) {
+          throw new Error(err);
+          done();
+        }
+        expect(res.text).to.equal('success');
+        Game.findById(gameId, (err, deletedGame) => {
+          if(err) {
+            throw new Error(err);
+            done();
+          }
+          expect(deletedGame).to.equal(null);
+          done();
+        });
+      });
+    });
+  });
 });
