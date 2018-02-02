@@ -1,9 +1,12 @@
 const mongoose = require('mongoose');
 const chai = require('chai');
+const chaiHTTP = require('chai-http');
 const { expect } = chai;
 const sinon = require('sinon');
 
 const Game = require('./models');
+const server = require('./server');
+chai.use(chaiHTTP);
 
 describe('Games', () => {
   before(done => {
@@ -30,9 +33,9 @@ describe('Games', () => {
     // write a beforeEach hook that will populate your test DB with data
     // each time this hook runs, you should save a document to your db
     // by saving the document you'll be able to use it in each of your `it` blocks
-    const testGame = new Game({
+    let testGame = new Game({
       title: 'Contra',
-      date: 1984,
+      date: 'August 1984',
       genre: 'action',
     });
     testGame
@@ -56,6 +59,40 @@ describe('Games', () => {
   });
 
   // test the POST here
+  describe('[POST /api/game/create', () => {
+    it('should add a new game', done => {
+      const myGame = {
+        title: 'Contra',
+        date: 'August 1984',
+        genre: 'Action',
+      };
+      chai
+        .request(server)
+        .post('/api/game/create')
+        .send(myGame)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.title).to.equal('Contra');
+          done();
+        });
+    });
+    it('should return status 422 upon bad data', () => {
+      const myGame = {
+        name: 'Contra',
+        date: 'August 1984',
+        genere: 'Action',
+      };
+      chai
+        .request(server)
+        .post('/api/game/create')
+        .send((err, res) => {
+          expect(res.status).to.equal(422);
+          const { error } = err.response.body;
+          expect(error).to.eql('Error saving data to the DB');
+          done();
+        });
+    });
+  });
 
   // test the GET here
 
