@@ -44,9 +44,9 @@ describe('Games', () => {
     });
     testGame
       .save()
-      .then(savedGame => {
-        tempTitle = savedGame._title;
-        tempId = savedGame._id;
+      .then(() => {
+        tempTitle = testGame.title;
+        tempId = testGame.id;
         done();
       })
       .catch(error => {
@@ -106,7 +106,7 @@ describe('Games', () => {
         .get('/api/game/get')
         .end((error, res) => {
           //if (error) return console.error(error);
-          // expect(res.body.length).to.equal(2);
+          expect(res.body[0].title).to.equal('Five Nights at Freddys');
         });
     });
   });
@@ -130,15 +130,16 @@ describe('Games', () => {
     });
     it('should correctly update an item in the db', () => {
       const gameUpdate = {
-        id: tempId,
-        title: 'Updated Name'
+        title: 'Updated Name',
+        id: tempId
       }
       chai
         .request(server)
         .put('/api/game/update')
         .send(gameUpdate)
         .end((error, res) => {
-          expect(res.status).to.equal(200);
+          if(error) return console.error(error);
+          expect(res.body).to.equal(200);
         });
     });
   });
