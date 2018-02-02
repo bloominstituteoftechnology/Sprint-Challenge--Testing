@@ -35,10 +35,19 @@ describe('Games', () => {
   });
 
   // test the POST here
+  describe('[POST] /api/game/create', () => {
+    // oh dear
+  });
 
   // test the GET here
-
+  describe('[GET] /api/game/get', () => {
+    // oh dear
+  });
+  
   // test the PUT here
+  describe('[PUT] /api/game/update', () => {
+    // Oh dear
+  });
 
   // --- Stretch Problem ---
   // Test the DELETE here
