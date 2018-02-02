@@ -198,11 +198,12 @@ describe('Games', () => {
     //   };
     //   chai
     //     .request(server)
-    //     .delete('/api/game/destroy/:id')
-    //     .send(deleteGame)
+    //     .delete(`api/game/delete/${deleteGame.id}`)
     //     .send((err, res) => {
     //       if (err) {
     //         expect(err.status).to.equal(422);
+    //         const { error } = err.response.body;
+    //         console.log(error);
     //       }
     //       done();
     //     });
