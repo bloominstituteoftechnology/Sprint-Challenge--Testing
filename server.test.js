@@ -29,11 +29,24 @@ describe('Games', () => {
   });
   // declare some global variables for use of testing
   // hint - these wont be constants because you'll need to override them.
+  let tempTitle = null;
+  let tempId = null;
   let testGame = new Game ({
     title: 'Five Nights at Freddys',
     genre: 'Horror', 
     releaseDate: 'yesterday'
   });
+  testGame
+    .save()
+    .then(game => {
+      tempTitle = game.title;
+      tempId = game.id;
+      done();
+    })
+    .catch(error => {
+      console.log(error);
+      done(error);
+    })
 
   beforeEach(done => {
     // write a beforeEach hook that will populate your test DB with data
@@ -52,9 +65,7 @@ describe('Games', () => {
     // simply remove the collections from your DB.
     Game
       .remove({}, error => {
-        if (error) {
-          console.log(error);
-        }
+        if (error) console.log(error);
         done();
       });
   });
