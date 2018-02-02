@@ -58,7 +58,6 @@ Here is the documentation for the API. It will provide information for interfaci
 } 
 ```
 + Success Response: 
-    + Code: 200
     + Content: ``` { title: 'Mario', genre: 'Action', releaseDate: '01/01/1991' } ```
 
 + Error Response: 
@@ -92,7 +91,6 @@ New Data
 }
 ```
 + Success Response: 
-    + Code: 200
     + Content: ``` { title: 'Mario 2', genre: 'Action', releaseDate: '01/01/1991' } ```
 
 + Error Response: 
@@ -117,7 +115,6 @@ New Data
 + No input is required, will return all current data
 
 + Success Response: 
-    + Code: 200
     + Content: ``` { title: 'Mario 2', genre: 'Action', releaseDate: '01/01/1991' }, { title: 'Mortal Kombat', genre: 'Fighting', releaseDate: '02/02/1992' } ``` 
 
 + Error Response: 
@@ -134,7 +131,6 @@ New Data
 + Providing id as input is required, will delete instance with id that matches what is entered
 
 + Success Response: 
-    + Code: 200
     + Content: ``` { success: '[The Game in Question] was removed from the DB' } ``` 
 
 + Error Response: 
