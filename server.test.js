@@ -40,6 +40,7 @@ describe('Games', () => {
     newGame.save((err, game) => {
       if (err) return done(err);
       gameId = game.id;
+      gameTitle = game.title;
       done();
     });
   });
@@ -108,4 +109,16 @@ describe('Games', () => {
 
   // --- Stretch Problem ---
   // Test the DELETE here
+  describe(`[DELETE] /api/game/destroy/:id`, () => {
+    it('should delete the game by given id from req.params.id', done => {
+      chai
+        .request(server)
+        .delete(`/api/game/destroy/${gameId}`)
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.body.success).to.eql(`${gameTitle} was removed from the DB`);
+          done();
+        });
+    });
+  });
 });
