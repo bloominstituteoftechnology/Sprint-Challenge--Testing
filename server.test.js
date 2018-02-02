@@ -67,7 +67,7 @@ describe('/POST /api/game/create', () => {
       let game = {
           title: "Final Fantasy",
           genre: "RPG",
-          releaseDate: "in the 1900's"  
+          releaseDate: "in the 1900s"  
       }
       chai.request(server)
           .post('/api/game/create')
@@ -85,7 +85,7 @@ describe('/POST /api/game/create', () => {
  });
 });
   // test the GET here
-describe('/GET /api/game/game', () => {
+describe('/GET /api/game/get', () => {
   it('it should GET all the games', (done) => {
     chai.request(server)
         .get('/api/game/get')
@@ -97,8 +97,27 @@ describe('/GET /api/game/game', () => {
         });
     });
 });
-   
- 
+   //gets a single game by id
+describe('/GET/:id api/game/get', () => {
+  it('it should GET a game by the given id', (done) => {
+    let game = new Game({ title: "Final Fantasy", genre: "RPG", releaseDate: "in the 1900s" });
+    game.save((err, game) => {
+        chai.request(server)
+        .get('/game/' + game.id)
+        .send(game)
+        .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a('object');
+            res.body.should.have.property('title');
+            res.body.should.have.property('genre');
+            res.body.should.have.property('releaseDate');
+            res.body.should.have.property('_id').eql(game.id);
+          done();
+        });
+    });
+
+  });
+}); 
 
   // test the PUT here
 describe('/PUT/:id /api/game/update', () => {
@@ -107,12 +126,12 @@ describe('/PUT/:id /api/game/update', () => {
     game.save((err, game) => {
             chai.request(server)
             .put('/game/' + game.id)
-            .send({title: "Final Fantasy", genre: "RPG", releaseDate: "in the 1900's"})
+            .send({title: "Final Fantasy", genre: "RPG", releaseDate: "in the 1900s"})
             .end((err, res) => {
                 res.should.have.status(200);
                 res.body.should.be.a('object');
                 res.body.should.have.property('message').eql('game updated!');
-                res.body.game.should.have.property('year').eql(1950);
+                res.body.game.should.have.property('releaseDate').eql('in the 1900s');
               done();
             });
         });
