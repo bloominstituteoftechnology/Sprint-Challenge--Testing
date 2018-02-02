@@ -60,48 +60,8 @@ describe('Games', () => {
         genre: 'Sports',
         date: 'June 1987'
       };
-       chai.request(app)
-         .post('/api/game/create')
-         .send(user)
-         .end((err, res) => {
-              if (err) {
-                console.log(err);
-                done();
-              }
-              expect(res.status).to.equal(200);
-              expect(typeof res.body.id).to.equal('number');
-              return done();
-            });
-        });
-      });
-
-
-      // test the GET here
-      describe("[GET]" /)
-
-
-      expect(res.data[0].foo).to.equal(bar.foo);
-
-
-      // test the PUT here
-      describe("PUT )
-
-        * Just like in class, send up the information you want changed on the server via the`req.body`.
-* You can send up the Id and the Server will be using that to
-// --- Stretch Problem ---
-// Test the DELETE here
-server.delete
-DELETE can take an ID off of the route parameter, or off of the req.body.It's your choice.
-});
-  describe(`[POST] /api/register`, () => {
-    it('Should add a new user to the DB', (done) => {
-      const user = {
-        email: "test2@test2.com",
-        password: "asdf",
-        aboutme: "I do funny stuff to code"
-      };
       chai.request(app)
-        .post('/api/register')
+        .post('/api/game/create')
         .send(user)
         .end((err, res) => {
           if (err) {
@@ -113,25 +73,80 @@ DELETE can take an ID off of the route parameter, or off of the req.body.It's yo
           return done();
         });
     });
+});
+
+
+// test the GET here
+describe("[GET] /api/game/create", () => {
+  it("should create new game") => {
+    const user = {
+      title: 'California Games',
+      genre: 'Sports',
+      date: 'June 1987'
+    };
+    chai.request(app)
+      .post('/api/game/create')
+      .send(user)
+      .end((err, res) => {
+        if (err) {
+          console.log(err);
+          done();
+        }
+        expect(res.status).to.equal(200);
+        expect(typeof res.body.id).to.equal('number');
+        return done();
+      });
   });
-  describe(`[POST] /api/login`, () => {
-    it('Should login a user and return it', (done) => {
-      const user = {
-        email: "test2@test2.com",
-        password: "asdf"
-      };
-      chai.request(app)
-        .post('/api/login')
-        .send(user)
-        .end((err, res) => {
-          if (err) {
-            console.log(err);
-            done();
-          }
-          expect(res.status).to.equal(200);
-          expect(typeof res.body.aboutme).to.equal('string');
-          return done();
-        });
-    });
+      });
+
+expect(res.data[0].foo).to.equal(bar.foo);
+
+
+// test the PUT here
+describe(`[PUT] /api/game/create`, () => {
+  it('Should login a user and return it', (done) => {
+    const user = {
+      title: 'California Games',
+      genre: 'Sports',
+      date: 'June 1987'
+    };
+    chai.request(app)
+      .post('/api/game/create')
+      .send(user)
+      .end((err, res) => {
+        if (err) {
+          console.log(err);
+          done();
+        }
+        expect(res.status).to.equal(200);
+        expect(typeof res.body.aboutme).to.equal('string');
+        return done();
+      });
   });
+});
+});
+
+// --- Stretch Problem ---
+// Test the DELETE here
+describe(`[DELETE] /api/game/create`, () => {
+  it('Should login a user and return it', (done) => {
+    const user = {
+      title: 'California Games',
+      genre: 'Sports',
+      date: 'June 1987'
+    };
+    chai.request(app)
+      .post('/api/game/create')
+      .send(user)
+      .end((err, res) => {
+        if (err) {
+          console.log(err);
+          done();
+        }
+        expect(res.status).to.equal(200);
+        expect(typeof res.body.aboutme).to.equal('string');
+        return done();
+      });
+  });
+});
 });
