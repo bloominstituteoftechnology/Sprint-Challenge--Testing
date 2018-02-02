@@ -80,14 +80,16 @@ This api's permits acess to a database of NES Games and perform the following fu
 | Endpoint | Type | Data | Result |
 |:---------|:--:|:--:|:-:| 
 |'/api/game/update|Put|Json|Returns the updated Game Object|
-  1. For the update to find the speciffic game, an object with the properties of "id" or "title" must be submitted. One of those properties will be sufficient, but both can be included.
+  1. For the update to find the speciffic game, an object with the properties of "id" && "title" must be submitted, along with the changes to be made to the Game Object properties.
   2. On Find Error: if the API can't find the provided id in the list this error will be returned: `{ error: 'Cannot find game by that id' }` with a status of `422`.
   3. On Database Connection Error: if the API can't reach the database this error will be returned: `{ error: 'Something really bad happened' }` with a status of `500`.
 #### Update Object Example:
 ```JSON
 {
     "id": "mongo DB ObjectID",
-    "title": "Super Mario Brothers"
+    "title": "Super Mario Brothers",
+    "date":"1981",
+    "genre": "Adventure Platform"
 }
 ```
 
