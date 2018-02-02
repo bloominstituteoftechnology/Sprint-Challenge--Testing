@@ -189,7 +189,7 @@ axios.put('/api/game/update', { id: [Mongo ObjectID], title: [String] })
 Return removed game title
 
 | Endpoint | HTTP Method | URL Params | Data Params | Return Data Type |
-|:----:|:----:|:----:|:----:|:----:|
+|:----:|:----:|:----:|:----:|:-----:|
 | /api/game/destroy/:id | [PUT] | Game id/None | Game id/None | JSON |
 
 **Data Params Example**
