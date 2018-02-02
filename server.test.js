@@ -138,8 +138,8 @@ describe('Games', () => {
         .put('/api/game/update')
         .send(gameUpdate)
         .end((error, res) => {
-          if(error) return console.error(error);
-          expect(res.body).to.equal(200);
+          // if(error) return console.error(error);
+          expect(res.status).to.equal(200);
         });
     });
   });
