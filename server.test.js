@@ -28,7 +28,7 @@ describe('Games', () => {
   });
   // declare some global variables for use of testing
   // hint - these wont be constants because you'll need to override them.
-  let nesGameId;
+  let GameId;
   beforeEach(done => {
     // write a beforeEach hook that will populate your test DB with data
     // each time this hook runs, you should save a document to your db
@@ -36,9 +36,8 @@ describe('Games', () => {
     const newGame = new Game({
       title: 'Zelda',
       genre: 'RPG',
-      releaseDate: '02/21/86'
+      date: '02/21/86'
     });
-  });
     newGame.save((error, game) => {
       if (error) return done(error);
       gameId = game.id;
@@ -52,13 +51,44 @@ describe('Games', () => {
       done();
     });
   });
-
   // test the POST here
-
+  describe(`[POST] /api/game/create`, () => {
+    it('should create a new game', done => {
+      const gameData = {
+        title: 'Mario Bros',
+        genre: 'Action',
+        date: '9/13/85'    
+      };
+      chai
+        .request(server)
+        .post('/api/game/create')
+        .send(gameData)
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.body.title).to.eql('Mario Bros');
+          expect(res.body.date).to.eql('9/13/85');
+          done();
+        });
+    });
+  });
   // test the GET here
-
+  describe(`[GET] /api/game/get`, () => {
+    it('should give all the games', done => {
+      chai
+        .request(server)
+        .get('/api/game/get')
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.body).to.be.an('array');
+          expect(res.body.length).to.eql(1);
+          expect(res.body[0].title).to.eql('Zelda');
+          done();
+        });
+      });
+    });
   // test the PUT here
 
   // --- Stretch Problem ---
   // Test the DELETE here
-});
+
+  });
