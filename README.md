@@ -43,10 +43,10 @@ All API access is over HTTP, and accessed from `http://localhost:5050/`. All dat
 Return a collection of games
 
 | Endpoint | HTTP Method | URL Params | Data Params | Return Data Type |
-|:----:|:----:|:----:|
+|:----:|:----:|:----:|:----:|:----:|
 | /api/game/get | [GET] | None | None | JSON |
 
-**Data Params Example**
+**Data Params Example**<br>
 None
 
 **Sample Call:**
