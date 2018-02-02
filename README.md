@@ -88,7 +88,7 @@ axios.get('/api/game/get')
 Return newly created game
 
 | Endpoint | HTTP Method | URL Params | Data Params | Return Data Type |
-|:----:|:----:|:----:|
+|:----:|:----:|:----:|:----:|:----:|
 | /api/game/create | [POST] | None | New game data | JSON |
 
 **Data Params Example**
