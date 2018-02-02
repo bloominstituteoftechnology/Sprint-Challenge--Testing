@@ -61,7 +61,28 @@ describe("Games", () => {
   });
 
   // test the POST here
-
+  describe("[POST] /api/game/create", () => {
+    it("should create a new game", done => {
+      const newGame = {
+        title: "waynes world",
+        genre: "action",
+        date: Date.now
+      };
+      chai
+        .request(server)
+        .post("api/game/create")
+        .send(newGame)
+        .end((err, res) => {
+          if (err) {
+            console.log(err);
+            done();
+          }
+          expect(res.status).to.equal(200);
+          expect(res.body.title).to.equal("waynes world");
+          done();
+        });
+    });
+  });
   // test the GET here
   describe("[GET] /api/game/get", () => {
     it("should get all bands", done => {
