@@ -6,7 +6,7 @@ const Game = require('./models');
 
 const server = express();
 server.use(bodyParser.json());
-server.use(morgan('combined'));
+// server.use(morgan('combined'));
 
 server.post('/api/game/create', (req, res) => {
   const { title, date, genre } = req.body;
@@ -14,6 +14,7 @@ server.post('/api/game/create', (req, res) => {
   myGame
     .save()
     .then(game => {
+      res.status(201);
       res.json(game);
     })
     .catch(err => {
@@ -29,6 +30,7 @@ server.get('/api/game/get', (req, res) => {
       res.json({ error: 'Something really bad happened' });
       return;
     }
+    res.status(200);
     res.json(games);
   });
 });
