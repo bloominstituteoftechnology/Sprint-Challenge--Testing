@@ -1,3 +1,4 @@
+
 # Assessing your Testing Fu
 
 <!-- TODO = SET UP TEST FOR SERVER, BEFORE AFTER, BEFOREEACH AFTER EACH, ESSAY Q's,  -->
@@ -29,11 +30,69 @@
 * You're going to be writing the documentation and the tests for a CRUD API
 * The API itself is really simple. You're task is to peek at the endpoints found in the `server.js` file and write docs for each one, then write the tests for the end points.
 
-## DOCUMENTATION GOES HERE
+## DOCUMENTATION
 
-```
-  <!-- THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR INFO AND PUT IT HERE. -->
-```
+# Games API
+This is a CRUD API, built for maintaining records of Game events.  
+HTTP API requests are sent, and responses are received in JSON format.
+
+## Create Game
+This will add a new game with the information provided with the request body.
+
+| Endpoint           | Method |
+| ------------------ | ------ |
+| `/api/game/create` | POST   |
+
+#### Request Body
+| Property | Type       | Required |
+| -------- | ---------- | -------- |
+| title    | String     | Yes      |
+| genre    | String     | Yes      |
+| date     | String     | Yes      |
+
+<br />
+
+## Get All Games
+This will return an array of all games that are stored in the database.
+
+| Endpoint           | Method |
+| ------------------ | ------ |
+| `/api/game/get`    | GET    |
+
+<br />
+
+## Upate Game
+This will update the `title` of the game, for which the `id` is provided.
+
+| Endpoint           | Method |
+| ------------------ | ------ |
+| `/api/game/update`    | PUT    |
+
+#### Request Body
+| Property | Type       | Required |
+| -------- | ---------- | -------- |
+| id       | String     | Yes      |
+| title    | String     | Yes      |
+
+<br />
+
+## Delete Game
+This will remove all entries that are referenced to a specific game by id.
+
+
+| Endpoint           | Method |
+| ------------------ | ------ |
+| `/api/game/destroy/:id`    | PUT    |
+
+*Note*: `:id` in the endpoint URL must be replaced by a valid **id** of a Game.
+
+<br />
+<br />
+
+*[ End of Documentation ]*
+
+---
+
 
 ## TESTS
 
