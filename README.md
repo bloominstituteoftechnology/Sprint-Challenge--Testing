@@ -1,12 +1,16 @@
-# Assessing your Testing Fundamentals Fu
+# Assessing your Testing Fu
+
+<!-- TODO = SET UP TEST FOR SERVER, BEFORE AFTER, BEFOREEACH AFTER EACH, ESSAY Q's,  -->
 
 * Keep Calm! Test On!
 * Now that you're familiar with the concepts of testing, your goal is to write documentation and tests for an API that is already in production. (This happens a lot :))
 * Answers to your written questions will be recorded in _Answers.md_
 * This is to be worked on alone but you can use outside resources. You can _reference_ any old code you may have, and the React Documentation, however, please refrain from copying and pasting any of your answers. Try and understand the question and put your responses in your own words. Be as thorough as possible when explaining something.
 * **Just a friendly Reminder** Don't fret or get anxious about this, this is a no-pressure assessment that is only going to help guide you here in the near future. This is NOT a pass/fail situation.
-  ## Start by forking and cloning this repository.
-  ## Questions - Self Study - You can exercise your Google-Fu for this and any other _Sprint Challenge_ in the future.
+
+## Start by forking and cloning this repository.
+
+## Questions - Self Study - You can exercise your Google-Fu for this and any other _Sprint Challenge_ in the future.
 
 1.
 
@@ -52,11 +56,15 @@
 ### Write a test for the "GET" method
 
 * Our get method should return the list of games.
-* **REMINDER** That this data structure returend from Mongo will be an array, so to test your game with a `beforeEach` hook you'll need to make sure you test against the first item in the array
+* **REMINDER** That this data structure returned from Mongo will be an array, so to test your game with a `beforeEach` hook you'll need to make sure you test against the first item in the array
 
 ```
 expect(res.data[0].foo).to.equal(bar.foo);
 ```
+
+## Stretch Problem
+
+* Write your `PUT` and your `DELETE`
 
 ### Write a test for the "PUT" method
 

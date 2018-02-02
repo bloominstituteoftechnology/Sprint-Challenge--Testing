@@ -15,8 +15,17 @@ const NESGameSchema = new Schema({
   releaseDate: String
 });
 
-NESGameSchema.methods.getGameTitle = function() {};
+NESGameSchema.methods.getGameTitle = function() {
+  return this.title;
+};
 
-NESGameSchema.statics.getGames = function(cb) {};
+NESGameSchema.statics.getGames = function(cb) {
+  Game.find({}, (err, games) => {
+    if (err) return cb(err);
+    cb(games);
+  });
+};
 
-module.exports = mongoose.model('Game', NESGameSchema);
+const Game = mongoose.model('Game', NESGameSchema);
+
+module.exports = Game;
