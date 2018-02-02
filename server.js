@@ -10,7 +10,7 @@ server.use(morgan('combined'));
 
 server.post('/api/game/create', (req, res) => {
   const { title, date, genre } = req.body;
-  const myGame = new Game({ req, date, genre });
+  const myGame = new Game({ title, date, genre });
   myGame
     .save()
     .then(game => {
@@ -18,7 +18,7 @@ server.post('/api/game/create', (req, res) => {
     })
     .catch(err => {
       res.status(422);
-      res.json({ error: 'Error saving data to the DB' });
+      res.json({ error: 'Error saving data to the DB', message: err });
     });
 });
 
