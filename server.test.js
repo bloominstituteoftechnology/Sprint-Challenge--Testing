@@ -29,16 +29,48 @@ describe('Games', () => {
     // write a beforeEach hook that will populate your test DB with data
     // each time this hook runs, you should save a document to your db
     // by saving the document you'll be able to use it in each of your `it` blocks
+    new Game({
+      title: 'What am I'
+    }).save((err, savedGame) => {
+      if (err) {
+        console.log(err);
+        return done();
+      }
+      gameId = savedGame.id;
+      done();
+    });
   });
   afterEach(done => {
     // simply remove the collections from your DB.
+    Game.remove({}, (err) => {
+      if (err) console.log(err);
+      done();
+    });
   });
 
   // test the POST here
+  server.post('Games', (req, res) => {
+    const game = new Game(req.body);
+    game.save((err, newGame) => {
+      if (err) return res.send(err);
+      res.send(newGame);
+    });
+  });
 
   // test the GET here
+  server.get('Games', (req, res) => {
+    res.json({ text: 'Games Collection' });
+  });
 
   // test the PUT here
+  server.put('Games', (req, res) => {
+    Game.findById(req.body.id, (err, games) => {
+      games.title = req.body.title;
+      games.save((err, updatedGame) => {
+        if (err) return res.send(err);
+        res.send(updatedGame);
+      });
+    });
 
   // --- Stretch Problem ---
   // Test the DELETE here
