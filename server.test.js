@@ -108,7 +108,44 @@ describe('Games', () => {
     });
     });
 
-  // test the PUT here
+  describe(`[PUT]/game`, () => {
+    it('should update a game given id', done => {
+      const gameUpdate = {
+        id: gameId,
+        title: 'newGameTitle'
+      };
+      chai
+      .request(server)
+      .put(`/game`)
+      .send(gameUpdate)
+      .end((err, res) => {
+        if(err) {
+          throw new Error(err);
+          done();
+        }
+        expect(res.body.title).to.equal(gameUpdate.title);
+        done();
+      });
+    });
+    it('should handle error if bad id sent', done => {
+      const gameUpdate ={
+        id: 'ofiewo',
+        title: 'NewGameTitle'
+      };
+      chai
+      .request(server)
+      .put('/game')
+      .send(gameUpdate)
+      .end((err, res) => {
+        if (err) {
+          expect(err.status).to.equal(422);
+          const { error } = err.response.body;
+          expect(error).to.eql('Game not ofund by that id');
+        }
+        done();
+      });
+    });
+  });
 
   // --- Stretch Problem ---
   // Test the DELETE here
