@@ -1,9 +1,13 @@
 const mongoose = require('mongoose');
 const chai = require('chai');
 const { expect } = chai;
+const chaiHTTP = require('chai-http');
 const sinon = require('sinon');
 
+chai.use(chaiHTTP);
+
 const Game = require('./models');
+const server = require('./server');
 
 describe('Games', () => {
   before(done => {
@@ -57,8 +61,23 @@ describe('Games', () => {
 
   // test the POST here
   describe('POST /api/games/create', () => {
-    it('should return an error if data is invalid', () => {
-      expect(1+2).to.equal(5);
+    it('should return an error code 422 and message if data is invalid', () => {
+      const newGame = new Game ({
+        title: 'cheese',
+        genre: 'food',
+        releaseDate: 'tomorrow'
+      });
+      chai.request(server)
+        .post('/api/game/create')
+        .send(newGame)
+        .end((error, addedGame) => {
+          if (error) return console.log(error);
+          expect(addedGame.title).to.equal('cheese');
+          done();
+        });
+    });
+    it('should return a game if correctly added to the database', () => {
+      expect(3+4).to.equal(17);
     });
   });
 
