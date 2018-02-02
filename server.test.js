@@ -3,8 +3,8 @@ const sinon = require('sinon');
 const server = require('./server');
 const Game = require('./models');
 
-describe('Games', () => {
-  before(done => {
+test('Games', () => {
+  beforeAll(done => {
     mongoose.Promise = global.Promise;
     mongoose.connect('mongodb://localhost/test');
     const db = mongoose.connection;
@@ -15,7 +15,7 @@ describe('Games', () => {
     });
   });
 
-  after(done => {
+  afterAll(done => {
     mongoose.connection.db.dropDatabase(() => {
       mongoose.connection.close(done);
       console.log('we are disconnected');
