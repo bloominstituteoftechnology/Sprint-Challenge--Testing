@@ -54,7 +54,6 @@ describe('Games', () => {
     });
   });
 
-  // test the POST here
   describe('[POST]/api/game/create', () => {
     it('should create a new game', (done) => {
       const game = {
@@ -75,7 +74,6 @@ describe('Games', () => {
     })
   })
 
-  // test the GET here
   describe('[GET]/api/game/get', (req, res) => {
     it('should get all games', (done) => {
       chai.request(server)
@@ -91,7 +89,6 @@ describe('Games', () => {
     })
   })
 
-  // test the PUT here
   describe('[PUT]/api/game/update', () => {
     it('should update game entry based on id', (done) => {
       const update = {
@@ -109,5 +106,26 @@ describe('Games', () => {
     });
   })
   // --- Stretch Problem ---
-  // Test the DELETE here
+  describe('[DELETE]/api/game/destroy/:id', (req, res) => {
+    it('should delete entry by id', (done) => {
+      chai.request(server)
+        .delete(`/api/game/destroy/${gameId}`)
+        .end((err, res) => {
+          if (err) {
+            console.log(err);
+            return done();
+          }
+          console.log('restext', res.text);
+          expect(res.text).to.equal('{"success":"The Legend of Zelda was removed from the DB"}');
+          Game.findById(gameId, (err, deletedGame) => {
+            if (err) {
+              console.log(err);
+              return done();
+            }
+            expect(deletedGame).to.equal(null);
+            done();
+          });
+        });
+    });
+  });
 });
