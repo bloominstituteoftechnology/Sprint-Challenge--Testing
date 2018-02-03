@@ -9,8 +9,8 @@ server.use(bodyParser.json());
 server.use(morgan('combined'));
 
 server.post('/api/game/create', (req, res) => {
-  const { title, date, genre } = req.body;
-  const myGame = new Game({ title, date, genre });
+  const { title, releaseDate, genre } = req.body;
+  const myGame = new Game({ title, releaseDate, genre });
   myGame
     .save()
     .then(game => {
