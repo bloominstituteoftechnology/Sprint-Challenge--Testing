@@ -31,10 +31,66 @@
 * The API itself is really simple. You're task is to peek at the endpoints found in the `server.js` file and write docs for each one, then write the tests for the end points.
 
 ## DOCUMENTATION GOES HERE
+</br>
 
+**Use the following to create API endpoints:**
+</br></br>
+
+
+**[GET]**
+
+This request will return all game entries. 
+
+
+|Endpoint       | Type      | Data    |
+|---------------|:---------:|--------:|
+|/api/game/get  | post      | json    |
+</br>
+
+**[POST]**
+
+|Endpoint         | Type      | Data    |
+|-----------------|:---------:|--------:|
+|/api/game/create | post      | json    |
+
+The Post method should take in the following object structure:
 ```
-  THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
+{
+    title: 'The Legend of Zelda',
+    genre: 'action-adventure',
+    date: 'November 21, 1991'
+}
 ```
+</br>
+
+**[PUT]**
+
+|Endpoint         | Type      | Data    |
+|-----------------|:---------:|--------:|
+|/api/game/update | post      | json    |
+
+The Put method should take in the following object structure:
+```
+{
+    title: 'The Legend of Zelda',
+    genre: 'action-adventure',
+    date: 'November 21, 1991' 
+}
+
+* date is not required
+```
+<br>
+
+**[DELETE]**
+
+The request requires a title to be entered. 
+
+
+|Endpoint              | Type      | Data    |
+|----------------------|:---------:|--------:|
+|/api/game/destroy/:id | post      | json    |
+</br>
+
 
 ## TESTS
 
