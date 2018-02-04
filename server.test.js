@@ -1,9 +1,12 @@
 const mongoose = require('mongoose');
 const chai = require('chai');
+const chaiHTTP = require('chai-http');
 const { expect } = chai;
 const sinon = require('sinon');
+chai.use(chaiHTTP);
 
 const Game = require('./models');
+const server = require('./server');
 
 describe('Games', () => {
   before(done => {
@@ -23,23 +26,134 @@ describe('Games', () => {
       console.log('we are disconnected');
     });
   });
-  // declare some global variables for use of testing
-  // hint - these wont be constants because you'll need to override them.
+  let gameId = null;
+  let testGame = null;
   beforeEach(done => {
-    // write a beforeEach hook that will populate your test DB with data
-    // each time this hook runs, you should save a document to your db
-    // by saving the document you'll be able to use it in each of your `it` blocks
+    const myGame =  new Game({
+      title: 'BrainGames',
+      genre:'Academic',
+      releaseDate:'November 2005'
+    });
+    myGame
+    .save()
+    .then( game => {
+      testGame = game;
+      gameId = game._id;
+      done();
+    })
+    .catch(err => {
+      console.error(err);
+      done();
+    });
   });
   afterEach(done => {
-    // simply remove the collections from your DB.
+    Game.remove({}, err => {
+      if (err) console.error(err);
+      done();
+    });
   });
 
-  // test the POST here
+  describe(`[POST]/api/game/create`, () => {
+    it('should add a new game', done => {
+      const myGame = {
+          title: 'BrainGames',
+          genre:'Academic',
+          releaseDate:'November 2005'
+      };
+      chai
+      .request(server)
+      .post('/api/game/create')
+      .send(myGame)
+      .end((err,res) => {
+        if(err) {
+          throw new Error(err)
+        }
+        expect(res.status).to.equal(200);
+        expect(res.body.title).to.equal('BrainGames');
+        done();
+      });
+    });
+  });
 
-  // test the GET here
+  describe(`[GET]/api/game/get`, () => {
+    it('should get all the games', done => {
+      chai
+      .request(server)
+      .get('api/game/get')
+      .end ((err, res) => {
+        if (err) {
+          throw new Error(err);
+          done();
+        }
+        expect(res.status).to.equal(200)
+        expect(res.body[0].title).to.eql('BrainGamea');
+        expect(res.body[0].genre).to.eql('Academic');
+        expect(res.body[0].releaseDate).to.eql('November 2005');
+        done();
+      });
+    });
+    });
 
-  // test the PUT here
+  describe(`[PUT]/api/game/update`, () => {
+    it('should update a game given id', done => {
+      const gameUpdate = {
+        id: gameId,
+        title: 'newGameTitle'
+      };
+      chai
+      .request(server)
+      .put(`/api/game/update`)
+      .send(gameUpdate)
+      .end((err, res) => {
+        if(err) {
+          throw new Error(err);
+          done();
+        }
+        expect(res.body.title).to.equal(gameUpdate.title);
+        done();
+      });
+    });
+    it('should handle error if bad id sent', done => {
+      const gameUpdate ={
+        id: 'ofiewo',
+        title: 'NewGameTitle'
+      };
+      chai
+      .request(server)
+      .put('/api/game/update')
+      .send(gameUpdate)
+      .end((err, res) => {
+        if (err) {
+          expect(err.status).to.equal(422);
+          const { error } = err.response.body;
+          expect(error).to.eql('Cannot find game by that id');
+        }
+        done();
+      });
+    });
+  });
 
   // --- Stretch Problem ---
-  // Test the DELETE here
+  describe(`[DELETE]/api/game/destroy/:id`, () => {
+    it('should remove game by id', done => {
+      chai
+      .request(server)
+      .delete(`/api/game/destroy/${gameId}`)
+      .end((err,res) => {
+        if(err) {
+          throw new Error(err);
+          done();
+        }
+        expect(res.text).to.equal(' {"success":"BrainGames was removed from the DB"}');
+        Game.findById(gameId, (err, deletedGame) => {
+          if(err) {
+            throw new Error(err);
+            done();
+          }
+          expect(deletedGame).to.equal(null);
+          done();
+        });
+      });
+    });
+  });
 });
