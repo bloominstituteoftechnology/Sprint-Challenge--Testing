@@ -9,16 +9,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/LambdaSchool/Sprint-Challenge--Testing.git"
+    "url": "git+https://github.com/metten0/Sprint-Challenge--Testing.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/LambdaSchool/Sprint-Challenge--Testing/issues"
+    "url": "https://github.com/metten0/Sprint-Challenge--Testing/issues"
   },
-  "homepage":
-    "https://github.com/LambdaSchool/Sprint-Challenge--Testing#readme",
+  "homepage": "https://github.com/metten0/Sprint-Challenge--Testing#readme",
   "dependencies": {
     "body-parser": "^1.18.2",
     "chai": "^4.1.2",
