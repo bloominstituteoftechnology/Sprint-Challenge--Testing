@@ -32,10 +32,79 @@
 
 ## DOCUMENTATION GOES HERE
 
+# Users API
+This api's permits acess to a database of NES Games and perform the following functions to the data add a new Game, update a Game, Display a list of Games, and Delete a Game.
+
+# To start the database
+1. Ensure MongoDB is installed in your system
+    * mongod should be acessible from your %path
+      * follow this tutorial if you have questions: https://www.youtube.com/watch?v=KLdHHa2XS8M
+2. Run this command in your terminal:
+    * On Windows: `mongod`
+    * On OSX: `sudo mongod`
+    * if all executed well it will have an instance of mongodb running on that terminal. Leave the terminal open or minimized.
+    * The data will be saved on a collection named `video-games`.
+3. Execute the API Server using a Terminal:
+    * Navigate to the API's root directory
+    * Run this command: `npm install`
+      * _This will install all the dependencies for the API to function properly._
+      * _Wait until it is finished executing before following the next step._
+    * Run this command: `npm start`
+      * _If the API server was executed sucessfully tis will display a a message like the one bellow on your terminal._
+      ```
+        Magic happening on port 5050
+        DB up and running
+
+      ```
+
+# Api Endpoints
+#### All api calls should be directed to:
+```http://localhost:5050```
+#### Use the following Endpoints:
+| Endpoint | Type | Data | Result |
+|:---------|:--:|:--:|:-:|
+|/api/game/create|Post|Json|Returns the created Game Object.
+#### Creation Object Example:
+```JSON
+{
+    "title":"Super Mario Brothers",
+    "date":"1981",
+    "genre": "Adventure Platform"
+}
 ```
-  THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
+| Endpoint | Type | Data | Result |
+|:---------|:--:|:--:|:-:|
+|/api/game/get|Get|Json|Returns the list of Games|
+  1. On Database Connection Error: if the API can't reach the database this error will be returned: `{ error: 'Something really bad happened' }` with a status of 500.
+
+| Endpoint | Type | Data | Result |
+|:---------|:--:|:--:|:-:| 
+|'/api/game/update|Put|Json|Returns the updated Game Object|
+  1. For the update to find the speciffic game, an object with the properties of "id" && "title" must be submitted, along with the changes to be made to the Game Object properties.
+  2. On Find Error: if the API can't find the provided id in the list this error will be returned: `{ error: 'Cannot find game by that id' }` with a status of `422`.
+  3. On Database Connection Error: if the API can't reach the database this error will be returned: `{ error: 'Something really bad happened' }` with a status of `500`.
+#### Update Object Example:
+```JSON
+{
+    "id": "mongo DB ObjectID",
+    "title": "Super Mario Brothers",
+    "date":"1981",
+    "genre": "Adventure Platform"
+}
 ```
 
+| Endpoint | Type | Data | Result |
+|:---------|:--:|:--:|:-:| 
+|/api/game/destroy/:id|delete|Json|Returns `{ success: "[Removed Game title] was removed from the DB" }`|
+  1. To delete a game you can send up an id on the request body or the params.
+  2. On Missing ID Error: if you do not provide an ID on the params or inside the request body this error will be returned: `{ error: 'You need to give me an ID' }` with a status of `422`.
+  3. On Find Error: if the API can't find the provided id in the list this error will be returned: `{ error: 'Cannot find game by that id' }` with a status of `422`.
+#### Delete Object Example:
+```JSON
+{
+    "id": "mongo DB ObjectID"
+}
+```
 ## TESTS
 
 * I have already manually tested this API for you.
