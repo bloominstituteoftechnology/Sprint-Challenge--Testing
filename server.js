@@ -52,12 +52,12 @@ server.put('/api/game/update', (req, res) => {
         res.json({ error: 'Something really bad happened' });
         return;
       }
-      res.json(game);
+      res.json(savedGame);
     });
   });
 });
 
-server.delete('/api/game/destroy/:id', (req, res) => {
+server.delete('/api/game/destroy/:id*?', (req, res) => {
   // to delete a game you can send up an id on the request body or the params
   let id = undefined;
   if (req.params.id) {
