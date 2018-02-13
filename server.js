@@ -6,7 +6,7 @@ const Game = require('./models');
 
 const server = express();
 server.use(bodyParser.json());
-server.use(morgan('combined'));
+// server.use(morgan('combined'));
 
 server.post('/api/game/create', (req, res) => {
   const { title, releaseDate, genre } = req.body;
@@ -14,6 +14,7 @@ server.post('/api/game/create', (req, res) => {
   myGame
     .save()
     .then(game => {
+      res.status(201);
       res.json(game);
     })
     .catch(err => {
@@ -29,6 +30,7 @@ server.get('/api/game/get', (req, res) => {
       res.json({ error: 'Something really bad happened' });
       return;
     }
+    res.status(200);
     res.json(games);
   });
 });
@@ -81,6 +83,7 @@ server.delete('/api/game/destroy/:id', (req, res) => {
       res.json({ error: 'Cannot find game by that id' });
       return;
     }
+    res.status(202);
     res.json({ success: `${removedGame.title} was removed from the DB` });
   });
 });

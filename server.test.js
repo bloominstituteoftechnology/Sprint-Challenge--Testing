@@ -1,45 +1,223 @@
 const mongoose = require('mongoose');
-const chai = require('chai');
-const { expect } = chai;
-const sinon = require('sinon');
-
+const server = require('./server');
 const Game = require('./models');
 
-describe('Games', () => {
+const chai = require('chai');
+const chaiHTTP = require('chai-http');
+const sinon = require('sinon');
+
+const { expect } = chai;
+
+chai.use(chaiHTTP);
+
+describe('Game: Routes', () => {
+  
   before(done => {
+    
     mongoose.Promise = global.Promise;
-    mongoose.connect('mongodb://localhost/test');
+    mongoose.connect('mongodb://localhost/video-games');
+    
     const db = mongoose.connection;
-    db.on('error', () => console.error.bind(console, 'connection error'));
-    db.once('open', () => {
-      console.log('we are connected');
-      done();
+    
+    db.on('error', () => {
+      done(new Error('Connection Error'));
     });
+    
+    db.once('open', done);
+    
   });
-
+  
   after(done => {
-    mongoose.connection.db.dropDatabase(() => {
+    
+    const db = mongoose.connection.db;
+    
+    db.dropDatabase(() => {
       mongoose.connection.close(done);
-      console.log('we are disconnected');
     });
+  
   });
-  // declare some global variables for use of testing
-  // hint - these wont be constants because you'll need to override them.
+  
   beforeEach(done => {
-    // write a beforeEach hook that will populate your test DB with data
-    // each time this hook runs, you should save a document to your db
-    // by saving the document you'll be able to use it in each of your `it` blocks
+    
+    Game.create(
+      {
+        title: 'California Games',
+        genre: 'Sports',
+        date: 'June 1987',
+      },
+      {
+        title: 'Super Bowl',
+        genre: 'Football',
+        date: 'September 2010',
+      },
+      {
+        title: 'FIFA World Cup',
+        genre: 'Soccer',
+        date: 'January 2018',
+      }
+    )
+    .then(res => {
+      done();
+    })
+    .catch(error => {
+      done(error);
+    });
+    
   });
+
   afterEach(done => {
-    // simply remove the collections from your DB.
+
+    Game.remove({})
+      .then(res => {
+        done();
+      })
+      .catch(error => {
+        done(error);
+      });
+
+  });
+  
+  describe('[POST] /api/game/create', () => {
+    
+    it('should create a new game', done => {
+
+      const testGame = {
+        title: 'California Games',
+        genre: 'Sports',
+        date: 'June 1987',
+      };
+
+      chai
+        .request(server)
+        .post('/api/game/create')
+        .send(testGame)
+        .then((res) => {
+          
+          expect(res.status).to.equal(201);
+          expect(res.body.title).to.equal('California Games');
+          expect(res.body.genre).to.equal('Sports');
+
+          done();
+
+        })
+        .catch((err) => {
+          done(err);
+        });
+
+    });
+    
   });
 
-  // test the POST here
+  describe('[GET] /api/game/get', () => {
 
-  // test the GET here
+    it('should return list all games', done => {
 
-  // test the PUT here
+      chai
+        .request(server)
+        .get('/api/game/get')
+        .then((res) => {
+          
+          expect(res.status).to.equal(200);
+          expect(res.body[0].title).to.equal('California Games');
+          expect(res.body[0].genre).to.equal('Sports');
 
-  // --- Stretch Problem ---
-  // Test the DELETE here
+          done();
+          
+        })
+        .catch((err) => {
+          done(err);
+        });
+
+    });
+
+  });
+
+  describe('[PUT] /api/game/update', () => {
+    
+    it('should update the game details', done => {
+
+      Game.find({ title: 'FIFA World Cup' })
+        .then(data => {
+
+          const testGame = {
+            id: data[0].id,
+            title: 'Champions League',
+          };
+    
+          chai
+            .request(server)
+            .put('/api/game/update')
+            .send(testGame)
+            .then((res) => {
+              
+              expect(res.status).to.equal(200);
+              expect(res.body.title).to.equal('Champions League');
+    
+              done();
+    
+            })
+            .catch((err) => {
+              done(err);
+            });
+
+        })
+        .catch(error => {
+          done(error);
+        });
+
+    });
+    
+  });
+
+  describe('[DELETE] /api/game/destroy/:id', () => {
+    
+    let gameId = null;
+
+    it('should returned the removed game', done => {
+
+      Game.findOne()
+        .then(data => {
+          
+          gameId = data.id;
+        
+          chai
+            .request(server)
+            .delete(`/api/game/destroy/${ gameId }`)
+            .then((res) => {
+              
+              expect(res.status).to.equal(202);
+              expect(res.body.success).to.equal(`${ data.title } was removed from the DB`);
+    
+              done();
+    
+            })
+            .catch((err) => {
+              done(err);
+            });
+
+        })
+        .catch(error => {
+          done(error);
+        })
+
+    });
+
+    it('verify the game is deleted', done => {
+
+      Game.findById(gameId)
+        .then(data => {
+          
+          expect(data).to.be.null;
+
+          done();
+
+        })
+        .catch(error => {
+          done(error);
+        })
+
+    });
+    
+  });
+
 });
