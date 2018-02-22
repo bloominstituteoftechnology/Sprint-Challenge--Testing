@@ -58,10 +58,14 @@ describe('Games', () => {
 
   // test the POST here
   describe('[POST] /game/create', ()=> {
+    /*not sure if the route is correct like this*/
     it('should add a new game', (done) => {
       const game = {
-        title: 'Blood Born'
-      };
+        title: 'Blood Born',
+        genre: '',
+        releaseDate: 'March 2015'
+
+      };//so we want to add a new title
 
       chai.request(server)
         .post('/game/create')
@@ -76,9 +80,41 @@ describe('Games', () => {
   });
 
   // test the GET here
+  describe('[GET] /api/game/get', () => {
+    it('should get all of the games', (done) => {
+      chai.request(server)
+        .get('/game')
+        .end((err, res) => {
+          if (err) return console.log(err);
+          expect(res.status).to.equal(200);
+          expect(Array.isArray(res.body)).to.equal(true);
+          expect(res.body.length).to.equal(1);
+          done();
+        });
+    });
+  });
+
 
   // test the PUT here
+  describe('[PUT] /api/game/update', () => {
+    it('should update the game document', (done) => {
+      const update = {
+        id: gameId,
+        title: 'Fuck Cheating Exes'
+      };
+      chai.request(server)
+        .pu('/game')
+        .send(update)
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.body.title).to.equal('Fuck Cheating Exes');
+          done();
+        });
+    });
+ });
+
 
   // --- Stretch Problem ---
   // Test the DELETE here
+  
 });
