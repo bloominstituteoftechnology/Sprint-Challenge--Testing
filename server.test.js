@@ -1,9 +1,13 @@
 const mongoose = require('mongoose');
 const chai = require('chai');
+const server = require('./server');
 const { expect } = chai;
 const sinon = require('sinon');
+const chaiHttp = require('chai-http');
 
 const Game = require('./models');
+
+chai.use(chaiHttp);
 
 describe('Games', () => {
   before(done => {
@@ -23,22 +27,103 @@ describe('Games', () => {
       console.log('we are disconnected');
     });
   });
-  // declare some global variables for use of testing
-  // hint - these wont be constants because you'll need to override them.
+  
   beforeEach(done => {
-    // write a beforeEach hook that will populate your test DB with data
-    // each time this hook runs, you should save a document to your db
-    // by saving the document you'll be able to use it in each of your `it` blocks
+    Game.create({
+      title: 'California Games',
+      genre: 'sports',
+      date: 'June 1987'
+    })
+    .then(res => {
+      done();
+    })
+    .catch(err => {
+      done(err);
+    });
   });
+
   afterEach(done => {
-    // simply remove the collections from your DB.
+    Game.remove({})
+      .then(res => {
+        done();
+      })
+      .catch(err => {
+        done(err);
+      })
   });
 
   // test the POST here
 
+  describe('[POST] /api/game/create', () => {
+    it('should create a game event', (done) => {
+      const game = {
+        title: 'California Games',
+        genre: 'sports',
+        date: 'June 1987'
+      };
+      chai
+        .request(server)
+        .post('/api/game/create')
+        .send(game)
+        .then((res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.title).to.equal('California Games');
+          done();
+        }).catch((err) => done(err));
+    });
+    it('should return 400 for invalid input', () => {
+      chai
+        .request(server)
+        .post('/api/game/create')
+        .send({})
+        .then((res) => {
+          return done(new Error('should have failed with 400'));
+        }).catch((err) => {
+          expect(err.status).to.equal(400);
+          done();
+        });
+    });
+  });
+
   // test the GET here
 
+  describe('[GET] /api/game/get', () => {
+    it('should return all the games', (done) => {
+      chai
+        .request(server)
+        .get('/api/game/get')
+        .then((res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body[0].title).to.equal('California Games');
+          done();
+        }).catch((err) => done(err));
+    });
+  });
+
   // test the PUT here
+
+  describe('[PUT] /api/game/update', () => {
+    it('should update a particular game', () => {
+      Game.find({
+        title: 'California Games'
+      })
+      .then((data) => {
+        const game = {
+          id: data[0].id,
+          title: 'Hawaii Games'
+        };
+        chai
+          .request(server)
+          .put('api/game/update')
+          .send(game)
+          .then((res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.title).to.equal('Hawaii Games');
+          done();
+        }).catch((err) => done(err));
+      });
+    });
+  });
 
   // --- Stretch Problem ---
   // Test the DELETE here
