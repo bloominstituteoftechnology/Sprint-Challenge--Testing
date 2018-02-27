@@ -11,8 +11,12 @@
 ## Questions - Self Study - You can exercise your Google-Fu for this and any other _Sprint Challenge_ in the future.
 
 1. In Mocha, what are the differences between `before` `after` `beforeEach` `afterEach`? When do they run? What are they used for?
+  - `before` and `after` will run hooks before/after all tests are run. `beforeEach` and `afterEach` will run hooks before/after each individual test.
+  - These hooks are normally used to initialize / remove connections and mock data.
 1. What is the point of Test Driven Development? What do you personally think about this approach?
+  - Test driven development ensures that changes to your codebase won't break other sections of the code and (usually) allows for faster development because the specific requirements are laid out in the tests.
 1. What is a `spy` in `sinon`? How do we use it to effectively test a `callback`?
+  - A sinon spy attaches to a callback function (or mocks a callback) and ensures that the callback is being called properly (e.g. the callback is called once for each element in an array or the callback is executed on specific elements of an array).
 
 ## Initializing Project -
 
@@ -32,10 +36,213 @@
 
 ## DOCUMENTATION GOES HERE
 
+# API Documentation
+
+## [POST] `/api/game/create`
+Description: Creates a new game with a title, date, and genre.
+
+__Request Body Parameters__:
+
+|  Field  | Type | Description
+|---------|------|--------------------------------------------|
+|title    |String|Title of the game.                          |
+|date     |String|MMM/YYYY date that the game was released.   |
+|genre    |String|Genre of the game.                          |
+
+__Request example__:
 ```
-  THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
+{
+  "title": "Super Mario Bros.",
+  "date": "September 1985",
+  "genre": "Platformer"
+}
 ```
 
+__Success 200 Response__:
+
+|  Field  | Type | Description
+|---------|--------|--------------------------------------------|
+|_id      |String  |String of the object's unique Mongo ID.     |
+|title    |String  |Title of the game.                          |
+|date     |String  |MMM/YYYY date that the game was released.   |
+|genre    |String  |Genre of the game.                          |
+
+__Response example__:
+```
+{
+  "_id"  : "5a5e47422518b901d2b1e309"
+  "title": "Super Mario Bros.",
+  "date" : "September 1985",
+  "genre": "Platformer"
+}
+```
+
+__Error 422 Response__:
+
+|  Field  | Type | Description
+|---------|-------|---------------------------------------------------------|
+|error    |String |A generic error message.                                 |
+|message  |String |The error message from the exception stack trace.        |
+
+__Response example__:
+```
+{ 
+  "error"  : "Error saving data to the DB"
+  "message": "title is a required field"
+}
+```
+
+## [GET] `/api/game/get`
+Description: Fetches an array of games that exist in the database.
+
+__Request Body Parameters__: N/A
+
+__Success 200 Response__:
+
+|  Field  | Type | Description
+|---------|-------------|---------------------------------------------|
+|games    |Array\<Games>|An array of all games that were found.       |
+
+
+__Response example__:
+```
+{ 
+  "games": [
+    {
+      "_id"  : "5a5e47422518b901d2b1e309"
+      "title": "Super Mario Bros.",
+      "date" : "September 1985",
+      "genre": "Platformer"
+    },
+    {
+      "_id"  : "5a5e47422518b901d2b1e310"
+      "title": "Dankey Kang",
+      "date" : "July 1981",
+      "genre": "Platformer"
+    }
+  ]
+}
+```
+
+__Error 500 Response__:
+
+|  Field  | Type | Description
+|---------|-------|-----------------------------------------------|
+|message  |String |A message describing an internal server error. |
+
+__Response example__:
+```
+{ 
+  message: 'Something really bad happened'
+}
+```
+
+## [PUT] `/api/game/update`
+Description: Updates a game's title by ID.
+
+__Request Body Parameters__:
+
+|  Field  | Type | Description
+|---------|------|-----------------------------------|
+|id       |String|Mongo ID of the game to update.    |
+|title    |String|The updated title of the game.     |
+
+__Request example__:
+```
+{
+  "id"   : "5a5e47422518b901d2b1e310",
+  "title": "Donkey Kong"
+}
+```
+
+
+__Success 200 Response__:
+
+|  Field  | Type | Description
+|---------|--------|--------------------------------------------|
+|_id      |String  |String of the object's unique Mongo ID.     |
+|title    |String  |Updated title of the game.                  |
+|date     |String  |MMM/YYYY date that the game was released.   |
+|genre    |String  |Genre of the game.                          |
+
+__Response example__:
+```
+    {
+      "_id"  : "5a5e47422518b901d2b1e310"
+      "title": "Donkey Kong", //was "Dankey Kang" before being updated
+      "date" : "July 1981",
+      "genre": "Platformer"
+    }
+```
+
+__Error 422 Response__:
+
+|  Field  | Type | Description
+|---------|-------|-----------------------------------------------------------------|
+|error    |String |Error message describing an input error or non-existing game ID. |
+
+__Response example__:
+```
+{ 
+  "error": "Cannot find game by that id"
+}
+```
+
+__Error 500 Response__:
+
+|  Field  | Type | Description
+|---------|-------|-----------------------------------------------|
+|error    |String |A message describing an internal server error. |
+
+__Response example__:
+```
+{ 
+  "message": "Something really bad happened"
+}
+```
+
+## [DELETE] `/api/game/destroy/:id`
+Description: Deletes a game by ID if the game exists.
+
+__Request Body Parameters__: 
+
+|  Field  | Type | Description
+|---------|--------|-------------------------------------------------------------------------------|
+| id      |String  |Mongo ID of the game to delete (optional if specified in the route params)     |
+
+__Request example__:
+```
+{
+  "id"  : "5a5e47422518b901d2b1e309"
+},
+```
+
+__Success 200 Response__:
+
+|  Field  | Type  | Description
+|---------|-------|----------------------------------------|
+|success  |String |"(Game title)" was removed from the DB" |
+
+__Response example__:
+```
+{ 
+  "success": "Super Mario Bros. was removed from the DB"
+}
+```
+
+__Error 422 Response__:
+
+|  Field  | Type | Description
+|---------|-------|-----------------------------------------------------------------|
+|error    |String |Error message describing an input error or non-existing game ID. |
+
+__Response example__:
+
+```
+{ 
+  "error": "You need to give me ID"
+}
+```
 ## TESTS
 
 * I have already manually tested this API for you.
@@ -53,6 +260,7 @@
   date: 'June 1987'
 }
 ```
+#### End of API documentation
 
 ### Write a test for the "GET" method
 

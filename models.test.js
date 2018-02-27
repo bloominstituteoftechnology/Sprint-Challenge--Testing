@@ -1,26 +1,18 @@
-const mongoose = require('mongoose');
-const chai = require('chai');
-const { expect } = chai;
 const sinon = require('sinon');
-
 const Game = require('./models');
-
+const mongoose = require('mongoose');
 describe('NESGames Model', () => {
-  before(done => {
+  beforeAll(()=> {
     mongoose.Promise = global.Promise;
-    mongoose.connect('mongodb://localhost/test');
+    const conn = mongoose.connect('mongodb://localhost/test');
     const db = mongoose.connection;
     db.on('error', () => console.error.bind(console, 'connection error'));
-    db.once('open', () => {
-      console.log('we are connected');
-      done();
-    });
+    return conn;
   });
 
-  after(done => {
+  afterAll(done => {
     mongoose.connection.db.dropDatabase(() => {
       mongoose.connection.close(done);
-      console.log('we are disconnected');
     });
   });
 
@@ -31,10 +23,10 @@ describe('NESGames Model', () => {
         date: 'June 1987',
         genre: 'Sports'
       });
-      expect(game.getGameTitle()).to.equal('California Games');
+      expect(game.getGameTitle()).toEqual('California Games');
     });
   });
-
+  
   describe('#getAllGames()', () => {
     it('should return all the games', () => {
       sinon.stub(Game, 'find');
@@ -46,10 +38,11 @@ describe('NESGames Model', () => {
         }
       ]);
       Game.getGames(returnObject => {
-        expect(returnObject.length).to.equal(1);
-        expect(returnObject[0].title).to.equal('California Games');
+        expect(returnObject.length).toEqual(1);
+        expect(returnObject[0].title).toEqual('California Games');
         Game.find.restore();
       });
     });
   });
+  
 });
