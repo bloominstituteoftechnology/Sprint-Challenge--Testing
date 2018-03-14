@@ -2,8 +2,11 @@ const mongoose = require('mongoose');
 const chai = require('chai');
 const { expect } = chai;
 const sinon = require('sinon');
+const chaiHTTP = require('chai-http');
 
 const Game = require('./models');
+chai.use(chaiHTTP);
+const server = require('./server');
 
 describe('Games', () => {
   before(done => {
@@ -25,21 +28,67 @@ describe('Games', () => {
   });
   // declare some global variables for use of testing
   // hint - these wont be constants because you'll need to override them.
+  let GameId;
   beforeEach(done => {
     // write a beforeEach hook that will populate your test DB with data
     // each time this hook runs, you should save a document to your db
-    // by saving the document you'll be able to use it in each of your `it` blocks
+    // by saving the document you'll be able to use it in each of your `it` 
+    const newGame = new Game({
+      title: 'Zelda',
+      genre: 'RPG',
+      date: '02/21/86'
+    });
+    newGame.save((error, game) => {
+      if (error) return done(error);
+      gameId = game.id;
+      done();
+    });
   });
   afterEach(done => {
     // simply remove the collections from your DB.
+    Game.remove((err) => {
+      if (err) return done(err);
+      done();
+    });
   });
-
   // test the POST here
-
+  describe(`[POST] /api/game/create`, () => {
+    it('should create a new game', done => {
+      const gameData = {
+        title: 'Mario Bros',
+        genre: 'Action',
+        date: '9/13/85'    
+      };
+      chai
+        .request(server)
+        .post('/api/game/create')
+        .send(gameData)
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.body.title).to.eql('Mario Bros');
+          expect(res.body.date).to.eql('9/13/85');
+          done();
+        });
+    });
+  });
   // test the GET here
-
+  describe(`[GET] /api/game/get`, () => {
+    it('should give all the games', done => {
+      chai
+        .request(server)
+        .get('/api/game/get')
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.body).to.be.an('array');
+          expect(res.body.length).to.eql(1);
+          expect(res.body[0].title).to.eql('Zelda');
+          done();
+        });
+      });
+    });
   // test the PUT here
 
   // --- Stretch Problem ---
   // Test the DELETE here
-});
+
+  });

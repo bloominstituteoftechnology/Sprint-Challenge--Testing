@@ -12,7 +12,7 @@ const NESGameSchema = new Schema({
     type: String,
     required: true
   },
-  releaseDate: String
+  date: String
 });
 
 NESGameSchema.methods.getGameTitle = function() {
