@@ -90,195 +90,164 @@ describe('Games', () => {
 
   // test the POST here
   describe(`[POST] /api/game/create`, _ => {
-    it('should return a status code of 200 when a game is saved', done => {
-      const game = {
-        title: 'Lambda Games',
-        genre: 'Computer Science',
-        releaseDate: 'July 2017',
-      };
+    describe('SUCCESS', _ => {
+      it('should return a status code of 200 when a game is saved', done => {
+        const game = {
+          title: 'Lambda Games',
+          genre: 'Computer Science',
+          releaseDate: 'July 2017',
+        };
 
-      chai
-        .request(server)
-        .post('/api/game/create')
-        .send(game)
-        .end((err, res) => {
-          expect(res).to.have.status(200);
+        chai
+          .request(server)
+          .post('/api/game/create')
+          .send(game)
+          .end((err, res) => {
+            expect(res).to.have.status(200);
 
-          done();
-        });
+            done();
+          });
+      });
+
+      it('should return the saved game', done => {
+        const game = {
+          title: 'Lambda School Games',
+          genre: 'Computer Science Academy',
+          releaseDate: 'January 2018',
+        };
+
+        chai
+          .request(server)
+          .post('/api/game/create')
+          .send(game)
+          .end((err, res) => {
+            expect(res.body.title).to.equal(game.title);
+            expect(res.body.genre).to.equal(game.genre);
+            expect(res.body.releaseDate).to.equal(game.releaseDate);
+            expect(res.body.__v).to.not.equal(null);
+            expect(res.body._id).to.not.equal(null);
+
+            done();
+          });
+      });
     });
 
-    it('should return the saved game', done => {
-      const game = {
-        title: 'Lambda School Games',
-        genre: 'Computer Science Academy',
-        releaseDate: 'January 2018',
-      };
+    describe('NO TITLE', _ => {
+      it('should return a status code of 422 when no title is supplied', done => {
+        const game = {
+          genre: 'Computer Science Academy',
+          releaseDate: 'January 2018',
+        };
 
-      chai
-        .request(server)
-        .post('/api/game/create')
-        .send(game)
-        .end((err, res) => {
-          expect(res.body.title).to.equal(game.title);
-          expect(res.body.genre).to.equal(game.genre);
-          expect(res.body.releaseDate).to.equal(game.releaseDate);
-          expect(res.body.__v).to.not.equal(null);
-          expect(res.body._id).to.not.equal(null);
+        chai
+          .request(server)
+          .post('/api/game/create')
+          .send(game)
+          .end((err, res) => {
+            expect(res).to.have.status(422);
 
-          done();
-        });
+            done();
+          });
+      });
+
+      it('should return the correct error name in the err when no title is supplied', done => {
+        const game = {
+          genre: 'Computer Science Academy',
+          releaseDate: 'January 2018',
+        };
+
+        chai
+          .request(server)
+          .post('/api/game/create')
+          .send(game)
+          .end((err, res) => {
+            expect(err.response.body.message.name).to.equal('ValidationError');
+
+            done();
+          });
+      });
     });
 
-    it('should return a status code of 422 when no title is supplied', done => {
-      const game = {
-        genre: 'Computer Science Academy',
-        releaseDate: 'January 2018',
-      };
+    describe('NO GENRE', _ => {
+      it('should return a status code of 422 when no genre is supplied', done => {
+        const game = {
+          title: 'Lambda School Games',
+          releaseDate: 'January 2018',
+        };
 
-      chai
-        .request(server)
-        .post('/api/game/create')
-        .send(game)
-        .end((err, res) => {
-          expect(res).to.have.status(422);
+        chai
+          .request(server)
+          .post('/api/game/create')
+          .send(game)
+          .end((err, res) => {
+            expect(res).to.have.status(422);
 
-          done();
-        });
+            done();
+          });
+      });
+
+      it('should return the correct error name in the err when no genre is supplied', done => {
+        const game = {
+          title: 'Lambda School Games',
+          releaseDate: 'January 2018',
+        };
+
+        chai
+          .request(server)
+          .post('/api/game/create')
+          .send(game)
+          .end((err, res) => {
+            expect(err.response.body.message.name).to.equal('ValidationError');
+
+            done();
+          });
+      });
     });
 
-    it('should return an error message in the response when no title is supplied', done => {
-      const game = {
-        genre: 'Computer Science Academy',
-        releaseDate: 'January 2018',
-      };
+    describe('NO RELEASE DATE', _ => {
+      it('should return a status code of 200 when no releaseDate is supplied', done => {
+        const game = {
+          title: 'Lambda School Games',
+          genre: 'Computer Science Academy',
+        };
 
-      chai
-        .request(server)
-        .post('/api/game/create')
-        .send(game)
-        .end((err, res) => {
-          expect(res.body.error).to.not.equal(null);
+        chai
+          .request(server)
+          .post('/api/game/create')
+          .send(game)
+          .end((err, res) => {
+            expect(res).to.have.status(200);
 
-          done();
-        });
-    });
+            done();
+          });
+      });
 
-    it('should return a status code of 422 when no genre is supplied', done => {
-      const game = {
-        title: 'Lambda School Games',
-        releaseDate: 'January 2018',
-      };
+      it('should return the saved game when no releaseDate is supplied', done => {
+        const game = {
+          title: 'Lambda School Games',
+          genre: 'Computer Science Academy',
+        };
 
-      chai
-        .request(server)
-        .post('/api/game/create')
-        .send(game)
-        .end((err, res) => {
-          expect(res).to.have.status(422);
+        chai
+          .request(server)
+          .post('/api/game/create')
+          .send(game)
+          .end((err, res) => {
+            expect(res.body.title).to.equal(game.title);
+            expect(res.body.genre).to.equal(game.genre);
+            expect(res.body.__v).to.not.equal(null);
+            expect(res.body._id).to.not.equal(null);
 
-          done();
-        });
-    });
-
-    it('should return an error message in the response when no genre is supplied', done => {
-      const game = {
-        title: 'Lambda School Games',
-        releaseDate: 'January 2018',
-      };
-
-      chai
-        .request(server)
-        .post('/api/game/create')
-        .send(game)
-        .end((err, res) => {
-          expect(res.body.error).to.not.equal(null);
-
-          done();
-        });
-    });
-
-    it('should return a status code of 200 when no releaseDate is supplied', done => {
-      const game = {
-        title: 'Lambda School Games',
-        genre: 'Computer Science Academy',
-      };
-
-      chai
-        .request(server)
-        .post('/api/game/create')
-        .send(game)
-        .end((err, res) => {
-          expect(res).to.have.status(200);
-
-          done();
-        });
-    });
-
-    it('should return the saved game when no releaseDate is supplied', done => {
-      const game = {
-        title: 'Lambda School Games',
-        genre: 'Computer Science Academy',
-      };
-
-      chai
-        .request(server)
-        .post('/api/game/create')
-        .send(game)
-        .end((err, res) => {
-          expect(res.body.title).to.equal(game.title);
-          expect(res.body.genre).to.equal(game.genre);
-          expect(res.body.__v).to.not.equal(null);
-          expect(res.body._id).to.not.equal(null);
-
-          done();
-        });
+            done();
+          });
+      });
     });
   });
 
   // test the GET here
   describe(`[GET] /api/game/get`, _ => {
-    it('should return a status code of 200 when retrieving games', done => {
-      chai
-        .request(server)
-        .get('/api/game/get')
-        .end((err, res) => {
-          expect(res).to.have.status(200);
-
-          done();
-        });
-    });
-
-    it('should return an Array when retrieving games', done => {
-      chai
-        .request(server)
-        .get('/api/game/get')
-        .end((err, res) => {
-          expect(res.body).to.be.an('array');
-
-          done();
-        });
-    });
-
-    it('should return the correct list of games', done => {
-      chai
-        .request(server)
-        .get('/api/game/get')
-        .end((err, res) => {
-          expect(res.body.length).to.equal(games.length);
-
-          res.body.forEach(game => {
-            const gameTest = games.find(e => e.title === game.title);
-
-            expect(game).to.deep.equal(gameTest);
-          });
-
-          done();
-        });
-    });
-
-    it('should return a status code of 200 when there are no games in the databse', done => {
-      Game.remove(_ => {
+    describe('SUCCESS', _ => {
+      it('should return a status code of 200 when retrieving games', done => {
         chai
           .request(server)
           .get('/api/game/get')
@@ -288,19 +257,61 @@ describe('Games', () => {
             done();
           });
       });
-    });
 
-    it('should return an empty Array when there are no games in the databse', done => {
-      Game.remove(_ => {
+      it('should return an Array when retrieving games', done => {
         chai
           .request(server)
           .get('/api/game/get')
           .end((err, res) => {
             expect(res.body).to.be.an('array');
-            expect(res.body.length).to.equal(0);
 
             done();
           });
+      });
+
+      it('should return the correct list of games', done => {
+        chai
+          .request(server)
+          .get('/api/game/get')
+          .end((err, res) => {
+            expect(res.body.length).to.equal(games.length);
+
+            res.body.forEach(game => {
+              const gameTest = games.find(e => e.title === game.title);
+
+              expect(game).to.deep.equal(gameTest);
+            });
+
+            done();
+          });
+      });
+    });
+    describe('EMPTY DATABASE', _ => {
+      it('should return a status code of 200 when there are no games in the databse', done => {
+        Game.remove(_ => {
+          chai
+            .request(server)
+            .get('/api/game/get')
+            .end((err, res) => {
+              expect(res).to.have.status(200);
+
+              done();
+            });
+        });
+      });
+
+      it('should return an empty Array when there are no games in the databse', done => {
+        Game.remove(_ => {
+          chai
+            .request(server)
+            .get('/api/game/get')
+            .end((err, res) => {
+              expect(res.body).to.be.an('array');
+              expect(res.body.length).to.equal(0);
+
+              done();
+            });
+        });
       });
     });
   });
@@ -348,13 +359,13 @@ describe('Games', () => {
           });
       });
 
-      it('should return an error message in the response when a title is not specified', done => {
+      it('should return have a property error in the response body when a title is not specified', done => {
         chai
           .request(server)
           .put('/api/game/update')
           .send({ id: games[0]._id })
           .end((err, res) => {
-            expect(res.body.error).to.equal('Must Provide a title && Id');
+            expect(res.body).to.have.property('error');
 
             done();
           });
