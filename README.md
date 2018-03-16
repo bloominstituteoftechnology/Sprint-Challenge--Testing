@@ -35,7 +35,76 @@
 ```
   THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
 ```
+### Game CRUD Operations
 
+#### [POST] METHOD 
+  * endpoint: **/api/game/create**
+  * To make a post request you **must include** the following properties to your object in the request body: 
+    *  `title` and `genre` as a string. 
+  * The post also takes in a releaseDate property that is **not required**.
+
+    Example of post request
+    ```
+    {
+      title: "California Games",
+      genre: "Sports",
+      releaseDate: "June 1987"
+    }
+    ```
+#### [GET] METHOD
+  * endpoint **/api/game/get**
+  * Results will be given in an array of object(s). 
+
+    Example of a get response
+    ```
+    [ { _id: '5aabf7f10a92b33d379e9147',
+    title: 'California Games',
+    genre: 'Sports',
+    releaseDate: 'June 1987',
+    __v: 0 } ]
+    ```
+#### [PUT] METHOD
+  * endpoint **/api/game/update**
+  * Put method **requires** an id of the game and the title property in the request body.
+
+    Example of a put request
+    ```
+    {
+       id: '5aabf7f10a92b33d379e9147',
+       title: 'Cal Games',
+    }
+    ```
+  * Expect an updated object as your response
+
+    Example of put response 
+    ```
+    {
+       _id: '5aabf7f10a92b33d379e9147',
+      title: 'Cal Games',
+      genre: 'Sports',
+      releaseDate: 'June 1987',
+      __v: 0 
+    }
+    ```
+#### [DELETE] METHOD
+  * endpoint **/api/game/destroy/:id**
+  * Delete method **requires** an id of the game to be deleted. The id can be passed through the parameters **or** the request body.
+    * Passing id through the parameters example
+    ```
+    /api/game/destroy/5aabf7f10a92b33d379e9147
+    ```
+    * passing id through the request body example
+    ``` 
+    {
+      id: '5aabf7f10a92b33d379e9147'
+    } 
+    ```
+  * When game is successfully deleted expect a response similar to the the following
+    ```
+    { 
+      success: `Cal Games was removed from the DB` 
+    }
+    ```
 ## TESTS
 
 * I have already manually tested this API for you.
