@@ -99,5 +99,16 @@ describe('Games', () => {
         .catch(err => done(err));
     });
   });
-
+  describe('[DELETE] /api/game/destroy/:id', () => {
+    it('Should delete a game by a given id', done => {
+      chai
+        .request(server)
+        .delete(`/api/game/destroy/${gameId}`)
+        .then(res => {
+          expect(res.status).to.equal(200);
+          done();
+        })
+        .catch(err => done(err));
+    });
+  });
 });
