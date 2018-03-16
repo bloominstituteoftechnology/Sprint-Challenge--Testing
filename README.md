@@ -32,9 +32,59 @@
 
 ## DOCUMENTATION GOES HERE
 
+## Documentation for NES Games API ##
+  The NES Game API will allow users to view a list NES Games, with its title, genre, and release date.   Users can add new games to the database, edit games by a given id, and delete any games that do not belong on the list.
+
+### The Port for the NES Games API: http://localhost:5050
+
+### HTTP Requests for the API ###
+* POST - Creates a new game for the Database
+* GET - Retrives a list of all games in the Database.
+* PUT - Allows the user to edit a game by supplied id
+* DELETE - Allows users to delete a game from the list
+
+### [POST] ###
+
+| Endpoint | Type | Data |
+|----|----|----|
+| api/game/create | post | json |
+
+#### POST Input Example ###
+
+``` 
+{
+  title: 'California Games',
+  genre: 'Sports',
+  date: 'June 1987'
+}
 ```
-  THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
+### [GET] ###
+
+| Endpoint | Type | Data |
+|----|----|----|
+| api/game/get | get | json |
+
+
+### [PUT] ###
+
+| Endpoint | Type | Data |
+|----|----|----|
+| api/game/update | put | json |
+
+#### PUT Input Example ###
+
+``` 
+{
+  title: 'California Games',
+  genre: 'Sports',
+  date: 'June 1987'
+} 
 ```
+### [DELETE] ###
+
+| Endpoint | Type | Data |
+|----|----|----|
+| api/game/destroy/:id | DELETE | json |
 
 ## TESTS
 
