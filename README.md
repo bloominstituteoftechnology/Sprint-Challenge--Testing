@@ -50,8 +50,8 @@ Example Input
 ```
 {
   title: 'Donkey Kong',
-  releaseDate: 'July 1981'
-  genre: 'Platformer',
+  releaseDate: 'July 1981',
+  genre: 'Platformer'
 }
 ```
 
