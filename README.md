@@ -49,8 +49,6 @@ This repo includes an API which manages a game collection, and was built using a
 * mocha
 * body-parser
 
-### PORT LOCATION: http://localhost:3333
-
 ## Instructions:
 * fork and clone repository from https://github.com/bitcointroy/Sprint-Challenge--Testing
 * run `npm install` to bring in all of the dependencies
