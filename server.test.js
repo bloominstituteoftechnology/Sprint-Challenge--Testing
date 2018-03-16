@@ -93,9 +93,77 @@ describe('Games', () => {
   });
 
   // test the GET here
-
+  describe('[GET] api/game/get', () => {
+    it('should return all bands', done => {
+      chai
+        .request(server)
+        .get('/api/game/get')
+        .end((err, res) => {
+          if (err) {
+            throw new Error(err);
+            done();
+          }
+          expect(res.body[0].title).to.eql(testGame.title);
+          expect(res.body[0]._id).to.equal(gameId.toString());
+          done();
+        });
+    });
+  });
   // test the PUT here
+  describe('[PUT] api/game/update', () => {
+    it('should update game given id and title', done => {
+      const gameUpdate = {
+        id: gameId,
+        title: 'Mario Bros.'
+      };
+      chai
+        .request(server)
+        .put('/api/game/update')
+        .send(gameUpdate)
+        .end((err, res) => {
+          if (err) {
+            throw new Error(err);
+            done();
+          }
+          expect(res.body.title).to.equal(gameUpdate.title);
+          done();
+        });
+    });
 
+    it('should return error and status 422 if no title', done => {
+      const gameUpdate = {
+        id: gameId
+      };
+      chai
+        .request(server)
+        .put('/api/game/update')
+        .send(gameUpdate)
+        .end((err, res) => {
+          if (err) {
+            expect(err.status).to.equal(422);
+            const { error } = err.response.body;
+            expect(error).to.eql('Must Provide a title && Id');
+          }
+          done();
+        });
+    });
+    it('should return error and status 422 it given id not found', done => {
+      const gameUpdate = {
+        title: 'Contra',
+        id: 50
+      };
+      chai
+        .request(server)
+        .put('/api/game/update')
+        .send(gameUpdate)
+        .end((err, res) => {
+          if (err) expect(err.status).to.equal(422);
+          const { error } = err.response.body;
+          expect(error).to.eql('Cannot find game by that id');
+        });
+      done();
+    });
+  });
   // --- Stretch Problem ---
   // Test the DELETE here
 });
