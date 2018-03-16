@@ -43,7 +43,9 @@ describe('Games', () => {
         newFile = game.id;
         done();
       })
-      .catch(err => ({ err: `game saveFile corrupted` }));
+      .catch(err => {
+        done(err);
+      });
   });
   afterEach(done => {
     // simply remove the collections from your DB.
@@ -57,8 +59,8 @@ describe('Games', () => {
   });
 
   // test the POST here
-  describe('[POST] /api/game/create', _ => {
-    it(`should post correctly to database`, _ => {
+  describe('[POST] /api/game/create', () => {
+    it(`should post correctly to database`, () => {
       const newGame = new Game({
         title: 'California Games',
         genre: 'Sports',
