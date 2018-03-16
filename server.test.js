@@ -68,11 +68,19 @@ describe('Games', () => {
         .catch(err => done(err));
     });
   });
+  describe('[GET] /api/game/get', () => {
+    it('Should get all games from the database', done => {
+      chai
+        .request(server)
+        .get('/api/game/get')
+        .then(res => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.be.an('array');
+          expect(res.body[0].title).to.equal('Super Mario Bros');
+          done();
+        })
+        .catch(err => done(err));
+    });
+  });
 
-  // test the GET here
-
-  // test the PUT here
-
-  // --- Stretch Problem ---
-  // Test the DELETE here
 });
