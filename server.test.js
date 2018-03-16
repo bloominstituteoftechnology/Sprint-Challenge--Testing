@@ -36,8 +36,7 @@ describe('Games', () => {
     };
     let update = {
         title: 'Donkey Kong',
-        genre: 'Platform',
-        releaseDate: 'July 9th, 1981'
+        gameId: '5aabed654642ac2c84f20cf5'
     };
 
     beforeEach(done => {
@@ -100,12 +99,11 @@ describe('Games', () => {
         it('should update the game with the given id', done => {
             chai
                 .request(server)
-                .put(`/api/game/${gameId}`)
+                .put(`/api/game/update/${gameId}`)
                 .send(update)
                 .then(res => {
                     expect(res.status).to.equal(200);
                     expect(res.body.title).to.equal('Donkey Kong');
-                    expect(res.body.releaseDate).to.equal('July 9th, 1981');
                     done();
                 })
                 .catch(err => done(err));
