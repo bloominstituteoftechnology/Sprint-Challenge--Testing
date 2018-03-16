@@ -147,7 +147,7 @@ describe('Games', () => {
         });
     });
 
-    it('should return some kind of error message when no title is supplied', done => {
+    it('should return an error message in the response when no title is supplied', done => {
       const game = {
         genre: 'Computer Science Academy',
         releaseDate: 'January 2018',
@@ -181,7 +181,7 @@ describe('Games', () => {
         });
     });
 
-    it('should return some kind of error message when no genre is supplied', done => {
+    it('should return an error message in the response when no genre is supplied', done => {
       const game = {
         title: 'Lambda School Games',
         releaseDate: 'January 2018',
@@ -192,7 +192,7 @@ describe('Games', () => {
         .post('/api/game/create')
         .send(game)
         .end((err, res) => {
-          expect(res).to.have.status(422);
+          expect(res.body.error).to.not.equal(null);
 
           done();
         });
@@ -307,30 +307,148 @@ describe('Games', () => {
 
   // test the PUT here
   describe(`[PUT] /api/game/update`, _ => {
-    it('should return a status code of 200 when updating a game', done => {
-      chai
-        .request(server)
-        .put('/api/game/update')
-        .send({ title: 'Testing update', id: games[0]._id })
-        .end((err, res) => {
-          expect(res).to.have.status(200);
+    describe('SUCCESS', _ => {
+      it('should return a status code of 200 when updating a game', done => {
+        chai
+          .request(server)
+          .put('/api/game/update')
+          .send({ title: 'Testing update', id: games[0]._id })
+          .end((err, res) => {
+            expect(res).to.have.status(200);
 
-          done();
-        });
+            done();
+          });
+      });
+
+      it('should return the updated game', done => {
+        const testTitle = 'Testing update';
+
+        chai
+          .request(server)
+          .put('/api/game/update')
+          .send({ title: testTitle, id: games[0]._id })
+          .end((err, res) => {
+            expect(res.body).to.deep.equal({ ...games[0], title: testTitle });
+
+            done();
+          });
+      });
     });
 
-    it('should return the updated game', done => {
-      const testTitle = 'Testing update';
+    describe('NO TITLE', _ => {
+      it('should return a status code of 422 when a title is not specified', done => {
+        chai
+          .request(server)
+          .put('/api/game/update')
+          .send({ id: games[0]._id })
+          .end((err, res) => {
+            expect(res).to.have.status(422);
 
-      chai
-        .request(server)
-        .put('/api/game/update')
-        .send({ title: testTitle, id: games[0]._id })
-        .end((err, res) => {
-          expect(res.body).to.deep.equal({ ...games[0], title: testTitle });
+            done();
+          });
+      });
 
-          done();
-        });
+      it('should return an error message in the response when a title is not specified', done => {
+        chai
+          .request(server)
+          .put('/api/game/update')
+          .send({ id: games[0]._id })
+          .end((err, res) => {
+            expect(res.body.error).to.equal('Must Provide a title && Id');
+
+            done();
+          });
+      });
+    });
+
+    describe('NO ID', _ => {
+      it('should return a status code of 422 when an id is not specified', done => {
+        chai
+          .request(server)
+          .put('/api/game/update')
+          .send({ title: 'Testing update' })
+          .end((err, res) => {
+            expect(res).to.have.status(422);
+
+            done();
+          });
+      });
+
+      it('should return an error message in the response when an id is not specified', done => {
+        chai
+          .request(server)
+          .put('/api/game/update')
+          .send({ title: 'Testing update' })
+          .end((err, res) => {
+            expect(res.body.error).to.equal('Must Provide a title && Id');
+
+            done();
+          });
+      });
+    });
+
+    describe('ID NOT FOUND', _ => {
+      it('should return a status code of 422 when receiving an id not in the database', done => {
+        const testTitle = 'Testing update';
+        const id = '1234567890abcdefghijklmnopqrstuvwxyz';
+
+        chai
+          .request(server)
+          .put('/api/game/update')
+          .send({ title: testTitle, id })
+          .end((err, res) => {
+            expect(res).to.have.status(422);
+
+            done();
+          });
+      });
+
+      it('should return an error message in the response when receiving an id not in the database', done => {
+        const testTitle = 'Testing update';
+        const id = '1234567890abcdefghijklmnopqrstuvwxyz';
+
+        chai
+          .request(server)
+          .put('/api/game/update')
+          .send({ title: testTitle, id })
+          .end((err, res) => {
+            expect(res.body.error).to.equal('Cannot find game by that id');
+
+            done();
+          });
+      });
+    });
+
+    describe('BAD ID', _ => {
+      it('should return a status code of 422 when receiving a malformed id', done => {
+        const testTitle = 'Testing update';
+        const id = '-1';
+
+        chai
+          .request(server)
+          .put('/api/game/update')
+          .send({ title: testTitle, id })
+          .end((err, res) => {
+            expect(res).to.have.status(422);
+
+            done();
+          });
+      });
+
+      it('should return an error message in the response when receiving a malformed id', done => {
+        const testTitle = 'Testing update';
+        const id = '-1';
+
+        chai
+          .request(server)
+          .put('/api/game/update')
+          .send({ title: testTitle, id })
+          .end((err, res) => {
+            expect(res.body.error).to.equal('Cannot find game by that id');
+
+            done();
+          });
+      });
     });
   });
 
