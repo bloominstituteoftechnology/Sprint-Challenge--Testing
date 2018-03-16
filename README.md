@@ -65,7 +65,7 @@ To post a game, pass it in the form of json. title and genre are required as str
 
 {
   "title": "Super Mario Bros",
-  "genre": "OG $h!t",
+  "genre": "OG stuff...",
   "releaseDate": "September 15, 1985"
 }
 
