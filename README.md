@@ -40,18 +40,24 @@ Documentation for all APIs.
 
 ---
 
-## `/ama`
+## `/game`
 
-**Description**: an API for creating AMAs (ask me anything) with a `question`, `answer`, and `answered` field.
+**Description**: an API for creating games with a `title`, `genre`, and `releaseDate`.
 
 All `/ama` **API** endpoints
 
-| endpoint           | type   | description                 | output | type   |
-| ------------------ | ------ | --------------------------- | ------ | ------ |
-| `/api/game/create` | POST   | Saves game to the database. | JSON   | Object |
-| `/api/game/get`    | GET    | Requests all games          | JSON   | Array  |
-| `/api/game/update` | UPDATE | Updates game title          | JSON   | Object |
-| `/api/game/delete` | DELETE | Deletes game                | JSON   | Object |
+| endpoint               | type   | description                 | output | type   |
+| ---------------------- | ------ | --------------------------- | ------ | ------ |
+| `/api/game/create`     | POST   | Saves game to the database. | JSON   | Object |
+| `/api/game/get`        | GET    | Requests all games          | JSON   | Array  |
+| `/api/game/update`     | UPDATE | Updates game title          | JSON   | Object |
+| `/api/game/destroy/id` | DELETE | Deletes game                | JSON   | Object |
+
+### Notes:
+
+1. `title` is a required field
+1. `genre` is a required field
+1. `releaseDate` is not a required field
 
 ---
 
@@ -155,13 +161,13 @@ Response: status code `200`
 
 ---
 
-### [DELETE] `/api/game/delete`
+### [DELETE] `/api/game/destroy/id`
 
 **Description**: deletes game.
 
 #### Example:
 
-Request: `[DELETE] /api/game/delete`
+1. Request: `[DELETE] /api/game/destroy`
 
 ```
 {
@@ -169,20 +175,21 @@ Request: `[DELETE] /api/game/delete`
 }
 ```
 
+2. Request: `[DELETE] /api/game/destroy/1234567890abcdefghijklmnopqrstuvwxyz`
+
+```
+  // request body not needed
+```
+
 Response: status code `200`
 
 ```
 {
-  deleted: true
+  success: 'LA Games was removed from the DB'
 }
 ```
 
 ---
-
-## Notes
-
-1. Don't forget to create pull requests if you see anything.
-1. Enjoy!
 
 ## TESTS
 
