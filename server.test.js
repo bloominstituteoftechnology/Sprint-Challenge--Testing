@@ -60,7 +60,7 @@ describe('Games', () => {
 
   // test the POST here
   describe('[POST] /api/game/create', () => {
-    it(`should post correctly to database`, () => {
+    it(`should post a game correctly to the DB`, () => {
       const newGame = new Game({
         title: 'California Games',
         genre: 'Sports',
@@ -79,6 +79,9 @@ describe('Games', () => {
   });
 
   // test the GET here
+  describe('[GET] /api/game/update', () => {
+    it('should update a game correctly on the DB');
+  });
 
   // test the PUT here
 
