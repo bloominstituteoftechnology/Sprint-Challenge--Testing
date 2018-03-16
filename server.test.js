@@ -461,6 +461,178 @@ describe('Games', () => {
           });
       });
     });
+
+    describe(`[DELETE] /api/game/destroy`, _ => {
+      describe('SUCCESS', _ => {
+        it('should return a status code of 200 when deleting a game', done => {
+          chai
+            .request(server)
+            .delete('/api/game/destroy/_')
+            .send({ id: games[0]._id })
+            .end((err, res) => {
+              expect(res).to.have.status(200);
+
+              done();
+            });
+        });
+
+        it("should return sucess in the response body with the deleted game's title", done => {
+          chai
+            .request(server)
+            .delete('/api/game/destroy/_')
+            .send({ id: games[0]._id })
+            .end((err, res) => {
+              expect(res.body).to.have.property('success');
+              expect(res.body.success).to.have.string(games[0].title);
+
+              done();
+            });
+        });
+      });
+
+      describe('ID NOT FOUND', _ => {
+        it('should return a status code of 422 when receiving an id not in the database', done => {
+          const id = '1234567890abcdefghijklmnopqrstuvwxyz';
+
+          chai
+            .request(server)
+            .delete('/api/game/destroy/_')
+            .send({ id })
+            .end((err, res) => {
+              expect(res).to.have.status(422);
+
+              done();
+            });
+        });
+
+        it('should return an error in the response body when receiving an id not in the database', done => {
+          const id = '1234567890abcdefghijklmnopqrstuvwxyz';
+
+          chai
+            .request(server)
+            .delete('/api/game/destroy/_')
+            .send({ id })
+            .end((err, res) => {
+              expect(res.body).to.have.property('error');
+
+              done();
+            });
+        });
+      });
+
+      describe('BAD ID', _ => {
+        it('should return a status code of 422 when receiving a malformed id', done => {
+          const id = '-1';
+
+          chai
+            .request(server)
+            .delete('/api/game/destroy/_')
+            .send({ id })
+            .end((err, res) => {
+              expect(res).to.have.status(422);
+
+              done();
+            });
+        });
+
+        it('should return an error in the response body when receiving a malformed id', done => {
+          const id = '-1';
+
+          chai
+            .request(server)
+            .delete('/api/game/destroy/_')
+            .send({ id })
+            .end((err, res) => {
+              expect(res.body).to.have.property('error');
+
+              done();
+            });
+        });
+      });
+    });
+
+    describe(`[DELETE] /api/game/destroy/id`, _ => {
+      describe('SUCCESS', _ => {
+        it('should return a status code of 200 when deleting a game', done => {
+          chai
+            .request(server)
+            .delete(`/api/game/destroy/${games[0]._id}`)
+            .end((err, res) => {
+              expect(res).to.have.status(200);
+
+              done();
+            });
+        });
+
+        it("should return sucess in the response body with the deleted game's title", done => {
+          chai
+            .request(server)
+            .delete(`/api/game/destroy/${games[0]._id}`)
+            .end((err, res) => {
+              expect(res.body).to.have.property('success');
+              expect(res.body.success).to.have.string(games[0].title);
+
+              done();
+            });
+        });
+      });
+
+      describe('ID NOT FOUND', _ => {
+        it('should return a status code of 422 when receiving an id not in the database', done => {
+          const id = '1234567890abcdefghijklmnopqrstuvwxyz';
+
+          chai
+            .request(server)
+            .delete(`/api/game/destroy/${id}`)
+            .end((err, res) => {
+              expect(res).to.have.status(422);
+
+              done();
+            });
+        });
+
+        it('should return an error in the response body when receiving an id not in the database', done => {
+          const id = '1234567890abcdefghijklmnopqrstuvwxyz';
+
+          chai
+            .request(server)
+            .delete(`/api/game/destroy/${id}`)
+            .end((err, res) => {
+              expect(res.body).to.have.property('error');
+
+              done();
+            });
+        });
+      });
+
+      describe('BAD ID', _ => {
+        it('should return a status code of 422 when receiving a malformed id', done => {
+          const id = '-1';
+
+          chai
+            .request(server)
+            .delete(`/api/game/destroy/${id}`)
+            .end((err, res) => {
+              expect(res).to.have.status(422);
+
+              done();
+            });
+        });
+
+        it('should return an error in the response body when receiving a malformed id', done => {
+          const id = '-1';
+
+          chai
+            .request(server)
+            .delete(`/api/game/destroy/${id}`)
+            .end((err, res) => {
+              expect(res.body).to.have.property('error');
+
+              done();
+            });
+        });
+      });
+    });
   });
 
   // --- Stretch Problem ---
