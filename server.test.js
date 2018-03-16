@@ -270,11 +270,13 @@ describe('Games', () => {
           res.body.forEach(game => {
             const gameTest = games.find(e => e.title === game.title);
 
-            expect(game._id).to.equal(gameTest._id);
-            expect(game.title).to.equal(gameTest.title);
-            expect(game.genre).to.equal(gameTest.genre);
-            expect(game.releaseDate).to.equal(gameTest.releaseDate);
-            expect(game._v).to.equal(gameTest._v);
+            expect(game).to.deep.equal(gameTest);
+
+            // expect(game._id).to.equal(gameTest._id);
+            // expect(game.title).to.equal(gameTest.title);
+            // expect(game.genre).to.equal(gameTest.genre);
+            // expect(game.releaseDate).to.equal(gameTest.releaseDate);
+            // expect(game._v).to.equal(gameTest._v);
           });
 
           done();
@@ -318,6 +320,20 @@ describe('Games', () => {
         .send({ title: 'Testing update', id: games[0]._id })
         .end((err, res) => {
           expect(res).to.have.status(200);
+
+          done();
+        });
+    });
+
+    it('should return the updated game', done => {
+      const testTitle = 'Testing update';
+
+      chai
+        .request(server)
+        .put('/api/game/update')
+        .send({ title: testTitle, id: games[0]._id })
+        .end((err, res) => {
+          expect(res.body).to.deep.equal({ ...games[0], title: testTitle });
 
           done();
         });
