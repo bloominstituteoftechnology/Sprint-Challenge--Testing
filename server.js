@@ -57,7 +57,7 @@ server.put('/api/game/update', (req, res) => {
 	});
 });
 
-server.delete('/api/game/destroy/:id', (req, res) => {
+server.delete('/api/game/destroy/', (req, res) => {
 	// to delete a game you can send up an id on the request body or the params
 	let id = undefined;
 	if (req.params.id) {

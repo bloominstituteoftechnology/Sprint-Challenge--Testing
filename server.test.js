@@ -139,4 +139,32 @@ describe('Games', () => {
 
 	// --- Stretch Problem ---
 	// Test the DELETE here
+	describe(`[DELETE] /api/game/destroy`, () => {
+		it('should delete a game given a valid gameId', (done) => {
+			const gameDelete = {
+				id: gameId
+			};
+			chai.request(server).delete('/api/game/destroy/').send(gameDelete).end((err, res) => {
+				if (err) {
+					throw new Error(err);
+					done();
+				}
+				expect(res.body.title).to.equal(gameDelete.title);
+				done();
+			});
+		});
+		it('handles the error if a bad gameId sent', (done) => {
+			const gameDelete = {
+				id: 'asdfasdf'
+			};
+			chai.request(server).delete('/api/game/destroy').send(gameDelete).end((err, res) => {
+				if (err) {
+					expect(err.status).to.equal(422);
+					const { error } = err.response.body;
+					expect(error).to.eql('Cannot find game by that id');
+				}
+				done();
+			});
+		});
+	});
 });
