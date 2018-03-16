@@ -67,8 +67,6 @@ describe('Games', () => {
       });
   });
 
-  // test the POST here
-
   describe('[POST] /api/games/create', () => {
     it('should create a game', done => {
       const addGame = {
@@ -92,7 +90,21 @@ describe('Games', () => {
     });
   });
 
-  // test the GET here
+  describe('[GET] /api/game/get', () => {
+    it('should get games', done => {
+      chai.request(server)
+        .get('/api/game/get')
+        .then(res => {
+          expect(res.status).to.equal(200);
+          expect(res.body[0].title).to.equal('Angry Birds');
+          expect(res.body[1].genre).to.equal('Strategy');
+          done();
+        })
+        .catch(err => {
+          done(err);
+        });
+    });
+  });
 
   // test the PUT here
 
