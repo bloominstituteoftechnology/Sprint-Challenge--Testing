@@ -30,11 +30,45 @@
 * You're going to be writing the documentation and the tests for a CRUD API.
 * The API itself is really simple. You're task is to peek at the endpoints found in the `server.js` file and write docs for each one, then write the tests for the end points.
 
+---
 ## DOCUMENTATION GOES HERE
 
-```
-  THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
-```
+# __Server Testing Documentation__
+
+This repo includes an API which manages a game collection, and was built using a test driven development approach. It connects to a dummy MONGODB API in order to run tests for GET, PUT, POST, and DELETE (CRUD) requests.
+
+## Dependencies utilized in this project
+
+* sinon
+* chai
+* chai-http
+* mocha
+* express
+* morgan
+* mongoose
+* mocha
+* body-parser
+
+## Instructions:
+* fork and clone repository from https://github.com/bitcointroy/Sprint-Challenge--Testing
+* run `npm install` to bring in all of the dependencies
+* make sure that your `MongoDB` is running
+* to run tests utilize `npm test`
+
+# Endpoints /api/game 
+| Endpoint | Type | Input (req.body) | Response |
+| :---: | :---: | :---: | :---:|
+| /create | *__POST__* | ```{title: 'Mario Brothers', releaseDate: '1981', genre: 'Karting'}``` | ```{title: 'Mario Brothers', releaseDate: '1981', genre: 'Karting'}``` | 
+| /get | *__GET__* | ```game_id``` | ```[{title: 'California Games', releaseDate: 'June 1987', genre: 'Sports' }]``` |
+| /update | *__PUT__* | ```game_id, {title: 'Mario Brothers'}``` | ```{title: 'Mario Brothers', releaseDate: 'June 1987', genre: 'Karting'}``` | 
+| /destroy | *__DELETE__* | ```game_id``` | ```success: true``` |
+
+
+#### __Maintained by:__
+
+##### [Troy Bradley (CS6)](https://github.com/bitcointroy)
+
+---
 
 ## TESTS
 
