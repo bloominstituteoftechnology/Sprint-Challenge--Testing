@@ -31,10 +31,36 @@
 * The API itself is really simple. You're task is to peek at the endpoints found in the `server.js` file and write docs for each one, then write the tests for the end points.
 
 ## DOCUMENTATION GOES HERE
+# User API
+This API holds access to a database of NES Games. It allows a user to sign in, add a new game, update an existing game, display a list of all games currently stored and delete games from the list.
 
-```
-  THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
-```
+# To Start The Database
+  * If you haven't already, install MongoDB, then initialize MongoDB.
+  * Then, start the API by navigating to the root directory, running npm install to grab all dependencies, and then npm start to start the server.
+
+# API Endpoints:
+The server is accessible on:
+``` http://localhost:5050 ```
+# [POST]
+| Endpoint    | Type  | Data  |     Result    |
+|-------------|-------|-------|---------------|
+|/api/game/create| Post | Json | Will add/return the created game object|
+
+# [GET]
+| Endpoint    | Type  | Data  |     Result    |
+|-------------|-------|-------|---------------|
+|/api/game/get| Get   | Json  | Returns a list of all games in the database|
+
+# [PUT]
+| Endpoint    | Type  | Data  |     Result    |
+|-------------|-------|-------|---------------|
+|/api/game/update| Put| Json  | Will update/return updated game information|
+
+# [DELETE]
+| Endpoint    | Type  | Data  |     Result    |
+|-------------|-------|-------|---------------|
+|/api/games/destroy/:id | Delete | Json | Will remove the specified game data|
+
 
 ## TESTS
 
