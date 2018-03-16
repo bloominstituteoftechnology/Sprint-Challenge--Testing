@@ -32,8 +32,83 @@
 
 ## DOCUMENTATION GOES HERE
 
+# Camila's API
+
+This API allows you to store, retrieve, update, and delete video game data. There's also a test suite that ensures that all the endpoints are working.
+
+## Port - Location for all endpoints to interface with video game data is http://localhost:5050
+
+## [POST] '/api/game/create'
+
+| Endpoint         | Type | Data |
+| ---------------- | :--: | ---: |
+| /api/game/create | post | json |
+
+### Example:
+
 ```
-  THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
+{
+	title: 'Tekken',
+	releaseDate: 'December 1994',
+	genre: 'Action'
+}
+```
+
+## [GET] '/api/game/get'
+
+| Endpoint         | Type | Data  |
+| ---------------- | :--: | ----: |
+| /api/game/get    | get  | array |
+
+### Example:
+
+```
+[
+	{
+		_id: 1,
+		title: 'Tekken',
+		releaseDate: 'December 1994',
+		genre: 'Action'
+	},
+	{
+		_id: 2,
+		title: 'X Men vs Street Fighter',
+        releaseDate: 'September 1996',
+        genre: 'Action'
+	}
+]
+```
+
+
+## [PUT] '/api/game/update'
+
+| Endpoint         | Type | Data |
+| ---------------- | :--: | ---: |
+| /api/game/update | put  | json |
+
+### Example:
+
+```
+{
+	_id: 1,
+	title: 'Pokemon Yellow',
+    releaseDate: 'September 1998',
+    genre: 'Adventure'
+}
+```
+
+## [DELETE] '/api/game/destroy/:id'
+
+| Endpoint              | Type   | Data |
+| ----------------      | :----: | ---: |
+| /api/game/destroy/:id | delete | json |
+
+### Example:
+
+```
+{ 
+	success: `${removedGame.title} was removed from the DB` 
+}
 ```
 
 ## TESTS
@@ -48,9 +123,9 @@
 
 ```
 {
-  title: 'California Games',
-  genre: 'Sports',
-  date: 'June 1987'
+	title: 'Pokemon Yellow',
+    releaseDate: 'September 1998',
+    genre: 'Adventure'
 }
 ```
 
