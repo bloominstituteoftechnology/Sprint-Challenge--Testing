@@ -55,7 +55,7 @@ describe('Games', () => {
 
   // test the POST here
   describe('[POST] /api/game/create', () => {
-    it(`should post a game correctly to the DB`, () => {
+    it(`should post a game correctly to the DB`, done => {
       let create = new Game({
         title: 'California Games',
         genre: 'Sports',
@@ -65,24 +65,25 @@ describe('Games', () => {
         .request(server)
         .post('/api/game/create')
         .send(create)
-        .end((err, res) => {
-          if (err) console.log(err);
+        .then(res => {
           expect(res.status).to.equal(200);
           expect(res.body.title).to.equal('California Games');
-        });
+          done();
+        })
+        .catch(err => done(err));
     });
   });
 
   // test the GET here
   describe('[GET] /api/game/get', () => {
-    it('should be able to locate a game successfully', done => {
+    it('should get ALL THE GAMES', done => {
       chai
         .request(server)
         .get('/api/game/get')
         .then(res => {
           expect(res.status).to.equal(200);
-          expect(res.body[0].title).to.equal('California Games');
-          expect(res.body[0].genre).to.equal('Sports');
+          expect(res.body[0].title).to.equal('Super Mario Bros');
+          expect(res.body[0].genre).to.equal('dope');
           done();
         })
         .catch(err => done(err));
@@ -90,6 +91,24 @@ describe('Games', () => {
   });
 
   // test the PUT here
+  describe('[PUT] /api/game/update', () => {
+    it('should update the games correctly to the DB', done => {
+      const update = {
+        title: 'Super Mario Bros',
+        id: gameID
+      };
+      chai
+        .request(server)
+        .put('/api/game/update')
+        .send(update)
+        .then(res => {
+          expect(res.status).to.equal(200);
+          expect(res.body.title).to.equal('Super Mario Bros');
+          done();
+        })
+        .catch(err => done(err));
+    });
+  });
 
   // --- Stretch Problem ---
   // Test the DELETE here
