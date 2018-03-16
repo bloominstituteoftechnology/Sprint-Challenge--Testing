@@ -2,7 +2,11 @@ const mongoose = require('mongoose');
 const chai = require('chai');
 const { expect } = chai;
 const sinon = require('sinon');
+const chaihttp = require('chai-http');
 
+chai.use(chaihttp);
+
+const server = require('./server');
 const Game = require('./models');
 
 describe('Games', () => {
@@ -51,14 +55,49 @@ describe('Games', () => {
     Game.remove({}, err => {
       if (err) console.error(err);
       done();
-    })
+    });
   });
 
   // test the POST here
-  describe(`[POST]`, () => {});
+  describe(`[POST]`, () => {
+    const badGame = {
+      title: 'Final Fantasy XI'
+    };
+    const goodGame = {
+      title: 'Final Fantasy X',
+      genre: 'JRPG',
+      releaseDate: 'July 19, 2001'
+    };
+    it('should require correct parameters of title, genre, and data', () => {
+      chai
+        .request(server)
+        .post('/api/game/create')
+        .send(badGame)
+        .end((err, res) => {
+          expect(res.status).to.equal(422);
+          expect(res.body.error).to.equal('Error saving data to the DB');
+        });
+    });
+    it('should return the created object', () => {
+      chai
+        .request(server)
+        .post('/api/game/create')
+        .send(goodGame)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.include({
+            title: 'Final Fantasy X',
+            genre: 'JRPG',
+            releaseDate: 'July 19, 2001'
+          });
+        });
+    });
+  });
 
   // test the GET here
-  describe(`[GET]`, () => {});
+  describe(`[GET]`, () => {
+    
+  });
 
   // test the PUT here
   describe(`[PUT]`, () => {});
