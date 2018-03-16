@@ -49,7 +49,7 @@ describe('Games', () => {
     game1.save()
       .then(game => {
         testGame1 = game;
-        testGame1_id = game._id;
+        testGame1_id = game._id.toString();
       })
       .catch(err => {
         console.error('Error saving game1');
@@ -57,7 +57,7 @@ describe('Games', () => {
     game2.save()
       .then(game => {
         testGame2 = game;
-        testGame2_id = game._id;
+        testGame2_id = game._id.toString();
       })
       .catch(err => {
         console.error('Error saving game2');
@@ -108,6 +108,20 @@ describe('Games', () => {
   });
 
   // test the GET here
+  describe('[GET] /api/game/get', () => {
+    it('should return all games in database', (done) => {
+      chai.request(server)
+        .get('/api/game/get')
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body[0].title).to.equal(testGame1.title);
+          expect(res.body[1].title).to.equal(testGame2.title);
+          expect(res.body[0]._id).to.equal(testGame1_id);
+          expect(res.body[1]._id).to.equal(testGame2_id);
+          done();
+        });
+    });
+  });
 
   // test the PUT here
 
