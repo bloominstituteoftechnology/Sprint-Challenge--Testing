@@ -10,9 +10,9 @@
 
 ## Questions - Self Study - You can exercise your Google-Fu for this and any other _Sprint Challenge_ in the future.
 
-1. In Mocha, what are the differences between `before` `after` `beforeEach` `afterEach`? When do they run? What are they used for?
-1. What is the point of Test Driven Development? What do you personally think about this approach?
-1. What is a `spy` in `sinon`? How do we use it to effectively test a `callback`?
+1.  In Mocha, what are the differences between `before` `after` `beforeEach` `afterEach`? When do they run? What are they used for?
+1.  What is the point of Test Driven Development? What do you personally think about this approach?
+1.  What is a `spy` in `sinon`? How do we use it to effectively test a `callback`?
 
 ## Initializing Project -
 
@@ -33,7 +33,48 @@
 ## DOCUMENTATION GOES HERE
 
 ```
-  THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
+  ## API Documentation
+  A simple CRUD api that allows you to affect a DB of your favorite games.
+
+  ## Port - `http://localhost:5050`
+
+  ## [POST] `/api/game/create`
+|    Endpoint       | Type          | data  |
+| ------------------|:-------------:| -----:|
+| /api/game/create  |          post | json  |
+
+
+  ## [GET] `/api/game/get'
+|    Endpoint       | Type          | data  |
+| ------------------|:-------------:| -----:|
+| /api/game/get     |          get  | json  |
+
+
+  ## [PUT] `/api/game/update'
+|    Endpoint       | Type          | data  |
+| ------------------|:-------------:| -----:|
+| /api/game/update  |          put  | json  |
+
+
+  ## [DELETE] `/api/game/destroy/:id`
+|    Endpoint            | Type          | data  |
+| -----------------------|:-------------:| -----:|
+| /api/game/destroy/:id  |       delete  | json  |
+
+To post a game, pass it in the form of json. title and genre are required as strings and release date is optional, but... I mean, come on...
+
+{
+  "title": "Super Mario Bros",
+  "genre": "OG stuff...",
+  "releaseDate": "September 15, 1985"
+}
+
+[PUT]
+
+{
+  "title": "Super Mario World 64",
+  "id": ...args
+}
 ```
 
 ## TESTS
