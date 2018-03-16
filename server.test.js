@@ -258,40 +258,6 @@ describe('Games', () => {
             expect(game.releaseDate).to.equal(gameTest.releaseDate);
           });
 
-          // let i = 0;
-
-          // let game = games.find(game => game.title === res.body[i].title);
-          // expect(res.body[i].title).to.equal(game.title);
-          // expect(res.body[i].genre).to.equal(game.genre);
-          // expect(res.body[i].releaseDate).to.equal(game.releaseDate);
-          // i++;
-
-          // game = games.find(game => game.title === res.body[i].title);
-          // expect(res.body[i].title).to.equal(game.title);
-          // expect(res.body[i].genre).to.equal(game.genre);
-          // expect(res.body[i].releaseDate).to.equal(game.releaseDate);
-          // i++;
-
-          // game = games.find(game => game.title === res.body[i].title);
-          // expect(res.body[i].title).to.equal(game.title);
-          // expect(res.body[i].genre).to.equal(game.genre);
-          // expect(res.body[i].releaseDate).to.equal(game.releaseDate);
-          // i++;
-
-          // game = games.find(game => game.title === res.body[i].title);
-          // expect(res.body[i].title).to.equal(game.title);
-          // expect(res.body[i].genre).to.equal(game.genre);
-          // expect(res.body[i].releaseDate).to.equal(game.releaseDate);
-          // i++;
-
-          // game = games.find(game => game.title === res.body[i].title);
-          // expect(res.body[i].title).to.equal(game.title);
-          // expect(res.body[i].genre).to.equal(game.genre);
-          // expect(res.body[i].releaseDate).to.equal(game.releaseDate);
-          // i++;
-
-          // expect(i).to.equal(games.length);
-
           done();
         });
     });
