@@ -55,13 +55,13 @@ This repo includes an API which manages a game collection, and was built using a
 * make sure that your `MongoDB` is running
 * to run tests utilize `npm test`
 
-# Endpoints /users 
+# Endpoints /api/game 
 | Endpoint | Type | Input (req.body) | Response |
 | :---: | :---: | :---: | :---:|
-| /users | *__POST__* | ```{title: 'Mario Brothers', releaseDate: '1981', genre: 'Karting'}``` | ```{title: 'Mario Brothers', releaseDate: '1981', genre: 'Karting'}``` | 
-| /users | *__GET__* | ```game_id``` | ```[{title: 'California Games', releaseDate: 'June 1987', genre: 'Sports' }]``` |
-| /users | *__PUT__* | ```game_id, {title: 'Mario Brothers'}``` | ```{title: 'Mario Brothers', releaseDate: 'June 1987', genre: 'Karting'}``` | 
-| /users | *__DELETE__* | ```game_id``` | ```success: true``` |
+| /create | *__POST__* | ```{title: 'Mario Brothers', releaseDate: '1981', genre: 'Karting'}``` | ```{title: 'Mario Brothers', releaseDate: '1981', genre: 'Karting'}``` | 
+| /get | *__GET__* | ```game_id``` | ```[{title: 'California Games', releaseDate: 'June 1987', genre: 'Sports' }]``` |
+| /update | *__PUT__* | ```game_id, {title: 'Mario Brothers'}``` | ```{title: 'Mario Brothers', releaseDate: 'June 1987', genre: 'Karting'}``` | 
+| /destroy | *__DELETE__* | ```game_id``` | ```success: true``` |
 
 
 #### __Maintained by:__
