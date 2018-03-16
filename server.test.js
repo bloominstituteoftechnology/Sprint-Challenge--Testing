@@ -74,7 +74,7 @@ describe('Games', () => {
   });
 
   // test the POST here
-  describe('[POST] /api/game/create', () => {
+  describe('[POST] /api/game/create', (done) => {
     it('should add a new game', (done) => {
       const newGame = new Game({
         title: 'Prince of Persia',
@@ -127,4 +127,19 @@ describe('Games', () => {
   })
   // --- Stretch Problem ---
   // Test the DELETE here
+  describe('[DELETE], /api/game/destroy/:id', (done) => {
+    it('should delete the game with the given id', (done) => {
+      Game.find({}, (err, existingGames) => {
+        if (err) return;
+        const idToRemove = existingGames[0]._id;
+        chai.request(server)
+          .delete(`/api/game/destroy/${idToRemove}`)
+          .end((err, res) => {
+            assert.equal(res.status, 200);
+            assert.equal(res.body.success, `${existingGames[0].title} was removed from the DB`)
+            done()
+          })
+      })
+    })
+  })
 });
