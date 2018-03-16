@@ -29,7 +29,7 @@ describe("Games", () => {
 
   let gameId;
   let marioGame;
-  
+
   beforeEach(done => {
     const newGame = new Game({
       title: "California Games",
@@ -40,7 +40,7 @@ describe("Games", () => {
     newGame
       .save()
       .then(game => {
-        gameId = game.id;
+        gameId = game.id.toString();
         marioGame = game;
         done();
       })
@@ -96,8 +96,58 @@ describe("Games", () => {
   });
 
   // test the GET here
+  describe("[GET] /api/game/get", () => {
+    it("should return all games in database", done => {
+      chai
+        .request(server)
+        .get("/api/game/get")
+        .end((err, res) => {
+          if (err) console.error(err);
+          expect(res.body).to.be.an("array");
+          expect(res.body[0].title).to.equal("California Games");
+          expect(res.body[0]._id).to.equal(gameId);
+          done();
+        });
+    });
+  });
 
   // test the PUT here
+  describe("[PUT] /api/game/update", () => {
+    it("should update information in the database", done => {
+      const updatedGame = {
+        id: gameId,
+        title: "Cal Games"
+      };
+      chai
+        .request(server)
+        .put("/api/game/update")
+        .send(updatedGame)
+        .end((err, res) => {
+          expect(res.body.title).to.equal("Cal Games");
+          expect(res.body._id).to.equal(gameId);
+          done();
+        });
+    });
+    it("should return a 422 error", done => {
+      const updatedGame = {
+        id: -1,
+        title: "Cal Games"
+      };
+      chai
+        .request(server)
+        .put("/api/game/update")
+        .send(updatedGame)
+        .end((err, res) => {
+          if (err) {
+            expect(err.status).to.equal(422);
+            expect(err.response.body.error).to.equal(
+              "Cannot find game by that id"
+            );
+            done();
+          }
+        });
+    });
+  });
 
   // --- Stretch Problem ---
   // Test the DELETE here
