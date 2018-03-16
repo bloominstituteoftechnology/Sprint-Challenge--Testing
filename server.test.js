@@ -159,7 +159,7 @@ describe('Games', () => {
         })
     });
 
-    it('verify the game is deleted', done => {
+    it('check to see if game has been removed', done => {
       Game.findById(gameId)
         .then(gameData => {
           expect(gameData).to.be.null;
