@@ -270,9 +270,11 @@ describe('Games', () => {
           res.body.forEach(game => {
             const gameTest = games.find(e => e.title === game.title);
 
+            expect(game._id).to.equal(gameTest._id);
             expect(game.title).to.equal(gameTest.title);
             expect(game.genre).to.equal(gameTest.genre);
             expect(game.releaseDate).to.equal(gameTest.releaseDate);
+            expect(game._v).to.equal(gameTest._v);
           });
 
           done();
