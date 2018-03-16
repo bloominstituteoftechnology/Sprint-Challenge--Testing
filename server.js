@@ -2,9 +2,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 
-const Game = require('./models');
 
 const server = express();
+const Game = require('./models');
+
 server.use(bodyParser.json());
 server.use(morgan('combined'));
 
@@ -57,18 +58,10 @@ server.put('/api/game/update', (req, res) => {
   });
 });
 
-server.delete('/api/game/destroy/:id', (req, res) => {
+server.delete('/api/game/destroy/:id*?', (req, res) => {
   // to delete a game you can send up an id on the request body or the params
-  let id = undefined;
-  if (req.params.id) {
-    // if it's on the params set it.
-    id = req.params.id;
-  }
-  if (req.body.id) {
-    // if it's on the body set it.
-    id = req.body.id;
-  }
-  if (id === undefined) {
+  const { id } = req.params;
+  if (!id) {
     // if it's undefined throw error back to client
     res.status(422);
     res.json({ error: 'You need to give me an ID' });

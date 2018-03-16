@@ -1,7 +1,10 @@
 const mongoose = require('mongoose');
+const server = require('./server');
 const chai = require('chai');
 const { expect } = chai;
 const sinon = require('sinon');
+const chaiHTTP = require('chai-http');
+chai.use(chaiHTTP);
 
 const Game = require('./models');
 
@@ -23,23 +26,138 @@ describe('Games', () => {
       console.log('we are disconnected');
     });
   });
-  // declare some global variables for use of testing
-  // hint - these wont be constants because you'll need to override them.
+
   beforeEach(done => {
-    // write a beforeEach hook that will populate your test DB with data
-    // each time this hook runs, you should save a document to your db
-    // by saving the document you'll be able to use it in each of your `it` blocks
+    new Game({
+
+      title: 'Super Mario Bros',
+      releaseDate: 'October 1988',
+      genre: 'Platformer'
+
+    }).save((err, savedGame) => {
+      if (err) {
+        console.log(err);
+        return done();
+      }
+      gameId = savedGame.id;
+      done();
+    })
   });
   afterEach(done => {
-    // simply remove the collections from your DB.
+    Game.remove()
+      .then(() => done())
+      .catch(error => done(error))
   });
 
-  // test the POST here
-
-  // test the GET here
-
-  // test the PUT here
-
-  // --- Stretch Problem ---
-  // Test the DELETE here
+  describe('[POST] /api/game/create', () => {
+    it('Should add a game to the database', () => {
+      const newGame = {
+        title: 'Super Mario Bros',
+        releaseDate: 'October 1988',
+        genre: 'Platformer'
+      };
+      chai
+        .request(server)
+        .post('/api/game/create')
+        .send(newGame)
+        .then(res => {
+          expect(res.status).to.equal(201);
+          expect(res.body.game.title).to.equal('Super Mario Bros')
+          done();
+        });
+    });
+    it('Should provide an error if the game does not have a title', done => {
+      const newGame = {
+        releaseDate: 'October 1988',
+        genre: 'Platformer'
+      };
+      chai
+        .request(server)
+        .post('/api/game/create')
+        .send(newGame)
+        .end((err, res) => {
+          expect(err.response.body.error).to.equal('Error saving data to the DB');
+          done();
+        });
+    });
+  });
+  describe('[GET] /api/game/get', () => {
+    it('Should get all games from the database', done => {
+      chai
+        .request(server)
+        .get('/api/game/get')
+        .then(res => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.be.an('array');
+          expect(res.body[0].title).to.equal('Super Mario Bros');
+          done();
+        })
+        .catch(err => done(err));
+    });
+  });
+  describe('[PUT] /api/game/update', () => {
+    it('Should update a game', () => {
+      const updateGame = { id: gameId, title: 'Duck Hunt' };
+      chai
+        .request(server)
+        .put('/api/game/update')
+        .send(updateGame)
+        .then(res => {
+          expect(res.status).to.equal(200);
+          expect(res.body.title).to.equal('Duck Hunt');
+          done();
+        });
+    });
+    it('Should provide an error if title is missing from game', done => {
+      const updateGame = { id: gameId };
+      chai
+        .request(server)
+        .put('/api/game/update')
+        .send(updateGame)
+        .end((err, res) => {
+          expect(err.response.body.error).to.equal('Must Provide a title && Id');
+          done();
+        });
+    });
+    it('Should provide an error if the game is not found by a given Id', done => {
+      const updateGame = { id: 2, title: 'Duck Hunt' };
+      chai
+        .request(server)
+        .put('/api/game/update')
+        .send(updateGame)
+        .end((err, res) => {
+          expect(err.response.body.error).to.equal('Cannot find game by that id');
+          done();
+        });
+    });
+  });
+  describe('[DELETE] /api/game/destroy/:id', () => {
+    it('Should delete a game by a given id', done => {
+      chai
+        .request(server)
+        .delete(`/api/game/destroy/${gameId}`)
+        .then(res => {
+          expect(res.status).to.equal(200);
+          done();
+        });
+    });
+    it('Should provide an error if the Id is not in the DB', done => {
+      chai
+        .request(server)
+        .delete('/api/game/destroy/01010101')
+        .end((err, res) => {
+          expect(err.response.body.error).to.equal('Cannot find game by that id');
+          done();
+        });
+    });
+    it('Should provide an error if there is no Id provided', done => {
+      chai
+        .request(server)
+        .delete('/api/game/destroy/')
+        .end((err, res) => {
+          expect(err.response.body.error).to.equal('You need to give me an ID');
+          done();
+        });
+    });
+  });
 });
