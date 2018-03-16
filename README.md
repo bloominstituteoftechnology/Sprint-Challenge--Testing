@@ -32,9 +32,57 @@
 
 ## DOCUMENTATION GOES HERE
 
+## Api Documentation 
+This API allows your to create,update,delete your favourite games through our API. It also allows you to get different games in different genres listed by other users from our api.
+
+## Port - Location for all endpoints to interface with our Sodas App is 
+`http://localhost:5050`
+
+## [POST] `/api/game/create`
+|Endpoint        |Type   |data  |
+| -------------- | ----- | ---- |
+|/api/game/create|post   |json  |
+
+## [PUT] `/api/game/update`
+|Endpoint        |Type   |data  |
+| -------------- | ----- | ---- |
+|/api/game/update|post   |json  | 
+
+## [Delete] `/api/game/destroy/:id`
+|Endpoint        |Type   |data  |
+| -------------- | ----- | ---- |
+|/api/game/destroy/:id|post   |json  |  
+
+
+## [GET] `/api/game/get`
+|Endpoint   |Type   |data  |
+| --------- | ----- | ---- |
+|/api/game/get|get  |      | 
+
+#### Example
+
+* To post a game pass data in form of a json object with genre(required) as a string and optional date.
 ```
-  THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
+{
+  "title":"Mario",
+  "genre":"OldSchool"
+}
 ```
+* Put
+```
+{
+  "title":"Mario",
+  "id":IdToBeUpdated 
+}
+```
+* Delete (if providing through body--optional)
+```
+{
+  "id":IdToBeUpdated 
+}
+```
+
+
 
 ## TESTS
 
