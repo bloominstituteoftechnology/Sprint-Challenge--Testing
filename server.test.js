@@ -56,7 +56,6 @@ describe("Games", () => {
     });
   });
 
-  // test the POST here
   describe("[POST] /api/game/create", () => {
     it("should add a new game", done => {
       const myGame = new Game({
@@ -95,7 +94,6 @@ describe("Games", () => {
     });
   });
 
-  // test the GET here
   describe("[GET] /api/game/get", () => {
     it("should return all games in database", done => {
       chai
@@ -111,7 +109,6 @@ describe("Games", () => {
     });
   });
 
-  // test the PUT here
   describe("[PUT] /api/game/update", () => {
     it("should update game information in the database", done => {
       const updatedGame = {
@@ -149,8 +146,6 @@ describe("Games", () => {
     });
   });
 
-  // --- Stretch Problem ---
-  // Test the DELETE here
   describe("[DELETE] /api/game/destroy/:id", () => {
     it("should delete game when id is passed as params", done => {
       chai

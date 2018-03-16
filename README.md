@@ -40,7 +40,7 @@
 #### [POST] METHOD 
   * endpoint: **/api/game/create**
   * To make a post request you **must include** the following properties to your object in the request body: 
-    *  `title` and `genre`. 
+    *  `title` and `genre` as a string. 
   * The post also takes in a releaseDate property that is **not required**.
 
     Example of post request
