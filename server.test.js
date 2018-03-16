@@ -33,35 +33,30 @@ describe('Games', () => {
     // write a beforeEach hook that will populate your test DB with data
     // each time this hook runs, you should save a document to your db
     // by saving the document you'll be able to use it in each of your `it` blocks
-    const game = new Game({
-      title: 'Destiny 2',
-      genre: 'ShootEmUp'
+    new Game({
+      title: 'Super Mario Bros',
+      genre: 'dope'
+    }).save((err, savedGame) => {
+      if (err) {
+        console.log(err);
+        return done();
+      }
+      gameID = savedGame.id;
+      done();
     });
-    game
-      .save()
-      .then(_ => {
-        newFile = game.id;
-        done();
-      })
-      .catch(err => {
-        done(err);
-      });
   });
+
   afterEach(done => {
     // simply remove the collections from your DB.
     Game.remove()
-      .then(_ => {
-        done();
-      })
-      .catch(err => {
-        done(err);
-      });
+      .then(() => done())
+      .catch(err => done(err));
   });
 
   // test the POST here
   describe('[POST] /api/game/create', () => {
     it(`should post a game correctly to the DB`, () => {
-      const newGame = new Game({
+      let create = new Game({
         title: 'California Games',
         genre: 'Sports',
         date: 'June 1987'
@@ -69,7 +64,7 @@ describe('Games', () => {
       chai
         .request(server)
         .post('/api/game/create')
-        .send(newGame)
+        .send(create)
         .end((err, res) => {
           if (err) console.log(err);
           expect(res.status).to.equal(200);
@@ -79,8 +74,19 @@ describe('Games', () => {
   });
 
   // test the GET here
-  describe('[GET] /api/game/update', () => {
-    it('should update a game correctly on the DB');
+  describe('[GET] /api/game/get', () => {
+    it('should be able to locate a game successfully', done => {
+      chai
+        .request(server)
+        .get('/api/game/get')
+        .then(res => {
+          expect(res.status).to.equal(200);
+          expect(res.body[0].title).to.equal('California Games');
+          expect(res.body[0].genre).to.equal('Sports');
+          done();
+        })
+        .catch(err => done(err));
+    });
   });
 
   // test the PUT here
