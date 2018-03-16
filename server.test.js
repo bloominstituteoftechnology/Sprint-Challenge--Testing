@@ -1,16 +1,17 @@
 const mongoose = require('mongoose');
 const chai = require('chai');
-const chaihttp = require('chai-http');
+const chaiHTTP = require('chai-http');
 const { expect } = chai;
 const sinon = require('sinon');
 
 const Game = require('./models');
 const server = require('./server');
-
-chai.use(chaihttp);
+chai.use(chaiHTTP);
 
 describe('Games', () => {
   before(done => {
+    let gameId = null;
+    let testGame = null;
     mongoose.Promise = global.Promise;
     mongoose.connect('mongodb://localhost/test');
     const db = mongoose.connection;
@@ -30,17 +31,15 @@ describe('Games', () => {
   // declare some global variables for use of testing
   // hint - these wont be constants because you'll need to override them.
   beforeEach(done => {
-    let gameId;
-    let testGame;
     // write a beforeEach hook that will populate your test DB with data
     // each time this hook runs, you should save a document to your db
     // by saving the document you'll be able to use it in each of your `it` blocks
-    const newGame = new Game({
-      title: 'Ocarina of time',
-      date: 'November 1998',
-      genre: 'Fantasy'
+    const myGame = new Game({
+      title: 'Contra',
+      date: 'August 1984',
+      genre: 'action'
     });
-    newGame
+    myGame
       .save()
       .then(game => {
         testGame = game;
@@ -49,36 +48,40 @@ describe('Games', () => {
       })
       .catch(err => {
         console.log(err);
+        done();
       });
   });
   afterEach(done => {
     // simply remove the collections from your DB.
     Game.remove({}, err => {
-      if (err) console.log(err);
+      if (err) console.error(err);
+      done();
     });
   });
 
   // test the POST here
   describe('[POST] /api/game/create', () => {
-    const newGame = {
-      title: 'Rocket League',
-      date: '2014',
-      genre: 'Stupid Teammates'
-    };
-    chai
-      .request(server)
-      .post('/api/game/creat')
-      .send(newGame)
-      .end((err, res) => {
-        expect(res.status).to.equal(200);
-        expect(res.body.title).to.equal('Rocket League');
-        done();
-      });
+    it('should add a new game', done => {
+      const myGame = {
+        title: 'Contra',
+        date: 'August 1984',
+        genre: 'Action'
+      };
+      chai
+        .request(server)
+        .post('/api/game/create')
+        .send(myGame)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.title).to.equal('Contra');
+          done();
+        });
+    });
     it('should return status 422 upon bad data', () => {
-      const newGame = {
-        title: 'Rocket League',
-        date: '2014',
-        genre: 'Stupid Teammates'
+      const myGame = {
+        name: 'Contra',
+        date: 'August 1984',
+        genere: 'Action'
       };
       chai
         .request(server)
@@ -86,7 +89,7 @@ describe('Games', () => {
         .send((err, res) => {
           expect(res.status).to.equal(422);
           const { error } = err.response.body;
-          expect(error).to.eql('Error saving  to the DB');
+          expect(error).to.eql('Error saving data to the DB');
           done();
         });
     });
@@ -109,6 +112,7 @@ describe('Games', () => {
         });
     });
   });
+
   // test the PUT here
   describe('[PUT] api/game/update', () => {
     it('should update game given id and title', done => {
@@ -164,6 +168,28 @@ describe('Games', () => {
       done();
     });
   });
+
   // --- Stretch Problem ---
   // Test the DELETE here
+  describe('[DELETE] /api/game/destroy/:id', () => {
+    it('should delete game when given proper id', done => {
+      const deleteGame = {
+        id: gameId
+      };
+      chai
+        .request(server)
+        .delete('/api/game/destroy/:id')
+        .send(deleteGame)
+        .end((err, res) => {
+          if (err) {
+            throw new Error(err);
+            done();
+          }
+          expect(res.status).to.equal(200);
+          const { success } = JSON.parse(res.res.text);
+          expect(success).to.equal('Contra was removed from the DB');
+          done();
+        });
+    });
+  });
 });
