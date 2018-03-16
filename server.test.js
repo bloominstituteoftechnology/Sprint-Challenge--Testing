@@ -73,7 +73,7 @@ describe('Games', () => {
 
   // test the POST here
   describe(`[POST] /api/game/create`, _ => {
-    it('should return a status code of 200', done => {
+    it('should return a status code of 200 when a game is saved', done => {
       const game = {
         title: 'Lambda Games',
         genre: 'Computer Science',
@@ -113,9 +113,8 @@ describe('Games', () => {
         });
     });
 
-    it('should return the saved game', done => {
+    it('should return a status code of 422 when no title is supplied', done => {
       const game = {
-        title: 'Lambda School Games',
         genre: 'Computer Science Academy',
         releaseDate: 'January 2018',
       };
@@ -125,9 +124,59 @@ describe('Games', () => {
         .post('/api/game/create')
         .send(game)
         .end((err, res) => {
+          expect(res).to.have.status(422);
+
+          done();
+        });
+    });
+
+    it('should return a status code of 422 when no genre is supplied', done => {
+      const game = {
+        title: 'Lambda School Games',
+        releaseDate: 'January 2018',
+      };
+
+      chai
+        .request(server)
+        .post('/api/game/create')
+        .send(game)
+        .end((err, res) => {
+          expect(res).to.have.status(422);
+
+          done();
+        });
+    });
+
+    it('should return a status code of 200 when no releaseDate is supplied', done => {
+      const game = {
+        title: 'Lambda School Games',
+        genre: 'Computer Science Academy',
+      };
+
+      chai
+        .request(server)
+        .post('/api/game/create')
+        .send(game)
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+
+          done();
+        });
+    });
+
+    it('should return the saved game when no releaseDate is supplied', done => {
+      const game = {
+        title: 'Lambda School Games',
+        genre: 'Computer Science Academy',
+      };
+
+      chai
+        .request(server)
+        .post('/api/game/create')
+        .send(game)
+        .end((err, res) => {
           expect(res.body.title).to.equal(game.title);
           expect(res.body.genre).to.equal(game.genre);
-          expect(res.body.releaseDate).to.equal(game.releaseDate);
           expect(res.body.__v).to.not.equal(null);
           expect(res.body._id).to.not.equal(null);
 
