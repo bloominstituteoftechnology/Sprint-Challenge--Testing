@@ -49,8 +49,7 @@ All `/ama` **API** endpoints
 | endpoint           | type   | description                                                                    | output | type   |
 | ------------------ | ------ | ------------------------------------------------------------------------------ | ------ | ------ |
 | `/api/game/create` | POST   | Creates game and saves it to the database.                                     | JSON   | Object |
-| `/ama`             | GET    | Requests all AMAs                                                              | JSON   | Array  |
-| `/ama/id`          | GET    | Requests the AMA with `id`                                                     | JSON   | Object |
+| `/api/game/get`    | GET    | Requests all games                                                             | JSON   | Array  |
 | `/ama/id`          | UPDATE | Updates either the question or answer field (but not both) of an AMA with `id` | JSON   | Object |
 | `/ama/id`          | DELETE | Deletes the AMA with `id`                                                      | JSON   | Object |
 
@@ -90,9 +89,9 @@ Response: status code `200`
 
 ---
 
-### [GET] `/api/ama`
+### [GET] `/api/game/get`
 
-**Description**: gets all AMAs.
+**Description**: requests all games.
 
 #### Example:
 
@@ -103,18 +102,23 @@ Response: status code `200`
 ```
 [
   {
-    id: 1234567890abcdefghijklmnopqrstuvwxyz,
-    question: 'What is Lambda School all about?',
-    answered: false,
-    createdOn: 'YYYY-MM-DDT00:00:00.000Z',
+    _id: '5aabeb980834920bd71fd71d',
+    title: 'California Games',
+    genre: 'Sports',
+    releaseDate: 'June 1987',
     __v: 0
   },
   {
-    id: zyxwvutsrqponmlkjihgfedcba0987654321,
-    question: 'What differentiates Lambda School from other CS programs?',
-    answered: true,
-    answer: 'You don't pay a cent until you get a job!'
-    createdOn: 'YYYY-MM-DDT00:00:00.000Z',
+    _id: '5aabeb910334920bd7zgd5dk',
+    title: 'Washington Games',
+    genre: 'Recreational',
+    __v: 0
+  },
+  {
+    _id: '4abce100asdg20bd7zakl89a',
+    title: 'Vancouver Games',
+    genre: 'Chill',
+    releaseDate: 'March 2018',
     __v: 0
   }
 ]
@@ -136,10 +140,10 @@ Response: status code `200`
 
 ```
 {
-  id: 1234567890abcdefghijklmnopqrstuvwxyz,
-  question: 'What is Lambda School all about?',
-  answered: false,
-  createdOn: 'YYYY-MM-DDT00:00:00.000Z',
+  _id: '5aabeb980834920bd71fd71d',
+  title: 'California Games',
+  genre: 'Sports',
+  releaseDate: 'June 1987',
   __v: 0
 }
 ```
