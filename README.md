@@ -32,9 +32,164 @@
 
 ## DOCUMENTATION GOES HERE
 
+# API Documentation
+
+Documentation for all APIs.
+
+### All API endpoints: `http://localhost:5050/api`
+
+---
+
+## `/game`
+
+**Description**: an API for creating games with a `title`, `genre`, and `releaseDate`.
+
+All `/ama` **API** endpoints
+
+| endpoint               | type   | description                 | output | type   |
+| ---------------------- | ------ | --------------------------- | ------ | ------ |
+| `/api/game/create`     | POST   | Saves game to the database. | JSON   | Object |
+| `/api/game/get`        | GET    | Requests all games          | JSON   | Array  |
+| `/api/game/update`     | UPDATE | Updates game title          | JSON   | Object |
+| `/api/game/destroy/id` | DELETE | Deletes game                | JSON   | Object |
+
+### Notes:
+
+1. `title` is a required field
+1. `genre` is a required field
+1. `releaseDate` is not a required field
+
+---
+
+### [POST] `/api/game/create`
+
+**Description**: saves game to the database.
+
+#### Example:
+
+Request: `[POST] /api/game/create`
+
 ```
-  THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
+{
+  title: 'Lambda School Games',
+  genre: 'Computer Science Academy',
+  releaseDate: 'January 2018',
+}
 ```
+
+Response: status code `200`
+
+```
+{
+  id: 1234567890abcdefghijklmnopqrstuvwxyz,
+  title: 'Lambda School Games',
+  genre: 'Computer Science Academy',
+  releaseDate: 'January 2018',
+  __v: 0
+}
+```
+
+#### Notes
+
+1. `releaseDate` is NOT required.
+
+---
+
+### [GET] `/api/game/get`
+
+**Description**: requests all games.
+
+#### Example:
+
+Request: `[GET] /api/ama`
+
+Response: status code `200`
+
+```
+[
+  {
+    _id: '5aabeb980834920bd71fd71d',
+    title: 'California Games',
+    genre: 'Sports',
+    releaseDate: 'June 1987',
+    __v: 0
+  },
+  {
+    _id: '5aabeb910334920bd7zgd5dk',
+    title: 'Washington Games',
+    genre: 'Recreational',
+    __v: 0
+  },
+  {
+    _id: '4abce100asdg20bd7zakl89a',
+    title: 'Vancouver Games',
+    genre: 'Chill',
+    releaseDate: 'March 2018',
+    __v: 0
+  }
+]
+```
+
+---
+
+### [UPDATE] `/api/game/update`
+
+**Description**: updates game title.
+
+#### Example:
+
+Request: `[UPDATE] /api/game/update`
+
+```
+{
+  id: 1234567890abcdefghijklmnopqrstuvwxyz,
+  title: 'LA Games'
+}
+```
+
+Response: status code `200`
+
+```
+{
+  _id: '5aabeb980834920bd71fd71d',
+  title: 'LA Games',
+  genre: 'Sports',
+  releaseDate: 'June 1987',
+  __v: 0
+}
+```
+
+---
+
+### [DELETE] `/api/game/destroy/id`
+
+**Description**: deletes game.
+
+#### Example:
+
+1. Request: `[DELETE] /api/game/destroy`
+
+```
+{
+  id: 1234567890abcdefghijklmnopqrstuvwxyz,
+}
+```
+
+2. Request: `[DELETE] /api/game/destroy/1234567890abcdefghijklmnopqrstuvwxyz`
+
+```
+  // request body not needed
+```
+
+Response: status code `200`
+
+```
+{
+  success: 'LA Games was removed from the DB'
+}
+```
+
+---
 
 ## TESTS
 
