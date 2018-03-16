@@ -29,7 +29,7 @@ describe('Games', () => {
   });
   // declare some global variables for use of testing
   // hint - these wont be constants because you'll need to override them.
-  const games = [
+  let games = [
     {
       title: 'California Games',
       genre: 'Sports',
@@ -62,12 +62,29 @@ describe('Games', () => {
     // by saving the document you'll be able to use it in each of your `it` blocks
 
     Game.remove(_ => {
-      Promise.all([games.map(game => Game(game).save())]).then(_ => done());
+      Promise.all(
+        games.map(
+          game =>
+            new Promise((resolve, reject) => {
+              Game(game)
+                .save()
+                .then(savedGame => resolve(savedGame))
+                .catch(err => reject(err));
+            }),
+        ),
+      )
+        .then(values => {
+          games = JSON.parse(JSON.stringify(values));
+
+          done();
+        })
+        .catch(reason => done());
     });
   });
 
   afterEach(done => {
     // simply remove the collections from your DB.
+    gameIds = [];
     Game.remove(_ => done());
   });
 
@@ -291,6 +308,19 @@ describe('Games', () => {
   });
 
   // test the PUT here
+  describe(`[PUT] /api/game/update`, _ => {
+    it('should return a status code of 200 when updating a game', done => {
+      chai
+        .request(server)
+        .put('/api/game/update')
+        .send({ title: 'Testing update', id: games[0]._id })
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+
+          done();
+        });
+    });
+  });
 
   // --- Stretch Problem ---
   // Test the DELETE here
