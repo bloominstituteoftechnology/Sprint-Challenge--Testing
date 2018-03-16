@@ -2,9 +2,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 
-const Game = require('./models');
 
 const server = express();
+const Game = require('./models');
+
 server.use(bodyParser.json());
 server.use(morgan('combined'));
 
