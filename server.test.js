@@ -133,7 +133,22 @@ describe('Games', () => {
     });
   });
 
-  // --- Stretch Problem ---
-  // Test the DELETE here
-
+  // describe('[DELETE] /api/game/destroy/:id', () => {
+  //   let deletedID = null;
+  //   it('should delete and return deleted game', done => {
+  //     Game.findOne().then(del => {
+  //       deleteID = del.id;
+  //       chai.request(server)
+  //         .delete(`/api/game/destroy/${deletedID}`)
+  //         .then(res => {
+  //           expect(res.status).to.equal(202);
+  //           expect(res.body.success).to.equal(`${del.title} deleted from database!`);
+  //           done();
+  //         });
+  //     })
+  //       .catch(err => {
+  //         done(err);
+  //       });
+  //   });
+  // });
 });
