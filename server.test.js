@@ -82,5 +82,22 @@ describe('Games', () => {
         .catch(err => done(err));
     });
   });
+  describe('[PUT] /api/game/update', () => {
+    it('Should update a game', () => {
+      const updateGame = { id: gameId, title: 'Duck Hunt', releaseDate: 'November 1988', genre: 'Shooter' };
+      chai
+        .request(server)
+        .put('/api/game/update')
+        .send(updateGame)
+        .then(res => {
+          expect(res.status).to.equal(200);
+          expect(res.body.title).to.equal('Duck Hunt');
+          expect(res.body.releaseDate).to.equal('November 1988');
+          expect(res.body.genre).to.equal('Shooter');
+          done();
+        })
+        .catch(err => done(err));
+    });
+  });
 
 });
