@@ -467,7 +467,7 @@ describe('Games', () => {
         it('should return a status code of 200 when deleting a game', done => {
           chai
             .request(server)
-            .delete('/api/game/destroy/_')
+            .delete('/api/game/destroy')
             .send({ id: games[0]._id })
             .end((err, res) => {
               expect(res).to.have.status(200);
@@ -479,7 +479,7 @@ describe('Games', () => {
         it("should return sucess in the response body with the deleted game's title", done => {
           chai
             .request(server)
-            .delete('/api/game/destroy/_')
+            .delete('/api/game/destroy')
             .send({ id: games[0]._id })
             .end((err, res) => {
               expect(res.body).to.have.property('success');
@@ -496,7 +496,7 @@ describe('Games', () => {
 
           chai
             .request(server)
-            .delete('/api/game/destroy/_')
+            .delete('/api/game/destroy')
             .send({ id })
             .end((err, res) => {
               expect(res).to.have.status(422);
@@ -510,7 +510,7 @@ describe('Games', () => {
 
           chai
             .request(server)
-            .delete('/api/game/destroy/_')
+            .delete('/api/game/destroy')
             .send({ id })
             .end((err, res) => {
               expect(res.body).to.have.property('error');
@@ -526,7 +526,7 @@ describe('Games', () => {
 
           chai
             .request(server)
-            .delete('/api/game/destroy/_')
+            .delete('/api/game/destroy')
             .send({ id })
             .end((err, res) => {
               expect(res).to.have.status(422);
@@ -540,7 +540,7 @@ describe('Games', () => {
 
           chai
             .request(server)
-            .delete('/api/game/destroy/_')
+            .delete('/api/game/destroy')
             .send({ id })
             .end((err, res) => {
               expect(res.body).to.have.property('error');
