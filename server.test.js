@@ -35,13 +35,14 @@ describe('Games', () => {
     // by saving the document you'll be able to use it in each of your `it` blocks
     new Game({
       title: 'Super Mario Bros',
-      genre: 'dope'
-    }).save((err, savedGame) => {
+      genre: 'dope',
+      releaseDate: 'September 13, 1985'
+    }).save((err, saveFile) => {
       if (err) {
         console.log(err);
         return done();
       }
-      gameID = savedGame.id;
+      gameID = saveFile.id;
       done();
     });
   });
@@ -112,4 +113,16 @@ describe('Games', () => {
 
   // --- Stretch Problem ---
   // Test the DELETE here
+  describe('[DELETE] /api/game/destroy/:id', () => {
+    it('should delete ALL THE THINGS by given ID', done => {
+      chai
+        .request(server)
+        .delete(`/api/game/destroy/${gameID}`)
+        .then(res => {
+          expect(res.status).to.equal(200);
+          done();
+        })
+        .catch(err => done(err));
+    });
+  });
 });
