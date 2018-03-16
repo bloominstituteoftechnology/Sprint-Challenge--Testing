@@ -32,10 +32,13 @@
 
 ## DOCUMENTATION
 
-## NES game API
+## NES Game API
 
-Database of NES games
+**Database of NES games**
 
+## Server Routes
+
+```
 ## Get all Games
 
 |  URL   | `/api/game/get` |
@@ -59,6 +62,7 @@ Database of NES games
 |  URL   | `/api/game/destroy/:id` |
 | :----: | :---------------------: |
 | Method |       `[DELETE]`        |
+```
 
 ## TESTS
 
