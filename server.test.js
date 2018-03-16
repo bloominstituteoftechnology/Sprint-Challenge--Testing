@@ -133,22 +133,41 @@ describe('Games', () => {
     });
   });
 
-  // describe('[DELETE] /api/game/destroy/:id', () => {
-  //   let deletedID = null;
-  //   it('should delete and return deleted game', done => {
-  //     Game.findOne().then(del => {
-  //       deleteID = del.id;
-  //       chai.request(server)
-  //         .delete(`/api/game/destroy/${deletedID}`)
-  //         .then(res => {
-  //           expect(res.status).to.equal(202);
-  //           expect(res.body.success).to.equal(`${del.title} deleted from database!`);
-  //           done();
-  //         });
-  //     })
-  //       .catch(err => {
-  //         done(err);
-  //       });
-  //   });
-  // });
+  describe('[DELETE] /api/game/destroy/:id', () => {
+
+    let gameId = null;
+
+    it('should returned the removed game', done => {
+
+      Game.findOne()
+        .then(delData => {
+          gameId = delData.id;
+          chai
+            .request(server)
+            .delete(`/api/game/destroy/${gameId}`)
+            .then((res) => {
+              expect(res.status).to.equal(200);
+              expect(res.body.success).to.equal(`${delData.title} was successfully removed from the database`);
+              done();
+            })
+            .catch((err) => {
+              done(err);
+            });
+        })
+        .catch(err => {
+          done(err);
+        })
+    });
+
+    it('verify the game is deleted', done => {
+      Game.findById(gameId)
+        .then(gameData => {
+          expect(gameData).to.be.null;
+          done();
+        })
+        .catch(error => {
+          done(error);
+        })
+    });
+  });
 });
