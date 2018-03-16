@@ -359,7 +359,7 @@ describe('Games', () => {
           });
       });
 
-      it('should return have a property error in the response body when a title is not specified', done => {
+      it('should return an error in the response body when a title is not specified', done => {
         chai
           .request(server)
           .put('/api/game/update')
@@ -385,13 +385,13 @@ describe('Games', () => {
           });
       });
 
-      it('should return an error message in the response when an id is not specified', done => {
+      it('should return an error in the response body when an id is not specified', done => {
         chai
           .request(server)
           .put('/api/game/update')
           .send({ title: 'Testing update' })
           .end((err, res) => {
-            expect(res.body.error).to.equal('Must Provide a title && Id');
+            expect(res.body).to.have.property('error');
 
             done();
           });
@@ -414,7 +414,7 @@ describe('Games', () => {
           });
       });
 
-      it('should return an error message in the response when receiving an id not in the database', done => {
+      it('should return an error in the response body when receiving an id not in the database', done => {
         const testTitle = 'Testing update';
         const id = '1234567890abcdefghijklmnopqrstuvwxyz';
 
@@ -423,7 +423,7 @@ describe('Games', () => {
           .put('/api/game/update')
           .send({ title: testTitle, id })
           .end((err, res) => {
-            expect(res.body.error).to.equal('Cannot find game by that id');
+            expect(res.body).to.have.property('error');
 
             done();
           });
@@ -446,7 +446,7 @@ describe('Games', () => {
           });
       });
 
-      it('should return an error message in the response when receiving a malformed id', done => {
+      it('should return an error in the response body when receiving a malformed id', done => {
         const testTitle = 'Testing update';
         const id = '-1';
 
@@ -455,7 +455,7 @@ describe('Games', () => {
           .put('/api/game/update')
           .send({ title: testTitle, id })
           .end((err, res) => {
-            expect(res.body.error).to.equal('Cannot find game by that id');
+            expect(res.body).to.have.property('error');
 
             done();
           });
