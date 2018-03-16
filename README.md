@@ -32,9 +32,84 @@
 
 ## DOCUMENTATION GOES HERE
 
+# Video Game API
+
+## API Description
+
+* This API handles a database of video games, using basic CRUD operations to interact with it.
+
+## Route Descriptions
+
+### [GET]
+
+* The [GET] route returns an array of JSON objects of all the video games currently in the database, in the following format:
+
 ```
-  THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
+[
+    {
+        "_id": "5aabeba0af1dcf2dc8923390",
+        "title": "Final Fantasy VII",
+        "releaseDate": "January 31, 1997",
+        "genre": "JRPG",
+        "__v": 0
+    },
+    {
+        "_id": "5aabec99af1dcf2dc8923391",
+        "title": "Final Fantasy VIII",
+        "releaseDate": "February 11, 1999",
+        "genre": "JRPG",
+        "__v": 0
+    }
+]
 ```
+
+### [POST]
+
+* The [POST] route creates a new entry in the database, requiring title and genre, with releaseDate being optional. It returns the newly created JSON object:
+
+```
+  {
+      "_id": "5aabeba0af1dcf2dc8923390",
+      "title": "Final Fantasy VII",
+      "releaseDate": "January 31, 1997",
+      "genre": "JRPG",
+      "__v": 0
+  }
+```
+
+### [PUT]
+
+* The [PUT] route submits a request to update an entry in the database, it requires a title and id in the request body. It returns the updated JSON object: 
+
+> Old Entry
+
+```
+{
+    "_id": "5aabed35af1dcf2dc8923392",
+    "title": "Final Fantasy VIII",
+    "releaseDate": "July 7, 2000",
+    "genre": "JRPG",
+    "__v": 0
+}
+```
+
+> Updated Entry
+
+```
+{
+    "_id": "5aabed35af1dcf2dc8923392",
+    "title": "Final Fantasy IX",
+    "releaseDate": "July 7, 2000",
+    "genre": "JRPG",
+    "__v": 0
+}
+```
+
+### [DELETE]
+
+* The [DELETE] route submits a request to remove an entry from the database. It requires an id given either in the request parameters or body. It returns a message that the game with that title has been removed from the database.
+
+---
 
 ## TESTS
 
