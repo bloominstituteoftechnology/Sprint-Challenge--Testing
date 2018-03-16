@@ -10,6 +10,8 @@ chai.use(chaiHTTP);
 
 describe('Games', () => {
   before(done => {
+    let gameId = null;
+    let testGame = null;
     mongoose.Promise = global.Promise;
     mongoose.connect('mongodb://localhost/test');
     const db = mongoose.connection;
@@ -27,15 +29,14 @@ describe('Games', () => {
     });
   });
   beforeEach(done => {
-    let gameId;
-    let  testGame;
+
     
-    const newGame = new Game({
-      title: 'Galaga',
-      releaseDate: 'December 1981',
-      genre: 'Fixed Shooter'
+    const thisGame = new Game({
+      title: 'Kirby\'s Adventure',
+      releaseDate: 'May 1993',
+      genre: 'Action Platformer'
     });
-    newGame
+    thisGame
       .save()
       .then(game => {
         testGame = game;
@@ -44,35 +45,39 @@ describe('Games', () => {
       })
       .catch(err => {
         console.log(err);
+        done();
       });
   });
   afterEach(done => {
     Game.remove({}, err => {
       if (err) console.log(err);
+      done();
     });
   });
 
   // test the POST here
   describe('[POST /api/game/create', () => {
-    const newGame = {
-      title: 'Mortal Kombat',
-      releaseDate: 'October 1992',
-      genre: 'Fighting'
-    };
-    chai
-      .request(server)
-      .post('/api/game/create')
-      .send(newGame)
-      .end((err, res) => {
-        expect(res.status).to.equal(200);
-        expect(res.body.title).to.equal('Mortal Kombat');
-        done();
-      });
+    it('should add a new game', done => {
+      const thisGame = {
+        title: 'Kirby\'s Adventure',
+        releaseDate: 'May 1993',
+        genre: 'Action Platformer'
+      };
+      chai
+        .request(server)
+        .post('/api/game/create')
+        .send(thisGame)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.title).to.equal('Kirby\'s Adventure');
+          done();
+        });
+    });
       it('should return Error Status 422 if data is incorrect', () => {
-        const newGame = {
-          title: 'Mortal Kombat',
-          releaseDate: 'October 1992',
-          genre: 'Fighting'
+        const thisGame = {
+          title: 'Kirby\'s Adventure',
+        releaseDate: 'May 1993',
+        genre: 'Action Platformer'
         };
         chai
           .request(server)
@@ -100,7 +105,7 @@ describe('Games', () => {
           }
           expect(res.body[0].title).to.eql(testGame.title);
           expect(res.body[0]._id).to.equal(gameId.toString());
-          done;
+          done();
         });
     });
   });
@@ -120,7 +125,7 @@ describe('[PUT] api/game/update', () => {
           throw new Error(err);
           done();
         }
-        expectr(res.body.title).to.equal(gameUpdate.title);
+        expect(res.body.title).to.equal(gameUpdate.title);
         done();
       });
   });
@@ -136,7 +141,7 @@ describe('[PUT] api/game/update', () => {
         if (err) {
           expect(err.status).to.equal(422);
           const { error } = err.response.body;
-          expect(error).to.eql('Title and Id are required for updates.');
+          expect(error).to.eql('Must Provide a title && Id');
         }
         done();
       });
@@ -153,11 +158,32 @@ describe('[PUT] api/game/update', () => {
       .end((err, res) => {
         if (err) expect(err.status).to.equal(422);
         const { error } = err.response.body;
-        expect(error).to.eql('That Id does not exist. Please try again.');
+        expect(error).to.eql('Cannot find game by that id');
       });
       done();
   });
 });
   // --- Stretch Problem ---
   // Test the DELETE here
+  describe('[DELETE] /api/game/destroy/:id', () => {
+    it('should delete a game when given matching id', done => {
+      const deleteGame = {
+        id: gameId
+      };
+      chai
+        .request(server)
+        .delete('/api/game/destroy/:id')
+        .send(deleteGame)
+        .end((err, res) => {
+          if (err) {
+            throw new Error(err);
+            done();
+          }
+          expect(res.status).to.equal(200);
+          const { success } = JSON.parse(res.res.text);
+          expect(success).to.equal('Kirby\'s Adventure was removed from the DB');
+          done();
+        });
+    });
+  });
 });
