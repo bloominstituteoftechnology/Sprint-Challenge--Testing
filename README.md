@@ -10,9 +10,9 @@
 
 ## Questions - Self Study - You can exercise your Google-Fu for this and any other _Sprint Challenge_ in the future.
 
-1. In Mocha, what are the differences between `before` `after` `beforeEach` `afterEach`? When do they run? What are they used for?
-1. What is the point of Test Driven Development? What do you personally think about this approach?
-1. What is a `spy` in `sinon`? How do we use it to effectively test a `callback`?
+1.  In Mocha, what are the differences between `before` `after` `beforeEach` `afterEach`? When do they run? What are they used for?
+1.  What is the point of Test Driven Development? What do you personally think about this approach?
+1.  What is a `spy` in `sinon`? How do we use it to effectively test a `callback`?
 
 ## Initializing Project -
 
@@ -32,8 +32,65 @@
 
 ## DOCUMENTATION GOES HERE
 
+# Games API
+
+## Port - Location for all EndPoints to interface with the games API is: http://localhost:5050/api/game
+
+## [POST]
+
+| Endpoint | Type | data |
+| :------: | :--: | :--- |
+| /create  | Post | JSON |
+
+### Expected data format:
+
 ```
-  THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
+{
+  "title" : "Game Title",
+  "data"  : "June 4th, 1990",
+  "genre": "Action"
+}
+```
+
+## [GET] - Retrieve all games
+
+| Endpoint | Type | data |
+| :------: | :--: | :--- |
+|   /get   | Get  | JSON |
+
+## [PUT]
+
+| Endpoint | Type | data |
+| :------: | :--: | :--- |
+| /update  | Put  | JSON |
+
+### Expected data format:
+
+```
+{
+  "id"    : "game_id"
+  "title" : "New Title",
+
+}
+```
+
+## [DELETE]
+
+| Endpoint |  Type  | data |
+| :------: | :----: | :--- |
+| /delete  | Delete | JSON |
+
+### options (params or body)
+
+## As Params `/api/game/delete/:id`
+
+## Body
+
+```
+{
+
+* "id" : "game_id"
+  }
 ```
 
 ## TESTS
@@ -48,9 +105,9 @@
 
 ```
 {
-  title: 'California Games',
-  genre: 'Sports',
-  date: 'June 1987'
+title: 'California Games',
+genre: 'Sports',
+date: 'June 1987'
 }
 ```
 
@@ -77,3 +134,7 @@ expect(res.data[0].foo).to.equal(bar.foo);
 * DELETE can take an ID off of the route parameter, or off of the req.body. It's your choice.
 
 ### Remember you can use any resources you want to solve these problems, but avoid copying/pasting solutions you've previously written. Also if you don't finish all of the challenges, that's fine! Just do what you can and submit your challenges in the end! HAVE FUN!
+
+```
+
+```
