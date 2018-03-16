@@ -29,8 +29,8 @@ describe('Games', () => {
   });
   // declare some global variables for use of testing
   // hint - these wont be constants because you'll need to override them.
-  let testGame1, testGame2 = null;
-  let testGame1_id, testGame2_id = null;
+  let testGame1 = null;
+  let testGame1_id = null;
 
   beforeEach(done => {
     // write a beforeEach hook that will populate your test DB with data
@@ -41,35 +41,23 @@ describe('Games', () => {
       genre: 'Sports',
       date: 'February 2018'
     });
-    const game2 = new Game({
-      title: 'Monopoly',
-      genre: 'Board Game',
-      date: 'January 1902'
-    });
     game1.save()
       .then(game => {
         testGame1 = game;
-        testGame1_id = game._id.toString();
+        testGame1_id = game._id;
+        done();
       })
       .catch(err => {
         console.error('Error saving game1');
+        done();
       });
-    game2.save()
-      .then(game => {
-        testGame2 = game;
-        testGame2_id = game._id.toString();
-      })
-      .catch(err => {
-        console.error('Error saving game2');
-      });
-      done();
   });
   afterEach(done => {
     // simply remove the collections from your DB.
     Game.remove({}, err => {
       if (err) console.error('Error removing test data');
+      done();
     });
-    done();
   });
 
   // test the POST here
@@ -115,15 +103,48 @@ describe('Games', () => {
         .end((err, res) => {
           expect(res.status).to.equal(200);
           expect(res.body[0].title).to.equal(testGame1.title);
-          expect(res.body[1].title).to.equal(testGame2.title);
-          expect(res.body[0]._id).to.equal(testGame1_id);
-          expect(res.body[1]._id).to.equal(testGame2_id);
+          expect(res.body[0]._id).to.equal(testGame1_id.toString());
           done();
         });
     });
   });
 
   // test the PUT here
+  describe('[PUT] /api/game/update', () => {
+    it('should update a game in database', (done) => {
+      const updatedGameTitle = 'Biathlon';
+      const updatedGameGenre = 'Olympic';
+      const updatedGameDate = '2018'
+      const updatedGame = {
+        id: testGame1_id,
+        title: updatedGameTitle,
+        genre: updatedGameGenre,
+        date: updatedGameDate
+      };
+      chai.request(server)
+        .put('/api/game/update')
+        .send(updatedGame)
+        .end((err, res) => {
+          expect(res.body.title).to.equal(updatedGameTitle);
+          done();
+        });
+    });
+    it('should return a status of 422 for a nonexistant game', (done) =>{
+      const updatedGame = {
+        id: -1,
+        title: 'The Game',
+        type: 'This type',
+        date: 'Tomorrow'
+      };
+      chai.request(server)
+        .put('/api/game/update')
+        .send(updatedGame)
+        .end((err, res) => {
+          expect(err.status).to.equal(422);
+        });
+        done();
+    });
+  });
 
   // --- Stretch Problem ---
   // Test the DELETE here
