@@ -31,6 +31,60 @@
 * The API itself is really simple. You're task is to peek at the endpoints found in the `server.js` file and write docs for each one, then write the tests for the end points.
 
 ## DOCUMENTATION GOES HERE
+  RETRO NES GAME LIBRARY
+==========
+###### *A TEST DRIVEN DEVELOPMENT API* 
+
+
+
+
+This api will allow you to unit test server endpoint  methods using chai, mocha, and sinon modules.  It uses a basic Node RESTful API.
+You can test CRUD operations on a game library.
+## :heavy_check_mark: <b>You will need to have:</b>
+####  *Node.js*
+<ul>
+    <li>it is assumed you have a basic understanding of node.js as it is an essential part of this api.</li>
+</ul>
+
+#### *POSTMAN*
+<ul>
+    <li>a very powerful API debugger for making fast HTTP requests.</li>
+    <li>all postman requests must be sent in json format. See the example below. All fields are required except where noted.</li>
+</ul>
+<pre><code>
+    {
+        "title": "title of game",
+        "genre": "genre of game"
+        "releaseDate": "date game was released",
+    }
+    </pre></code>
+
+
+#### *MongoDB*
+<ul>
+    <li>the database that our express server will be connecting to.</li>
+</ul>
+
+##  :wrench:Configuration
+<ul>
+    <li>make sure dependencies are installed by running <i>npm install</i> from the terminal within the main directory.</li>
+    <li>make sure you have MongoDB running before starting the test server, it may also help to have MongoDB compass installed so you can monitor MongoDB's connectivity and changes.</li>
+    <li>in a separate terminal window run <i>npm test</i> to begin testing</li>
+    <li>direct all requests through POSTMAN on localhost:5050.  All endpoints and allowed requests will be discussed in the next section.</li>
+</ul>
+
+##  :airplane:  Endpoints
+This API allows you to perform POST, PUT, GET, and DELETE requests.
+
+
+| ENDPOINT          | TYPE   | DATA | ACTION                                   |
+|-------------------|--------|------|------------------------------------------|
+| /api/game/get     | GET    | json | displays list of all game from the database |
+| /api/game/create    | POST   | json | creates a new game         |
+| /api/game/:id | GET    | json | gets a single game<br>              |
+| /api/game/update/:id | PUT    | json | updates a single game                |
+| /api/game/destroy/:id | DELETE | json | deletes a single game                 |
+
 
 ```
   THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
