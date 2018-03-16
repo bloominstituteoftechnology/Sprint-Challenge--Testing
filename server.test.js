@@ -34,7 +34,7 @@ describe("Games", () => {
     const newGame = new Game({
       title: "California Games",
       genre: "Sports",
-      date: "June 1987"
+      releaseDate: "June 1987"
     });
 
     newGame
@@ -62,7 +62,7 @@ describe("Games", () => {
       const myGame = new Game({
         title: "Super Mario Bros.",
         genre: "Action",
-        date: "September 1985"
+        releaseDate: "September 1985"
       });
       chai
         .request(server)
@@ -77,7 +77,7 @@ describe("Games", () => {
     it("should return a 422 error", done => {
       const myGame = {
         genre: "Sport",
-        date: "June 1987"
+        releaseDate: "June 1987"
       };
       chai
         .request(server)
