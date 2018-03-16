@@ -1,9 +1,13 @@
 const mongoose = require('mongoose');
 const chai = require('chai');
 const { expect } = chai;
+const chaihttp = require('chai-http');
 const sinon = require('sinon');
 
 const Game = require('./models');
+
+const server = require('./server');
+chai.use(chaihttp);
 
 describe('Games', () => {
   before(done => {
@@ -69,6 +73,39 @@ describe('Games', () => {
   });
 
   // test the POST here
+  describe('[POST] /api/game/create', () => {
+    it('should add a new Game', (done) => {
+      const newGame = {
+        title: 'Chess',
+        genre: 'Board Game',
+        date: '6th Century'
+      };
+      chai.request(server)
+        .post('/api/game/create')
+        .send(newGame)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.title).to.equal('Chess');
+          done();
+        });
+    });
+    it('should send back a 422 for bad data', (done) => {
+      const newGame = {
+        title: 'Chess',
+        type: 'Board Game',
+        date: '6th Century'
+      };
+      chai.request(server)
+        .post('/api/game/create')
+        .send(newGame)
+        .end((err, res) => {
+          if (err) {
+            expect(err.status).to.equal(422);
+          }
+          done();
+        });
+    });
+  });
 
   // test the GET here
 
