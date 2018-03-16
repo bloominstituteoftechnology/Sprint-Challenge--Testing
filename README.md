@@ -30,11 +30,70 @@
 * You're going to be writing the documentation and the tests for a CRUD API.
 * The API itself is really simple. You're task is to peek at the endpoints found in the `server.js` file and write docs for each one, then write the tests for the end points.
 
-## DOCUMENTATION GOES HERE
+## DOCUMENTATION:
+
+## [POST] - Create a new game
+
+``` POST /api/game/create ```
+
+__Parameters:__
+
+| Field          | Type            | Description  |
+|:-------------:| :-------------: | :-----: |
+| `title`      | `string`  | **Required**. Game title |
+| `releaseDate` | `string`      |    Year of game's release |
+| `genre`      | `string`      |   **Required**. Game genre |
+
+
+Example Input
 
 ```
-  THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
+{
+  title: 'Donkey Kong',
+  releaseDate: 'July 1981'
+  genre: 'Platformer',
+}
 ```
+
+Response Status
+
+``` 201 Created ```
+
+## [GET] - Return all games
+``` GET /api/game/get ```
+
+Response Status
+
+``` 200 OK ```
+
+## [PUT] - Update a game by title and id
+``` PUT /api/game/update ```
+
+__Parameters:__
+
+| Field          | Type            | Description  |
+| :-------------: | :-------------: | :-----: |
+| ``` title ```      | ``` string ``` | **Required**. New game title |
+| ``` ID ```      | ``` string ```      |   **Required**. Game ID being updated |
+
+Response Status
+
+``` 201 Created ```
+
+## [DELETE] - Delete a game by id
+``` DELETE /api/game/destroy/:id ```
+
+__Parameters:__
+
+__*Note*__: A game can be deleted by placing it's id on the request body __or__ in the request params.
+
+| Field          | Type            | Description  |
+| :-------------: | :-------------: | :-----: |
+| ``` ID ```      | ``` string ```      |   **Required**. Game ID being deleted |
+
+Response Status
+
+``` 200 OK ```
 
 ## TESTS
 
