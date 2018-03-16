@@ -32,9 +32,52 @@
 
 ## DOCUMENTATION GOES HERE
 
+# Guelmis API
+
+Here you found the documentation of our api! We're excited to show you the ins and outs of how to interface with our API. This API is all about Games. _NOTE_ that interfacing with our API will bring much joy and satisfaction.
+
+## PORT-  `http://localhost:5050`
+
+#### Example:
+
+* Fields marked with an asterisk are required. Everything else is supplimental information about our Games.
+
 ```
-  THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
+{
+  *title: 'California Games',
+  *genre: 'Sports',
+  *date: 'June 1987'
+}
 ```
+
+## [GET] `/api/game/get`
+
+| Endpoint      |     Type      |  data |
+| ------------- | :-----------: | ----: |
+| /api/game/get |   get   |    json |
+
+
+
+## [POST] `/api/game/create`
+
+| Endpoint      | Type | data |
+| ------------- | :--: | ---: |
+| /api/game/create | post | json |
+
+
+
+## [PUT] `/api/game/update`
+
+| Endpoint      | Type | data |
+| ------------- | :--: | ---: |
+| /api/game/update | put | json |
+
+
+## [DELETE] `/api/game/destroy/:id`
+
+| Endpoint      | Type | data |
+| ------------- | :--: | ---: |
+| /api/game/destroy/:id | delete | json |
 
 ## TESTS
 
