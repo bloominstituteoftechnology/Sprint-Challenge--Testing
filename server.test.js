@@ -113,7 +113,7 @@ describe("Games", () => {
 
   // test the PUT here
   describe("[PUT] /api/game/update", () => {
-    it("should update information in the database", done => {
+    it("should update game information in the database", done => {
       const updatedGame = {
         id: gameId,
         title: "Cal Games"
@@ -151,4 +151,46 @@ describe("Games", () => {
 
   // --- Stretch Problem ---
   // Test the DELETE here
+  describe("[DELETE] /api/game/destroy/:id", () => {
+    it("should delete game when id is passed as params", done => {
+      chai
+        .request(server)
+        .delete(`/api/game/destroy/${gameId}`)
+        .end((err, res) => {
+          expect(res.body.success).to.equal(
+            `${marioGame.title} was removed from the DB`
+          );
+          done();
+        });
+    });
+    it("should delete game when id is passed in body", done => {
+      const id = {
+        id: gameId
+      };
+      chai
+        .request(server)
+        .delete("/api/game/destroy/:id")
+        .send(id)
+        .end((err, res) => {
+          expect(res.body.success).to.equal(
+            `${marioGame.title} was removed from the DB`
+          );
+          done();
+        });
+    });
+    it("should return a 422 error", done => {
+      chai
+        .request(server)
+        .delete(`/api/game/destroy/${gameId}354`)
+        .end((err, res) => {
+          if (err) {
+            expect(err.response.body.error).to.equal(
+              `Cannot find game by that id`
+            );
+            expect(err.status).to.equal(422);
+            done();
+          }
+        });
+    });
+  });
 });
