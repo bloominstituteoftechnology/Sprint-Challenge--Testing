@@ -12,7 +12,7 @@ describe('NESGames Model', () => {
     const db = mongoose.connection;
     db.on('error', () => console.error.bind(console, 'connection error'));
     db.once('open', () => {
-      console.log('we are connected');
+      console.log('\n*~*~*~*~*~*~*~*~*~ we are connected ~*~*~*~*~*~*~*~*~*\n');
       done();
     });
   });
@@ -20,7 +20,7 @@ describe('NESGames Model', () => {
   after(done => {
     mongoose.connection.db.dropDatabase(() => {
       mongoose.connection.close(done);
-      console.log('we are disconnected');
+      console.log('\n*~*~*~*~*~*~*~*~ we are disconnected *~*~*~*~*~*~*~*~*\n');
     });
   });
 
@@ -29,7 +29,7 @@ describe('NESGames Model', () => {
       const game = new Game({
         title: 'California Games',
         date: 'June 1987',
-        genre: 'Sports'
+        genre: 'Sports',
       });
       expect(game.getGameTitle()).to.equal('California Games');
     });
@@ -42,8 +42,8 @@ describe('NESGames Model', () => {
         {
           title: 'California Games',
           date: 'June 1987',
-          genre: 'Sports'
-        }
+          genre: 'Sports',
+        },
       ]);
       Game.getGames(returnObject => {
         expect(returnObject.length).to.equal(1);
