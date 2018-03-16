@@ -46,18 +46,18 @@ Documentation for all APIs.
 
 All `/ama` **API** endpoints
 
-| endpoint           | type   | description                                                                    | output | type   |
-| ------------------ | ------ | ------------------------------------------------------------------------------ | ------ | ------ |
-| `/api/game/create` | POST   | Creates game and saves it to the database.                                     | JSON   | Object |
-| `/api/game/get`    | GET    | Requests all games                                                             | JSON   | Array  |
-| `/ama/id`          | UPDATE | Updates either the question or answer field (but not both) of an AMA with `id` | JSON   | Object |
-| `/ama/id`          | DELETE | Deletes the AMA with `id`                                                      | JSON   | Object |
+| endpoint           | type   | description                 | output | type   |
+| ------------------ | ------ | --------------------------- | ------ | ------ |
+| `/api/game/create` | POST   | Saves game to the database. | JSON   | Object |
+| `/api/game/get`    | GET    | Requests all games          | JSON   | Array  |
+| `/api/game/update` | UPDATE | Updates game title          | JSON   | Object |
+| `/api/game/delete` | DELETE | Deletes game                | JSON   | Object |
 
 ---
 
 ### [POST] `/api/game/create`
 
-**Description**: creates a game and saves it to the database.
+**Description**: saves game to the database.
 
 #### Example:
 
@@ -126,143 +126,48 @@ Response: status code `200`
 
 ---
 
-### [GET] `/api/ama/id`
+### [UPDATE] `/api/game/update`
 
-**Description**: gets the specific AMA with `id`.
+**Description**: updates game title.
 
-#### Examples:
+#### Example:
 
-#### _Unanswered AMA_:
+Request: `[UPDATE] /api/game/update`
 
-Request: `[GET] /api/ama/1234567890abcdefghijklmnopqrstuvwxyz`
+```
+{
+  id: 1234567890abcdefghijklmnopqrstuvwxyz,
+  title: 'LA Games'
+}
+```
 
 Response: status code `200`
 
 ```
 {
   _id: '5aabeb980834920bd71fd71d',
-  title: 'California Games',
+  title: 'LA Games',
   genre: 'Sports',
   releaseDate: 'June 1987',
   __v: 0
 }
 ```
 
-#### _Answered AMA_:
-
-Request: `[GET] /api/ama/zyxwvutsrqponmlkjihgfedcba0987654321`
-
-Response: status code `200`
-
-```
-{
-  id: zyxwvutsrqponmlkjihgfedcba0987654321,
-  question: 'What differentiates Lambda School from other CS programs?',
-  answered: true,
-  answer: 'You don't pay a cent until you get a job!'
-  createdOn: 'YYYY-MM-DDT00:00:00.000Z',
-  __v: 0
-}
-```
-
-#### Notes
-
-1. When the AMA with `id` does not exist:
-
-Request: `[GET] /api/ama/ayxwvutsrqponmlkjihgfedcba0987654321`
-
-```
-incorrect id (starts with a) - ayxwvutsrqponmlkjihgfedcba0987654321
-correct id   (starts with z) - zyxwvutsrqponmlkjihgfedcba0987654321
-```
-
-Response: status code `404`
-
-```
-{
-    "message": "No ama with id (ayxwvutsrqponmlkjihgfedcba0987654321) found.",
-    "ama": null
-}
-```
-
-2. When the `id` is malformed (incorrect format for the database to parse):
-
-Request: `[GET] /api/ama/1`
-
-Response: status code `500`
-
-```
-{
-    "message": "Error requesting ama with id 1"
-}
-```
-
 ---
 
-### [UPDATE] `/api/ama/id`
+### [DELETE] `/api/game/delete`
 
-**Description**: update the specific AMA's question or answer with `id`.
-
-#### Examples:
-
-#### _Updating the question for an AMA_:
-
-Request: `[UPDATE] /api/ama/1234567890abcdefghijklmnopqrstuvwxyz`
-
-```
-{
-  question: 'What programs are available at Lambda School?'
-}
-```
-
-Response: status code `200`
-
-```
-{
-  id: 1234567890abcdefghijklmnopqrstuvwxyz,
-  question: 'What programs are available at Lambda School?',
-  answered: false,
-  createdOn: 'YYYY-MM-DDT00:00:00.000Z',
-  __v: 0
-}
-```
-
-#### _Answering the question for an AMA_:
-
-Request: `[UPDATE] /api/ama/1234567890abcdefghijklmnopqrstuvwxyz`
-
-```
-{
-  answer: 'There is a full-stack and a machine-learning program.'
-}
-```
-
-Response: status code `200`
-
-```
-{
-  id: 1234567890abcdefghijklmnopqrstuvwxyz,
-  question: 'What programs are available at Lambda School?',
-  answer: 'There is a full-stack and a machine-learning program.'
-  answered: true,
-  createdOn: 'YYYY-MM-DDT00:00:00.000Z',
-  __v: 0
-}
-```
-
-#### Notes
-
-1. The `answered` field is automatically changed to `true` if an answer is provided.
-
----
-
-### [DELETE] `/api/ama/id`
-
-**Description**: deletes the specific AMA with `id`.
+**Description**: deletes game.
 
 #### Example:
 
-Request: `[DELETE] /api/ama/1234567890abcdefghijklmnopqrstuvwxyz`
+Request: `[DELETE] /api/game/delete`
+
+```
+{
+  id: 1234567890abcdefghijklmnopqrstuvwxyz,
+}
+```
 
 Response: status code `200`
 
