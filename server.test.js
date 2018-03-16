@@ -34,11 +34,12 @@ describe('Games', () => {
 
   beforeEach(done => {
 
-    Game.create({
-      title: 'Contest of Champions',
-      genre: 'Fighting',
-      date: 'August 18 2007',
-    },
+    Game.create(
+      {
+        title: 'Contest of Champions',
+        genre: 'Fighting',
+        date: 'August 18 2007',
+      },
       {
         title: 'Madden 2018',
         genre: 'Sports',
@@ -96,8 +97,8 @@ describe('Games', () => {
         .get('/api/game/get')
         .then(res => {
           expect(res.status).to.equal(200);
-          expect(res.body[0].title).to.equal('Angry Birds');
-          expect(res.body[1].genre).to.equal('Strategy');
+          expect(res.body[0].title).to.equal('Contest of Champions');
+          expect(res.body[0].genre).to.equal('Fighting');
           done();
         })
         .catch(err => {
@@ -106,8 +107,33 @@ describe('Games', () => {
     });
   });
 
-  // test the PUT here
+  describe('[PUT] /api/game/update', () => {
+    it('should find and update any game details', done => {
+      Game.find({ title: 'Contest of Champions' })
+        .then(details => {
+          const updatedGame = {
+            id: details[0].id,
+            title: 'Marvel\'s Contest of Champions',
+          };
+          chai.request(server)
+            .put('/api/game/update')
+            .send(updatedGame)
+            .then(res => {
+              expect(res.status).to.equal(200);
+              expect(res.body.title).to.equal('Marvel\'s Contest of Champions');
+              done();
+            })
+            .catch(err => {
+              done(err);
+            });
+        })
+        .catch(err => {
+          done(err);
+        });
+    });
+  });
 
   // --- Stretch Problem ---
   // Test the DELETE here
+
 });
