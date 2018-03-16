@@ -250,7 +250,7 @@ describe('Games', () => {
         .end((err, res) => {
           expect(res.body.length).to.equal(games.length);
 
-          res.body.map(game => {
+          res.body.forEach(game => {
             const gameTest = games.find(e => e.title === game.title);
 
             expect(game.title).to.equal(gameTest.title);
