@@ -130,7 +130,41 @@ describe('Games', () => {
         });
     });
 
+    it('should return some kind of error message when no title is supplied', done => {
+      const game = {
+        genre: 'Computer Science Academy',
+        releaseDate: 'January 2018',
+      };
+
+      chai
+        .request(server)
+        .post('/api/game/create')
+        .send(game)
+        .end((err, res) => {
+          expect(res.body.error).to.not.equal(null);
+
+          done();
+        });
+    });
+
     it('should return a status code of 422 when no genre is supplied', done => {
+      const game = {
+        title: 'Lambda School Games',
+        releaseDate: 'January 2018',
+      };
+
+      chai
+        .request(server)
+        .post('/api/game/create')
+        .send(game)
+        .end((err, res) => {
+          expect(res).to.have.status(422);
+
+          done();
+        });
+    });
+
+    it('should return some kind of error message when no genre is supplied', done => {
       const game = {
         title: 'Lambda School Games',
         releaseDate: 'January 2018',
