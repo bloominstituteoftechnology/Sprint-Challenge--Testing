@@ -220,6 +220,57 @@ describe('Games', () => {
   });
 
   // test the GET here
+  describe(`[GET] /api/game/get`, _ => {
+    it('should return a status code of 200 when retrieving games', done => {
+      chai
+        .request(server)
+        .get('/api/game/get')
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+
+          done();
+        });
+    });
+
+    it('should return an array when retrieving games', done => {
+      chai
+        .request(server)
+        .get('/api/game/get')
+        .end((err, res) => {
+          expect(res.body).to.be.an('array');
+
+          done();
+        });
+    });
+
+    it('should return the correct list of games', done => {
+      chai
+        .request(server)
+        .get('/api/game/get')
+        .end((err, res) => {
+          expect(res.body[0].title).to.equal(games[0].title);
+          expect(res.body[0].genre).to.equal(games[0].genre);
+          expect(res.body[0].releaseDate).to.equal(games[0].releaseDate);
+
+          expect(res.body[1].title).to.equal(games[1].title);
+          expect(res.body[1].genre).to.equal(games[1].genre);
+
+          expect(res.body[2].title).to.equal(games[2].title);
+          expect(res.body[2].genre).to.equal(games[2].genre);
+          expect(res.body[2].releaseDate).to.equal(games[2].releaseDate);
+
+          expect(res.body[3].title).to.equal(games[3].title);
+          expect(res.body[3].genre).to.equal(games[3].genre);
+          expect(res.body[3].releaseDate).to.equal(games[3].releaseDate);
+
+          expect(res.body[4].title).to.equal(games[4].title);
+          expect(res.body[4].genre).to.equal(games[4].genre);
+          expect(res.body[4].releaseDate).to.equal(games[4].releaseDate);
+
+          done();
+        });
+    });
+  });
 
   // test the PUT here
 
