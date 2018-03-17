@@ -10,3 +10,4 @@
 
 1. What is a `spy` in `sinon`? How do we use it to effectively test a `callback`?
 - 
+-
