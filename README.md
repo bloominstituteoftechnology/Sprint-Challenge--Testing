@@ -32,8 +32,63 @@
 
 ## DOCUMENTATION GOES HERE
 
+# Games API
+
+## Port - Location for all EndPoints to interface with the games API is: http://localhost:5050/api/game
+
+## [POST]
+
+| Endpoint | Type | data |
+| :------: | :--: | :--- |
+| /create  | POST | JSON |
+
+### Expected data format:
+
 ```
-  THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
+{
+  title: 'California Games',
+  genre: 'Sports',
+  date: 'June 1987',
+}
+```
+
+## [GET] - Retrieve all games
+
+| Endpoint | Type | data |
+| :------: | :--: | :--- |
+|   /get   | GET  | JSON |
+
+## [PUT]
+
+| Endpoint | Type | data |
+| :------: | :--: | :--- |
+| /update  | PUT  | JSON |
+
+### Expected data format:
+
+```
+{
+  "id"    : "game_id",
+  "title" : "New Title",
+}
+```
+
+## [DELETE]
+
+| Endpoint |  Type  | data |
+| :------: | :----: | :--- |
+| /delete  | DELETE | JSON |
+
+### options (params or body)
+
+## As Params `/api/game/delete/:id`
+
+## Body
+
+```	 
+{
+  "id" : "game_id"
+}
 ```
 
 ## TESTS
