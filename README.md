@@ -19,11 +19,10 @@
 * Fork/Clone this project into a directory on your machine.
 * `cd` into your forked local copy.
 * notice there is a `package.json` file included. We have included all of the dev-dependencies that you'll need to build your project.
-* run `npm install` to download all the dependencies you need for this project.
-* run `npm test` to start your tests.
-* Keep an active log of your changes by `commiting` and `pushing` often.
+* run `yarn` to download and install all the dependencies you need for this project.
+* run `yarn test` to start your tests.
+* Keep an active log of your changes by `commiting` with Git and `pushing` often to GitHub.
 * Write all of your tests in the `server.test.js` file. This is where you're going to be doing your API mocking/testing.
-* Once you're done writing all the tests, push your commits to your fork and submit a Pull-Request.
 
 ## Project Description
 
@@ -40,7 +39,7 @@
 
 * I have already manually tested this API for you.
 * All you have to do is write Unit tests to ensure that the end points do what they're supposed to do.
-* THERE IS NO NEED TO NPM START. BUT YOU'LL WANT TO ENSURE THAT YOU HAVE A `MONGO` INSTANCE UP AND RUNNING.
+* THERE IS NO NEED TO `YARN START`, BUT YOU'LL WANT TO ENSURE THAT YOU HAVE A `MONGO` INSTANCE UP AND RUNNING.
 
 ### Write a test for the "POST" method
 
