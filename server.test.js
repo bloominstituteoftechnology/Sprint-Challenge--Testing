@@ -126,11 +126,11 @@ describe('[PUT] /api/game/update', () => {
       };
       chai.request(server).delete('/api/game/destroy/:id').send(gameDelete).end((err, res) => {
         if(err) {
-          console.Error('chai request error: ',err);
+          console.Error('chai request error:', err);
           done();
         }
         expect(res.status).to.equal(200);
-        expect(res.body.title).to.equal('Manhattan Games');
+        expect(res.body.id).to.equal(gameDelete.id);
         done();
       });
     });
