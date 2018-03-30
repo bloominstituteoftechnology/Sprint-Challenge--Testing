@@ -35,6 +35,96 @@
 THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
 ```
 
+#Server-Testing Assignment - Jobs
+
+## Port - Location of all endpoints to interface with our API is at `http://localhost:5050`
+
+## [GET] `/api/game/get`
+| Endpoint      | Type          | Data  |
+| ------------- |:-------------:| -----:|
+| /api/game/get     | GET | json |
+
+### Example:
+```
+[
+  {
+    title: 'California Games',
+    date: 'June 1987',
+    genre: 'Sports'
+  },
+  {
+    title: 'Halo',
+    date: 'November 2001',
+    genre: 'FPS'
+  },
+]
+```
+
+
+## [POST] `/api/game/create`
+| Endpoint      | Type          | Data  |
+| ------------- |:-------------:| -----:|
+| /jobs    | POST | json |
+
+### Example:
+```
+{
+  title: 'Halo',
+  date: 'November 2001',
+  genre: 'FPS'
+}
+```
+
+
+## [PUT] `/api/game/update`
+| Endpoint      | Type          | Data  |
+| ------------- |:-------------:| -----:|
+| /api/game/update   | PUT | json |
+
+### Example:
+```
+{
+  title: 'Halo',
+  date: 'November 2001',
+  genre: 'FPS'
+}
+ ```
+
+ Change genre
+
+ ```
+{
+  title: 'Halo',
+  date: 'November 2001',
+  genre: 'Action/Adventure Shooter'
+}
+```
+
+
+## [DELETE] `/api/game/destroy/:id`
+| Endpoint      | Type          | Data  |
+| ------------- |:-------------:| -----:|
+| /api/game/destroy/:id    | DELETE | json |
+
+### Example:
+```
+{
+  ._id: "1"
+  title: 'Halo',
+  date: 'November 2001',
+  genre: 'FPS'
+}
+```
+delete item with id: 1
+
+```
+
+{
+  success: `Halo was removed from the DB`
+}
+
+```
+
 ## TESTS
 
 * The provided API has already been manually tested for you.
