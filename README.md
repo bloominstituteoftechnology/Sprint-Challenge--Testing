@@ -10,9 +10,9 @@
 
 ## Questions - Self Study - You can exercise your Google-Fu for this and any other _Sprint Challenge_ in the future.
 
-1. In Mocha, what are the differences between `before`, `after`, `beforeEach`, and `afterEach`? When do they run? What are they used for?
-2. What is the point of Test Driven Development? What do you personally think about this approach?
-3. What is a `spy` in `sinon`? How do we use it to effectively test a `callback`?
+1.  In Mocha, what are the differences between `before`, `after`, `beforeEach`, and `afterEach`? When do they run? What are they used for?
+2.  What is the point of Test Driven Development? What do you personally think about this approach?
+3.  What is a `spy` in `sinon`? How do we use it to effectively test a `callback`?
 
 ## Initializing Project -
 
@@ -29,11 +29,75 @@
 * You're going to be writing the documentation and the tests for a CRUD API.
 * The API itself is really simple. Your task is to peek at the endpoints found in the `server.js` file and write docs for each one, then write the tests for the end points.
 
-## DOCUMENTATION GOES HERE
+# Our API Documentation
+
+Here's the description of our glorious API! _NOTE:_ interfacing with our API will bring you much joy and happiness!
+
+## Port - Location of all endpoints to interface with our API is at `http://localhost:5050`
+
+## [POST] `/api/game/create`
+
+| Endpoint         | Type | Data |
+| ---------------- | :--: | ---: |
+| /api/game/create | POST | json |
+
+### Example:
 
 ```
-THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
+{
+  title: 'Halo',
+  genre: 'FPS'
+  releaseDate: 'November 15, 2001',
+}
 ```
+
+## [GET] `/api/game/get`
+
+| Endpoint      | Type | Data |
+| ------------- | :--: | ---: |
+| /api/game/get | GET  | json |
+
+### Example:
+
+```
+[
+  {
+    title: 'Halo',
+    genre: 'FPS',
+    releaseDate: 'November 15, 2001',
+  },
+  {
+    title: 'Smite',
+    genre: 'MOBA',
+    releaseDate: 'March 25, 2014',
+  }
+]
+```
+
+## [PUT] `/api/game/update`
+
+| Endpoint           | Type | Data |
+| ------------------ | :--: | ---: |
+| /api/game/update | PUT  | json |
+
+### Example:
+
+All PUT requests require a new title and the game (document) `_id`.
+
+```
+  {
+    title: 'new title',
+    _id: 'game id'
+  }
+```
+
+## [DELETE] `/api/game/destroy/:id`
+
+To delete a game, you can send up the `_id` in either the request body or the params.
+
+| Endpoint           |  Type  | Data |
+| ------------------ | :----: | ---: |
+| /api/game/destroy/:id | DELETE | json |
 
 ## TESTS
 
