@@ -32,7 +32,21 @@
 ## DOCUMENTATION GOES HERE
 
 ```
-  THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
+# Sprint-Challenge-Testing
+
+## Usage
+
+### Root - http://localhost:5050
+
+## API Endpoints:
+
+### [GET] `/api/game/get`
+
+### [POST] `/api/game/create`
+
+### [DELETE] `/api/game/destroy/:id`
+
+### [PUT] `/api/game/update`
 ```
 
 ## TESTS
