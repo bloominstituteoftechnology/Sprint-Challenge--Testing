@@ -78,7 +78,7 @@ describe('Games', () => {
     it('should add a new game', (done) => {
         const newGame = {
             title: 'MarioKart',
-            genre: 'racing'
+            genre: 'Racing'
         };
         chai.request(server)
         .post('/api/game/create')
@@ -97,6 +97,24 @@ describe('Games', () => {
 });
 
   // test the GET here
+
+
+  describe('[GET] /api/game/get', () => {
+    it('should return a list of all the toppings', (done) => {
+        chai.request(server)
+        .get('/api/game/get')
+        .end((err, res) => {
+            if (err) {
+                console.error(err);
+                done();
+            }
+            expect(res.status).to.equal(200);
+            expect(res.body.length).to.equal(2);
+            expect(res.body[1].genre).to.equal('Sports')
+        });
+        done();
+    });
+  });
 
   // test the PUT here
 
