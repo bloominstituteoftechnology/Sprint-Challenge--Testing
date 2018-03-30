@@ -84,11 +84,11 @@ describe('Games', () => {
         .get('/api/game/get')
         .end((err, res) => {
           if (err) {
-            console.log('FIRING')
+            console.log('FIRING');
             console.error(err);
             done();
           }
-          console.log('Poop', res)
+          console.log('Poop', res);
           expect(res.status).to.equal(200);
           done();
         });
@@ -120,15 +120,15 @@ describe('Games', () => {
         .request(server)
         .post('/api/game/create')
         .send(newGame)
-        .end((err,res) => {
+        .end((err, res) => {
           if (err) {
             console.error(err);
             done();
           }
           expect(res.status).to.equal(201);
           done();
-        })
-    })
+        });
+    });
   });
   describe('[PUT] /api/game/update', () => {
     it('should update the game with the provided information at the given id', (done) => {
@@ -151,13 +151,13 @@ describe('Games', () => {
     });
   });
   describe('[DELETE] /api/game/destroy/:id', () => {
-    it('should update the game with the provided information at the given id', (done) => {
+    it('should delete the game with the provided information at the given id', (done) => {
       const gameToDelete = {
-        id: testGameID,
+        id: testGameID.toString(),
       };
       chai
         .request(server)
-        .delete('/api/game/destroy/' + gameToDelete.id.toString())
+        .delete('/api/game/destroy/' + gameToDelete.id)
         .end((err, res) => {
           if (err) {
             console.error(err);
@@ -165,6 +165,24 @@ describe('Games', () => {
           }
           expect(res.body.success).to.equal(
             `${testGame.title} was removed from the DB`
+          );
+          done();
+        });
+    });
+    it('should not delete a game at an invalid id', (done) => {
+      const gameToDelete = {
+        id: '324jlk34jlk3;24324',
+      };
+      chai
+        .request(server)
+        .delete('/api/game/destroy/' + gameToDelete.id)
+        .end((err, res) => {
+          if (err) {
+            console.error(err);
+            done();
+          }
+          expect(res.body.error).to.equal(
+            'Cannot find game by that id'
           );
           done();
         });
