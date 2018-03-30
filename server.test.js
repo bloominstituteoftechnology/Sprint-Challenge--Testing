@@ -47,6 +47,8 @@ describe('Games', () => {
     });
   });
 
+  //i commented out afterEach because it removes the collection before the get method is invoked - don't know why
+
   // afterEach(done => {
   //   console.log('afterEach');
   //   // simply remove the collections from your DB.

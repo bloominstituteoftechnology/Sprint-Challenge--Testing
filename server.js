@@ -39,22 +39,25 @@ server.put('/api/game/update', (req, res) => {
   console.log('server put request');
   // All I care about is the game title and id.. don't worry about genre or date.
   const { title, id } = req.body;
+  console.log('title', title);
   if (!title || !id) {
     return res.status(422).json({ error: 'Must Provide a title && Id' });
   }
   Game.findById(id, (err, game) => {
-    // this console runs and returns a game document
-    console.log('server game', game);
+    // found game document and console log is running here
+    //console.log('server game', game);
     if (err || game === null) {
       res.status(422);
       res.json({ error: 'Cannot find game by that id' });
       return;
     }
+    console.log('server game', game);
     game.title = title;
     game.save((saveErr, savedGame) => {
-      //this console.log doesn't even run
-      console.log('SAVEDGAME', savedGame);
+      //this console.log doesn't run
+      console.log('SAVED GAME', savedGame);
       if (err || game === null) {
+        console.log('WE HAVE ERRORRRR!!');
         res.status(500);
         res.json({ error: 'Something really bad happened' });
         return;
