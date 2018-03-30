@@ -112,8 +112,43 @@ describe('Games', () => {
     });
   });
 
-  // test the PUT here
+  describe(`[PUT] /api/game/update`, () => {
+    it('update a document given an id and update information', (done) => {
+      const update = {
+        id: id,
+        title: 'Duck Hunt Changed',
+      };
+      chai
+        .request(server)
+        .put('/api/game/update')
+        .send(update)
+        .end((err, res) => {
+          if (err) {
+            throw new Error(err);
+            done();
+          }
+          expect(res.body.title).to.equal(update.title);
+          done();
+        });
+    });
+    it('handle error', (done) => {
+      const update = {
+        id: '24601',
+        title: 'Duck Hunt Changed',
+        genre: 'Genre Changed',
+        releaseDate: 'unkown',
+      };
+      chai
+        .request(server)
+        .put('/api/game/update')
+        .send(update)
+        .end((err, res) => {
+          if (err) {
+            expect(err.status).to.equal(422);
+          }
+          done();
+        });
+    });
+  });
 
-  // --- Stretch Problem ---
-  // Test the DELETE here
 });
