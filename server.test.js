@@ -1,9 +1,12 @@
 const mongoose = require('mongoose');
 const chai = require('chai');
+const chaiHTTP = require('chai-http');
 const { expect } = chai;
 const sinon = require('sinon');
+chai.use(chaiHTTP);
 
 const Game = require('./models');
+const server = require('./server');
 
 describe('Games', () => {
   before(done => {
@@ -23,23 +26,140 @@ describe('Games', () => {
       console.log('we are disconnected');
     });
   });
-  // declare some global variables for use of testing
-  // hint - these wont be constants because you'll need to override them.
+
+  let gameID = null;
+
   beforeEach(done => {
-    // write a beforeEach hook that will populate your test DB with data
-    // each time this hook runs, you should save a document to your db
-    // by saving the document you'll be able to use it in each of your `it` blocks
+    const newGame = new Game({
+      title: 'Halo',
+      releaseDate: 'November 15, 2001',
+      genre: 'First Person Shooter'
+    });
+    newGame
+      .save()
+      .then(game => {
+        gameID = game._id;
+        done();
+      })
+      .catch(err => {
+        console.error(err);
+        done();
+      })
   });
+
   afterEach(done => {
-    // simply remove the collections from your DB.
+    Game.remove({}, err => {
+      if (err) console.error(err);
+      done();
+    });
   });
 
   // test the POST here
-
+  describe('[POST] /api/game/create', () => {
+    it('should add a new game and save to the database', (done) => {
+      const newGame = {
+        title: 'Fortnite',
+        releaseDate: 'July 25, 2017',
+        genre: 'Survival'
+      };
+      chai
+        .request(server)
+        .post('/api/game/create')
+        .send(newGame)
+        .end((err, res) => {
+          expect(res.body.title).to.equal('Fortnite')
+          done();
+        });
+    });
+    it('should return status 422 upon error saving data', (done) => {
+      const newGame = {
+        title: 'Fortnite',
+        releaseDate: 'July 25, 2017',
+      };
+      chai
+        .request(server)
+        .post('/api/game/create')
+        .send(newGame)
+        .end((err, res) => {
+          if (err) {
+            expect(err.status).to.equal(422);
+            done();
+          }
+        });
+    });
+  });
   // test the GET here
-
+  describe('[GET] /api/game/get', () => {
+    it('should return all games', (done) => {
+      chai
+        .request(server)
+        .get('/api/game/get')
+        .end((err, res) => {
+          if (err) {
+            console.error(err);
+            done();
+          }
+          expect(res.body[0].title).to.equal('Halo');
+          done();
+        });
+    });
+  });
   // test the PUT here
+  describe('[PUT] /api/game/update', () => {
+    it('should update the game with the new game title', (done) => {
+      const updatedGame = {
+        id: gameID,
+        title: 'Fortnite Battle Royale',
+      };
+      chai
+        .request(server)
+        .put('/api/game/update')
+        .send(updatedGame)
+        .end((err, res) => {
+          expect(res.body.title).to.equal(updatedGame.title);
+          expect(res.body._id).to.equal(updatedGame.id.toString());
+          done();
+        });
+    });
+    it('should return status 422 if title or id is missing', (done) => {
+      const updatedGame = {
+        id: gameID
+      };
+      chai
+        .request(server)
+        .put('/api/game/update')
+        .send(updatedGame)
+        .end((err, res) => {
+          if (err) {
+            expect(err.status).to.equal(422);
+            done();
+          }
+        });
+    });
+  });
 
   // --- Stretch Problem ---
   // Test the DELETE here
+  describe('[DELETE] /api/game/destroy/:id', () => {
+    it('should remove the game with the given id', (done) => {
+      chai
+        .request(server)
+        .delete(`/api/game/destroy/${gameID}`)
+        .end((err, res) => {
+          expect(res.body).to.have.property('success');
+          done();
+        });
+    });
+    it('should return status 422 if ID is not found', (done) => {
+      chai
+        .request(server)
+        .delete(`/api/game/destroy/1223423423`)
+        .end((err, res) => {
+          if (err) {
+            expect(err.status).to.equal(422);
+            done();
+          }
+        });
+    });
+  });
 });
