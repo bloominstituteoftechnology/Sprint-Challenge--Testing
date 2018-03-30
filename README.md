@@ -31,9 +31,33 @@
 
 ## DOCUMENTATION GOES HERE
 
+### [POST] `/api/game/create`
+Create a new game entry.
+The request body needs to have:
 ```
-THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
+title: {String, Required},
+genre: {String, Required},
+releaseDate: {String}
 ```
+Should return a status of `200` and the new game on successful creation, and a `422` with an error.
+
+### [PUT] `/api/game/update`
+Update the title of an existing game entry.
+The request body needs to have:
+```
+title: {String, Required},
+id: {String, Required, Valid}
+```
+If no game is found by that `id` or a part of the request is missing then it will return a status `422`. An error saving changes will result in a `500`. Success is `200` and you are sent back the changed game.
+
+### [DELETE] `/api/game/destroy/:id` or `/api/game/destroy/`
+Provide a valid `id` either by URL parameter or in the request body.  No valid, matching`id` will result in a `422`.  Upon success it returns a status of `200` and a confirmation message.
+
+### [GET] `/api/game/get`
+Returns all the games.
+
+Should return a status of `200` on successful creation, and a `500` with an error.
+
 
 ## TESTS
 
