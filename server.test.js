@@ -79,4 +79,22 @@ describe('Games', () => {
         });
     });
   });
+  describe('[POST] /api/game/create', () => {
+    it('should create a new game with provided information', (done) => {
+      const newGame = {
+        title: 'California Games',
+        genre: 'Sports',
+        date: 'June 1987',
+      };
+      chai
+        .request(server)
+        .post('/api/game/create')
+        .send(newGame)
+        .end((err, res) => {
+          console.log("RESBODY IN DESCRIBE", res.body);
+          expect(res.body.title).to.equal('California Games');
+          done();
+        });
+    });
+  });
 });
