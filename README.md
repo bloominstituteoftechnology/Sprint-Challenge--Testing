@@ -10,9 +10,9 @@
 
 ## Questions - Self Study - You can exercise your Google-Fu for this and any other _Sprint Challenge_ in the future.
 
-1. In Mocha, what are the differences between `before`, `after`, `beforeEach`, and `afterEach`? When do they run? What are they used for?
-2. What is the point of Test Driven Development? What do you personally think about this approach?
-3. What is a `spy` in `sinon`? How do we use it to effectively test a `callback`?
+1.  In Mocha, what are the differences between `before`, `after`, `beforeEach`, and `afterEach`? When do they run? What are they used for?
+2.  What is the point of Test Driven Development? What do you personally think about this approach?
+3.  What is a `spy` in `sinon`? How do we use it to effectively test a `callback`?
 
 ## Initializing Project -
 
@@ -31,9 +31,47 @@
 
 ## DOCUMENTATION GOES HERE
 
+# Video Games API
+
+A place for you to save all of your favorite games. _NOTE:_ Video games are life!
+
+## Port - Location of all endpoints to interface with our API is at `http://localhost:5050`
+
+## [POST] `/api/game/create`
+
+| Endpoint         | Type | Data |
+| ---------------- | :--: | ---: |
+| /api/game/create | POST | json |
+
+### Example:
+
+```js
+{
+  title: 'California Games',
+  genre: 'Sports',
+  date: 'June 1987'
+}
 ```
-THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
-```
+
+## [GET] `/`
+
+| Endpoint | Type | Data |
+| -------- | :--: | ---: |
+| /        | GET  | json |
+
+### Example:
+
+[
+{
+name: 'Rush',
+genre: 'Classic Rock',
+},
+{
+name: 'Linkin Park',
+genre: 'Alt Rock',
+}
+
+---
 
 ## TESTS
 
