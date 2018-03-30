@@ -152,19 +152,31 @@ describe('Games', () => {
   // Test the DELETE here
 
   describe('[DELETE] /api/game/destroy/:id', () => {
-    it('should remove the game and return status 200', done => {
+    it('should remove the game, return status 200, send back the game data and confirm the game is removed', done => {
+      const deleteTest = {
+        id: testGameID
+      };
       chai
         .request(server)
         .delete('/api/game/destroy/:id')
+        .send(deleteTest)
         .end((err, res) => {
           if (err) {
             console.error(err);
             done();
           }
           expect(res.status).to.equal(200);
+          expect(res.body.success).to.equal('SinonSpies was removed from the DB');
+          Game.findById(deleteTest.id, (err, deleted) => {
+            if (err) {
+              console.error(err);
+              done();
+            }
+            expect(deleted).to.equal(null);
             done();
           });
         });
+      });
     });
 
 });
