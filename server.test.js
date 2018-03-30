@@ -1,7 +1,11 @@
 const mongoose = require('mongoose');
 const chai = require('chai');
+const chaihttp = require('chai-http');
 const { expect } = chai;
 const sinon = require('sinon');
+
+const server = require('./server');
+chai.use(chaihttp);
 
 const Game = require('./models');
 
@@ -49,13 +53,33 @@ describe('Games', () => {
         console.log(err);
         return done();
       };
-      mongoose.connection.db.dropCollection(() => {
-        done();
-      });
+      mongoose.connection.db.dropDatabase();
+      done();
     });
   });
 
-  // test the POST here
+  describe('[POST] /api/game/create', () => {
+    it('should add a new game', (done) => {
+      const game = {
+        title: 'Contra',
+        releaseDate: 'February 20, 1987',
+        genre: 'Run and gun'
+      };
+
+      chai.request(server)
+        .post('/api/game/create')
+        .send(game)
+        .end((err, res) => {
+          if (err) {
+            console.log(err);
+            return done();
+          }
+          expect(res.status).to.equal(200);
+          expect(res.body.title).to.equal('Contra');
+          done();
+        });
+    });
+  });
 
   // test the GET here
 
