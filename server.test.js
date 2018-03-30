@@ -142,4 +142,16 @@ describe('Games', () => {
 
   // --- Stretch Problem ---
   // Test the DELETE here
+describe('[DELETE] /api/game/destroy/:id', () => {
+  it('should delete the specified game', (done) => {
+    chai.request(server)
+      .delete(`/api/game/destroy/${gameId}`)
+      .end((err, res) => {
+        expect(res.status).to.equal(200);
+        expect(res.body.success).to.equal('Code Name: Vooper was removed from the DB')
+        done();
+      })
+  });
+});
+
 });
