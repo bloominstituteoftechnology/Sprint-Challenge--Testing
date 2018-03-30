@@ -82,9 +82,9 @@ describe('Games', () => {
 
       it('should send 422 with invalid data', done => {
          const myGame = {
-          title: 'Counter-strike: Source',
-          genre: 'FPS',
-          releaseDate: true,
+            title: 'Counter-strike: Source',
+            genre: 'FPS',
+            releaseDate: true,
          };
          chai
             .request(server)
@@ -95,28 +95,54 @@ describe('Games', () => {
                   expect(err.status).to.equal(422);
                   const { error } = err.response.body;
                   expect(error).to.equal('Error saving data to the DB');
-                }
-                done();
+               }
+               done();
             });
       });
    });
 
-  // test the GET here
-  describe(`[GET] /api/game/get`, () => {
-    it('should get all games in db', (done) => {
-      chai.request(server).get('/api/game/get').end((err, res) => {
-        if (err) {
-          throw new Error(err);
-          done();
-        }
-        expect(res.body[0].title).to.equal(testGame.title);
-        expect(res.body[0]._id).to.equal(String(gameId));
-        done();
+   // test the GET here
+   describe(`[GET] /api/game/get`, () => {
+      it('should get all games in db', done => {
+         chai
+            .request(server)
+            .get('/api/game/get')
+            .end((err, res) => {
+               if (err) {
+                  throw new Error(err);
+                  done();
+               }
+               expect(res.body[0].title).to.equal(testGame.title);
+               expect(res.body[0]._id).to.equal(String(gameId));
+               done();
+            });
       });
-    });
-  });
-  // test the PUT here
-
-  // --- Stretch Problem ---
-  // Test the DELETE here
+   });
+   // test the PUT here
+   describe(`[PUT] /api/game/update`, () => {
+      it('should update the prescribed game object', done => {
+         const gameUpdate = {
+            id: gameId,
+            title: 'Final Fantasy XV',
+            genre: 'RPG',
+            releaseDate: 'November 2016',
+         };
+         chai
+            .request(server)
+            .put('/api/game/update')
+            .send(gameUpdate)
+            .end((err, res) => {
+               if (err) {
+                  throw new Error(err);
+                  done();
+               }
+               expect(res.body.title).to.equal(gameUpdate.title);
+               expect(res.body.genre).to.eql(gameUpdate.genre);
+               expect(res.body.releaseDate).to.eql(gameUpdate.releaseDate);
+               done();
+            });
+      });
+   });
+   // --- Stretch Problem ---
+   // Test the DELETE here
 });
