@@ -21,7 +21,7 @@
 * notice there is a `package.json` file included. We have included all of the dev-dependencies that you'll need to build your project.
 * run `yarn` to download and install all the dependencies you need for this project.
 * run `yarn test` to start your tests.
-* Keep an active log of your changes by `commiting` with Git and `pushing` often to GitHub.
+* Keep an active log of your changes by committing with Git and pushing often to GitHub.
 * Write all of your tests in the `server.test.js` file. This is where you're going to be doing your API mocking/testing.
 
 ## Project Description
@@ -125,22 +125,22 @@ N/A, a simple `GET` request is all that is needed.
 
 * The `POST` method should take in an object that looks like this
 
-```js
-{
-  title: 'California Games',
-  genre: 'Sports',
-  date: 'June 1987'
-}
-```
+  ```js
+  {
+    title: 'California Games',
+    genre: 'Sports',
+    releaseDate: 'June 1987'
+  }
+  ```
 
 ### Write a test for the "GET" method
 
 * Our get method should return the list of games.
 * **REMINDER** That this data structure returned from Mongo will be an array, so to test your game with a `beforeEach` hook you'll need to make sure you test against the first item in the array
 
-```js
-expect(res.data[0].foo).to.equal(bar.foo);
-```
+  ```js
+  expect(res.data[0].foo).to.equal(bar.foo);
+  ```
 
 * Write your `PUT` and your `DELETE`
 
