@@ -14,7 +14,7 @@ server.post('/api/game/create', (req, res) => {
   myGame
     .save()
     .then(game => {
-      res.json(game);
+      res.status(200).json(game);
     })
     .catch(err => {
       res.status(422);
@@ -81,7 +81,7 @@ server.delete('/api/game/destroy/:id', (req, res) => {
       res.json({ error: 'Cannot find game by that id' });
       return;
     }
-    res.json({ success: `${removedGame.title} was removed from the DB` });
+    res.status(200).json({ success: `${removedGame.title} was removed from the DB` });
   });
 });
 

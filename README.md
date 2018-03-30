@@ -29,11 +29,27 @@
 * You're going to be writing the documentation and the tests for a CRUD API.
 * The API itself is really simple. Your task is to peek at the endpoints found in the `server.js` file and write docs for each one, then write the tests for the end points.
 
-## DOCUMENTATION GOES HERE
+## API DOCUMENTATION
 
-```
-THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
-```
+### POST- `/api/game/create`
+| Endpoint          | Type          | Data Type   | Data Description  |
+|:-----------------:|:-------------:|:-----------:|:----------:       |
+| /api/game/create     | POST       | string       | title, genre, and release date strings |
+
+### GET- `/api/game/get`
+| Endpoint          | Type          | Data Type   | Data Description  |
+|:-----------------:|:-------------:|:-----------:|:----------:       |
+| /api/game/get     | GET           | n/a      |   n/a              |
+
+### PUT- `/api/game/update`
+| Endpoint          | Type          | Data Type   | Data Description  |
+|:-----------------:|:-------------:|:-----------:|:----------:       |
+| /api/game/update   | PUT         | string        | title, genre, and release date strings |
+
+### DELETE- `/api/game/destroy/:id`
+| Endpoint          | Type          | Data Type   | Data Description  |
+|:-----------------:|:-------------:|:-----------:|:----------:       |
+| /api/game/destroy/:id     | DELETE | string     | unique Mongo ID |
 
 ## TESTS
 

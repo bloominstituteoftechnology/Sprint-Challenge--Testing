@@ -1,9 +1,12 @@
 const mongoose = require('mongoose');
 const chai = require('chai');
+const chaiHTTP = require('chai-http');
 const { expect } = chai;
 const sinon = require('sinon');
-
+const server = require('./server');
 const Game = require('./models');
+
+chai.use(chaiHTTP);
 
 describe('Games', () => {
   before(done => {
@@ -23,23 +26,152 @@ describe('Games', () => {
       console.log('we are disconnected');
     });
   });
-  // declare some global variables for use of testing
-  // hint - these wont be constants because you'll need to override them.
+  
+  let id = null;
+  let game = null;
+
   beforeEach(done => {
-    // write a beforeEach hook that will populate your test DB with data
-    // each time this hook runs, you should save a document to your db
-    // by saving the document you'll be able to use it in each of your `it` blocks
+    const newGame = new Game({
+      title: 'Duck Hunt',
+      genre: 'light gun shooter',
+      releaseDate: '21 April 1984',
+    });
+    newGame.save((error, saved) => {
+      if (error) {
+        console.error(err);
+        return done();
+      }
+      id = saved._id;
+      game = saved;
+      done();
+    });
   });
+
   afterEach(done => {
-    // simply remove the collections from your DB.
+    Game.remove({}, (error, removed) => {
+      if (error) {
+        console.error(err);
+        return done();
+      }
+      done();
+    });
   });
 
-  // test the POST here
+  describe('[POST] /api/game/create', () => {
+    it('should add a new game', (done) => {
+      const postGame = new Game({
+        title: 'California Games',
+        genre: 'Sports',
+        releaseDate: 'June 1987',
+      });
+      chai
+        .request(server)
+        .post('/api/game/create')
+        .send(postGame)
+        .end((err, res) => {
+          if (err) {
+            throw new Error(err);
+            done();
+          }
+          expect(res.status).to.equal(200);
+          expect(res.body.title).to.equal('California Games')
+          done();
+        });
+    });
+    it('should have status 422 when improper data is passed', (done) => {
+      const postGame = {
+        title: 'California Games 2',
+      };
+      chai
+        .request(server)
+        .post('/api/game/create')
+        .send(postGame)
+        .end((err, res) => {
+          if (err) {
+            expect(err.status).to.equal(422);
+            done();
+          }
+        });
+    });
+  });
 
-  // test the GET here
+  describe(`[GET] /api/game/get`, () => {
+    it('should get all games in the db', (done) => {
+      chai
+        .request(server)
+        .get('/api/game/get')
+        .end((err, res) => {
+          if (err) {
+            throw new Error(err);
+            done();
+          }
+          expect(res.body[0].title).to.equal('Duck Hunt');
+          expect(res.body[0]._id).to.equal(id.toString());
+          done();
+        });
+    });
+  });
 
-  // test the PUT here
-
-  // --- Stretch Problem ---
-  // Test the DELETE here
+  describe(`[PUT] /api/game/update`, () => {
+    it('update a document given an id and update information', (done) => {
+      const update = {
+        id: id,
+        title: 'Duck Hunt Changed',
+      };
+      chai
+        .request(server)
+        .put('/api/game/update')
+        .send(update)
+        .end((err, res) => {
+          if (err) {
+            throw new Error(err);
+            done();
+          }
+          expect(res.body.title).to.equal(update.title);
+          done();
+        });
+    });
+    it('handle error', (done) => {
+      const update = {
+        id: '24601',
+        title: 'Duck Hunt Changed',
+        genre: 'Genre Changed',
+        releaseDate: 'unkown',
+      };
+      chai
+        .request(server)
+        .put('/api/game/update')
+        .send(update)
+        .end((err, res) => {
+          if (err) {
+            expect(err.status).to.equal(422);
+          }
+          done();
+        });
+    });
+  });
+  describe('[DELETE] /api/game/destroy/:id', () => {
+    it('should delete a game from the list', (done) => {
+        chai.request(server)
+        .delete(`/api/game/destroy/${id}`)
+        .end((err, res) => {
+            if (err) {
+              throw new Error(err);
+              done();
+            }
+            expect(res.status).to.equal(200);
+        });
+        done();
+    });
+    it('should delete a game from the list', (done) => {
+      chai.request(server)
+      .delete(`/api/game/destroy/24601`)
+      .end((err, res) => {
+          if (err) {
+            expect(res.status).to.equal(422);
+            done();
+          }
+      });
+    });
+  });
 });
