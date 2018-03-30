@@ -62,7 +62,7 @@ describe('Games', () => {
       const newGame = {
         title: 'Another Sweet game',
         genre: 'Fighting',
-        date: 'June 1989',
+        releaseDate: 'June 1989',
       };
       chai
         .request(server)
@@ -82,7 +82,8 @@ describe('Games', () => {
 
   describe('[GET] /api/game/get', () => {
     it('should return all games from the db', (done) => {
-      chai.request(server)
+      chai
+        .request(server)
         .get('/api/game/get')
         .end((err, res) => {
           if (err) {
@@ -90,16 +91,48 @@ describe('Games', () => {
             done();
           }
           expect(res.status).to.equal(200);
-          expect(res.body[0].title).to.equal('Another Sweet game');
-        })
+          expect(res.body[0].title).to.equal('California Games');
+        });
       done();
-    })
+    });
   });
 
-  // test the GET here
+  describe('[PUT] /api/game/update', () => {
+    it('should return the updated game', (done) => {
+      const updatedGame = {
+        title: 'Okalahoma Games',
+        id: gameId,
+      };
+      chai
+        .request(server)
+        .put('/api/game/update')
+        .send(updatedGame)
+        .end((err, res) => {
+          if (err) {
+            console.error(err);
+            done();
+          }
+          expect(res.status).to.equal(200);
+          expect(res.body.title).to.equal('Okalahoma Games');
+        });
+      done();
+    });
+  });
 
-  // test the PUT here
-
-  // --- Stretch Problem ---
-  // Test the DELETE here
+  describe('[DELETE] /api/game/destroy/', () => {
+    it('should return the title', (done) => {
+      chai
+        .request(server)
+        .delete('/api/game/destroy/' + gameId)
+        .end((err, res) => {
+          if (err) {
+            console.error(err);
+            done();
+          }
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.property('success');
+        });
+      done();
+    });
+  });
 });
