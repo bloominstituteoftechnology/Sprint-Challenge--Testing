@@ -29,11 +29,13 @@
 * You're going to be writing the documentation and the tests for a CRUD API.
 * The API itself is really simple. You're task is to peek at the endpoints found in the `server.js` file and write docs for each one, then write the tests for the end points.
 
-## DOCUMENTATION GOES HERE
-
-```
-  THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
-```
+# Endpoints /api/game 
+| Endpoint | Type | Input (req.body or req.param) | Response |
+| :---: | :---: | :---: | :---:|
+| /api/game/create | *__POST__* | ```{title: 'Angry Birds', genre: 'Strategy', date: 'May 16 2002'}``` | ```{title: 'Angry Birds', genre: 'Strategy', date: 'May 16 2002'}```|
+| /api/game/get | *__GET__* | ```Not applicable``` | ```[{title: 'Contest of Champions', genre: 'Fighting', date: 'August 18 2007'}]``` |
+| /api/game/update | *__PUT__* | ```{title: 'Marvel's Contest of Champions', genre: 'Fighting', data: 'August 18 2007'}``` | ```{title: 'Marvel's Contest of Champions', genre: 'Fighting', data: 'August 18 2007'}``` | 
+| /api/game/destroy/:id | *__DELETE__* | ```id: id``` | ```success: true``` |
 
 ## TESTS
 
