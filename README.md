@@ -27,7 +27,7 @@
 ## Project Description
 
 * You're going to be writing the documentation and the tests for a CRUD API.
-* The API itself is really simple. You're task is to peek at the endpoints found in the `server.js` file and write docs for each one, then write the tests for the end points.
+* The API itself is really simple. Your task is to peek at the endpoints found in the `server.js` file and write docs for each one, then write the tests for the end points.
 
 ## DOCUMENTATION GOES HERE
 
@@ -45,22 +45,22 @@ THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RI
 
 * The `POST` method should take in an object that looks like this
 
-```js
-{
-  title: 'California Games',
-  genre: 'Sports',
-  date: 'June 1987'
-}
-```
+  ```js
+  {
+    title: 'California Games',
+    genre: 'Sports',
+    releaseDate: 'June 1987'
+  }
+  ```
 
 ### Write a test for the "GET" method
 
 * Our get method should return the list of games.
 * **REMINDER** That this data structure returned from Mongo will be an array, so to test your game with a `beforeEach` hook you'll need to make sure you test against the first item in the array
 
-```js
-expect(res.data[0].foo).to.equal(bar.foo);
-```
+  ```js
+  expect(res.data[0].foo).to.equal(bar.foo);
+  ```
 
 * Write your `PUT` and your `DELETE`
 
