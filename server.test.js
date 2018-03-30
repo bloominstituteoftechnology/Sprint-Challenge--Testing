@@ -91,7 +91,6 @@ describe('Games', () => {
         .post('/api/game/create')
         .send(newGame)
         .end((err, res) => {
-          console.log('RESBODY IN DESCRIBE', res.body);
           expect(res.body.title).to.equal('California Games');
           done();
         });
@@ -109,10 +108,28 @@ describe('Games', () => {
         .send(updatedGame)
         .end((err, res) => {
           if (err) {
-            throw new Error(err);
+            console.error(err);
             done();
           }
           expect(res.body.name).to.equal(updatedGame.name);
+          done();
+        });
+    });
+  });
+  describe('[DELETE] /api/game/destroy/:id', () => {
+    it('should update the game with the provided information at the given id', (done) => {
+      const gameToDelete = {
+        id: testGameID,
+      };
+      chai
+        .request(server)
+        .delete('/api/game/destroy/' + gameToDelete.id.toString())
+        .end((err, res) => {
+          if (err) {
+            console.error(err);
+            done();
+          }
+          expect(res.body.success).to.equal(`${testGame.title} was removed from the DB`)
           done();
         });
     });
