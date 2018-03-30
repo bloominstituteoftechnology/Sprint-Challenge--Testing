@@ -1,8 +1,11 @@
 const mongoose = require('mongoose');
 const chai = require('chai');
+const chaihttp = require('chai-http');
 const { expect } = chai;
 const sinon = require('sinon');
+
 const server = require('./server');
+chai.use(chaihttp);
 
 const Game = require('./models');
 
@@ -26,7 +29,8 @@ describe('Games', () => {
       console.log('we are disconnected');
     });
   });
-  let gameID = null;
+
+  let testGameID = null;
   let testGame = null;
   // declare some global variables for use of testing
   // hint - these wont be constants because you'll need to override them.
@@ -34,35 +38,45 @@ describe('Games', () => {
     // write a beforeEach hook that will populate your test DB with data
     // each time this hook runs, you should save a document to your db
     // by saving the document you'll be able to use it in each of your `it` blocks
-    db.clear(function(err) {
-      if (err) return done(err);
-      db.save(
-        [
-          {
-            title: 'Double Dragon',
-            genre: 'Beat-Em Up',
-            releaseDate: '1988',
-          },
-          {
-            title: 'Final Fantasy',
-            genre: 'RPG',
-            releaseDate: '1990',
-          },
-        ],
-        done
-      );
+    const newGame = new Game({
+      title: 'Final Fantasy',
+      genre: 'RPG',
+      releaseDate: '1990',
     });
+    newGame
+      .save()
+      .then((game) => {
+        testGame = game;
+        testGameID = game._id;
+        done();
+      })
+      .catch((err) => {
+        console.error(err);
+        done();
+      });
   });
   afterEach((done) => {
     // simply remove the collections from your DB.
+    Game.remove({}, (err) => {
+      if (err) console.error(err);
+      done();
+    });
   });
 
-  // test the POST here
-
-  // test the GET here
-
-  // test the PUT here
-
-  // --- Stretch Problem ---
-  // Test the DELETE here
+  describe(`[GET] /api/game/get`, () => {
+    it('should return all games', (done) => {
+      chai
+        .request(server)
+        .get('/api/game/get')
+        .end((err, res) => {
+          if (err) {
+            console.error(err);
+            done();
+          }
+          expect(res.body[0].name).to.eql(testGame.name);
+          expect(res.body[0]._id).to.equal(testGameID.toString());
+          done();
+        });
+    });
+  });
 });
