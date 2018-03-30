@@ -2,8 +2,11 @@ const mongoose = require('mongoose');
 const chai = require('chai');
 const { expect } = chai;
 const sinon = require('sinon');
-
+const server = require('./server');
+const chaiHTTP = require('chai-http');
 const Game = require('./models');
+
+chai.use(chaiHTTP);
 
 describe('Games', () => {
   before(done => {
@@ -36,22 +39,45 @@ describe('Games', () => {
     });
     newGame
       .save()
+      .then(() => {
+        done();
+      })
       .catch(error => {
         done(error);
       });
-  });
+    });
   afterEach(done => {
     // simply remove the collections from your DB.
     Game.remove()
-    .catch(error => {
-      done(error);
-    });
+    .then(() => {
+      done();
+    })
+      .catch(error => {
+        done(error);
+      });
   });
 
   // test the POST here
 
   // test the GET here
-
+  describe('[GET] /api/game/get', () => {
+    it(`should get all games`, done => {
+      chai
+        .request(server)
+        .get('/api/game/get')
+        .end((err, res) => {
+          if (err) {
+            console.log(err);
+            done();
+          }
+          expect(res.status).to.equal(200);
+          expect(res.body[0].title).to.equal('California Games');
+          expect(res.body[0].genre).to.equal('Sports');
+          done();
+        });
+    });
+  });
+  
   // test the PUT here
 
   // --- Stretch Problem ---
