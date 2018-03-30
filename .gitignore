@@ -1,4 +1,4 @@
 /node_modules
 yarn.lock
 .eslintrc
-.yarn-error.log
+yarn-error.log
