@@ -77,25 +77,6 @@ describe('[POST] /api/game/create', () => {
         done();
     });
   });
-
-  // it('should send back 422 upon bad data', done => {
-  //   const newGame = {
-  //     title: 'California Games',
-  //     genre: 'Sport',
-  //   };
-  //   chai
-  //     .request(server)
-  //     .post('/api/game/create')
-  //     .send(newGame)
-  //     .end((err, res) => {
-  //       if (err) {
-  //       expect(err.status).to.equal(422);
-  //       const { error } = err.response.body;
-  //       expect(error).to.eql('Invalid input data sent to server');
-  //       done();
-  //       }
-  //     });
-  // });
 });
 
   // test the GET here
@@ -119,7 +100,7 @@ describe('[GET] /api/game/get', () => {
   // test the PUT here
   describe('[PUT] /api/game/update', () => {
     it('should update a game', done => {
-      const newGame = {
+      const myGame = {
         title: 'California Games',
       };
 
@@ -131,12 +112,12 @@ describe('[GET] /api/game/get', () => {
       .get('/api/game/get')
       .end((err, res) => {
         chai.request(server)
-        .put('/api/game/update')
-        .send(newGame)
+        .put('/api/game/update'+res.body[0]._id)
+        .send(myGame)
         .end((err, res) => {
           if (err) console.log(err)
           expect(res.status).to.equal(200);
-          expect(res.body.title).to.equal('Vacation Game');
+          expect(res.body).to.equal(gameUpdate);
         });
         done();
       });
@@ -144,4 +125,9 @@ describe('[GET] /api/game/get', () => {
   });
   // --- Stretch Problem ---
   // Test the DELETE here
+  describe('[DELETE] /api/game/destroy/:id', () => {
+    it('should delete the game using an id', done => {
+      
+    })
+  })
 });
