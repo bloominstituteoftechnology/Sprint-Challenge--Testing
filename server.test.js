@@ -42,11 +42,11 @@ describe('Games', () => {
       .then(game => {
         testGame = game;
         gameId = game._id;
-        done();
+        return done();
       })
       .catch(err => {
         console.error(err);
-       done();
+        return done();
       });
   });
 
@@ -148,4 +148,27 @@ describe('Games', () => {
   });
   // --- Stretch Problem ---
   // Test the DELETE here
+  describe(`[DELETE] /api/game/destroy/:id`, () => {
+    it('should delete a game with the provided id from the collection', done =>{
+      chai
+      .request(server)
+      .delete(`/api/game/destroy/${gameId}`)
+      .end((err, res) => {
+        if (err) {
+          console.error(err);
+          return done();
+        }
+        expect(res.status).to.equal(200);
+        expect(res.text).to.equal('success');
+        Game.findById(gameId, (err, deletedGame) => {
+          if (err) {
+            console.error(err);
+            return done();
+          }
+          expect(deletedGame).to.equal(null);
+          done();
+        });
+      });
+    });
+  });
 });
