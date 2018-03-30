@@ -35,7 +35,7 @@ describe('Games', () => {
     const myGame = new Game({
       title: 'VVS',
       genre: 'Sports',
-      releaseDate: 'October 1979'
+      releaseDate: 'December 1983'
     });
     myGame
     .save()
@@ -116,4 +116,23 @@ describe('[PUT] /api/game/update', () => {
 });
   // --- Stretch Problem ---
   // Test the DELETE here
+  describe('[DELETE] /api/game/destroy/:id', () => {
+    it('should delete the object based on id', done => {
+      const gameDelete = {
+        id: gameId,
+        title: 'Manhattan Games',
+        genre: 'Sports',
+        releaseDate: 'December 1983'
+      };
+      chai.request(server).delete('/api/game/destroy/:id').send(gameDelete).end((err, res) => {
+        if(err) {
+          console.Error('chai request error: ',err);
+          done();
+        }
+        expect(res.status).to.equal(200);
+        expect(res.body.title).to.equal('Manhattan Games');
+        done();
+      });
+    });
+  });
 });
