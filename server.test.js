@@ -1,9 +1,12 @@
 const mongoose = require('mongoose');
 const chai = require('chai');
+const chaihttp = require('chai-http');
 const {expect} = chai;
 const sinon = require('sinon');
+const server = require('./server');
 
 const Game = require('./models');
+chai.use(chaihttp);
 
 describe('Games', () => {
     before(done => {
@@ -39,14 +42,38 @@ describe('Games', () => {
         }).save((err, resp) => {
             if (err) done();
             gameId = resp.id;
+            console.log('foreach:::', resp);
             done();
         });
     });
     afterEach(done => {
         // simply remove the collections from your DB.
+        Game.remove({}, (err) => {
+            if (err) done();
+            mongoose.connection.db.dropDatabase();
+            done();
+        });
     });
 
-    // test the POST here
+    describe('[POST] /api/game/create', () => {
+        it('should create a new game', (done) => {
+            const game = {
+                title: 'Mortal Kombat.',
+                genre: 'fight',
+                releaseDate: 'September 20, 1982',
+            };
+
+            chai.request(server)
+                .post('/api/game/create')
+                .send(game)
+                .end((err, res) => {
+                    if (err) done();
+                    expect(res.status).to.equal(200);
+                    expect(res.body.title).to.equal('Mortal Kombat.');
+                    done();
+                });
+        });
+    });
 
     // test the GET here
 
