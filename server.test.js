@@ -120,6 +120,47 @@ describe('Games', () => {
   });
 
   // test the PUT here
+  describe(`[PUT] /api/game/update`, () => {
+    it('should update a game by given information', done => {
+      const updateGame = {
+        id: gameId,
+        title: 'Snow Bros',
+        genre: 'Adventure'
+      };
+      chai
+        .request(server)
+        .put('/api/game/update')
+        .send(updateGame)
+        .end((err, res) => {
+          if (err) {
+            throw new Error(err);
+            done();
+          }
+          expect(res.body.title).to.equal(updateGame.title);
+          expect(res.body.genre).to.equal(updateGame.genre);
+          done();
+        });
+    });
+    it('should hanle error if bad ID is sent', done => {
+      const updateGame = {
+        id: 'oldschoolgamez',
+        title: 'Snow Bros',
+        genre: 'Adventure'
+      };
+      chai
+        .request(server)
+        .put('/api/game/update')
+        .send(updateGame)
+        .end((err, res) => {
+          if (err) {
+            expect(err.status).to.equal(STATUS_UNPROCESSABLE);
+            const { error } = err.response.body;
+            expect(error).to.eql('Cannot find game by that id');
+          }
+          done();
+        });
+    });
+  });
 
   // --- Stretch Problem ---
   // Test the DELETE here
