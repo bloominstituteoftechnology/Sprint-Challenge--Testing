@@ -8,7 +8,7 @@ const Game = require('./models');
 describe('Games', () => {
     before(done => {
         mongoose.Promise = global.Promise;
-        mongoose.connect('mongodb://localhost/test');
+        mongoose.connect('mongodb://germancin:secure123@159.65.170.21/test');
         const db = mongoose.connection;
         db.on('error', () => console.error.bind(console, 'connection error'));
         db.once('open', () => {
@@ -25,12 +25,22 @@ describe('Games', () => {
     });
     // declare some global variables for use of testing
     // hint - these wont be constants because you'll need to override them.
-    let
-        beforeEach
-    (done => {
+
+    let gameId;
+
+    beforeEach(done => {
         // write a beforeEach hook that will populate your test DB with data
         // each time this hook runs, you should save a document to your db
         // by saving the document you'll be able to use it in each of your `it` blocks
+        new Game({
+            title: 'Mario Car',
+            genre: 'adventure',
+            releaseDate: 'January 27, 1988'
+        }).save((err, resp) => {
+            if (err) done();
+            gameId = resp.id;
+            done();
+        });
     });
     afterEach(done => {
         // simply remove the collections from your DB.
