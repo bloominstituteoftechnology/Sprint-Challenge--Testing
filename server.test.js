@@ -1,9 +1,12 @@
 const mongoose = require('mongoose');
 const chai = require('chai');
+const chaiHTTP = require('chai-http');
 const { expect } = chai;
 const sinon = require('sinon');
-
+const server = require('./server');
 const Game = require('./models');
+
+chai.use(chaiHTTP);
 
 describe('Games', () => {
   before(done => {
@@ -29,30 +32,49 @@ describe('Games', () => {
 
   beforeEach(done => {
     const newGame = new Game({
-      name: 'Duck Hunt',
+      title: 'Duck Hunt',
       genre: 'light gun shooter',
       releaseDate: '21 April 1984',
     });
-    newGame.save()
-      .then(created => {
-        id = created._id;
-        game = created;
-        done();
-      })
-      .catch(error => {
-        console.error(error);
-        done();
-      });
-  });
-
-  afterEach(done => {
-    Game.remove({}, err => {
-      if (err) console.error(err);
+    newGame.save((error, saved) => {
+      if (error) {
+        console.error(err);
+        return done();
+      }
+      id = saved._id;
+      game = saved;
       done();
     });
   });
 
-  // test the POST here
+  afterEach(done => {
+    Game.remove({}, (error, removed) => {
+      if (error) {
+        console.error(err);
+        return done();
+      }
+      done();
+    });
+  });
+
+  describe('POST /api/game/create', () => {
+    it('should add a new game', (done) => {
+      const postGame = new Game({
+        title: 'California Games',
+        genre: 'Sports',
+        releaseDate: 'June 1987',
+      });
+      chai
+        .request(server)
+        .post('/api/game/create')
+        .send(postGame)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.title).to.equal('California Games')
+          done();
+        });
+    });
+  });
 
   // test the GET here
 
