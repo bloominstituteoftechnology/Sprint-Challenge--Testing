@@ -113,6 +113,8 @@ describe('Games', () => {
           expect(res.status).to.equal(200);
           expect(res.body).to.be.an('array');
           expect(res.body.length).to.equal(2);
+          expect(res.body[0].title).to.equal('Excitebike');
+          expect(res.body[1].title).to.equal('Code Name: Vooper');
           done();
         });
     });
