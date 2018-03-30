@@ -49,10 +49,11 @@ To get started, the default port is `5050`. Available endpoints are documented b
 `status: 200 OK`
 ```json
 {
-  "id": "fo90ef8h209ufgh0e90f9",
-  "title": "Metroid",
-  "releaseDate": "August 6, 1986",
-  "genre": "Action-Adventure"
+    "_id": "5abece24500cd24398f3ba45",
+    "title": "Contra",
+    "releaseDate": "February 20, 1987",
+    "genre": "Run and gun",
+    "__v": 0
 }
 ```
 
@@ -65,16 +66,15 @@ N/A, a simple `GET` request is all that is needed.
 ### Example Response
 `status: 200 OK`
 ```json
-{
-  "body": [
-    {
-      "id": "fo90ef8h209ufgh0e90f9",
-      "title": "Super Mario Bros.",
-      "releaseDate": "September 13, 1985",
-      "genre": "Platformer"
-    }
-  ]
-}
+[
+  {
+    "_id": "5abece24500cd24398f3ba45",
+    "title": "Super Mario Bros.",
+    "releaseDate": "September 13, 1985",
+    "genre": "Platformer",
+    "__v": 0
+  }
+]
 ```
 
 ## Update a Game in the Database
@@ -90,10 +90,11 @@ N/A, a simple `GET` request is all that is needed.
 `status: 200 OK`
 ```json
 {
-  "id": "fo90ef8h209ufgh0e90f9",
+  "_id": "5abece24500cd24398f3ba45",
   "title": "Metroid",
   "releaseDate": "August 6, 1986",
-  "genre": "Action-Adventure"
+  "genre": "Action-Adventure",
+  "__v": 0
 }
 ```
 
