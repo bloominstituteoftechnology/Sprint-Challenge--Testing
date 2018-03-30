@@ -110,8 +110,8 @@ describe('Games', () => {
         .get('/api/game/get')
         .end((err, res) => {
           expect(res.status).to.equal(STATUS_OK);
-          expect(res.body[0].title).to.eql(testGame.title);
-          expect(res.body[0]._id).to.equal(gameId.toString());
+          expect(res.body.title).to.eql(testGame.title);
+          expect(res.body._id).to.equal(gameId.toString());
           done();
         });
     });
@@ -148,8 +148,8 @@ describe('Games', () => {
             done();
           }
           expect(res.status).to.equal(STATUS_OK);
-          expect(res.body.title).to.equal(updateGame.title);
-          expect(res.body.genre).to.equal(updateGame.genre);
+          expect(res.body[0].title).to.equal(updateGame.title);
+          expect(res.body[0].genre).to.equal(updateGame.genre);
           done();
         });
     });
@@ -240,7 +240,7 @@ describe('Games', () => {
       };
       chai
         .request(server)
-        .delete('/api/game/destroy/:id')
+        .delete(`/api/game/destroy/${gameId}`)
         .send(deleteGame)
         .end((err, res) => {
           if (err) {
@@ -258,7 +258,7 @@ describe('Games', () => {
       };
       chai
         .request(server)
-        .delete('/api/game/destroy/:id')
+        .delete('/api/game/destroy/')
         .send(deleteGame)
         .end((err, res) => {
           if (res === undefined) {
@@ -275,7 +275,7 @@ describe('Games', () => {
       };
       chai
         .request(server)
-        .delete('/api/game/destroy/:id')
+        .delete('/api/game/destroy/mufasa')
         .send(deleteGame)
         .end((err, res) => {
           if (err) {
