@@ -110,6 +110,25 @@ describe('Games', () => {
           done();
         });
     });
+    it('should return a status 201 on successful post', (done) => {
+      const newGame = {
+        title: 'California Games',
+        genre: 'Sports',
+        date: 'June 1987',
+      };
+      chai
+        .request(server)
+        .post('/api/game/create')
+        .send(newGame)
+        .end((err,res) => {
+          if (err) {
+            console.error(err);
+            done();
+          }
+          expect(res.status).to.equal(201);
+          done();
+        })
+    })
   });
   describe('[PUT] /api/game/update', () => {
     it('should update the game with the provided information at the given id', (done) => {

@@ -14,7 +14,7 @@ server.post('/api/game/create', (req, res) => {
   myGame
     .save()
     .then(game => {
-      res.json(game);
+      res.status(201).json(game);
     })
     .catch(err => {
       res.status(422);
