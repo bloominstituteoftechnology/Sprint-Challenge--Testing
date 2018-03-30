@@ -10,6 +10,11 @@ chai.use(chaitHTTP);
 const Game = require('./models');
 
 describe('Games', () => {
+  // declare some global variables for use of testing
+  // hint - these wont be constants because you'll need to override them.
+
+  let gameId;
+
   before(done => {
     mongoose.Promise = global.Promise;
     mongoose.connect('mongodb://localhost/test');
@@ -27,8 +32,7 @@ describe('Games', () => {
       console.log('we are disconnected');
     });
   });
-  // declare some global variables for use of testing
-  // hint - these wont be constants because you'll need to override them.
+
   beforeEach(async () => {
     // write a beforeEach hook that will populate your test DB with data
     // each time this hook runs, you should save a document to your db
@@ -39,12 +43,12 @@ describe('Games', () => {
       date: 'November 30, 1984'
     });
     const game2 = new Game({
-      title: 'Code Name: Viper',
+      title: 'Code Name: Vooper',
       genre: 'Action/Shooter',
       date: 'March 1990'
     });
     await game1.save();
-    await game2.save();
+    await game2.save().then(game => gameId = game.id);
   });
   afterEach(done => {
     // simply remove the collections from your DB.
@@ -115,6 +119,24 @@ describe('Games', () => {
   });
 
   // test the PUT here
+  describe('[PUT] /api/game/update', () => {
+    it('should return the updated game', (done) => {
+      const game = {
+        title: 'Code Name: Viper',
+        id: gameId
+      };
+
+      chai.request(server)
+        .put('/api/game/update')
+        .send(game)
+        .end((err, res) => {
+          expect(err).to.be.a('null');
+          expect(res.status).to.equal(200);
+          expect(res.body.title).to.equal('Code Name: Viper');
+          done();
+        });
+    });
+  });
 
   // --- Stretch Problem ---
   // Test the DELETE here
