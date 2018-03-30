@@ -54,3 +54,23 @@ Here's the description of the Game API!
 }
 
 ```
+
+## [DELETE] `/api/game/destroy/:id`
+| Endpoint              | Type          | Data  |
+| --------------------- |:-------------:| -----:|
+| /api/game/destroy/:id | DELETE | json |
+
+
+### Example:
+```
+http://localhost/api/game/destroy/5abe7b02dc27588864299016
+```
+
+
+### Response Example:
+
+```
+{
+    "success": "Mario Bros II. was removed from the DB"
+}
+```
