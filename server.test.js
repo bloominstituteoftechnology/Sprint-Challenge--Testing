@@ -78,12 +78,28 @@ describe('Games', () => {
           done();
         });
     });
+
+    it('should return an error when missing a title', (done) => {
+      const game = {
+        genre: 'Platformer/Plumbing Simulator',
+      };
+
+      chai.request(server)
+        .post('/api/game/create')
+        .send(game)
+        .end((err, res) => {
+          expect(err.response.body.message.message).to.equal('Game validation failed: title: Path `title` is required.');
+          expect(res.status).to.equal(422);
+          expect(res.body.title).to.be.undefined;
+          done();
+        });
+    });
   });
 
   // test the GET here
   describe('[GET] /api/game/get', () => {
     it('should return the games in the database', (done) => {
-      chair.request(server)
+      chai.request(server)
         .get('/api/game/get')
         .end((err, res) => {
           if (err) {
@@ -94,7 +110,7 @@ describe('Games', () => {
           expect(res.body).to.be.an('array');
           expect(res.body.length).to.equal(2);
           done();
-        })
+        });
     });
   });
 
