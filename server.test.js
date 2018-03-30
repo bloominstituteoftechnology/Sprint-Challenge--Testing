@@ -78,6 +78,21 @@ describe('Games', () => {
           done();
         });
     });
+    it('should return status 200 on successful get', (done) => {
+      chai
+        .request(server)
+        .get('/api/game/get')
+        .end((err, res) => {
+          if (err) {
+            console.log('FIRING')
+            console.error(err);
+            done();
+          }
+          console.log('Poop', res)
+          expect(res.status).to.equal(200);
+          done();
+        });
+    });
   });
   describe('[POST] /api/game/create', () => {
     it('should create a new game with provided information', (done) => {
@@ -129,7 +144,9 @@ describe('Games', () => {
             console.error(err);
             done();
           }
-          expect(res.body.success).to.equal(`${testGame.title} was removed from the DB`)
+          expect(res.body.success).to.equal(
+            `${testGame.title} was removed from the DB`
+          );
           done();
         });
     });
