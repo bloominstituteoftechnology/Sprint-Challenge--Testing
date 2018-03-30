@@ -1,7 +1,11 @@
 <!-- Answers to the Short Answer Essay Questions go here -->
 
 1. In Mocha, what are the differences between `before`, `after`, `beforeEach`, and `afterEach`? When do they run? What are they used for?
+  * Mocha uses these hooks to execute logic in between tests as part of a test suite. `before` and `after` each trigger a single time, respectively before and after the execution of the entire suite. The other two hooks execute before and after each individual test, or each test that matches some condition rpovided to the hook.
 
 2. What is the point of Test Driven Development? What do you personally think about this approach?
+  * Test-Driven Development is the paradigm of writing code to verify the requirements of the different elements of your program - BEFORE you start creating the elements themselves.  This helps you to think of your functions in the context of the largest application, by forcing you to boil them down to their required functionality. TDD can save development time by mitigating feature creep and focusing development goals.
+  * I think TDD is a powerful tool for large, complex apps with many moving parts, complicated specs, and potentially sizeable development teams.  However, it's important not to force scaling featuresets into applications where they don't belong, and the use of unit testing does add significant additional overhead to any changes you want to make to your code's functionality.
 
 3. What is a `spy` in `sinon`? How do we use it to effectively test a `callback`?
+* A spy is a special function that returns information about all of the calls made to it. Sinon provides us with two flavors of spy: anonymous functions, created with sinon.spy() with empty params, are often used when all that is needed is to check whether a certain function invocation is happening as expected (this is generally how we test that callbacks are being called where/when they should be). But spies can also be used to wrap an existing method with the syntax sinon.spy(object, "method"). The wrapped function will still perform all the same operations that the raw function did, but it will also return spy info about the calls made to the function, etc.
