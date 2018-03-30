@@ -3,7 +3,11 @@ const chai = require('chai');
 const { expect } = chai;
 const sinon = require('sinon');
 
+const chaiHTTP = require('chai-http');
+chai.use(chaiHTTP);
+
 const Game = require('./models');
+const server = require('./server');
 
 describe('Games', () => {
   before(done => {
@@ -71,18 +75,19 @@ describe('Games', () => {
         releaseDate: '1776',
         genre: 'Awesome'
       };
-      chai.request(server)
+      chai
+      .request(server)
       .post('api/game/create')
       .send(newGame)
       .end((err,res) => {
         if (err) {
-          expect(res.status).to.equal(200);
-          expect(res.body.title).to.equal('Rampage')
-          expect(err.status).to.equal(422);
+          console.error(err);
           done();
         }
+        assert.equal(res.body.title, 'Rampage');
+        done();
       });
-    });
+    })
   });
 
 
@@ -91,9 +96,9 @@ describe('Games', () => {
 
   describe('[GET] /api/game/get', () => {
     it('should return all the games', done => {
-      chai.request(server).get('api/game/get').end((err,res) => {
+      chai.request(server).get('api/game/get').end((err, res) => {
         if (err) {
-          throw new Error(err);
+          
           done();
         }
         expect(res.body[0].title).to.equal(testGame.title);
@@ -104,6 +109,7 @@ describe('Games', () => {
   });
 
   // test the PUT here
+ 
 
   
 
