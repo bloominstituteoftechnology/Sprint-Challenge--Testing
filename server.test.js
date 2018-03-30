@@ -109,8 +109,36 @@ describe('Games', () => {
   });
 
   // test the PUT here
+  describe ('[PUT] /api/game/update', () => {
+    it('should update a game in database', done => {
+      const updatedGameTitle = 'Duck Hunt';
+      const updatedGameGenre = 'Animal';
+      const updatedGameDate = '2018';
+      const updatedGame = {
+        title: updatedGameTitle,
+        genre: updatedGameGenre,
+        date: updatedGameDate 
+      };
+      chai.request(server)
+      .put('api/game/update')
+      .send(updatedGame)
+      .end((err, res) => {
+        if (err) {
+          console.error(err);
+          done();
+        }
+        assert.equal(res.status, 200);
+        assert.equal(res.body.title, 'Duck Hunt');
+          if (err) {
+            console.log(err);
+            done();
+          }
+          assert.nonExist(title);
+          done();
+      })
+    })
+  })
  
-
   
 
   // --- Stretch Problem ---
