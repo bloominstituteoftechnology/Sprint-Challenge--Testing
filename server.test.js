@@ -86,6 +86,19 @@ describe('Games', () => {
     })
   });
 
+  describe('[GET] api/game/get', () => {
+    it('should send back an array of all games', () => {
+      chai
+        .request(server)
+        .get('/api/game/get')
+        .end((err, res) => {
+          if (err) {
+            console.log(err);
+            done();
+          }
+          expect(res.body).to.have.length(2);
+        });
+    });
   });
 
   // test the PUT here
