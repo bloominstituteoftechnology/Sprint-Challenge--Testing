@@ -2,8 +2,11 @@ const mongoose = require('mongoose');
 const chai = require('chai');
 const { expect } = chai;
 const sinon = require('sinon');
-
+const chaiHTTP = require('chai-http');
 const Game = require('./models');
+
+const server = require('./server');
+chai.use(chaiHTTP);
 
 describe('Games', () => {
   before(done => {
@@ -58,6 +61,24 @@ describe('Games', () => {
   });
 
   // test the POST here
+
+  describe('[POST /api/game/create', () => {
+    it('should save a new game', done => {
+      const postTestGame = {
+        title: 'A Game',
+        releaseDate: 'Now',
+        genre: 'Mystery'
+      };
+      chai
+        .request(server)
+        .post('/api/game/create')
+        .send(postTestGame)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          done();
+        });
+    });
+  });
 
   // test the GET here
 
