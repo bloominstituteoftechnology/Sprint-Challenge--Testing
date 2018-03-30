@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const chai = require('chai');
 const { expect } = chai;
 const sinon = require('sinon');
+const server = require('./server');
 
 const Game = require('./models');
 
@@ -35,6 +36,28 @@ describe('Games', () => {
   });
 
   // test the POST here
+  describe('[POST] /api/game/create', () => {
+    it ('should return the newly added game', (done) => {
+      const game = {
+        name: 'Pro Wrestling',
+        genre: 'Fighting/Sports',
+        date: 'March 1987'
+      };
+
+      chai.request(server)
+        .post('/api/game/create')
+        .send(game)
+        .end((err, res) => {
+          if (err) {
+            console.error(err);
+            return done();
+          }
+          expect(res.status).to.equal(200);
+          expect(res.body.name).to.equal('Pro Wrestling');
+          done();
+        });
+    });
+  });
 
   // test the GET here
 
