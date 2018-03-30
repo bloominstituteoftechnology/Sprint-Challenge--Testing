@@ -35,7 +35,7 @@ server.get('/api/game/get', (req, res) => {
 
 server.put('/api/game/update', (req, res) => {
   // All I care about is the game title and id.. don't worry about genre or date.
-  const { title, id } = req.body;
+  const { title, id, releaseDate } = req.body;
   if (!title || !id) {
     return res.status(422).json({ error: 'Must Provide a title && Id' });
   }
@@ -46,6 +46,7 @@ server.put('/api/game/update', (req, res) => {
       return;
     }
     game.title = title;
+    game.releaseDate = releaseDate;
     game.save((saveErr, savedGame) => {
       if (err || game === null) {
         res.status(500);
@@ -58,6 +59,7 @@ server.put('/api/game/update', (req, res) => {
 });
 
 server.delete('/api/game/destroy/:id', (req, res) => {
+  console.log('req is', req.params);
   // to delete a game you can send up an id on the request body or the params
   let id = undefined;
   if (req.params.id) {
