@@ -105,7 +105,7 @@ How to handle GET/POST/PUT/DELETE
 
 ```
 {
-    name: 'Rush',
+    id: ___________________
 }
 ```
 
