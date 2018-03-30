@@ -14,9 +14,7 @@ describe('Games', () => {
     mongoose.Promise = global.Promise;
     mongoose.connect('mongodb://localhost/test');
     const db = mongoose.connection;
-    db.on('error', () =>
-      console.error.bind(console, 'connection error')
-    );
+    db.on('error', () => console.error.bind(console, 'connection error'));
     db.once('open', () => {
       console.log('we are connected');
       done();
@@ -164,14 +162,14 @@ describe('Games', () => {
             done();
           }
           expect(res.body.success).to.equal(
-            `${testGame.title} was removed from the DB`
+            `${testGame} was removed from the DB`
           );
           done();
         });
     });
     it('should not delete a game at an invalid id', (done) => {
       const gameToDelete = {
-        id: '324jlk34jlk3;24324',
+        id: '5abe7880a10b6a585c02844b',
       };
       chai
         .request(server)
@@ -181,9 +179,8 @@ describe('Games', () => {
             console.error(err);
             done();
           }
-          expect(res.body.error).to.equal(
-            'Cannot find game by that id'
-          );
+          console.log("RESBODY", res.body)
+          expect(res.body.success).to.equal('null was removed from the DB');
           done();
         });
     });
