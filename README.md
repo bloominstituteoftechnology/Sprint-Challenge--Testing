@@ -31,7 +31,7 @@
 
 ## DOCUMENTATION GOES HERE
 
-```
+
 # Sprint-Challenge-Testing
 
 ## Usage
@@ -47,7 +47,7 @@
 ### [DELETE] `/api/game/destroy/:id`
 
 ### [PUT] `/api/game/update`
-```
+
 
 ## TESTS
 
