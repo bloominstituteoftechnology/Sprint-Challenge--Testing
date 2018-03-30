@@ -98,6 +98,23 @@ describe('Games', () => {
   });
 
   // test the PUT here
+  describe('[PUT] /api/game/update', () => {
+    it('should update the game correctly', done => {
+      const updatedGame = {
+        title: 'Bioshock: The Collection',
+        id: testGameId,
+      };
+      chai
+        .request(server)
+        .put('/api/game/update')
+        .send(updatedGame)
+        .end((err, res) => {
+          if (err) return console.error(err);
+          expect(res.body.title).to.equal('Bioshock: The Collection');
+          done();
+        });
+    });
+  });
 
   // --- Stretch Problem ---
   // Test the DELETE here
