@@ -91,8 +91,28 @@ describe('Games', () => {
         .post('/api/game/create')
         .send(newGame)
         .end((err, res) => {
-          console.log("RESBODY IN DESCRIBE", res.body);
+          console.log('RESBODY IN DESCRIBE', res.body);
           expect(res.body.title).to.equal('California Games');
+          done();
+        });
+    });
+  });
+  describe('[PUT] /api/game/update', () => {
+    it('should update the game with the provided information at the given id', (done) => {
+      const updatedGame = {
+        title: 'Battle Toads',
+        id: testGameID,
+      };
+      chai
+        .request(server)
+        .put('/api/game/update')
+        .send(updatedGame)
+        .end((err, res) => {
+          if (err) {
+            throw new Error(err);
+            done();
+          }
+          expect(res.body.name).to.equal(updatedGame.name);
           done();
         });
     });
