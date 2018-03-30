@@ -89,6 +89,27 @@ describe('Games', () => {
     });
   });
   // test the PUT here
+  describe('[PUT] /api/game/update', () => {
+    it('should update the game with the given id', (done) => {
+      const updatedGame ={
+        id: gameID,
+        title: 'Fortnite Battle Royale',
+      };
+      chai
+        .request(server)
+        .put('/api/game/update')
+        .send(updatedGame)
+        .end((err, res) => {
+          if (err) {
+            console.error(err);
+            done();
+          }
+          expect(res.body.title).to.equal(updatedGame.title);
+          expect(res.body._id).to.equal(updatedGame.id.toString());
+          done();
+        });
+    });
+  });
 
   // --- Stretch Problem ---
   // Test the DELETE here
