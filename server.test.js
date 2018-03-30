@@ -142,7 +142,46 @@ describe('Games', () => {
                done();
             });
       });
+
+      it('should return 422 if bad id sent', done => {
+         const gameUpdate = {
+            id: 'bad id',
+            title: 'Final Fantasy XV',
+            genre: 'RPG',
+            releaseDate: 'November 2016',
+         };
+         chai
+            .request(server)
+            .put('/api/game/update')
+            .send(gameUpdate)
+            .end((err, res) => {
+               if (err) {
+                  expect(err.status).to.eql(422);
+                  const { error } = err.response.body;
+                  expect(error).to.eql('Cannot find game by that id');
+               }
+               done();
+            });
+      });
    });
    // --- Stretch Problem ---
    // Test the DELETE here
+   describe(`[DELETE] /api/game/delete/:id`, () => {
+      it('should delete a game with proper id', done => {
+         chai
+            .request(server)
+            .delete(`/api/game/destroy/${gameId}`)
+            // .send({ id: gameId })
+            .end((err, res) => {
+               if (err) {
+                  throw new Error(err);
+                  done();
+               }
+               expect(res.body.success).to.eql(
+                  'Final Fantasy VII was removed from the DB'
+               );
+               done();
+            });
+      });
+   });
 });
