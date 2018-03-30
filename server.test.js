@@ -66,19 +66,24 @@ describe('Games', () => {
     });
   });
 
-  // test the POST here
+  describe('[POST] api/game/post', () => {
+    const newGame = {
+      title: 'Donkey Kong',
+      genre: 'Platformer',
+    };
 
-  describe('[GET] api/game/get', () => {
-    it('should send back an array of all games', () => {
-      chai.request(server).get('/api/game/get').end((err, res) => {
+    chai
+      .request(server)
+      .post('/api/game/create')
+      .send(newGame)
+      .end((err, res) => {
         if (err) {
           console.log(err);
           done();
         }
-        expect(res.body).to.have.length(2);
+        expect(res.body.title).to.equal('Donkey Kong');
       })
-    })
-  })
+  });
 
   // test the PUT here
 
