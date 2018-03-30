@@ -46,6 +46,14 @@
 |-------------------|:-------------:|----------|
 | /api/game/get      | GET           |Get list of game titles in your collection|
 
+### PUT Route - update data for a game in your collection
+
+```GET- '/api/game/update/:id'```
+
+| Endpoint          | Type          | Data     |
+|-------------------|:-------------:|----------|
+| /api/game/update/:id      | PUT           |Update data for a game in your collection|
+
 
 ## TESTS
 
