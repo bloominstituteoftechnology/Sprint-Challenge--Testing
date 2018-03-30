@@ -49,6 +49,7 @@ describe('Games', () => {
         return done();
       }
       firstGameId = saved._id;
+      console.log('First Game ID: ', firstGameId);
     });
     new Game({
       title: 'Madden NFL 2027',
@@ -109,9 +110,9 @@ describe('Games', () => {
                 done();
             }
             console.log('Get res.body: ', res.body);
-            // expect(res.status).to.equal(200);
-            // // expect(res.body.length).to.equal(2);
-            // expect(res.body[1].genre).to.equal('Zombie')
+            expect(res.status).to.equal(200);
+            expect(res.body.length).to.equal(2);
+            expect(res.body[1].genre).to.equal('Zombie')
         });
         done();
     });
@@ -122,7 +123,7 @@ describe('Games', () => {
   describe('[UPDATE] /api/game/update', () => {
     it('should update a game from your list', (done) => {
         const updatedTopping = {
-            id: `${secondGameId}`,
+            id: `${firstGameId}`,
             title: 'Madden NFL 2018',
             genre: 'Sports',
         }
@@ -144,4 +145,21 @@ describe('Games', () => {
 
   // --- Stretch Problem ---
   // Test the DELETE here
+  describe('[DELETE] /api/game/destroy/:id', () => {
+    console.log('Delete first game id: ', firstGameId);
+    it('should delete a game from the list of games in your collection', (done) => {
+        chai.request(server)
+        .delete(`/api/game/destroy/${firstGameId}`)
+        .end((err, res) => {
+            if (err) {
+                console.error(err);
+                done();
+            }
+            console.log('Delete res.body: ', res.body);
+            expect(res.status).to.equal(200);
+            expect(res.body.success).to.equal('The Rest Of Us was removed from the DB');
+        });
+        done();
+    });
+});
 });
