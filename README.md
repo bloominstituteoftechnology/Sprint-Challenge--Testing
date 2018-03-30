@@ -38,7 +38,7 @@
 |-------------------|:-------------:|----------|
 | /api/topping       | POST           |adds a game to your collection|
 
-### GET Route - gets a list of all the pizza toppings
+### GET Route - gets a list of all the game titles in your collection
 
 ```GET- '/api/game/get'```
 
