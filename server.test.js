@@ -44,7 +44,7 @@ describe('Games', () => {
       .save()
       .then(game => {
         testGame = game;
-        gameId = game.id;
+        gameId = game._id;
         done();
       })
       .catch(err => {
@@ -85,6 +85,24 @@ describe('Games', () => {
   });
 
   // test the GET here
+  describe('[GET] /api/game/get', () => {
+    it('should get all games', done => {
+      chai
+        .request(server)
+        .get('/api/game/get')
+        .end((err, res) => {
+          if (err) {
+            console.error(err);
+            done();
+          }
+          expect(res.body[0].title).to.eql(testGame.title);
+          // console.log(gameId.toString());
+          // console.log(res.body[0]._id);
+          expect(res.body[0]._id).to.equal(gameId.toString());
+        });
+      done();
+    });
+  });
 
   // test the PUT here
 
