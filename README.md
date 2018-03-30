@@ -31,9 +31,20 @@
 
 ## DOCUMENTATION GOES HERE
 
-```
-THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
-```
+# [POST]
+| Endpoint       |  Type  |  Data  |           Result           |
+|----------------|--------|--------|----------------------------|
+|/api/game/create|  post  |  json  | returns newly created game |
+
+# [GET]
+| Endpoint       |  Type  |  Data  |             Result                 |
+|----------------|--------|--------|------------------------------------|
+|/api/game/get   |  get   |  json  | returns list of all games database |
+
+# [PUT]
+| Endpoint       |  Type  |  Data  |          Result           |
+|----------------|--------|--------|---------------------------|
+|/api/game/update|  put   |  json  | returns updated game info |
 
 ## TESTS
 
