@@ -101,10 +101,22 @@ describe('Games', () => {
       });
    });
 
-   // test the GET here
+  // test the GET here
+  describe(`[GET] /api/game/get`, () => {
+    it('should get all games in db', (done) => {
+      chai.request(server).get('/api/game/get').end((err, res) => {
+        if (err) {
+          throw new Error(err);
+          done();
+        }
+        expect(res.body[0].title).to.equal(testGame.title);
+        expect(res.body[0]._id).to.equal(String(gameId));
+        done();
+      });
+    });
+  });
+  // test the PUT here
 
-   // test the PUT here
-
-   // --- Stretch Problem ---
-   // Test the DELETE here
+  // --- Stretch Problem ---
+  // Test the DELETE here
 });
