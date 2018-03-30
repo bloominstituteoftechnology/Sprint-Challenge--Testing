@@ -71,6 +71,24 @@ describe('Games', () => {
           done();
         });
     });
+    it('should return status 422 upon error saving data', (done) => {
+      const newGame = {
+        title: 'Fortnite',
+        releaseDate: 'July 25, 2017',
+        genre: 'Survival'
+      };
+      chai
+        .request(server)
+        .post('/api/game/create')
+        .send(newGame)
+        .end((err, res) => {
+          if (err) {
+            expect(err.status).to.equal(422);
+            done();
+          }
+          done();
+        });
+    });
   });
   // test the GET here
   describe('[GET] /api/game/get', () => {
@@ -79,11 +97,19 @@ describe('Games', () => {
         .request(server)
         .get('/api/game/get')
         .end((err, res) => {
+          expect(res.body[0].title).to.equal('Halo');
+          done();
+        });
+    });
+    it('should return status 500 upon error retrieving data', (done) => {
+      chai
+        .request(server)
+        .get('/api/game/get')
+        .end((err, res) => {
           if (err) {
-            console.error(err);
+            expect(err.status).to.equal(500);
             done();
           }
-          expect(res.body[0].title).to.equal('Halo');
           done();
         });
     });
