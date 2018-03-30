@@ -11,7 +11,8 @@
 ```
     {
         title: 'Super Mario Bros',
-        releaseDate: 1985
+        releaseDate: 1985,
+        genre: 'Action'
     }
 ```
 
@@ -26,11 +27,13 @@ output:
   [
     {
         title: 'Super Mario Bros 3',
-        releaseDate: 1988
+        releaseDate: 1988,
+        genre: 'Action'
     },
     {
         title: 'Final Fantasy',
-        releaseDate: 1987
+        releaseDate: 1987,
+        genre: 'Adventure'
     }
   ]
 ```
