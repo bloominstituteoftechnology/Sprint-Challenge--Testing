@@ -30,10 +30,66 @@
 * The API itself is really simple. You're task is to peek at the endpoints found in the `server.js` file and write docs for each one, then write the tests for the end points.
 
 ## DOCUMENTATION GOES HERE
+# Server Testing - Games API Documentation
+This API was created in order to help understand Server testing using ```Chai```, ```Chai-HTTP``` and ```Sinon```.
 
+The API contains routes that use the following HTTP verbs: POST, GET, PUT and DELETE.
+
+It will allow users to view a list of games with their genre dateReleased and title. Users will also be able to create new game entries to the database, edit a given game and delete a given game.
+
+| Endpoint            | Type          | Data  |
+| ------------------- |:-------------:| -----:|
+| /api/game/create    | POST          | json  |
+
+### Example:
 ```
-THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
+{
+  genre: 'Board',
+  title: 'Chess',
+  dateReleased: '2015'
+
+}
 ```
+
+## [GET] `/api/game/get`
+| Endpoint      | Type          | Data  |
+| ------------- |:-------------:| -----:|
+| /api/game/get     | GET | json |
+
+### Example:
+```
+[
+  {
+    title: 'LOL',
+    genre: 'Group game',
+    dateReleased: '2012'
+  },
+  {
+    name: 'McLaren',
+    genre: 'F1',
+  }
+]
+```
+## [PUT] `/api/game/update`
+| Endpoint      | Type          | Data  |
+| ------------- |:-------------:| -----:|
+| /api/cars     | PUT | json |
+
+### Example:
+```
+  {
+    title: 'Tennis',
+    genre: 'Sports',
+    dateReleased: '2017'
+  }
+```
+
+## [DELETE] `'/api/game/destroy/`
+| Endpoint      | Type          | Data  |
+| ------------- |:-------------:| -----:|
+| /api/cars     | DELETE | json |
+
+
 
 ## TESTS
 
