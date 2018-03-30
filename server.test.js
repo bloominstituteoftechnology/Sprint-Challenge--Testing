@@ -84,7 +84,36 @@ describe('Games', () => {
     })
   })
   // test the GET here
+  describe('[GET] /api/game/get', () => {
+    it('should get all the games', done => {
+      const PUBG = {
+        title: 'PUBG',
+        genre: 'Battle Royale',
+        releaseDate: 'June, 2014',
+      };
+      chai
+        .request(server)
+        .post('/api/game/create')
+        .send(PUBG)
+        .end((err, res) => {
+          console.log('error sending to create');
+        });
 
+      chai
+        .request(server)
+        .get('/api/game/get')
+        .end((err, res) => {
+          if (err) {
+            console.error(res.body);
+            done();
+          }
+          assert.equal(res.status, 200)
+          assert.equal(res.body[0].title, 'Half Life 2');
+          assert.equal(res.body[1].title, 'PUBG');
+          done();
+        });
+    });
+  });
   // test the PUT here
 
   // --- Stretch Problem ---
