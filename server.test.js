@@ -75,6 +75,21 @@ describe('Games', () => {
         });
     });
   });
+    it('should have status 422 when improper data is passed', (done) => {
+      const postGame = {
+        title: 'California Games 2',
+      };
+      chai
+        .request(server)
+        .post('/api/game/create')
+        .send(postGame)
+        .end((err, res) => {
+          if (err) {
+            expect(err.status).to.equal(422);
+            done();
+          }
+        });
+    });
 
   // test the GET here
 
