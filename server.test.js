@@ -5,8 +5,10 @@ const chaihttp = require('chai-http');
 const { expect } = chai;
 const sinon = require('sinon');
 
-const Game = require('./models');
+const server = require('./server');
 chai.use(chaihttp);
+
+const Game = require('./models');
 
 describe('Games', () => {
   before(done => {
@@ -38,7 +40,7 @@ describe('Games', () => {
     // each time this hook runs, you should save a document to your db
     // by saving the document you'll be able to use it in each of your `it` blocks
     new Game({
-      name: 'The Rest Of Us',
+      title: 'The Rest Of Us',
       genre: 'Zombie',
       releaseDate: 'June 2011',
     }).save((err, saved) => {
@@ -47,10 +49,9 @@ describe('Games', () => {
         return done();
       }
       firstGameId = saved._id;
-      done();
     });
     new Game({
-      name: 'Madden NFL 2027',
+      title: 'Madden NFL 2027',
       genre: 'Sports'
     }).save((err, saved) => {
       if (err) {
@@ -72,6 +73,28 @@ describe('Games', () => {
 
 
   // test the POST here
+
+  describe('[POST] /api/game/create', () => {
+    it('should add a new game', (done) => {
+        const newGame = {
+            title: 'MarioKart',
+            genre: 'racing'
+        };
+        chai.request(server)
+        .post('/api/game/create')
+        .send(newGame)
+        .end((err, res) => {
+            if (err) {
+                console.error(err);
+                done();
+            }
+            expect(res.body.title).to.equal('MarioKart');
+            console.log('Post res.body: ', res.body);
+            expect(res.status).to.equal(200);
+        });
+        done();
+    });
+});
 
   // test the GET here
 
