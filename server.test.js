@@ -119,7 +119,7 @@ describe('Games', () => {
             console.error(err)
             done();
           }
-          expect(res.body[0].title).to.eql(testGame.title);
+          expect(res.body[0].title).to.equal(testGame.title);
           done();
         });
     });
