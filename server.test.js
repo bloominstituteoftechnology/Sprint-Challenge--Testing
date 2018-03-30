@@ -119,5 +119,25 @@ describe('Games', () => {
   });
 
   // --- Stretch Problem ---
-  // Test the DELETE here
+  describe('[DELETE] /api/game/destroy/:id', () => {
+    it('should remove the specified game from the database', (done) => {
+      chai.request(server)
+        .delete(`/api/game/destroy/${gameId}`)
+        .end((err, res) => {
+          if (err) {
+            console.log(err);
+            return done();
+          }
+          expect(res.text).to.equal('{"success":"Mega Man was removed from the DB"}');
+          Game.findById(gameId, (err, deletedGame) => {
+            if (err) {
+              console.log(err);
+              return done();
+            }
+            expect(deletedGame).to.equal(null);
+            done();
+          });
+        });
+    });
+  });
 });
