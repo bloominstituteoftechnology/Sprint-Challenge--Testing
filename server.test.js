@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const chai = require('chai');
 const { expect } = chai;
 const sinon = require('sinon');
+const server = require("./server");
 
 const Game = require('./models');
 
@@ -35,13 +36,13 @@ describe('Games', () => {
       genre: "JRPG",
       releaseDate: "July 6, 2010"
     })
-    .save((err, newGame) => {
+    .save((err, savedGame) => {
       if (err) {
         console.log(`There has been an error saving the game: \n ${err}`);
         done();
         return;
       } else {
-        gameId = newGame.id;
+        gameId = savedGame.id;
         console.log(`The game has been added successfully!`);
         done();
       }
@@ -56,6 +57,24 @@ describe('Games', () => {
   });
 
   // test the POST here
+  describe("[POST] /api/game/create", () => {
+    it("should add a new game to the database", (done) => {
+      const newGame = {
+        title: "Phoenix Wright: Ace Attorney",
+        genre: "Visual Novel",
+        releaseDate: "September 1, 2006"
+      };
+      chai.request(server)
+        .put("/api/game/create")
+        .send(newGame)
+        .end((err, res) => {
+          if (err) return console.log(`There has been an error with the post request: \n ${err}`);
+          expect(res.status).to.equal(200);
+          expect(res.body.title).to.equal("Phoenix Wright: Ace Attorney");
+          done();
+        })
+    })
+  })
 
   // test the GET here
 
