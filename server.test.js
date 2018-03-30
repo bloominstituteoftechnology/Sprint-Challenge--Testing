@@ -28,8 +28,23 @@ describe('Games', () => {
   let game = null;
 
   beforeEach(done => {
-    
+    const newGame = new Game({
+      name: 'Duck Hunt',
+      genre: 'light gun shooter',
+      releaseDate: '21 April 1984',
+    });
+    newGame.save()
+      .then(created => {
+        id = created._id;
+        game = created;
+        done();
+      })
+      .catch(error => {
+        console.error(error);
+        done();
+      });
   });
+
   afterEach(done => {
     Game.remove({}, err => {
       if (err) console.error(err);
