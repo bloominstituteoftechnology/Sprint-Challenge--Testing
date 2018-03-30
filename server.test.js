@@ -77,6 +77,21 @@ describe('Games', () => {
   })
 
   // test the GET here
+  describe("[GET] /api/game/get", () => {
+    it("should send a list of all games stored on the database", (done) => {
+      chai.request(server)
+        .get("/api/game/get")
+        .end((err, res) => {
+          if (err) return console.log(`There has been an error with the get request: \n ${err}`);
+          expect(res.status).to.equal(200);
+          expect(Array.isArray(res.body)).to.equal(true);
+          expect(res.body[0].title).to.equal("Persona 3 Portable");
+          expect(res.body.length).to.equal(2);
+          done();
+        })
+    })
+  })
+
 
   // test the PUT here
 
