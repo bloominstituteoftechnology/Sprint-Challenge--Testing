@@ -93,7 +93,27 @@ describe('[GET] /api/game/get', () => {
   });
 });
   // test the PUT here
-
+describe('[PUT] /api/game/update', () => {
+  it('should update the based on id', done => {
+    const gameUpdate = {
+      id: gameId,
+      title: 'Manhattan Games',
+      genre: 'Sports',
+      releaseDate: 'December 1983'
+    };
+    chai.request(server).put('/api/game/update')
+    .send(gameUpdate).end((err, res) => {
+      if(err) {
+        throw new Error(err);
+        done();
+      }
+      expect(res.body.title).to.equal(gameUpdate.title);
+      expect(res.body.genre).to.equal(gameUpdate.genre);
+      expect(res.body.releaseDate).to.equal(gameUpdate.releaseDate);
+      done();
+    });
+  });
+});
   // --- Stretch Problem ---
   // Test the DELETE here
 });
