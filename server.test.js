@@ -57,7 +57,7 @@ describe('Games', () => {
     });
   });
 
-  describe('POST /api/game/create', () => {
+  describe('[POST] /api/game/create', () => {
     it('should add a new game', (done) => {
       const postGame = new Game({
         title: 'California Games',
@@ -69,12 +69,15 @@ describe('Games', () => {
         .post('/api/game/create')
         .send(postGame)
         .end((err, res) => {
+          if (err) {
+            throw new Error(err);
+            done();
+          }
           expect(res.status).to.equal(200);
           expect(res.body.title).to.equal('California Games')
           done();
         });
     });
-  });
     it('should have status 422 when improper data is passed', (done) => {
       const postGame = {
         title: 'California Games 2',
@@ -90,8 +93,24 @@ describe('Games', () => {
           }
         });
     });
+  });
 
-  // test the GET here
+  describe(`[GET] /api/game/get`, () => {
+    it('should get all games in the db', (done) => {
+      chai
+        .request(server)
+        .get('/api/game/get')
+        .end((err, res) => {
+          if (err) {
+            throw new Error(err);
+            done();
+          }
+          expect(res.body[0].title).to.equal('Duck Hunt');
+          expect(res.body[0]._id).to.equal(id.toString());
+          done();
+        });
+    });
+  });
 
   // test the PUT here
 
