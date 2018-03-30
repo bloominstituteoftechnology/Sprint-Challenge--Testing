@@ -82,6 +82,20 @@ describe('Games', () => {
   });
 
   // test the GET here
+  describe('[GET] /api/game/get', () => {
+    it('should retrieve the games correctly', done => {
+      chai
+        .request(server)
+        .get('/api/game/get')
+        .end((err, res) => {
+          if (err) return console.error(err);
+          expect(res.body).to.be.an('array');
+          expect(res.body[0]).to.be.an('object');
+          expect(res.body[0].title).to.equal('Bioshock');
+          done();
+        });
+    });
+  });
 
   // test the PUT here
 
