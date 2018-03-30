@@ -66,3 +66,4 @@ output:
     {
         'success': 'Jumanji was removed from the DB'
     }
+```
