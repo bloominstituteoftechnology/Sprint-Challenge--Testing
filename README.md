@@ -33,6 +33,7 @@
 ### POST Route - adds a game to your list of games
 
 ```POST- '/api/game/create'```
+
 | Endpoint          | Type          | Data     |
 |-------------------|:-------------:|----------|
 | /api/topping       | POST           |adds a game to your collection|
