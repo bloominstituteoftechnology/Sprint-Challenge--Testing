@@ -38,6 +38,14 @@
 |-------------------|:-------------:|----------|
 | /api/topping       | POST           |adds a game to your collection|
 
+### GET Route - gets a list of all the pizza toppings
+
+```GET- '/api/game/get'```
+
+| Endpoint          | Type          | Data     |
+|-------------------|:-------------:|----------|
+| /api/game/get      | GET           |Get list of game titles in your collection|
+
 
 ## TESTS
 
