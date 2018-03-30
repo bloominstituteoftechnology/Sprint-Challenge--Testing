@@ -67,14 +67,27 @@ describe('Games', () => {
         .post('/api/game/create')
         .send(newGame)
         .end((err, res) => {
-          expect(res.status).to.equal(200);
           expect(res.body.title).to.equal('Fortnite')
           done();
         });
     });
   });
   // test the GET here
-
+  describe('[GET] /api/game/get', () => {
+    it('should return all games', (done) => {
+      chai
+        .request(server)
+        .get('/api/game/get')
+        .end((err, res) => {
+          if (err) {
+            console.error(err);
+            done();
+          }
+          expect(res.body[0].title).to.equal('Halo');
+          done();
+        });
+    });
+  });
   // test the PUT here
 
   // --- Stretch Problem ---
