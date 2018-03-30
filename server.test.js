@@ -75,7 +75,6 @@ describe('Games', () => {
       const newGame = {
         title: 'Fortnite',
         releaseDate: 'July 25, 2017',
-        genre: 'Survival'
       };
       chai
         .request(server)
@@ -86,7 +85,6 @@ describe('Games', () => {
             expect(err.status).to.equal(422);
             done();
           }
-          done();
         });
     });
   });
@@ -97,19 +95,11 @@ describe('Games', () => {
         .request(server)
         .get('/api/game/get')
         .end((err, res) => {
-          expect(res.body[0].title).to.equal('Halo');
-          done();
-        });
-    });
-    it('should return status 500 upon error retrieving data', (done) => {
-      chai
-        .request(server)
-        .get('/api/game/get')
-        .end((err, res) => {
           if (err) {
-            expect(err.status).to.equal(500);
+            console.error(err);
             done();
           }
+          expect(res.body[0].title).to.equal('Halo');
           done();
         });
     });
@@ -126,13 +116,24 @@ describe('Games', () => {
         .put('/api/game/update')
         .send(updatedGame)
         .end((err, res) => {
-          if (err) {
-            console.error(err);
-            done();
-          }
           expect(res.body.title).to.equal(updatedGame.title);
           expect(res.body._id).to.equal(updatedGame.id.toString());
           done();
+        });
+    });
+    it('should return status 422 if title or id is missing', (done) => {
+      const updatedGame = {
+        id: gameID
+      };
+      chai
+        .request(server)
+        .put('/api/game/update')
+        .send(updatedGame)
+        .end((err, res) => {
+          if (err) {
+            expect(err.status).to.equal(422);
+            done();
+          }
         });
     });
   });
@@ -145,12 +146,19 @@ describe('Games', () => {
         .request(server)
         .delete(`/api/game/destroy/${gameID}`)
         .end((err, res) => {
-          if (err) {
-            console.error(err);
-            done();
-          }
           expect(res.body).to.have.property('success');
           done();
+        });
+    });
+    it('should return status 422 if ID is not found', (done) => {
+      chai
+        .request(server)
+        .delete(`/api/game/destroy/1223423423`)
+        .end((err, res) => {
+          if (err) {
+            expect(err.status).to.equal(422);
+            done();
+          }
         });
     });
   });
