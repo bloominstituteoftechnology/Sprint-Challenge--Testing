@@ -127,7 +127,24 @@ describe('[GET] /api/game/get', () => {
   // Test the DELETE here
   describe('[DELETE] /api/game/destroy/:id', () => {
     it('should delete the game using an id', done => {
-      
+      const availableGame = {
+        title: 'Vacation Game',
+        genre: 'Sports',
+        date: 'June 1987'
+      };
+      chai
+      .request(server)
+      .get('/api/game/destroy/:id')
+      .end((err, res) => {
+        chai.request(server)
+        .delete('/api/game/destroy/:id'+res.body[0]._id)
+        .end((err, res) => {
+          if(err) console.error(err);
+          expect(res.status).to.equal(200);
+          expect(res.body).to.equal('undefined');
+        })
+       done();
+      })
     })
   })
 });
