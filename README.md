@@ -31,8 +31,82 @@
 
 ## DOCUMENTATION GOES HERE
 
+# API Documentation
+
+How to handle GET/POST/PUT/DELETE
+
+### Port - Location of all endpoints to interface with our API is at `http://localhost:3000`
+
+## [Get] `/api/game/get Get All Games`
+
+| EndPoint  | Type | Data |
+| ---------- | :--: | ---: |
+| /api/game/get | GET  | json |
+
+### Example:
+
 ```
-THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
+{
+  title: 'Double Dragon',
+  genre: 'Beat-Em Up',
+  releaseDate: '1988',
+},
+{
+  title: 'Final Fantasy',
+  genre: 'RPG',
+  releaseDate: '1990',
+}
+```
+
+## [POST] `/api/game/create Create New Game`
+
+| EndPoint | Type | Data |
+| --------- | :--: | ---: |
+| /api/game/create | POST | json |
+
+### You must provide title *and* genre.  releaseDate is optional.
+
+### Example:
+
+```
+{
+  title: 'Final Fantasy',
+  genre: 'RPG',
+  releaseDate: '1990',
+}
+```
+
+## [PUT] `/api/game/update`
+
+| EndPoint  | Type | Data |
+| ---------- | :--: | ---: |
+| /api/band:name | PUT  | json |
+
+### You must provide the title *and* id
+
+### Example:
+
+```
+{
+    title: 'Final Fantasy',
+    id: ___________________
+}
+```
+
+## [DELETE] `/api/game/destroy/:id Destroy a Game`
+
+### You must provide an id by body *or* params
+
+| EndPoint  | Type | Data |
+| ---------- | :--: | ---: |
+| /api/game/destroy/:id | DELETE  | json |
+
+### Example:
+
+```
+{
+    name: 'Rush',
+}
 ```
 
 ## TESTS
