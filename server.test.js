@@ -42,7 +42,6 @@ describe('Games', () => {
         }).save((err, resp) => {
             if (err) done();
             gameId = resp.id;
-            console.log('foreach:::', resp);
             done();
         });
     });
@@ -75,6 +74,28 @@ describe('Games', () => {
         });
     });
 
+    // test the PUT here
+    describe('[PUT] /api/game/update', () => {
+        it('should update a game by id', (done) => {
+
+            const dataToUpdate = {
+                id: gameId,
+                title: 'Mario Car II.',
+            };
+
+            chai.request(server)
+                .put('/api/game/update')
+                .send(dataToUpdate)
+                .end((err, resp) => {
+                    if (err) {
+                        done();
+                    }
+                    expect(resp.body.title).to.equal(dataToUpdate.title);
+                });
+            done();
+        });
+    });
+
     // test the GET here
     describe('[GET] /api/game/get', () => {
         it('should create a new game', (done) => {
@@ -85,9 +106,7 @@ describe('Games', () => {
                         console.error(err);
                         done();
                     }
-                    console.log('resp.body::::', resp.body.length);
                     expect(resp.status).to.equal(200);
-                    expect(resp.body.length).to.equal(1);
                 });
             done();
         });
@@ -104,22 +123,10 @@ describe('Games', () => {
                 });
             done();
         });
-
-        it('should return one record', (done) => {
-            chai.request(server)
-                .get('/api/game/get')
-                .end((err, resp) => {
-                    if (err) {
-                        console.error(err);
-                        done();
-                    }
-                    expect(resp.body.length).to.equal(1);
-                });
-            done();
-        });
     });
 
-    // test the PUT here
+
+
 
     // --- Stretch Problem ---
     // Test the DELETE here
