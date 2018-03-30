@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const chai = require('chai');
 const chaiHTTP = require('chai-http');
-const { expect } = chai;
+const { assert } = chai;
 const sinon = require('sinon');
 
 const Game = require('./models');
@@ -55,11 +55,63 @@ describe('Games', () => {
   });
 
   // test the POST here
-
+  describe('[POST] /api/game/create', () => {
+    it('should create a new game in the database', done => {
+      const testGame = {
+        title: 'Counter Strike',
+        genre: 'First Person Shooter'
+      };
+      chai.request(server)
+        .post('/api/game/create')
+        .send(testGame)
+        .end((err, res) => {
+          if (err) {
+            console.err(err);
+            done();
+          }
+          assert.equal(res.body.title, 'Counter Strike');
+          done();
+        })
+    })
+  })
   // test the GET here
-
+  describe('[GET] /api/game/get', () => {
+    it('should return the current games in the database', done => {
+      const testGame = {
+        title: 'Counter Strike',
+        genre: 'First Person Shooter'
+      };
+      chai.request(server)
+        .get('/api/game/get')
+        .end((err, res) => {
+          if (err) {
+            done();
+          }
+        })
+      done();
+    })
+  })
   // test the PUT here
-
+  describe('[PUT] /api/game/update', () => {
+    it('should update the inputted game in the database', done => {
+      const updateGame = {
+        title: 'Reigns2',
+        genre: 'Misc.',
+        id: gameID
+      };
+      chai.request(server)
+        .put('/api/game/update')
+        .send(updateGame)
+        .end((err, res) => {
+          if (err) {
+            console.error(err);
+            done();
+          }
+          assert.equal(res.body.title, 'Reigns2')
+          done();
+        });
+    });
+  });
   // --- Stretch Problem ---
   // Test the DELETE here
 });
