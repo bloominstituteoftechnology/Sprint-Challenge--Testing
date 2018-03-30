@@ -29,38 +29,33 @@ describe('Games', () => {
   });
   // declare some global variables for use of testing
   // hint - these wont be constants because you'll need to override them.
+  let gameID;
   beforeEach(done => {
     // write a beforeEach hook that will populate your test DB with data
     // each time this hook runs, you should save a document to your db
     // by saving the document you'll be able to use it in each of your `it` blocks
-    new Game({
+    const mario = {
       title: 'Mario Bros',
       genre: 'Platform',
       releaseDate: 'June 1986',
-    }).save((err, savedWeapon) => {
+    };
+    const newGame = new Game(mario);
+    newGame.save((err, savedGame) => {
       if (err) {
-        console.log('There was an error saving the document in the beforeEach hook');
         console.log(err);
-        done();
+        return done();
       }
-    })
-    new Game({
-      title: 'Tetris',
-      genre: 'Puzzle',
-    }).save((err, savedWeapon) => {
-      if (err) {
-        console.log('There was an error saving the document in the beforeEach hook');
-        console.log(err);
-        done();
-      }
+      gameID = savedGame._id;
+      console.log(gameID);
       done();
-    })
+    });
   });
   afterEach(done => {
     Game.remove({}, err => {
       if (err) {
-        console.log('There was an error removing the data in the afterEach hook');
-        done()
+        console.log(
+          'There was an error removing the data in the afterEach hook'
+        );
       }
       done();
     });
@@ -82,8 +77,8 @@ describe('Games', () => {
             done();
           }
           expect(res.body.title).to.equal('Donkey Kong');
-        })
-    })
+        });
+    });
   });
 
   describe('[GET] api/game/get', () => {
@@ -96,13 +91,48 @@ describe('Games', () => {
             console.log(err);
             done();
           }
-          expect(res.body).to.have.length(2);
+          expect(res.body).to.have.length(1);
         });
     });
   });
 
-  // test the PUT here
+  describe('[PUT] api/game/update', () => {
+    it('should update the correct document', done => {
+      chai
+        .request(server)
+        .put(`/api/game/update`)
+        .send({ title: 'Tetris 2', id: gameID })
+        .end((err, res) => {
+          if (err) {
+            console.log('error in end', err);
+            done();
+          }
+          expect(res.body.title).to.equal('Tetris 2');
+          done();
+        });
+    });
+  });
 
-  // --- Stretch Problem ---
-  // Test the DELETE here
+  describe('[DELETE] /api/game/destroy/:id', () => {
+    it('should delete the specified game', done => {
+      chai
+        .request(server)
+        .delete(`/api/game/destroy/${gameID}`)
+        .end((err, res) => {
+          if (err) {
+            console.error(err);
+            done();
+          }
+          expect(res.body.success).to.equal('Mario Bros was removed from the DB');
+          Game.findOne({ name: 'Mario Bros' }, (err, game) => {
+            if (err) {
+              console.log(err);
+              done();
+            }
+            expect(game).to.equal(null);
+            done();
+          });
+        });
+    });
+  });
 });
