@@ -115,7 +115,7 @@ describe('Games', () => {
           done();
         });
     });
-    it('should hanle error if no games were fetched', done => {
+    it('should handle error if no games were fetched', done => {
       chai
         .request(server)
         .get('/api/game/get')
@@ -153,7 +153,7 @@ describe('Games', () => {
           done();
         });
     });
-    it('should hanle error if no title is sent', done => {
+    it('should handle error if no title is sent', done => {
       const updateGame = {
         id: gameId,
         title: null,
@@ -172,7 +172,7 @@ describe('Games', () => {
           done();
         });
     });
-    it('should hanle error if no ID is sent', done => {
+    it('should handle error if no ID is sent', done => {
       const updateGame = {
         id: null,
         title: 'Snow Bros',
@@ -191,7 +191,7 @@ describe('Games', () => {
           done();
         });
     });
-    it('should hanle error if bad ID is sent', done => {
+    it('should handle error if bad ID is sent', done => {
       const updateGame = {
         id: 'oldschoolgamez',
         title: 'Snow Bros',
@@ -210,7 +210,7 @@ describe('Games', () => {
           done();
         });
     });
-    it('should hanle error if updated game does not exist', done => {
+    it('should handle error if updated game does not exist', done => {
       const updateGame = {
         id: gameId,
         title: 'Snow Bros',
@@ -252,7 +252,7 @@ describe('Games', () => {
           done();
         });
     });
-    it('should hanle error if no valid ID is sent', done => {
+    it('should handle error if no valid ID is sent', done => {
       const deleteGame = {
         id: undefined
       };
@@ -269,7 +269,7 @@ describe('Games', () => {
           done();
         });
     });
-    it('should hanle error if bad ID is sent', done => {
+    it('should handle error if bad ID is sent', done => {
       const deleteGame = {
         id: 'oldschoolgamez'
       };
