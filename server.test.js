@@ -150,4 +150,21 @@ describe('Games', () => {
 
   // --- Stretch Problem ---
   // Test the DELETE here
+
+  describe('[DELETE] /api/game/destroy/:id', () => {
+    it('should remove the game and return status 200', done => {
+      chai
+        .request(server)
+        .delete('/api/game/destroy/:id')
+        .end((err, res) => {
+          if (err) {
+            console.error(err);
+            done();
+          }
+          expect(res.status).to.equal(200);
+            done();
+          });
+        });
+    });
+
 });
