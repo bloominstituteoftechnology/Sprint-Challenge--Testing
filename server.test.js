@@ -32,187 +32,112 @@ describe('Games', () => {
 
   let gameId;
 
-  beforeEach((done) => {
-    new Game({
-      title: 'Mega Man',
-      releaseDate: 'December 17, 1987',
-      genre: 'Action Platformer'
-    }).save((err, savedGame) => {
-      if (err) {
-        console.log(err);
-        return done();
-      }
-      gameId = savedGame.id;
-      done();
+  beforeEach(async function() {
+    let newGame = await Promise.resolve(
+      new Game({
+        title: 'Mega Man',
+        releaseDate: 'December 17, 1987',
+        genre: 'Action Platformer'
+    }).save()).catch(err => {
+      return console.error(err);
     });
+      return gameId = newGame.id;
   });
 
-  afterEach((done) => {
-    Game.remove({}, (err) => {
+  afterEach(async function() {
+    await Game.remove({}, (err) => {
       if (err) {
-        console.log(err);
-        return done();
+        return console.log(err);
       };
-      mongoose.connection.db.dropDatabase();
-      done();
+      return mongoose.connection.db.dropDatabase();
     });
   });
 
   describe('[POST] /api/game/create', () => {
-    it('should add a new game', (done) => {
+    it('should add a new game', async function() {
       const game = {
         title: 'Contra',
         releaseDate: 'February 20, 1987',
         genre: 'Run and gun'
       };
 
-      chai.request(server)
-        .post('/api/game/create')
-        .send(game)
-        .end((err, res) => {
-          if (err) {
-            console.log(err);
-            return done();
-          }
-          expect(res.status).to.equal(200);
-          expect(res.body.title).to.equal('Contra');
-          done();
-        });
+      const res = await Promise.resolve(chai.request(server).post('/api/game/create').send(game)).catch(err => console.error(err));
+      expect(res.status).to.equal(200);
+      expect(res.body.title).to.equal('Contra');
     });
 
-    it('should return HTTP status 422 when failing to save to the database', (done) => {
+    it('should return HTTP status 422 when failing to save to the database', async function() {
       const game = {
         title: 'Contra',
         releaseDate: 'February 20, 1987',
       };
 
-      chai.request(server)
-        .post('/api/game/create')
-        .send(game)
-        .end((err, res) => {
-          expect(res.status).to.equal(422);
-          done();
-        });
+      const res = await Promise.resolve(chai.request(server).post('/api/game/create').send(game)).catch(err => {
+        return expect(err.status).to.equal(422);
+      }); 
     });
   });
 
   describe('[GET] /api/game/get', () => {
-    it('should return all games in the database', (done) => {
-      chai.request(server)
-        .get('/api/game/get')
-        .end((err, res) => {
-          if (err) {
-            console.log(err);
-            return done();
-          }
-          expect(res.status).to.equal(200);
-          expect(res.body.length).to.equal(1);
-          done();
-        });
+    it('should return all games in the database', async function() {
+      const res = await Promise.resolve(chai.request(server).get('/api/game/get')).catch(err => console.error(err));
+      expect(res.status).to.equal(200);
+      expect(res.body.length).to.equal(1);
     });
-    it('should return an array', (done) => {
-      chai.request(server)
-      .get('/api/game/get')
-      .end((err, res) => {
-        if (err) {
-          console.log(err);
-          return done();
-        }
-        expect(Array.isArray(res.body)).to.equal(true);
-        expect(res.body.length).to.equal(1);
-        done();
-      });
+
+    it('should return an array', async function() {
+      const res = await Promise.resolve(chai.request(server).get('/api/game/get')).catch(err => console.error(err));
+      expect(Array.isArray(res.body)).to.equal(true);
     });
   });
 
   describe('[PUT] /api/game/update', () => {
-    it('should update a game document in the database', (done) => {
+    it('should update a game document in the database', async function() {
       const update = {
         id: gameId,
         title: 'Castlevania'
       };
-      chai.request(server)
-        .put('/api/game/update')
-        .send(update)
-        .end((err, res) => {
-          if (err) {
-            console.log(err);
-            return done();
-          }
-          expect(res.body.title).to.equal('Castlevania');
-          done();
-        });
+
+      const res = await Promise.resolve(chai.request(server).put('/api/game/update').send(update)).catch(err => console.error(err));
+      expect(res.body.title).to.equal('Castlevania');
     });
 
-    it('should return HTTP status 422 when no title is provided', (done) => {
+    it('should return HTTP status 422 when no title is provided', async function() {
       const update = {
         id: gameId,
       };
-      chai.request(server)
-        .put('/api/game/update')
-        .send(update)
-        .end((err, res) => {
-          expect(res.status).to.equal(422);
-          done();
-        });
+
+      const res = await Promise.resolve(chai.request(server).put('/api/game/update').send(update)).catch(err => {
+        return expect(err.status).to.equal(422);
+      }); 
     });
 
-    it('should return HTTP status 422 when an invalid ID is provided', (done) => {
+    it('should return HTTP status 422 when no title is provided', async function() {
       const update = {
-        id: 8385913296527396,
+        id: 1234567890,
         title: 'Castlevania'
       };
-      chai.request(server)
-        .put('/api/game/update')
-        .send(update)
-        .end((err, res) => {
-          expect(res.status).to.equal(422);
-          done();
-        });
-    })
+
+      const res = await Promise.resolve(chai.request(server).put('/api/game/update').send(update)).catch(err => {
+        return expect(err.status).to.equal(422);
+      }); 
+    });
   });
 
   // --- Stretch Problem ---
   describe('[DELETE] /api/game/destroy/:id', () => {
-    it('should remove the specified game from the database', (done) => {
-      chai.request(server)
-        .delete(`/api/game/destroy/${gameId}`)
-        .end((err, res) => {
-          if (err) {
-            console.log(err);
-            return done();
-          }
-          expect(res.text).to.equal('{"success":"Mega Man was removed from the DB"}');
-          Game.findById(gameId, (err, deletedGame) => {
-            if (err) {
-              console.log(err);
-              return done();
-            }
-            expect(deletedGame).to.equal(null);
-            done();
-          });
-        });
+    it('should remove the specified game from the database', async function() {
+      const res = await Promise.resolve(chai.request(server).delete(`/api/game/destroy/${gameId}`)).catch(err => console.error(err));
+
+      expect(res.text).to.equal('{"success":"Mega Man was removed from the DB"}');
+      const deletedGame = await Promise.resolve(Game.findById(gameId)).catch(err => console.error(err));
+      expect(deletedGame).to.equal(null);
     });
 
-    // it('should return HTTP status 422 when no ID is provided', (done) => {
-    //   chai.request(server)
-    //     .delete('/api/game/destroy/')
-    //     .send({})
-    //     .end((err, res) => {
-    //       expect(res.status).to.equal(422);
-    //       done();
-    //     });
-    //   });
-    // You can't actually test the above, '/api/game/destroy' is not a valid endpoint, it will return 404 to DELETE requests.
-    // It HAS to have an ID passed in the parameter, it does not actually work with accepting an object containing an id.
-
-    it('should return HTTP status 422 when an invalid ID is provided', (done) => {
-      chai.request(server)
-        .delete('/api/game/destroy/I_am_an_invalid_id')
-        .end((err, res) => {
-          expect(res.status).to.equal(422);
-          done();
-        });
+    it('should return HTTP status 422 when an invalid ID is provided', async function() {
+      const res = await Promise.resolve(chai.request(server).delete(`/api/game/destroy/I_am_an_invalid_ID`)).catch(err => {
+        return expect(err.status).to.equal(422)
       });
+    });
   });
 });
