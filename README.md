@@ -30,11 +30,77 @@
 * The API itself is really simple. You're task is to peek at the endpoints found in the `server.js` file and write docs for each one, then write the tests for the end points.
 
 ## DOCUMENTATION GOES HERE
+# Movie API Documentation
 
-```
-THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
-```
+Here's how you can interface with our Games API.
 
+Port- Location of our endpoints to interface with our API is at http://localhost:5050
+
+## [POST] /api/movie/create
+
+| Endpoint  | Type | Data
+| --------- | -----| ------
+|/api/game/create | POST | JSON 
+
+### Example 
+````
+{
+  name: 'Fortnite',
+  genre: 'First Person Shooter/Misc.',
+}
+
+Adds a new game to the Database
+
+````
+## [GET] /api/game/get
+
+| Endpoint  | Type | Data
+| --------- | -----| ------
+|/api/game/get | GET | JSON 
+
+### Example 
+```
+{
+  name: 'Fortnite',
+  genre: 'First Person Shooter/Misc.',
+},
+{
+  name: 'Starcraft',
+  genre: 'RTS',
+}
+
+Will receive all of the games in the database we have POSTed 
+```
+## [PUT] /api/game/update
+
+| Endpoint  | Type | Data
+| --------- | -----| ------
+|/api/game/update | PUT | JSON 
+### Example 
+```
+{
+  name: 'Reigns2',
+  genre: 'Misc.,
+}
+
+Will update the previous 'Fortnite' game entry with 'Reigns2'
+```
+## [DELETE] /api/game/destroy/:id
+
+| Endpoint  | Type | Data
+| --------- | -----| ------
+|/api/game/destroy/:id | DELETE | JSON 
+
+### Example 
+````
+{
+  name: 'Fortnite',
+  genre: 'First Person Shooter',
+}
+
+Will remove the Fortnite JSON entry from the Database
+
+````
 ## TESTS
 
 * I have already manually tested this API for you.
