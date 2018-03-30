@@ -32,7 +32,95 @@
 ## DOCUMENTATION GOES HERE
 
 ```
-  THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
+# API Documentation
+
+Welcome to NES Database API! To get started, the default port is `5050`. Available endpoints are documented below.
+
+## Get a Full List of Games from the Database
+`[GET] /api/game/get`
+
+### Parameters
+N/A, a simple `GET` request is all that is needed.
+
+### Example Response
+`status: 200 OK`
+```json
+{
+  "body": [
+    {
+      "id": "fo90ef8h209ufgh0e90f9",
+      "title": "Duck Hunt",
+      "genre": "Lightgun Shooter",
+      "releaseDate": "April 1987",
+    }
+  ]
+}
+```
+
+## Add a game to the Database
+`[POST] /api/game/create`
+
+### Request Body
+|Name|Type|Description|
+|----|----|-----------|
+|title|string|The name of the game you want to add to the database.|
+|genre|string|The genre of the game you want to add to the database.|
+|releaseDate|string - optional|The release date of the game you want to add to the database.|
+
+### Example Response
+`status: 200 OK`
+```json
+{
+  "id": "fj248rh2049t8he09if209e8rh029",
+  "name": "Duck Hunt",
+  "genre": "Lightgun Shooter",
+  "releaseDate": "April 1987"
+}
+```
+
+## Delete a game from the Database
+`[DELETE] /api/game/destroy/:id`
+
+### Parameters
+None, but make sure to include the id of the target document in the request URL.
+### Example Response
+`status: 200 OK`
+```json
+{
+  "body": [
+    {
+      "id": "fj248rh2049t8he09if209e8rh029",
+      "name": "Duck Hunt",
+      "genre": "Lightgun Shooter",
+      "releaseDate": "April 1987"
+    }
+  ]
+}
+```
+
+## Update a game in the Database
+`[PUT] /api/game/update`
+
+### Request Body
+|Name|Type|Description|
+|----|----|-----------|
+|id|string|The document whose name and genre you want to update.
+|title|string|The new title for the game.|
+|genre|string|The new genre for the game.|
+|releaseDate|string - optional|The new release date for this game.|
+
+### Example Response
+`status: 200 OK`
+```json
+{
+  "body": {
+      "id": "fj248rh2049t8he09if209e8rh029",
+      "name": "Duck Hunt",
+      "genre": "Lightgun Shooter",
+      "releaseDate": "April 1987"
+    }
+}
+```
 ```
 
 ## TESTS
