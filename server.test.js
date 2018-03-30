@@ -33,9 +33,9 @@ describe('Games', () => {
     // each time this hook runs, you should save a document to your db
     // by saving the document you'll be able to use it in each of your `it` blocks
     const newGame = new Game({
-      title:'California Games',
-      date:'June 1987',
-      genre:'Sports',
+      title: 'California Games',
+      date: 'June 1987',
+      genre: 'Sports',
     });
     newGame
       .save()
@@ -46,6 +46,7 @@ describe('Games', () => {
         done(error);
       });
     });
+
   afterEach(done => {
     // simply remove the collections from your DB.
     Game.remove()
@@ -58,6 +59,29 @@ describe('Games', () => {
   });
 
   // test the POST here
+  describe('[POST] /api/game/create', () => {
+    it(`shold post a new game`, done => {
+      const newGame = {
+        title: 'Dankey Kang',
+        genre: 'Stealth',
+        date: 'Fall 2018'
+      };
+      chai
+        .request(server)
+        .post('/api/game/create')
+        .send(newGame)
+        .end((err, res) => {
+          if (err) {
+            console.log(err);
+            done();
+          }
+          expect(res.status).to.equal(200);
+          expect(res.body.title).to.equal('Dankey Kang');
+          expect(res.body.genre).to.equal('Stealth');
+          done();
+        });
+    });
+  });
 
   // test the GET here
   describe('[GET] /api/game/get', () => {
@@ -77,7 +101,7 @@ describe('Games', () => {
         });
     });
   });
-  
+
   // test the PUT here
 
   // --- Stretch Problem ---
