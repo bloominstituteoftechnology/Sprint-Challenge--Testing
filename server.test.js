@@ -115,7 +115,27 @@ describe('Games', () => {
     });
   });
   // test the PUT here
+  describe('[PUT] /api/game/update', () => {
+    it("should update the game info", done => {
+      const updatedGame = {
+        title: 'Halo 2',
+        id: gameId,
+      };
 
+      chai
+        .request(server)
+        .put('/api/game/update')
+        .send(updatedGame)
+        .end((err, res) => {
+          if (err) {
+            console.error(err);
+            done();
+          }
+          assert.equal(res.body.title, 'Halo 2');
+          done();
+        });
+    });
+  });
   // --- Stretch Problem ---
   // Test the DELETE here
 });
