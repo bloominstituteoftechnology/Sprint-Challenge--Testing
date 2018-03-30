@@ -109,13 +109,22 @@ describe('Games', () => {
         .request(server)
         .get('/api/game/get')
         .end((err, res) => {
-          if (err) {
-            throw new Error(err);
-            done();
-          }
           expect(res.status).to.equal(STATUS_OK);
           expect(res.body[0].title).to.eql(testGame.title);
           expect(res.body[0]._id).to.equal(gameId.toString());
+          done();
+        });
+    });
+    it('should hanle error if no games were fetched', done => {
+      chai
+        .request(server)
+        .get('/api/game/get')
+        .end((err, res) => {
+          if (res === null) {
+            expect(err.status).to.equal(STATUS_SERVER_ERROR);
+            const { error } = err.response.body;
+            expect(error).to.eql('Something really bad happened');
+          }
           done();
         });
     });
@@ -144,6 +153,44 @@ describe('Games', () => {
           done();
         });
     });
+    it('should hanle error if no title is sent', done => {
+      const updateGame = {
+        id: gameId,
+        title: null,
+        genre: 'Adventure'
+      };
+      chai
+        .request(server)
+        .put('/api/game/update')
+        .send(updateGame)
+        .end((err, res) => {
+          if (err) {
+            expect(err.status).to.equal(STATUS_UNPROCESSABLE);
+            const { error } = err.response.body;
+            expect(error).to.eql('Must Provide a title && Id');
+          }
+          done();
+        });
+    });
+    it('should hanle error if no ID is sent', done => {
+      const updateGame = {
+        id: null,
+        title: 'Snow Bros',
+        genre: 'Adventure'
+      };
+      chai
+        .request(server)
+        .put('/api/game/update')
+        .send(updateGame)
+        .end((err, res) => {
+          if (err) {
+            expect(err.status).to.equal(STATUS_UNPROCESSABLE);
+            const { error } = err.response.body;
+            expect(error).to.eql('Must Provide a title && Id');
+          }
+          done();
+        });
+    });
     it('should hanle error if bad ID is sent', done => {
       const updateGame = {
         id: 'oldschoolgamez',
@@ -159,6 +206,25 @@ describe('Games', () => {
             expect(err.status).to.equal(STATUS_UNPROCESSABLE);
             const { error } = err.response.body;
             expect(error).to.eql('Cannot find game by that id');
+          }
+          done();
+        });
+    });
+    it('should hanle error if updated game does not exist', done => {
+      const updateGame = {
+        id: gameId,
+        title: 'Snow Bros',
+        genre: 'Adventure'
+      };
+      chai
+        .request(server)
+        .put('/api/game/update')
+        .send(updateGame)
+        .end((err, res) => {
+          if (res === null) {
+            expect(err.status).to.equal(STATUS_SERVER_ERROR);
+            const { error } = err.response.body;
+            expect(error).to.eql('Something really bad happened');
           }
           done();
         });
@@ -183,6 +249,23 @@ describe('Games', () => {
           }
           expect(res.status).to.equal(STATUS_OK);
           expect(res.ok).to.be.true;
+          done();
+        });
+    });
+    it('should hanle error if no valid ID is sent', done => {
+      const deleteGame = {
+        id: undefined
+      };
+      chai
+        .request(server)
+        .delete('/api/game/destroy/:id')
+        .send(deleteGame)
+        .end((err, res) => {
+          if (res === undefined) {
+            expect(err.status).to.equal(STATUS_UNPROCESSABLE);
+            const { error } = err.response.body;
+            expect(error).to.eql('You need to give me an ID');
+          }
           done();
         });
     });

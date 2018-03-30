@@ -77,6 +77,7 @@ Here's documentation for Sprint Challenge API. :)
 ```
 [
   {
+    id: gameId, //provide `_id` value
     title: 'Tetris',
     genre: 'Puzzle',
   }
@@ -86,7 +87,8 @@ is now updated to
 ```
 [
   {
-    title: 'Kirby\'s Island',
+    _id: gameId,
+    title: 'Kirby\'s Adventure',
     genre: 'Adventure',
   }
 ]
@@ -101,12 +103,11 @@ is now updated to
 ```
 [
   {
-    title: 'Tetris',
-    genre: 'Puzzle',
+    id: gameId, //provide `_id` value
   }
 ]
 ```
-is now updated to
+the game with specified ID is now updated to
 ```
 null
 ```
