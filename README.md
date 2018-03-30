@@ -31,8 +31,60 @@
 
 ## DOCUMENTATION GOES HERE
 
+Here's the description of our glorious API! *NOTE:* interfacing with our API will bring you much joy and happiness!
+## Port - Location of all endpoints to interface with our API is at `http://localhost:5050/`
+
+## [POST] `/api/game/create`
+Add a new game to the database. Requires the body to have a title and genre, and adding the release date is optional.
+
+It will send back the newly created game document.
+| Endpoint      | Type          | Data  |
+| ------------- |:-------------:| -----:|
+| /api/game/create     | POST | json |
+### Example:
 ```
-THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
+  {
+    title: 'Mario Bros',
+    genre: 'Platform',
+    releaseDate: 'June 1986'
+  }
+```
+## [GET] `api/game/get`
+Sends back a list of all the games in the database.
+| Endpoint      | Type          | Data  |
+| ------------- |:-------------:| -----:|
+| api/game/get     | GET | json |
+
+## [PUT] `/api/game/update`
+Will update the title of the game with the given id.
+
+It will send back the updated game document.
+
+| Endpoint      | Type          | Data  |
+| ------------- |:-------------:| -----:|
+| /api/game/update     | PUT | json |
+### Example:
+All PUT requests require a title and an ID property
+```
+  {
+    title: 'Donkey Kong',
+    id: '5abd4cd777e49e4801f9f466',
+  }
+```
+## [DELETE] `/api/game/destroy/:id`
+You can send the ID either through URL parameter or by request body.
+
+It will send back a success message with the removed game's title on successful deletion.
+
+| Endpoint      | Type          | Data  |
+| ------------- |:-------------:| -----:|
+| /api/game/destoy/:id     | DELETE | json |
+### Example:
+All PUT request bodies require a name and description input. This is not required if the ID is sent in the URL.
+```
+  {
+    id: '5abd4cd777e49e4801f9f466',
+  }
 ```
 
 ## TESTS
