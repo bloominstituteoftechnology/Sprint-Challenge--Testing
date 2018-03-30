@@ -8,7 +8,7 @@ const Game = require('./models');
 describe('NESGames Model', () => {
   before(done => {
     mongoose.Promise = global.Promise;
-    mongoose.connect('mongodb://localhost/test');
+    mongoose.connect('mongodb://germancin:secure123@159.65.170.21/test');
     const db = mongoose.connection;
     db.on('error', () => console.error.bind(console, 'connection error'));
     db.once('open', () => {
