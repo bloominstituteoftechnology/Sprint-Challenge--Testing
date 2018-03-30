@@ -37,7 +37,12 @@ describe('Games', () => {
   });
   afterEach(done => {
     // simply remove the collections from your DB.
-    done();
+    Game.remove({}, (err) => {
+      if (err) {
+        console.error(err);
+      }
+      done();
+    });
   });
 
   // test the POST here
