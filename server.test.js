@@ -40,12 +40,12 @@ describe('Games', () => {
     const game1 = new Game({
       title: 'Excitebike',
       genre: 'Racing',
-      date: 'November 30, 1984'
+      releaseDate: 'November 30, 1984'
     });
     const game2 = new Game({
       title: 'Code Name: Vooper',
       genre: 'Action/Shooter',
-      date: 'March 1990'
+      releaseDate: 'March 1990'
     });
     await game1.save();
     await game2.save().then(game => gameId = game.id);
@@ -66,7 +66,7 @@ describe('Games', () => {
       const game = {
         title: 'Pro Wrestling',
         genre: 'Fighting/Sports',
-        date: 'March 1987'
+        releaseDate: 'March 1987'
       };
 
       chai.request(server)
