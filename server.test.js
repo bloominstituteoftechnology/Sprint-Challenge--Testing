@@ -36,9 +36,9 @@ describe('Games', () => {
     // each time this hook runs, you should save a document to your db
     // by saving the document you'll be able to use it in each of your `it` blocks
     const myGame = new Game({
-      title: 'Tales of Vesperia',
-      genre: 'RPG',
-      releaseDate: 'Aug 2008',
+      title: 'Donkey Kong',
+      genre: 'Platformer',
+      releaseDate: 'July 1981',
     });
     myGame
       .save()
@@ -64,9 +64,9 @@ describe('Games', () => {
   describe('[POST] /api/game/create', () => {
     it('should add a new game', done => {
       const myGame = {
-        title: 'Tales of Symphonia',
-        genre: 'RPG',
-        releaseDate: 'Aug 2003',
+        title: 'Super Mario Bros 2',
+        genre: 'Platformer',
+        releaseDate: 'Sept 1985',
       };
       chai
         .request(server)
@@ -109,7 +109,7 @@ describe('Games', () => {
     it('should update a game with the given id', done => {
       const gameUpdate = {
         id: gameId,
-        title: 'Tales of Symphonia, Dawn of the New World',
+        title: 'Super Mario Bros',
       };
       chai
         .request(server)
