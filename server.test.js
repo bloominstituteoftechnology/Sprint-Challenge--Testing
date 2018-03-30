@@ -25,13 +25,36 @@ describe('Games', () => {
   });
   // declare some global variables for use of testing
   // hint - these wont be constants because you'll need to override them.
+  let gameId = null;
+  let testGame = null;
+
   beforeEach(done => {
     // write a beforeEach hook that will populate your test DB with data
     // each time this hook runs, you should save a document to your db
     // by saving the document you'll be able to use it in each of your `it` blocks
+    const myGame = new Game({
+      title: 'Kirby\'s Adventure',
+      genre: 'Adventure',
+      releaseDate: '1993'
+    });
+    myGame
+      .save()
+      .then(game => {
+        testGame = game;
+        gameId = game._id;
+        done();
+      })
+      .catch(err => {
+        console.error(err);
+        done();
+      });
   });
   afterEach(done => {
     // simply remove the collections from your DB.
+    Game.remove({}, err => {
+      if (err) console.error(err);
+      done();
+    });
   });
 
   // test the POST here
