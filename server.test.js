@@ -90,8 +90,8 @@ describe('Games', () => {
   });
   // test the PUT here
   describe('[PUT] /api/game/update', () => {
-    it('should update the game with the given id', (done) => {
-      const updatedGame ={
+    it('should update the game with the new game title', (done) => {
+      const updatedGame = {
         id: gameID,
         title: 'Fortnite Battle Royale',
       };
@@ -113,4 +113,19 @@ describe('Games', () => {
 
   // --- Stretch Problem ---
   // Test the DELETE here
+  describe('[DELETE] /api/game/destroy/:id', () => {
+    it('should remove the game with the given id', (done) => {
+      chai
+        .request(server)
+        .delete(`/api/game/destroy/${gameID}`)
+        .end((err, res) => {
+          if (err) {
+            console.error(err);
+            done();
+          }
+          expect(res.body).to.have.property('success');
+          done();
+        });
+    });
+  });
 });
