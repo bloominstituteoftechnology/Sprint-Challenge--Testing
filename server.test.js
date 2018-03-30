@@ -60,7 +60,7 @@ describe('Games', () => {
 
   // test the POST here
   describe('[POST] /api/game/create', () => {
-    it(`shold post a new game`, done => {
+    it(`should post a new game`, done => {
       const newGame = {
         title: 'Dankey Kang',
         genre: 'Stealth',
@@ -103,6 +103,39 @@ describe('Games', () => {
   });
 
   // test the PUT here
+  describe('[PUT] /api/game/update', () => {
+    it('should update the game', () => {
+      const checkGame = {
+        title: 'Donkey King',
+        genre: 'Simulation',
+        date: 'January 2000'
+      };
+      Game.find({}, (err, games) => {
+        if (err)
+        return;
+        const updateGame = {
+          id: games[0]._id,
+          title: checkGame.title,
+          genre: checkGame.genre,
+          date: checkGame.date
+        }
+        chai
+          .request(server)
+          .put('/api/game/update')
+          .send(updateGame)
+          .end((err, res) => {
+            if(err) {
+              return console.log(err);
+              done();
+            }
+            expect(res.status).to.equal(200);
+            expect(res.body.title).to.equal('Donkey King')
+            expect(res.body.genre).to.equal('Simulation')
+            done();
+          });
+      });
+    });
+  });
 
   // --- Stretch Problem ---
   // Test the DELETE here
