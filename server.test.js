@@ -134,6 +134,39 @@ describe('Games', () => {
           done();
         });
     });
+
+    it('should return HTTP status 422 when no title is provided', (done) => {
+      const update = {
+        id: gameId,
+      };
+      chai.request(server)
+        .put('/api/game/update')
+        .send(update)
+        .end((err, res) => {
+          if (err) {
+            return done();
+          }
+          expect(res.status).to.equal(422);
+          done();
+        });
+    });
+
+    it('should return HTTP status 422 when an invalid ID is provided', (done) => {
+      const update = {
+        id: 8385913296527396,
+        title: 'Castlevania'
+      };
+      chai.request(server)
+        .put('/api/game/update')
+        .send(update)
+        .end((err, res) => {
+          if (err) {
+            return done();
+          }
+          expect(res.status).to.equal(422);
+          done();
+        });
+    })
   });
 
   // --- Stretch Problem ---
