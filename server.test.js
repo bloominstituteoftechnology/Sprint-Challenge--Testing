@@ -41,12 +41,13 @@ describe('Games', () => {
       releaseDate: "Test Date"
     });
     newGame
-    .save((err, savedGame) => {
-      if (err) {
-        console.log("Error saving data", err);
-        return done();
-      }
+    .save()
+    .then(savedGame => {
       gameId = savedGame._id;
+      done();
+    })
+    .catch(err => {
+      console.log(err);
       done();
     });
   });
@@ -60,13 +61,14 @@ describe('Games', () => {
 
   // test the POST here
   describe('[POST] /api/game/create', () => {
-    const game = new Game ({
-      title: "Post Game",
-      genre: "Post Genre",
-      releaseDate: "Post Date"
-    });
     it('should post a new game', (done) => {
-      chai.request(server)
+      const game = new Game ({
+        title: "Post Game",
+        genre: "Post Genre",
+        releaseDate: "Post Date"
+      });
+      chai
+      .request(server)
       .post('/api/game/create')
       .send(game)
       .end((err, res) => {
@@ -86,12 +88,14 @@ describe('Games', () => {
       .request(server)
       .get('/api/game/get')
       .end((err, res) => {
-        console.log("Response in get is: ", res.body);
-        if (err) return console.log(err);
+        if (err) {
+          console.log(err);
+          done();
+        };
         expect(res.status).to.equal(200);
         expect(res.body[0].title).to.equal("Tester");
+        done();
       });
-      done();
     });
   });
   
@@ -102,15 +106,20 @@ describe('Games', () => {
         id: gameId,
         title: "Updated Game"
       }
-      chai.request(server)
+      chai
+      .request(server)
       .put('/api/game/update')
       .send(update)
       .end((err, res) => {
-        console.log("Response is: ", res.body);
-        if (err) return console.log(err);
+        if (err) {
+          console.log(err);
+          done();
+        }
         expect(res.status).to.equal(200);
+        expect(res.body._id).to.equal(update.id.toString());
+        expect(res.body.title).to.equal(update.title);
+        done();
       });
-      done();
     });
   })
   
