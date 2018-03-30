@@ -32,7 +32,30 @@
 ## DOCUMENTATION GOES HERE
 
 ```
-THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
+## Game Api Documentation
+
+### [PUT] `/api/game/update`
+
+| Endpoint         | Type          | Data  |
+| ---------------- | :------------:| -----:|
+| /api/game/update | PUT           | json  |
+
+
+### [POST] `/api/game/create`
+
+| Endpoint         | Type          | Data  |
+| ---------------- | :------------:| ----: |
+| /api/game/create | POST          | json  |
+
+
+### [GET] `/api/game/get`
+
+| Endpoint         | Type          | Data  |
+| ---------------- | :------------:| ----: |
+| /api/game/create | GET           | json  |
+
+
+
 ```
 
 ## TESTS
