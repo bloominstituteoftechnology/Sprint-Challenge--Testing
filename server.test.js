@@ -78,6 +78,20 @@ describe('Games', () => {
           done();
         });
     });
+    it('should return error 422', done => {
+      const postTestGame2 = {
+        title: 'A Game'
+      };
+      chai
+        .request(server)
+        .post('/api/game/create')
+        .send(postTestGame2)
+        .end((err, res) => {
+          expect(res.status).to.equal(422);
+          done();
+        });
+    });
+
   });
 
   // test the GET here
