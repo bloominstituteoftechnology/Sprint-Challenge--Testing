@@ -1,5 +1,3 @@
-# Assessing your Testing Fu
-
 * Keep Calm! Test On!
 * Now that you're familiar with the concepts of testing, your goal is to write documentation and tests for an API that is already in production. (This happens a lot :))
 * Answers to your written questions will be recorded in _ANSWERS.md_
@@ -31,9 +29,14 @@
 
 ## DOCUMENTATION GOES HERE
 
-```
-THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
-```
+# Game Collection :video_game: API 
+### POST Route - adds a game to your list of games
+
+```POST- '/api/game/create'```
+| Endpoint          | Type          | Data     |
+|-------------------|:-------------:|----------|
+| /api/topping       | POST           |adds a game to your collection|
+
 
 ## TESTS
 
