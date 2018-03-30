@@ -25,13 +25,34 @@ describe('Games', () => {
   });
   // declare some global variables for use of testing
   // hint - these wont be constants because you'll need to override them.
-  beforeEach(done => {
-    // write a beforeEach hook that will populate your test DB with data
-    // each time this hook runs, you should save a document to your db
-    // by saving the document you'll be able to use it in each of your `it` blocks
+
+  let gameId;
+
+  beforeEach((done) => {
+    new Game({
+      title: 'Mega Man',
+      releaseDate: 'December 17, 1987',
+      genre: 'Action Platformer'
+    }).save((err, savedGame) => {
+      if (err) {
+        console.log(err);
+        return done();
+      }
+      gameId = savedGame.id;
+      done();
+    });
   });
-  afterEach(done => {
-    // simply remove the collections from your DB.
+
+  afterEach((done) => {
+    Game.remove({}, (err) => {
+      if (err) {
+        console.log(err);
+        return done();
+      };
+      mongoose.connection.db.dropCollection(() => {
+        done();
+      });
+    });
   });
 
   // test the POST here
