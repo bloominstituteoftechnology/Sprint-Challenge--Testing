@@ -31,24 +31,24 @@
 
 ## API DOCUMENTATION
 
-### GET Route - 
+## GET Route - 
 
-```POST- '/api/game/create'```
+### POST- `/api/game/create`
 | Endpoint          | Type          | Data Type   | Data Description  |
 |:-----------------:|:-------------:|:-----------:|:----------:       |
 | /api/game/create     | POST       | string       | title, genre, and release date strings               |
 
-```GET- '/api/game/get'```
+### GET- `/api/game/get`
 | Endpoint          | Type          | Data Type   | Data Description  |
 |:-----------------:|:-------------:|:-----------:|:----------:       |
 | /api/game/get     | GET           | n/a      |   n/a              |
 
-```PUT- '/api/game/update'```
+### PUT- `/api/game/update`
 | Endpoint          | Type          | Data Type   | Data Description  |
 |:-----------------:|:-------------:|:-----------:|:----------:       |
 | /api/game/update   | PUT         | string        | title, genre, and release date strings              |
 
-```DELETE- '/api/game/destroy/:id'```
+### DELETE- `/api/game/destroy/:id`
 | Endpoint          | Type          | Data Type   | Data Description  |
 |:-----------------:|:-------------:|:-----------:|:----------:       |
 | /api/game/destroy/:id     | DELETE | string     | unique Mongo ID               |
