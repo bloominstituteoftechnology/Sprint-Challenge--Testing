@@ -91,10 +91,26 @@ describe('Games', () => {
           done();
         });
     });
-
   });
 
   // test the GET here
+
+  describe('[GET] api/game/get', () => {
+    it('should return all of the games', done => {
+      chai
+        .request(server)
+        .get('/api/game/get')
+        .end((err, res) => {
+          if (err) {
+            console.error(err)
+            done();
+          }
+          expect(res.status).to.equal(200);
+          expect(res.body).to.be.an('array');;
+          done();
+        });
+    });
+  });
 
   // test the PUT here
 
