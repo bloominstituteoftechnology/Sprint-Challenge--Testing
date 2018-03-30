@@ -1,14 +1,13 @@
 const mongoose = require('mongoose');
 const chai = require('chai');
-const chaiHTTP = require('chai-http');
+const chaihttp = require('chai-http');
 const { expect } = chai;
 const sinon = require('sinon');
 
 const server = require('./server');
-
 const Game = require('./models');
 
-chai.use(chaiHTTP);
+chai.use(chaihttp);
 
 describe('Games', () => {
   before(done => {
@@ -32,7 +31,30 @@ describe('Games', () => {
   // hint - these wont be constants because you'll need to override them.
   
   
-  let gameId;
+  let games = [
+    {
+     title: 'league of legends',
+     genre: 'MOBA',
+     releaseDate: '10-10-2010'
+    },
+    {
+      title: 'diablo 3',
+      genre: 'fail',
+      releaseDate: '10-10-2010'
+    },
+    {
+      title: 'L4D',
+      genre: 'FPS',
+      releaseDate: '10-10-2010'
+    },
+    {
+      title: 'CS',
+      genre: 'FPS',
+      releaseDate: '10-10-2010'
+    }
+  ];
+
+
   beforeEach(done => {
     // write a beforeEach hook that will populate your test DB with data
     // each time this hook runs, you should save a document to your db
@@ -66,11 +88,6 @@ describe('Games', () => {
   // test the POST here
 
   describe(`[POST] /api/game/create`, () => {
-    const newGame = {
-      title: 'Diablo 3',
-      genre: 'Fail',
-      releaseDate: 'March 30, 1900' 
-    };
     chai.request(server)
     .post(`api/game/create`)
     .send((err, res) => {
