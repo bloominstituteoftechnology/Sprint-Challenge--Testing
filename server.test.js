@@ -4,6 +4,7 @@ const { expect } = chai;
 const sinon = require('sinon');
 
 const Game = require('./models');
+const server = require('./server');
 
 describe('Games', () => {
   before(done => {
@@ -26,6 +27,22 @@ describe('Games', () => {
   // declare some global variables for use of testing
   // hint - these wont be constants because you'll need to override them.
   beforeEach(done => {
+    const newGame = new Game ({
+      title: 'Counter Strike',
+      genre: 'First Person Shooter'
+    });
+    newGame
+    .save()
+    .then(game => {
+      testGame = game;
+      gameID = game._id;
+      done();
+    })
+    .catch(err => {
+      console.error(err);
+      done();
+    });
+    
     // write a beforeEach hook that will populate your test DB with data
     // each time this hook runs, you should save a document to your db
     // by saving the document you'll be able to use it in each of your `it` blocks
