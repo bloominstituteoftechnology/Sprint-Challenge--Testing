@@ -29,7 +29,7 @@ describe('Games', () => {
   });
   // declare some global variables for use of testing
   // hint - these wont be constants because you'll need to override them.
-  beforeEach(async (done) => {
+  beforeEach(async () => {
     // write a beforeEach hook that will populate your test DB with data
     // each time this hook runs, you should save a document to your db
     // by saving the document you'll be able to use it in each of your `it` blocks
@@ -45,7 +45,6 @@ describe('Games', () => {
     });
     await game1.save();
     await game2.save();
-    done();
   });
   afterEach(done => {
     // simply remove the collections from your DB.
@@ -82,6 +81,22 @@ describe('Games', () => {
   });
 
   // test the GET here
+  describe('[GET] /api/game/get', () => {
+    it('should return the games in the database', (done) => {
+      chair.request(server)
+        .get('/api/game/get')
+        .end((err, res) => {
+          if (err) {
+            console.error(err);
+            return done();
+          }
+          expect(res.status).to.equal(200);
+          expect(res.body).to.be.an('array');
+          expect(res.body.length).to.equal(2);
+          done();
+        })
+    });
+  });
 
   // test the PUT here
 
