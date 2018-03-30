@@ -31,9 +31,28 @@
 
 ## DOCUMENTATION GOES HERE
 
-```
-THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
-```
+# The API docs
+
+## Port - Location of all endpoints: `http://localhost:5050`
+
+# API Endpoints:
+The server is accessible on:
+``` http://localhost:5050 ```
+# [POST]
+| Endpoint    | Type  | Data  |     Result    |
+|-------------|-------|-------|---------------|
+|/api/game/create| Post | Json | Will add the game object|
+
+# [GET]
+| Endpoint    | Type  | Data  |     Result    |
+|-------------|-------|-------|---------------|
+|/api/game/get| Get   | Json  | Returns all games from the DB|
+
+# [PUT]
+| Endpoint    | Type  | Data  |     Result    |
+|-------------|-------|-------|---------------|
+|/api/game/update| Put| Json  | Will update game info on the DB|
+
 
 ## TESTS
 
