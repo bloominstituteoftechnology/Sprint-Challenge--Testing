@@ -90,9 +90,6 @@ describe('Games', () => {
         .post('/api/game/create')
         .send(game)
         .end((err, res) => {
-          if (err) {
-            return done();
-          }
           expect(res.status).to.equal(422);
           done();
         });
@@ -109,10 +106,22 @@ describe('Games', () => {
             return done();
           }
           expect(res.status).to.equal(200);
-          expect(Array.isArray(res.body)).to.equal(true);
           expect(res.body.length).to.equal(1);
           done();
         });
+    });
+    it('should return an array', (done) => {
+      chai.request(server)
+      .get('/api/game/get')
+      .end((err, res) => {
+        if (err) {
+          console.log(err);
+          return done();
+        }
+        expect(Array.isArray(res.body)).to.equal(true);
+        expect(res.body.length).to.equal(1);
+        done();
+      });
     });
   });
 
@@ -143,9 +152,6 @@ describe('Games', () => {
         .put('/api/game/update')
         .send(update)
         .end((err, res) => {
-          if (err) {
-            return done();
-          }
           expect(res.status).to.equal(422);
           done();
         });
@@ -160,9 +166,6 @@ describe('Games', () => {
         .put('/api/game/update')
         .send(update)
         .end((err, res) => {
-          if (err) {
-            return done();
-          }
           expect(res.status).to.equal(422);
           done();
         });
@@ -190,5 +193,26 @@ describe('Games', () => {
           });
         });
     });
+
+    // it('should return HTTP status 422 when no ID is provided', (done) => {
+    //   chai.request(server)
+    //     .delete('/api/game/destroy/')
+    //     .send({})
+    //     .end((err, res) => {
+    //       expect(res.status).to.equal(422);
+    //       done();
+    //     });
+    //   });
+    // You can't actually test the above, '/api/game/destroy' is not a valid endpoint, it will return 404 to DELETE requests.
+    // It HAS to have an ID passed in the parameter, it does not actually work with accepting an object containing an id.
+
+    it('should return HTTP status 422 when an invalid ID is provided', (done) => {
+      chai.request(server)
+        .delete('/api/game/destroy/I_am_an_invalid_id')
+        .end((err, res) => {
+          expect(res.status).to.equal(422);
+          done();
+        });
+      });
   });
 });
