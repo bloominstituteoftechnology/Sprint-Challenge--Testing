@@ -2,8 +2,12 @@ const mongoose = require('mongoose');
 const chai = require('chai');
 const { expect } = chai;
 const sinon = require('sinon');
+const server = require('./server');
+const chaihttp = require('chai-http');
 
 const Game = require('./models');
+
+chai.use(chaihttp);
 
 describe('Games', () => {
   before(done => {
@@ -29,14 +33,52 @@ describe('Games', () => {
     // write a beforeEach hook that will populate your test DB with data
     // each time this hook runs, you should save a document to your db
     // by saving the document you'll be able to use it in each of your `it` blocks
+    new Game({
+      title: 'Mario Bros',
+      genre: 'Platform',
+      releaseDate: 'June 1986',
+    }).save((err, savedWeapon) => {
+      if (err) {
+        console.log('There was an error saving the document in the beforeEach hook');
+        console.log(err);
+        done();
+      }
+    })
+    new Game({
+      title: 'Tetris',
+      genre: 'Puzzle',
+    }).save((err, savedWeapon) => {
+      if (err) {
+        console.log('There was an error saving the document in the beforeEach hook');
+        console.log(err);
+        done();
+      }
+      done();
+    })
   });
   afterEach(done => {
-    // simply remove the collections from your DB.
+    Game.remove({}, err => {
+      if (err) {
+        console.log('There was an error removing the data in the afterEach hook');
+        done()
+      }
+      done();
+    });
   });
 
   // test the POST here
 
-  // test the GET here
+  describe('[GET] api/game/get', () => {
+    it('should send back an array of all games', () => {
+      chai.request(server).get('/api/game/get').end((err, res) => {
+        if (err) {
+          console.log(err);
+          done();
+        }
+        expect(res.body).to.have.length(2);
+      })
+    })
+  })
 
   // test the PUT here
 
