@@ -105,7 +105,26 @@ describe('Games', () => {
   });
 
   // test the PUT here
-
+  describe('[PUT] /api/game/update', () => {
+    it('should update a game with the given id', done => {
+      const gameUpdate = {
+        id: gameId,
+        title: 'Tales of Symphonia, Dawn of the New World',
+      };
+      chai
+        .request(server)
+        .put('/api/game/update')
+        .send(gameUpdate)
+        .end((err, res) => {
+          if (err) {
+            console.log(err);
+            done();
+          }
+          expect(res.body.title).to.equal(gameUpdate.title);
+        });
+      done();
+    });
+  });
   // --- Stretch Problem ---
   // Test the DELETE here
 });
