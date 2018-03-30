@@ -8,16 +8,21 @@ const server = express();
 server.use(bodyParser.json());
 server.use(morgan('combined'));
 
+const STATUS_OK = 200;
+const STATUS_UNPROCESSABLE = 422;
+const STATUS_SERVER_ERROR = 500;
+
 server.post('/api/game/create', (req, res) => {
   const { title, releaseDate, genre } = req.body;
   const myGame = new Game({ title, releaseDate, genre });
   myGame
     .save()
     .then(game => {
+      res.
       res.json(game);
     })
     .catch(err => {
-      res.status(422);
+      res.status(STATUS_UNPROCESSABLE);
       res.json({ error: 'Error saving data to the DB', message: err });
     });
 });
@@ -25,7 +30,7 @@ server.post('/api/game/create', (req, res) => {
 server.get('/api/game/get', (req, res) => {
   Game.find({}, (err, games) => {
     if (err) {
-      res.status(500);
+      res.status(STATUS_SERVER_ERROR);
       res.json({ error: 'Something really bad happened' });
       return;
     }
@@ -37,18 +42,18 @@ server.put('/api/game/update', (req, res) => {
   // All I care about is the game title and id.. don't worry about genre or date.
   const { title, id } = req.body;
   if (!title || !id) {
-    return res.status(422).json({ error: 'Must Provide a title && Id' });
+    return res.status(STATUS_UNPROCESSABLE).json({ error: 'Must Provide a title && Id' });
   }
   Game.findById(id, (err, game) => {
     if (err || game === null) {
-      res.status(422);
+      res.status(STATUS_UNPROCESSABLE);
       res.json({ error: 'Cannot find game by that id' });
       return;
     }
     game.title = title;
     game.save((saveErr, savedGame) => {
       if (err || game === null) {
-        res.status(500);
+        res.status(STATUS_SERVER_ERROR);
         res.json({ error: 'Something really bad happened' });
         return;
       }
@@ -70,14 +75,14 @@ server.delete('/api/game/destroy/:id', (req, res) => {
   }
   if (id === undefined) {
     // if it's undefined throw error back to client
-    res.status(422);
+    res.status(STATUS_UNPROCESSABLE);
     res.json({ error: 'You need to give me an ID' });
     return;
   }
   Game.findByIdAndRemove(id, (err, removedGame) => {
     // search for game by that id and remove it
     if (err) {
-      res.status(422);
+      res.status(STATUS_UNPROCESSABLE);
       res.json({ error: 'Cannot find game by that id' });
       return;
     }
