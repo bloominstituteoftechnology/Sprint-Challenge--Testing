@@ -29,6 +29,7 @@ describe('Games', () => {
   });
   // declare some global variables for use of testing
   // hint - these wont be constants because you'll need to override them.
+  let marioId = null;
   beforeEach(done => {
     // write a beforeEach hook that will populate your test DB with data
     // each time this hook runs, you should save a document to your db
@@ -39,8 +40,9 @@ describe('Games', () => {
     }).save((err, game) => {
       if (err) {
         console.log(err);
-        return done();
+        done();
       }
+      marioId = game._id;
       done();
     });
   });
@@ -93,6 +95,27 @@ describe('Games', () => {
 
 
   // test the PUT here
+    describe('[PUT] /api/game/update', () => {
+    it('should update a game', (done) => {
+      const updateGame = {
+        title: 'Super Mario',
+        id: marioId
+      };
+      chai.request(server)
+        .put('/api/game/update')
+        .send(updateGame)
+        .end((err, res) => {
+          //this console log doesn't run and nothing from res
+          console.log('GOT RESPONSE BACK FROM PUT METHOD');
+          console.log('put res', res);
+          if (err) console.error(err);
+          expect(res.status).to.equal(200);
+          //this test should obviously fail but nothing happen
+          expect(res.body.title).to.equal('Super Mljkhlhklhjario');
+        });
+        done();
+    });
+  });
 
   // --- Stretch Problem ---
   // Test the DELETE here

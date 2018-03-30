@@ -23,6 +23,7 @@ server.post('/api/game/create', (req, res) => {
 });
 
 server.get('/api/game/get', (req, res) => {
+    console.log('server get request');
   Game.find({}, (err, games) => {
     if (err) {
       res.status(500);
@@ -34,12 +35,16 @@ server.get('/api/game/get', (req, res) => {
 });
 
 server.put('/api/game/update', (req, res) => {
+  //this console log runs
+  console.log('server put request');
   // All I care about is the game title and id.. don't worry about genre or date.
   const { title, id } = req.body;
   if (!title || !id) {
     return res.status(422).json({ error: 'Must Provide a title && Id' });
   }
   Game.findById(id, (err, game) => {
+    // this console runs and returns a game document
+    console.log('server game', game);
     if (err || game === null) {
       res.status(422);
       res.json({ error: 'Cannot find game by that id' });
@@ -47,11 +52,15 @@ server.put('/api/game/update', (req, res) => {
     }
     game.title = title;
     game.save((saveErr, savedGame) => {
+      //this console.log doesn't even run
+      console.log('SAVEDGAME', savedGame);
       if (err || game === null) {
         res.status(500);
         res.json({ error: 'Something really bad happened' });
         return;
       }
+      //this console.log also doesn't run
+      console.log('SERVER GAME RETURNED', game);
       res.json(game);
     });
   });
