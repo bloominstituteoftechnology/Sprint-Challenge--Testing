@@ -94,6 +94,27 @@ describe('Games', () => {
 
 
   // test the PUT here
+  describe("[PUT] /api/game/update", () => {
+    it("should update the game document in the database", (done) => {
+      const updatedGame = {
+        id: gameId,
+        title: "Undertale",
+        genre: "Turn Based RPG",
+        releaseDate: "September 15, 2015"
+      };
+
+      chai.request(server)
+        .put("/api/game/update")
+        .send(updatedGame)
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.body.title).to.equal("Undertale");
+          expect(res.body.genre).to.equal("Turn Based RPG");
+          expect(res.body.releaseDate).to.equal("September 15, 2015");
+          done();
+        })
+    })
+  })
 
   // --- Stretch Problem ---
   // Test the DELETE here
