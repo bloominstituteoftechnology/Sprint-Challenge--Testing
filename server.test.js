@@ -34,6 +34,7 @@ describe('Games', () => {
 
   const STATUS_OK = 200;
   const STATUS_UNPROCESSABLE = 422;
+  const STATUS_SERVER_ERROR = 500;
 
   beforeEach(done => {
     // write a beforeEach hook that will populate your test DB with data
@@ -112,6 +113,7 @@ describe('Games', () => {
             throw new Error(err);
             done();
           }
+          expect(res.status).to.equal(STATUS_OK);
           expect(res.body[0].title).to.eql(testGame.title);
           expect(res.body[0]._id).to.equal(gameId.toString());
           done();
@@ -136,6 +138,7 @@ describe('Games', () => {
             throw new Error(err);
             done();
           }
+          expect(res.status).to.equal(STATUS_OK);
           expect(res.body.title).to.equal(updateGame.title);
           expect(res.body.genre).to.equal(updateGame.genre);
           done();
@@ -164,4 +167,41 @@ describe('Games', () => {
 
   // --- Stretch Problem ---
   // Test the DELETE here
+  describe(`[DELETE] /api/game/destroy/:id`, () => {
+    it('should delete a game by given ID', done => {
+      const deleteGame = {
+        id: gameId
+      };
+      chai
+        .request(server)
+        .delete('/api/game/destroy/:id')
+        .send(deleteGame)
+        .end((err, res) => {
+          if (err) {
+            throw new Error(err);
+            done();
+          }
+          expect(res.status).to.equal(STATUS_OK);
+          expect(res.ok).to.be.true;
+          done();
+        });
+    });
+    it('should hanle error if bad ID is sent', done => {
+      const deleteGame = {
+        id: 'oldschoolgamez'
+      };
+      chai
+        .request(server)
+        .delete('/api/game/destroy/:id')
+        .send(deleteGame)
+        .end((err, res) => {
+          if (err) {
+            expect(err.status).to.equal(STATUS_UNPROCESSABLE);
+            const { error } = err.response.body;
+            expect(error).to.eql('Cannot find game by that id');
+          }
+          done();
+        });
+    });
+  });
 });
