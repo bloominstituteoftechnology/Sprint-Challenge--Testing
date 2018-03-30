@@ -147,7 +147,7 @@ N/A, a simple `GET` request is all that is needed.
 ### Write a test for the "PUT" method
 
 * Just like in class, send up the information you want changed on the server via the `req.body`.
-* You can send up the Id and the Server will be using that to
+* You can send up the Id and the Server will be using that to find the record and then when found, update the record with the `req.body` info you sent up
 
 ## Stretch Problem
 
