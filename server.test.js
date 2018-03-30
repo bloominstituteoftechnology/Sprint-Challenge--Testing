@@ -1,8 +1,11 @@
 const mongoose = require('mongoose');
 const chai = require('chai');
+const chaitHTTP = require('chai-http');
 const { expect } = chai;
 const sinon = require('sinon');
 const server = require('./server');
+
+chai.use(chaitHTTP);
 
 const Game = require('./models');
 
@@ -30,16 +33,18 @@ describe('Games', () => {
     // write a beforeEach hook that will populate your test DB with data
     // each time this hook runs, you should save a document to your db
     // by saving the document you'll be able to use it in each of your `it` blocks
+    done();
   });
   afterEach(done => {
     // simply remove the collections from your DB.
+    done();
   });
 
   // test the POST here
   describe('[POST] /api/game/create', () => {
     it ('should return the newly added game', (done) => {
       const game = {
-        name: 'Pro Wrestling',
+        title: 'Pro Wrestling',
         genre: 'Fighting/Sports',
         date: 'March 1987'
       };
@@ -53,7 +58,7 @@ describe('Games', () => {
             return done();
           }
           expect(res.status).to.equal(200);
-          expect(res.body.name).to.equal('Pro Wrestling');
+          expect(res.body.title).to.equal('Pro Wrestling');
           done();
         });
     });
