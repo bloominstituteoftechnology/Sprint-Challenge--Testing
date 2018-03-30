@@ -61,7 +61,23 @@ describe('Games', () => {
   });
 
   // test the POST here
-
+describe('[POST /api/game/create', () => {
+  it('should add a new game', done => {
+    const myGame = {
+      title: 'Mario',
+      genre: 'NS-games',
+      releaseDate: 'November 2000'
+    };
+    chai.request(server)
+    .post('/api/game/create')
+    .send(myGame)
+    .end((err, res) => {
+      expect(res.status).to.equal(200);
+      expect(res.body.title).to.equal('Mario');
+      done();
+    });
+  });
+});
   // test the GET here
 
   // test the PUT here
