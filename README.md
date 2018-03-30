@@ -33,7 +33,7 @@
 
 Here's the description of our glorious API! _NOTE:_ interfacing with our API will bring you much joy and happiness!
 
-## Port - Location of all endpoints to interface with our API is at `http://localhost:3030`
+## Port - Location of all endpoints to interface with our API is at `http://localhost:5050`
 
 ## [POST] `/api/game/create`
 

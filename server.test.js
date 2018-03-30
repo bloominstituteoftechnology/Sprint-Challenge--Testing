@@ -4,7 +4,7 @@ const chai = require('chai');
 const { assert } = chai;
 const sinon = require('sinon');
 
-const server = require('../server');
+const server = require('./server');
 const Game = require('./models');
 
 chai.use(chaihttp);
@@ -70,7 +70,7 @@ describe('Games', () => {
             console.error(err);
             done();
           }
-          assert.equal(res.body.name, 'Smite');
+          assert.equal(res.body.title, 'Smite');
           done();
         });
     });
@@ -108,7 +108,7 @@ describe('Games', () => {
         .post('/api/game/create')
         .send(smite)
         .end((err, res) => {
-          console.log(err || res);
+          //console.log(err || res);
         });
 
       chai
@@ -116,14 +116,14 @@ describe('Games', () => {
         .get('/api/game/get')
         .end((err, res) => {
           if (err) {
-            console.error(err);
+            //console.error(err);
             done();
           }
           assert.equal(res.status, 200);
           assert.isArray(res.body);
           assert.lengthOf(res.body, 2);
-          assert.equal(res.body[0].name, 'Halo');
-          assert.equal(res.body[1].name, 'Smite');
+          assert.equal(res.body[0].title, 'Halo');
+          assert.equal(res.body[1].title, 'Smite');
           done();
         });
     });
@@ -146,8 +146,8 @@ describe('Games', () => {
             done();
           }
           assert.equal(res.status, 200);
-          assert.equal(res.body.name, 'Halo: Combat Evolved');
-          Game.findOne({ name: 'Halo' }, (err, game) => {
+          assert.equal(res.body.title, 'Halo: Combat Evolved');
+          Game.findOne({ title: 'Halo' }, (err, game) => {
             if (err) {
               console.log(err);
               done();
