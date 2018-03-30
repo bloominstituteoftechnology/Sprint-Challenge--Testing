@@ -54,6 +54,15 @@
 |-------------------|:-------------:|----------|
 | /api/game/update/      | PUT           |Update data for a game in your collection|
 
+### DELETE Route - delete a game from your collection
+
+
+```GET- '/api/game/destroy/:id'```
+
+| Endpoint          | Type          | Data     |
+|-------------------|:-------------:|----------|
+| /api/game/destroy/:id      | DELETE           |Delete a game from your collection|
+
 
 ## TESTS
 
