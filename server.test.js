@@ -96,7 +96,7 @@ describe('Games', () => {
   // test the GET here
 
   describe('[GET] api/game/get', () => {
-    it('should return all of the games', done => {
+    it('should return an array with status 200', done => {
       chai
         .request(server)
         .get('/api/game/get')
@@ -107,6 +107,19 @@ describe('Games', () => {
           }
           expect(res.status).to.equal(200);
           expect(res.body).to.be.an('array');;
+          done();
+        });
+    });
+    it('should return all of the games', done => {
+      chai
+        .request(server)
+        .get('/api/game/get')
+        .end((err, res) => {
+          if (err) {
+            console.error(err)
+            done();
+          }
+          expect(res.body[0].title).to.eql(testGame.title);
           done();
         });
     });
