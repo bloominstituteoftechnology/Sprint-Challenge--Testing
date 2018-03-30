@@ -35,7 +35,7 @@ describe('Games', () => {
     const newGame = new Game({
       title: 'California Games',
       genre: 'Sports',
-      date: 'June 1987',
+      releaseDate: 'June 1987',
     });
     newGame
       .save()
