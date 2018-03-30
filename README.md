@@ -21,7 +21,7 @@
 * notice there is a `package.json` file included. We have included all of the dev-dependencies that you'll need to build your project.
 * run `yarn` to download and install all the dependencies you need for this project.
 * run `yarn test` to start your tests.
-* Keep an active log of your changes by `commiting` with Git and `pushing` often to GitHub.
+* Keep an active log of your changes by committing with Git and pushing often to GitHub.
 * Write all of your tests in the `server.test.js` file. This is where you're going to be doing your API mocking/testing.
 
 ## Project Description
