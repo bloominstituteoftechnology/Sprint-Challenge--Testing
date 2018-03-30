@@ -32,7 +32,63 @@
 ## DOCUMENTATION GOES HERE
 
 ```
-THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
+# API Documentation
+
+Provides access to the collection of Games of various Genre.
+
+## Port - Location of all endpoints to interface with our API is at http://localhost:5050/api/
+
+## [GET] `/game/get`
+| Endpoint      | Type          | Data  |
+| ------------- |:-------------:| -----:|
+| /game/get     |    GET        | Array |
+
+### Example:
+[
+  {
+    title: 'California Games',
+    genre: 'Sports',
+    date: 'June 1987'
+  },
+  {
+    title: 'World of Warcraft',
+    genre: 'Strategy',
+    date: November, 2004
+  }
+]
+
+## [POST] `/game/create`
+| Endpoint         | Type          | Data  |
+| ---------------- |:-------------:| -----:|
+|   /game/create   |      POST     |  json |
+
+### Example:
+{
+  title: 'California Games',
+  genre: 'Sports',
+  date: 'June 1987'
+}
+
+## PUT Route
+| Endpoint         | Type    | Data  |
+| ---------------- |:-------:| -----:|
+| /game/update     |   PUT   |  json |
+
+### Example:
+{
+  id: '12345',
+  title: 'California Games',
+}
+
+## DELETE Route
+| Endpoint          | Type   | Data  |
+| ----------------- |:------:| -----:|
+| /game/destroy/:id | DELETE |  json |
+
+### Example:
+  {
+    id: '12345',
+  }
 ```
 
 ## TESTS
