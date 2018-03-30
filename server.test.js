@@ -79,6 +79,24 @@ describe('Games', () => {
           done();
         });
     });
+
+    it('should return HTTP status 422 when failing to save to the database', (done) => {
+      const game = {
+        title: 'Contra',
+        releaseDate: 'February 20, 1987',
+      };
+
+      chai.request(server)
+        .post('/api/game/create')
+        .send(game)
+        .end((err, res) => {
+          if (err) {
+            return done();
+          }
+          expect(res.status).to.equal(422);
+          done();
+        });
+    });
   });
 
   describe('[GET] /api/game/get', () => {
