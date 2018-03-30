@@ -63,7 +63,7 @@ describe('Games', () => {
   // test the POST here
 
   describe('[POST /api/game/create', () => {
-    it('should save a new game', done => {
+    it('should save and return a new game', done => {
       const postTestGame = {
         title: 'A Game',
         releaseDate: 'Now',
@@ -75,6 +75,7 @@ describe('Games', () => {
         .send(postTestGame)
         .end((err, res) => {
           expect(res.status).to.equal(200);
+          expect(res.body.title).to.equal('A Game');
           done();
         });
     });
