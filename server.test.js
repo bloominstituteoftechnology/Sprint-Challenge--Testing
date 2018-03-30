@@ -71,18 +71,21 @@ describe('Games', () => {
       title: 'Donkey Kong',
       genre: 'Platformer',
     };
+    it('should post the new game to the database', () => {
+      chai
+        .request(server)
+        .post('/api/game/create')
+        .send(newGame)
+        .end((err, res) => {
+          if (err) {
+            console.log(err);
+            done();
+          }
+          expect(res.body.title).to.equal('Donkey Kong');
+        })
+    })
+  });
 
-    chai
-      .request(server)
-      .post('/api/game/create')
-      .send(newGame)
-      .end((err, res) => {
-        if (err) {
-          console.log(err);
-          done();
-        }
-        expect(res.body.title).to.equal('Donkey Kong');
-      })
   });
 
   // test the PUT here
