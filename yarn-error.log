@@ -1,0 +1,68 @@
+Arguments: 
+  /usr/bin/node /usr/bin/yarn test
+
+PATH: 
+  /usr/local/sbin:/usr/local/bin:/usr/bin:/var/lib/flatpak/exports/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl
+
+Yarn version: 
+  1.5.1
+
+Node version: 
+  9.9.0
+
+Platform: 
+  linux x64
+
+npm manifest: 
+  {
+    "name": "Sprint-Challenge--Testing",
+    "version": "1.0.0",
+    "description": "",
+    "main": "server.js",
+    "scripts": {
+      "test": "mocha *.test.js --exit",
+      "start": "nodemon app.js"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/LambdaSchool/Sprint-Challenge--Testing.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+      "url": "https://github.com/LambdaSchool/Sprint-Challenge--Testing/issues"
+    },
+    "homepage": "https://github.com/LambdaSchool/Sprint-Challenge--Testing#readme",
+    "dependencies": {
+      "body-parser": "^1.18.2",
+      "chai": "^4.1.2",
+      "chai-http": "^3.0.0",
+      "express": "^4.16.2",
+      "mocha": "^5.0.0",
+      "mongoose": "^5.0.3",
+      "morgan": "^1.9.0",
+      "sinon": "^4.2.2"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
+
+Trace: 
+  Error: Command failed.
+  Exit code: 1
+  Command: sh
+  Arguments: -c mocha *.test.js --exit
+  Directory: /home/marionette/Projects/Sprint-Challenge--Testing
+  Output:
+  
+      at ProcessTermError.MessageError (/usr/lib/node_modules/yarn/lib/cli.js:186:110)
+      at new ProcessTermError (/usr/lib/node_modules/yarn/lib/cli.js:226:113)
+      at ChildProcess.<anonymous> (/usr/lib/node_modules/yarn/lib/cli.js:30281:17)
+      at ChildProcess.emit (events.js:180:13)
+      at maybeClose (internal/child_process.js:936:16)
+      at Process.ChildProcess._handle.onexit (internal/child_process.js:220:5)
