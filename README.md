@@ -31,9 +31,17 @@
 
 ## DOCUMENTATION GOES HERE
 
-```
-THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
-```
+### API USAGE
+
+#### Root: `http://localhost:5050/api/game`
+
+#### [GET] `/get`
+
+#### [POST] `/create`
+
+#### [PUT] `/update`
+
+#### [DELETE] `/destroy/:id`
 
 ## TESTS
 

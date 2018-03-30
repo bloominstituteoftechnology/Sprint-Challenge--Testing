@@ -118,4 +118,16 @@ describe('Games', () => {
 
   // --- Stretch Problem ---
   // Test the DELETE here
+  describe('[DELETE] /api/game/destroy/:id', () => {
+    it('should delete the game correctly', done => {
+      chai
+        .request(server)
+        .delete(`/api/game/destroy/${testGameId}`)
+        .end((err, res) => {
+          if (err) return console.error(err);
+          expect(res.body.success).to.equal('Bioshock was removed from the DB');
+          done()
+        });
+    });
+  });
 });
