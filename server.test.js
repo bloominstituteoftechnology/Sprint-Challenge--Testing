@@ -81,7 +81,22 @@ describe('Games', () => {
     });
   });
 
-  // test the GET here
+  describe('[GET] /api/game/get', () => {
+    it('should return all games in the database', (done) => {
+      chai.request(server)
+        .get('/api/game/get')
+        .end((err, res) => {
+          if (err) {
+            console.log(err);
+            return done();
+          }
+          expect(res.status).to.equal(200);
+          expect(Array.isArray(res.body)).to.equal(true);
+          expect(res.body.length).to.equal(1);
+          done();
+        });
+    });
+  });
 
   // test the PUT here
 
