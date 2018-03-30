@@ -1,11 +1,12 @@
 const mongoose = require('mongoose');
 const chai = require('chai');
+const chaiHTTP = require('chai-http');
 const { expect } = chai;
 const sinon = require('sinon');
 
 const Game = require('./models');
 const server = require('./server');
-
+chai.use(chaiHTTP);
 describe('Games', () => {
   before(done => {
     mongoose.Promise = global.Promise;
@@ -18,6 +19,8 @@ describe('Games', () => {
     });
   });
 
+  let gameID = null;
+
   after(done => {
     mongoose.connection.db.dropDatabase(() => {
       mongoose.connection.close(done);
@@ -27,28 +30,28 @@ describe('Games', () => {
   // declare some global variables for use of testing
   // hint - these wont be constants because you'll need to override them.
   beforeEach(done => {
-    const newGame = new Game ({
+    const newGame = new Game({
       title: 'Counter Strike',
       genre: 'First Person Shooter'
     });
     newGame
-    .save()
-    .then(game => {
-      testGame = game;
-      gameID = game._id;
-      done();
-    })
-    .catch(err => {
-      console.error(err);
-      done();
-    });
-    
-    // write a beforeEach hook that will populate your test DB with data
-    // each time this hook runs, you should save a document to your db
-    // by saving the document you'll be able to use it in each of your `it` blocks
+      .save()
+      .then(game => {
+        testGame = game;
+        gameID = game._id;
+        done();
+      })
+      .catch(err => {
+        console.error(err);
+        done();
+      });
   });
   afterEach(done => {
     // simply remove the collections from your DB.
+    Game.remove({}, error => {
+      if (error) console.error(error);
+      done();
+    });
   });
 
   // test the POST here
