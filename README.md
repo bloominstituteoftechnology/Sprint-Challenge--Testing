@@ -32,7 +32,7 @@
 ## DOCUMENTATION GOES HERE
 
 ```
-  THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
+THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
 ```
 
 ## TESTS
@@ -43,9 +43,9 @@
 
 ### Write a test for the "POST" method
 
-* The Post method should take in an object that looks like this
+* The `POST` method should take in an object that looks like this
 
-```
+```js
 {
   title: 'California Games',
   genre: 'Sports',
@@ -58,7 +58,7 @@
 * Our get method should return the list of games.
 * **REMINDER** That this data structure returned from Mongo will be an array, so to test your game with a `beforeEach` hook you'll need to make sure you test against the first item in the array
 
-```
+```js
 expect(res.data[0].foo).to.equal(bar.foo);
 ```
 
@@ -73,6 +73,6 @@ expect(res.data[0].foo).to.equal(bar.foo);
 
 ### Write a test for the "DELETE" method
 
-* DELETE can take an ID off of the route parameter, or off of the req.body. It's your choice.
+* `DELETE` can take an ID off of the route parameter, or off of the req.body. It's your choice.
 
 ### Remember you can use any resources you want to solve these problems, but avoid copying/pasting solutions you've previously written. Also if you don't finish all of the challenges, that's fine! Just do what you can and submit your challenges in the end! HAVE FUN!
