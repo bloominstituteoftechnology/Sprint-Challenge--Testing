@@ -1,9 +1,12 @@
 const mongoose = require('mongoose');
 const chai = require('chai');
+const chaiHTTP = require('chai-http');
 const { expect } = chai;
 const sinon = require('sinon');
+chai.use(chaiHTTP);
 
 const Game = require('./models');
+const server = require('./server');
 
 describe('Games', () => {
   before(done => {
@@ -23,19 +26,53 @@ describe('Games', () => {
       console.log('we are disconnected');
     });
   });
-  // declare some global variables for use of testing
-  // hint - these wont be constants because you'll need to override them.
+
+  let gameID = null;
+
   beforeEach(done => {
-    // write a beforeEach hook that will populate your test DB with data
-    // each time this hook runs, you should save a document to your db
-    // by saving the document you'll be able to use it in each of your `it` blocks
+    const newGame = new Game({
+      title: 'Halo',
+      releaseDate: 'November 15, 2001',
+      genre: 'First Person Shooter'
+    });
+    newGame
+      .save()
+      .then(game => {
+        gameID = game._id;
+        done();
+      })
+      .catch(err => {
+        console.error(err);
+        done();
+      })
   });
+
   afterEach(done => {
-    // simply remove the collections from your DB.
+    Game.remove({}, err => {
+      if (err) console.error(err);
+      done();
+    });
   });
 
   // test the POST here
-
+  describe('[POST] /api/game/create', () => {
+    it('should add a new game and save to the database', (done) => {
+      const newGame = {
+        title: 'Fortnite',
+        releaseDate: 'July 25, 2017',
+        genre: 'Survival'
+      };
+      chai
+        .request(server)
+        .post('/api/game/create')
+        .send(newGame)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.title).to.equal('Fortnite')
+          done();
+        });
+    });
+  });
   // test the GET here
 
   // test the PUT here
