@@ -10,8 +10,8 @@
 
 ```
     {
-        title: 'Jumanji',
-        releaseDate: 1995
+        title: 'Super Mario Bros',
+        releaseDate: 1985
     }
 ```
 
@@ -25,12 +25,12 @@
 output:
   [
     {
-        title: 'Jumanji',
-        releaseDate: 1995
+        title: 'Super Mario Bros 3',
+        releaseDate: 1988
     },
     {
-        title: 'Monoploy',
-        releaseDate: 1935
+        title: 'Final Fantasy',
+        releaseDate: 1987
     }
   ]
 ```
@@ -45,8 +45,8 @@ output:
 #### * Example:
 ```
     {
-        title: 'Jumanji',
-        releaseDate: 2017
+        title: 'Super Mario Bros 3',
+        releaseDate: 1990
     }
 ```
 
@@ -64,6 +64,6 @@ output:
 ```
 output: 
     {
-        'success': 'Jumanji was removed from the DB'
+        'success': 'Bad Street Brawler was removed from the DB'
     }
 ```
