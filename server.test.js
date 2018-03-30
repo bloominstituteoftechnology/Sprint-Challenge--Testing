@@ -98,7 +98,25 @@ describe('Games', () => {
     });
   });
 
-  // test the PUT here
+  describe('[PUT] /api/game/update', () => {
+    it('should update a game document in the database', (done) => {
+      const update = {
+        id: gameId,
+        title: 'Castlevania'
+      };
+      chai.request(server)
+        .put('/api/game/update')
+        .send(update)
+        .end((err, res) => {
+          if (err) {
+            console.log(err);
+            return done();
+          }
+          expect(res.body.title).to.equal('Castlevania');
+          done();
+        });
+    });
+  });
 
   // --- Stretch Problem ---
   // Test the DELETE here
