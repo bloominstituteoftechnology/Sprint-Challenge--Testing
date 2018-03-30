@@ -112,6 +112,44 @@ describe("Games", () => {
   });
 
   // test the PUT here
+  describe("[PUT] /api/game/update", () => {
+    it("should update the game", done => {
+      const newGameTitle = "Ponzi Scheme";
+      const newGameGenre = "Scam";
+      const newGameDate = "2018";
+
+      const newGameUpdate = {
+        id: gameTestId,
+        title: newGameTitle,
+        genre: newGameGenre,
+        date: newGameDate
+      };
+      chai
+        .request(server)
+        .put("/api/game/update")
+        .send(newGameUpdate)
+        .end((err, res) => {
+          expect(res.body.title).to.equal(newGameTitle);
+          done();
+        });
+    });
+    it("should return an error if entry doesnt exist", done => {
+      const newGameUpdate = {
+        id: "xDxDxD",
+        title: "Swagger",
+        nason: "Doesn't exist",
+        date: "!remindmeinayear"
+      };
+      chai
+        .request(server)
+        .put("/api/game/update")
+        .send(newGameUpdate)
+        .end((err, res) => {
+          expect(err.status).to.equal(422);
+        });
+      done();
+    });
+  });
 
   // --- Stretch Problem ---
   // Test the DELETE here
