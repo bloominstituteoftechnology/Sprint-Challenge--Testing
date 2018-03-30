@@ -9,6 +9,16 @@ const server = require('./server');
 chai.use(chaihttp);
 
 const Game = require('./models');
+const data = [
+  {
+  title: 'The Rest Of Us',
+  genre: 'Zombie',
+  },
+  {
+    title: 'Madden NFL 2027',
+    genre: 'Sports'
+  },
+]
 
 describe('Games', () => {
   before(done => {
@@ -32,37 +42,69 @@ describe('Games', () => {
   });
   let firstGameId;
   let secondGameId;
+  // let gameIds;
   // declare some global variables for use of testing
   // hint - these wont be constants because you'll need to override them.
-  beforeEach(done => {
+  beforeEach(async () => {
     console.log('running `beforeEach` method')
     // write a beforeEach hook that will populate your test DB with data
     // each time this hook runs, you should save a document to your db
     // by saving the document you'll be able to use it in each of your `it` blocks
-    new Game({
+    const game1 = new Game({
       title: 'The Rest Of Us',
       genre: 'Zombie',
-      date: 'June 2011',
-    }).save((err, saved) => {
-      if (err) {
-        console.log(err);
-        return done();
-      }
-      firstGameId = saved._id;
-      console.log('First Game ID: ', firstGameId);
     });
-    new Game({
+    const game2 = new Game({
       title: 'Madden NFL 2027',
       genre: 'Sports'
-    }).save((err, saved) => {
-      if (err) {
-        console.log(err);
-        return done();
-      }
-      secondGameId = saved._id;
-      done();;
     });
+    await game1.save().then(game => firstGameId = game.id);
+    await game2.save().then(game => secondGameId = game.id);
   });
+    // beforeEach(done => {
+    //   gameIds = [];
+    //   console.log('running `beforeEach` method')
+    //   Promise.all(data.map(game => {
+    //       return new Promise((resolve, reject) => {
+    //         Game(game).save()
+    //         .then(savedGame => {
+    //           gameIds.push(savedGame.id);
+    //           return resolve(savedGame);
+    //         })
+    //         .catch(err =>  reject(err));
+    //       })
+    //     })
+    //   ).then(rv => {
+    //     games = JSON.parse(JSON.stringify(rv));
+    //     console.log(`I'm the returned value from the promise all: `, rv);
+    //     done();
+    //   })
+    //   .catch(err => done(err));
+    // firstGameId = games[0]._id
+    // done();
+    // new Game({
+    //   title: 'The Rest Of Us',
+    //   genre: 'Zombie',
+    // }).save((err, saved) => {
+    //   if (err) {
+    //     console.log(err);
+    //     return done();
+    //   }
+    //   firstGameId = saved._id;
+    //   console.log('First Game ID: ', firstGameId);
+    // });
+    // new Game({
+    //   title: 'Madden NFL 2027',
+    //   genre: 'Sports'
+    // }).save((err, saved) => {
+    //   if (err) {
+    //     console.log(err);
+    //     return done();
+    //   }
+    //   secondGameId = saved._id;
+    //   done();
+    // });
+  // });
   afterEach(done => {
     console.log('running `afterEach` method');
     // simply remove the collections from your DB.
@@ -85,15 +127,11 @@ describe('Games', () => {
         .post('/api/game/create')
         .send(newGame)
         .end((err, res) => {
-            if (err) {
-                console.error(err);
-                done();
-            }
             expect(res.body.title).to.equal('MarioKart');
             console.log('Post res.body: ', res.body);
             expect(res.status).to.equal(200);
+            done();
         });
-        done();
     });
 });
 
@@ -105,61 +143,52 @@ describe('Games', () => {
         chai.request(server)
         .get('/api/game/get')
         .end((err, res) => {
-            if (err) {
-                console.error(err);
-                done();
-            }
             console.log('Get res.body: ', res.body);
             expect(res.status).to.equal(200);
             expect(res.body.length).to.equal(2);
-            expect(res.body[1].genre).to.equal('Zombie')
+            expect(res.body[1].genre).to.equal('Sports')
+            done();
         });
-        done();
     });
   });
 
   // test the PUT here
-
+  
   describe('[UPDATE] /api/game/update', () => {
     it('should update a game from your list', (done) => {
-        const updatedTopping = {
-            id: `${firstGameId}`,
-            title: 'Madden NFL 2018',
-            genre: 'Sports',
+      // console.log('Update game id of second game: ', gameIds[1])
+      const updatedGame = {
+          id: secondGameId,
+          // id: gameIds[0],
+          title: 'The Rest of Them',
+          genre: 'Zombie Sports',
         }
         chai.request(server)
         .put(`/api/game/update`)
-        .send(updatedTopping)
+        .send(updatedGame)
         .end((err, res) => {
-            if (err) {
-                console.error(err);
-                done();
-            }
-            console.log('Update res.body: ', res.body);
+            console.log(Object.keys(res));
+            console.log('Why am I getting this 422?', res.body.error);
             expect(res.status).to.equal(200);
-            expect(res.body.title).to.equal('Madden NFL 2018');
+            expect(res.body.title).to.equal('The Rest of Them');
+            done();
         });
-        done();
     });
 });
 
   // --- Stretch Problem ---
   // Test the DELETE here
   describe('[DELETE] /api/game/destroy/:id', () => {
-    console.log('Delete first game id: ', firstGameId);
     it('should delete a game from the list of games in your collection', (done) => {
         chai.request(server)
         .delete(`/api/game/destroy/${firstGameId}`)
+        // .delete(`/api/game/destroy/${gameIds[0]}`)
         .end((err, res) => {
-            if (err) {
-                console.error(err);
-                done();
-            }
             console.log('Delete res.body: ', res.body);
             expect(res.status).to.equal(200);
             expect(res.body.success).to.equal('The Rest Of Us was removed from the DB');
+            done();
         });
-        done();
     });
-});
+  });
 });
