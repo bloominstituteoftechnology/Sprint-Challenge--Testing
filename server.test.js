@@ -25,13 +25,34 @@ describe('Games', () => {
   });
   // declare some global variables for use of testing
   // hint - these wont be constants because you'll need to override them.
+  let gameId;
   beforeEach(done => {
     // write a beforeEach hook that will populate your test DB with data
     // each time this hook runs, you should save a document to your db
     // by saving the document you'll be able to use it in each of your `it` blocks
+    new Game({
+      title: "Persona 3 Portable",
+      genre: "JRPG",
+      releaseDate: "July 6, 2010"
+    })
+    .save((err, newGame) => {
+      if (err) {
+        console.log(`There has been an error saving the game: \n ${err}`);
+        done();
+        return;
+      } else {
+        gameId = newGame.id;
+        console.log(`The game has been added successfully!`);
+        done();
+      }
+    })
   });
   afterEach(done => {
     // simply remove the collections from your DB.
+    Game.remove({}, err => {
+      if (err) console.log(`There has been an error removing the game: \n ${err}`);
+      else console.log(`The game has been removed successfully!`)
+    })
   });
 
   // test the POST here
