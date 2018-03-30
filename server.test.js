@@ -127,6 +127,27 @@ describe('Games', () => {
 
   // test the PUT here
 
+  describe('[PUT] api/game/update', () => {
+    it('should update the game title', done => {
+      const updatedGame = {
+        id: testGameID,
+        title: 'LIFE'
+      };
+      chai
+        .request(server)
+        .put('/api/game/update')
+        .send(updatedGame)
+        .end((err, res) => {
+          if (err) {
+            console.error(err)
+            done();
+          }
+          expect(res.body.title).to.equal(updatedGame.title);
+          done();
+        });
+    });
+  });
+
   // --- Stretch Problem ---
   // Test the DELETE here
 });
