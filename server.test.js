@@ -2,8 +2,12 @@ const mongoose = require('mongoose');
 const chai = require('chai');
 const { expect } = chai;
 const sinon = require('sinon');
+const server = require('./server');
+const chaiHTTP = require('chai-http');
 
 const Game = require('./models');
+
+chai.use(chaiHTTP);
 
 describe('Games', () => {
   before(done => {
@@ -25,17 +29,74 @@ describe('Games', () => {
   });
   // declare some global variables for use of testing
   // hint - these wont be constants because you'll need to override them.
+  let gameId = null;
+  let testGame = null;
   beforeEach(done => {
     // write a beforeEach hook that will populate your test DB with data
     // each time this hook runs, you should save a document to your db
     // by saving the document you'll be able to use it in each of your `it` blocks
+    const myGame = new Game({
+      title: 'Star Wars',
+      genre: 'action',
+      releaseDate: 'May 2018'
+    });
+    myGame
+      .save()
+      .then(game => {
+        testGame = game;
+        gameId = game._id;
+        done();
+      })
+      .catch(err => {
+        console.error(err);
+        done();
+      });
   });
+
   afterEach(done => {
     // simply remove the collections from your DB.
+    Game.remove({}, err => {
+      if (err) console.error(err);
+      done();
+    });
   });
 
   // test the POST here
-
+  describe(`[POST] /api/game/create`, () => {
+    it(`should add a new game`, done => {
+      const myGame = {
+        title: 'California Games',
+        genre: 'Sports',
+        releaseDate: 'June 1987'
+      };
+      chai
+        .request(server)
+        .post('/api/game/create')
+        .send(myGame)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.title).to.equal('California Games');
+          done();
+        });
+    });
+    it(`should send back 422 upon bad data`, done => {
+      const myGame = {
+        itle: 'California Games',
+        genre: 'Sports',
+        releaseDate: 'June 1987'
+      };
+      chai
+        .request(server)
+        .post('/api/game/create')
+        .send(myGame)
+        .end((err, res) => {
+          if (err) {
+            expect(err.status).to.equal(422);
+            done();
+          }
+        });
+    });
+  })
   // test the GET here
 
   // test the PUT here
