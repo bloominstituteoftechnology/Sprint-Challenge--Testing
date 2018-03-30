@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 const chai = require('chai');
 const { expect } = chai;
 const sinon = require('sinon');
+const server = require('./server');
+const chaiHTTP = require('chai-http');
+
+chai.use(chaiHTTP);
 
 const Game = require('./models');
 
@@ -36,6 +40,7 @@ describe('Games', () => {
     const newGame = new Game({
       title: 'The Legend of Zelda',
       genre: 'Adventure',
+      releaseDate: 'February 21, 1986',
     });
     newGame
       .save()
@@ -60,10 +65,48 @@ describe('Games', () => {
 
   // test the POST here
 
-  // test the GET here
+  describe(`[POST] /api/game/create`, () => {
+    it('should add a new video game', done => {
+      const newGame = {
+        title: 'The Legend of Zelda',
+        genre: 'Adventure',
+        releaseDate: 'February 21, 1986',
+      };
+      chai
+        .request(server)
+        .post('/api/game/create')
+        .send(newGame),
+        end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.title).to.equal('The Legend of Zelda');
+          done();
+        });
+    });
+    it('should return error status 422', done => {
+      const newGame = {
+        title: 'The Legend of Zelda',
+        genre: 'Adventure',
+        releaseDate: 'February 21, 1986',
+      };
+      chai
+        .request(server)
+        .post('/api/game/create')
+        .send(newGame)
+        .end((err, res) => {
+          if (err) {
+            expect(err.status).to.equal(422);
+            const { error } = err.response.body;
+            expect(error).to.equal('Invalid data');
+            done();
+          }
+        });
+    });
 
-  // test the PUT here
+    // test the GET here
 
-  // --- Stretch Problem ---
-  // Test the DELETE here
+    // test the PUT here
+
+    // --- Stretch Problem ---
+    // Test the DELETE here
+  });
 });
