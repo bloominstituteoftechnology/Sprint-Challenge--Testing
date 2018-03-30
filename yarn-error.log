@@ -33,8 +33,7 @@ npm manifest:
     "bugs": {
       "url": "https://github.com/LambdaSchool/Sprint-Challenge--Testing/issues"
     },
-    "homepage":
-      "https://github.com/LambdaSchool/Sprint-Challenge--Testing#readme",
+    "homepage": "https://github.com/LambdaSchool/Sprint-Challenge--Testing#readme",
     "dependencies": {
       "body-parser": "^1.18.2",
       "chai": "^4.1.2",
@@ -817,7 +816,7 @@ Lockfile:
 
 Trace: 
   Error: Command failed.
-  Exit code: 2
+  Exit code: 1
   Command: C:\Windows\system32\cmd.exe
   Arguments: /d /s /c mocha *.test.js --exit
   Directory: C:\Users\Mike\Sprint-Challenge--Testing
