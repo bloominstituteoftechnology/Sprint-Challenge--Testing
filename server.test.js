@@ -3,14 +3,17 @@ const chai = require('chai');
 const { expect } = chai;
 const sinon = require('sinon');
 const server = require("./server");
+const chaiHttp = require("chai-http");
 
 const Game = require('./models');
+
+chai.use(chaiHttp);
 
 describe('Games', () => {
   before(done => {
     mongoose.Promise = global.Promise;
     mongoose.connect('mongodb://localhost/test');
-    const db = mongoose.connection;
+    const db = mongoose.connection;git 
     db.on('error', () => console.error.bind(console, 'connection error'));
     db.once('open', () => {
       console.log('we are connected');
@@ -107,7 +110,10 @@ describe('Games', () => {
         .put("/api/game/update")
         .send(updatedGame)
         .end((err, res) => {
-          if (err) return done(err);
+          if (err) {
+            console.log(`There was an error with the put request: \n ${err}`);
+            return done(err);
+          };
           expect(res.body.title).to.equal("Undertale");
           expect(res.body.genre).to.equal("Turn Based RPG");
           expect(res.body.releaseDate).to.equal("September 15, 2015");
@@ -118,4 +124,25 @@ describe('Games', () => {
 
   // --- Stretch Problem ---
   // Test the DELETE here
+  describe("[DELETE] /api/game/destroy/:id", () => {
+    it("should remove the game with the given id from the database", (done) => {
+      chai.request(server)
+        .delete("/api/game/destroy/:id")
+        .end((err, res) => {
+          if (err){
+            console.log(`There was an error with the delete request: \n ${err}`);
+            return done(err);
+          }
+          expect(res.text).to.equal('success');
+          Game.findById(gameId, (err, res) => {
+            if (err){
+              console.log(`There was an error checking for the deleted game: \n ${err}`);
+              return done(err);
+            }
+            expect(res).to.equal(null);
+            done();
+          })
+        })
+    })
+  })
 });
