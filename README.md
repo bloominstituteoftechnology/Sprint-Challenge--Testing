@@ -29,19 +29,66 @@
 * You're going to be writing the documentation and the tests for a CRUD API.
 * The API itself is really simple. You're task is to peek at the endpoints found in the `server.js` file and write docs for each one, then write the tests for the end points.
 
-## DOCUMENTATION GOES HERE
+## DOCUMENTATION
 
-### API USAGE
+### Root URL: _`http://localhost:5050/api/game`_
 
-#### Root: `http://localhost:5050/api/game`
+#### [GET] _`/get`_
+```
+Example response from [GET] request:
 
-#### [GET] `/get`
+[
+    {
+        "_id": "5abe77a5858577350defd991",
+        "title": "Monopoly",
+        "releaseDate": "1933",
+        "genre": "Board Game",
+        "__v": 0
+    },
+    {
+        "_id": "5abe77dc858577350defd992",
+        "title": "Bioshock",
+        "releaseDate": "September 2006",
+        "genre": "Video Game",
+        "__v": 0
+    }
+]
 
-#### [POST] `/create`
+```
 
-#### [PUT] `/update`
+#### [POST] _`/create`_
+  ```
+  Example [POST] request:
 
-#### [DELETE] `/destroy/:id`
+  {
+    "title": "Bioshock",                   // required
+    "genre": "Video game",                 // required
+    "releaseDate": "September 2006"        // optional
+  }
+
+  Note: "title" and "genre" is required. "releaseDate" is optional.
+  ```
+
+#### [PUT] _`/update`_
+```
+  Example [PUT] request:
+
+  {
+    "title": "Bioshock: The Collection",
+    "id": "5abe77dc858577350defd992"
+  }
+
+Note: "title" and "id" are required. "releaseDate" is optional.
+```
+
+#### [DELETE] _`/destroy/:id`_
+```
+  Example response from [DELETE] request
+
+  {
+    "success": "Monopoly was removed from the DB"
+  }
+```
 
 ## TESTS
 
