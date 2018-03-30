@@ -150,5 +150,28 @@ describe('Games', () => {
         });
     });
   });
-
+  describe('[DELETE] /api/game/destroy/:id', () => {
+    it('should delete a game from the list', (done) => {
+        chai.request(server)
+        .delete(`/api/game/destroy/${id}`)
+        .end((err, res) => {
+            if (err) {
+              throw new Error(err);
+              done();
+            }
+            expect(res.status).to.equal(200);
+        });
+        done();
+    });
+    it('should delete a game from the list', (done) => {
+      chai.request(server)
+      .delete(`/api/game/destroy/24601`)
+      .end((err, res) => {
+          if (err) {
+            expect(res.status).to.equal(422);
+            done();
+          }
+      });
+    });
+  });
 });
