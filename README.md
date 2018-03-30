@@ -48,11 +48,11 @@
 
 ### PUT Route - update data for a game in your collection
 
-```GET- '/api/game/update/:id'```
+```GET- '/api/game/update/'```
 
 | Endpoint          | Type          | Data     |
 |-------------------|:-------------:|----------|
-| /api/game/update/:id      | PUT           |Update data for a game in your collection|
+| /api/game/update/      | PUT           |Update data for a game in your collection|
 
 
 ## TESTS
