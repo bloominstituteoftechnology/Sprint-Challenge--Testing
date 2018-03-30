@@ -117,11 +117,12 @@ N/A, a simple `GET` request is all that is needed.
 
 ## TESTS
 
-* I have already manually tested this API for you.
-* All you have to do is write Unit tests to ensure that the end points do what they're supposed to do.
+* The provided API has already been manually tested for you.
+* Your job is to write unit tests to ensure that the end points do what they're supposed to do.
+* Each endpoint should have multiple tests to ensure that different sorts of input are handled correctly/as expected. As a guideline, write at least two tests for each endpoint.
 * THERE IS NO NEED TO `YARN START`, BUT YOU'LL WANT TO ENSURE THAT YOU HAVE A `MONGO` INSTANCE UP AND RUNNING.
 
-### Write a test for the "POST" method
+### Write tests for the "POST" method
 
 * The `POST` method should take in an object that looks like this
 
@@ -133,7 +134,7 @@ N/A, a simple `GET` request is all that is needed.
   }
   ```
 
-### Write a test for the "GET" method
+### Write tests for the "GET" method
 
 * Our get method should return the list of games.
 * **REMINDER** That this data structure returned from Mongo will be an array, so to test your game with a `beforeEach` hook you'll need to make sure you test against the first item in the array
@@ -144,14 +145,14 @@ N/A, a simple `GET` request is all that is needed.
 
 * Write your `PUT` and your `DELETE`
 
-### Write a test for the "PUT" method
+### Write tests for the "PUT" method
 
 * Just like in class, send up the information you want changed on the server via the `req.body`.
 * You can send up the Id and the Server will be using that to find the record and then when found, update the record with the `req.body` info you sent up
 
 ## Stretch Problem
 
-### Write a test for the "DELETE" method
+### Write tests for the "DELETE" method
 
 * `DELETE` can take an ID off of the route parameter, or off of the req.body. It's your choice.
 
