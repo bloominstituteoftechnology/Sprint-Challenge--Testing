@@ -36,7 +36,7 @@ THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RI
   
 
 
-```
+
 ## [POST] '/api/game/create'
 ```
 
@@ -44,9 +44,11 @@ THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RI
 | ---------------- | ---- | ---- |
 | /api/game/create | Post | json |
 | ---------------- | ---- | ---- |
-```
 
-### Example:
+
+###
+Example:
+
 ```
 
   
@@ -54,16 +56,16 @@ THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RI
     releaseDate: '1776',
     genre: 'Awesome'
   
-```
 
-## [PUT] '/api/game/update'
 ```
+## [PUT] '/api/game/update'
+
 
 | Endpoint         | Type| Data |
 | ---------------- | --- | ---- |
 | /api/game/update | PUT | json |
 | ---------------- | --- | ---- |
-```
+
 ### Example:
 ```
 
