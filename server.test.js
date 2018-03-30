@@ -79,7 +79,19 @@ describe('[POST /api/game/create', () => {
   });
 });
   // test the GET here
-
+describe('[GET] /api/game/get', () => {
+  it('should get all the games', done => {
+    chai.request(server).get('/api/game/get').end((err, res) => {
+      if(err) {
+        throw new Error(err);
+        done();
+      }
+      expect(res.body[0].title).to.equal(testGame.title);
+      expect(res.body[0]._id).to.equal(gameId.toString());
+      done();
+    });
+  });
+});
   // test the PUT here
 
   // --- Stretch Problem ---
