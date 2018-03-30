@@ -116,7 +116,49 @@ describe('Games', () => {
       });
     });
   // test the PUT here
+  describe(`[PUT] /api/game/update`, () => {
+    it('update given id and some text', done => {
+      const gameUpdate = {
+        id: gameId,
+        title: 'Sta Wars',
+        releaseDate: 'June 2018',
+        genre: 'Romantic comedy game'
+      };
+      chai
+        .request(server)
+        .put('/api/game/update')
+        .send(gameUpdate)
+        .end((err, res) => {
+          if (err) {
+            throw new Error(err);
+            done();
+          }
+          expect(res.body.title).to.equal(gameUpdate.title);
+          done();
+        });
+    });
 
+    it('handle error if bad id sent', done => {
+      const gameUpdate = {
+        id: 'asdfasdf',
+        name: 'Sta Wars',
+        releaseDate: 'June 2018',
+        genre: 'Romantic comedy game'
+      };
+      chai
+        .request(server)
+        .put('/api/game/update')
+        .send(gameUpdate)
+        .end((err, res) => {
+          if (err) {
+            expect(err.status).to.equal(422);
+            const { error } = err.response.body;
+            expect(error).to.eql('Must Provide a title && Id');
+          }
+          done();
+        });
+    });
+  });
   // --- Stretch Problem ---
   // Test the DELETE here
 });
