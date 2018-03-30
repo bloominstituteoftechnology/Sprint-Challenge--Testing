@@ -31,8 +31,84 @@
 
 ## DOCUMENTATION GOES HERE
 
+# Sprint Challenge API Documentation
+Here's documentation for Sprint Challenge API. :)
+
+## Port - Location of all endpoints to interface with our API is at `http://localhost:5050`
+
+## [POST] `/api/game/create`
+| Endpoint      | Type          | Data  |
+| ------------- |:-------------:| -----:|
+| /api/game/create     | POST | json |
+
+### Example:
 ```
-THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
+{
+  title: 'Tetris',
+  genre: 'Puzzle',
+}
+```
+
+## [GET] `/api/game/get`
+| Endpoint      | Type          | Data  |
+| ------------- |:-------------:| -----:|
+| /api/game/get     | GET | json |
+
+### Example:
+```
+[
+  {
+    title: 'Tetris',
+    genre: 'Puzzle',
+  },
+  {
+    title: 'Snow Bros',
+    genre: 'Adventure',
+  }
+]
+```
+
+## [PUT] `/api/game/update`
+| Endpoint      | Type          | Data  |
+| ------------- |:-------------:| -----:|
+| /api/game/update     | GET | json |
+
+### Example:
+```
+[
+  {
+    title: 'Tetris',
+    genre: 'Puzzle',
+  }
+]
+```
+is now updated to
+```
+[
+  {
+    title: 'Kirby\'s Island',
+    genre: 'Adventure',
+  }
+]
+```
+
+## [DELETE] `/api/game/destroy/:id`
+| Endpoint      | Type          | Data  |
+| ------------- |:-------------:| -----:|
+| /api/game/destroy/:id     | GET | json |
+
+### Example:
+```
+[
+  {
+    title: 'Tetris',
+    genre: 'Puzzle',
+  }
+]
+```
+is now updated to
+```
+null
 ```
 
 ## TESTS
