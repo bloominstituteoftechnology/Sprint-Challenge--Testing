@@ -76,6 +76,48 @@ describe('Games', () => {
     });
 
     // test the GET here
+    describe('[GET] /api/game/get', () => {
+        it('should create a new game', (done) => {
+            chai.request(server)
+                .get('/api/game/get')
+                .end((err, resp) => {
+                    if (err) {
+                        console.error(err);
+                        done();
+                    }
+                    console.log('resp.body::::', resp.body.length);
+                    expect(resp.status).to.equal(200);
+                    expect(resp.body.length).to.equal(1);
+                });
+            done();
+        });
+
+        it('should return an object', (done) => {
+            chai.request(server)
+                .get('/api/game/get')
+                .end((err, resp) => {
+                    if (err) {
+                        console.error(err);
+                        done();
+                    }
+                    expect(typeof resp.body).to.equal("object");
+                });
+            done();
+        });
+
+        it('should return one record', (done) => {
+            chai.request(server)
+                .get('/api/game/get')
+                .end((err, resp) => {
+                    if (err) {
+                        console.error(err);
+                        done();
+                    }
+                    expect(resp.body.length).to.equal(1);
+                });
+            done();
+        });
+    });
 
     // test the PUT here
 
