@@ -46,7 +46,7 @@ describe('Games', () => {
       })
       .catch(err => {
         console.error(err);
-        done();
+       done();
       });
   });
 
@@ -124,7 +124,28 @@ describe('Games', () => {
     });
   });
   // test the PUT here
-
+  describe(`[PUT] /api/game/update`, () => {
+    it('should update a game given an id and some text', done => {
+      const gameUpdate = {
+        id: gameId,
+        title: 'Super Mario Brothers',
+        releaseDate: 'September, 1985'
+      };
+      chai
+      .request(server)
+      .put('/api/game/update')
+      .send(gameUpdate)
+      .end((err, res) => {
+        if (err) {
+          throw new Error(err);
+          done();
+        }
+        expect(res.body.title).to.equal(gameUpdate.title);
+        expect(res.body.releaseDate).to.equal(gameUpdate.releaseDate);
+        done();
+      });
+    });
+  });
   // --- Stretch Problem ---
   // Test the DELETE here
 });
