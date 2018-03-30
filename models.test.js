@@ -28,7 +28,7 @@ describe('NESGames Model', () => {
     it('should give back the proper game.title', () => {
       const game = new Game({
         title: 'California Games',
-        date: 'June 1987',
+        releaseDate: 'June 1987',
         genre: 'Sports'
       });
       expect(game.getGameTitle()).to.equal('California Games');
@@ -41,7 +41,7 @@ describe('NESGames Model', () => {
       Game.find.yields(null, [
         {
           title: 'California Games',
-          date: 'June 1987',
+          releaseDate: 'June 1987',
           genre: 'Sports'
         }
       ]);
