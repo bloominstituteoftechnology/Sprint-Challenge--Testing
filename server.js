@@ -8,28 +8,30 @@ const server = express();
 server.use(bodyParser.json());
 server.use(morgan('combined'));
 
+const STATUS_OK = 200;
+const STATUS_UNPROCESSABLE = 422;
+const STATUS_SERVER_ERROR = 500;
+
 server.post('/api/game/create', (req, res) => {
   const { title, releaseDate, genre } = req.body;
   const myGame = new Game({ title, releaseDate, genre });
   myGame
     .save()
     .then(game => {
-      res.json(game);
+      res.status(STATUS_OK).json(game);
     })
     .catch(err => {
-      res.status(422);
-      res.json({ error: 'Error saving data to the DB', message: err });
+      res.status(STATUS_UNPROCESSABLE).json({ error: 'Error saving data to the DB', message: err });
     });
 });
 
 server.get('/api/game/get', (req, res) => {
   Game.find({}, (err, games) => {
     if (err) {
-      res.status(500);
-      res.json({ error: 'Something really bad happened' });
+      res.status(STATUS_SERVER_ERROR).json({ error: 'Something really bad happened' });
       return;
     }
-    res.json(games);
+    res.status(STATUS_OK).json(games);
   });
 });
 
@@ -37,22 +39,20 @@ server.put('/api/game/update', (req, res) => {
   // All I care about is the game title and id.. don't worry about genre or date.
   const { title, id } = req.body;
   if (!title || !id) {
-    return res.status(422).json({ error: 'Must Provide a title && Id' });
+    return res.status(STATUS_UNPROCESSABLE).json({ error: 'Must Provide a title && Id' });
   }
   Game.findById(id, (err, game) => {
     if (err || game === null) {
-      res.status(422);
-      res.json({ error: 'Cannot find game by that id' });
+      res.status(STATUS_UNPROCESSABLE).json({ error: 'Cannot find game by that id' });
       return;
     }
     game.title = title;
     game.save((saveErr, savedGame) => {
       if (err || game === null) {
-        res.status(500);
-        res.json({ error: 'Something really bad happened' });
+        res.status(STATUS_SERVER_ERROR).json({ error: 'Something really bad happened' });
         return;
       }
-      res.json(game);
+      res.status(STATUS_OK).json(game);
     });
   });
 });
@@ -70,18 +70,16 @@ server.delete('/api/game/destroy/:id', (req, res) => {
   }
   if (id === undefined) {
     // if it's undefined throw error back to client
-    res.status(422);
-    res.json({ error: 'You need to give me an ID' });
+    res.status(STATUS_UNPROCESSABLE).json({ error: 'You need to give me an ID' });
     return;
   }
   Game.findByIdAndRemove(id, (err, removedGame) => {
     // search for game by that id and remove it
     if (err) {
-      res.status(422);
-      res.json({ error: 'Cannot find game by that id' });
+      res.status(STATUS_UNPROCESSABLE).json({ error: 'Cannot find game by that id' });
       return;
     }
-    res.json({ success: `${removedGame.title} was removed from the DB` });
+    res.status(STATUS_OK).json({ success: `${removedGame.title} was removed from the DB` });
   });
 });
 
