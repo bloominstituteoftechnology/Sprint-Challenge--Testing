@@ -1,9 +1,13 @@
 const mongoose = require('mongoose');
 const chai = require('chai');
+const chaiHttp = require('chai-http');
 const { expect } = chai;
 const sinon = require('sinon');
+const server = require('./server');
 
 const Game = require('./models');
+
+chai.use(chaiHttp);
 
 describe('Games', () => {
   before(done => {
@@ -66,7 +70,7 @@ describe('Games', () => {
       const newGame = new Game({
         title: 'California Games',
         genre: 'Sports',
-        date: 'June 1987'
+        releaseDate: 'June 1987'
       });
       chai.request(server)
         .post('/api/game/create')
@@ -82,11 +86,39 @@ describe('Games', () => {
         done();
     });
   });
+  it('should return a 422 error when missing info', (done) => {
+    const newGame = {
+      genre: 'test genre',
+      releaseDate: 'test date'
+    };
+    chai.request(server)
+      .post('/api/game/create')
+      .send(newGame)
+      .end((err, res) => {
+        if (err) console.error(err);
+
+        expect(res.status).to.equal(422);
+      });
+      done();
+  });
 
   // test the GET here
   describe('[GET] /api/game/get', () => {
-    it('should return')
-  })
+    it('should return 1 game', (done) => {
+      chai.request(server)
+        .get('/api/game/get')
+        .end((err, res) => {
+          if (err) {
+            console.error(err);
+            done();
+          }
+          expect(res.status).to.equal(200);
+          expect(res.body).to.be.a('array');
+          expect(res.body[0].title).to.equal('California Games');
+          done();
+        });
+    });
+  });
 
   // test the PUT here
 
