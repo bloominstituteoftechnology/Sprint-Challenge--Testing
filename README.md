@@ -1,5 +1,3 @@
-# Assessing your Testing Fu
-
 * Keep Calm! Test On!
 * Now that you're familiar with the concepts of testing, your goal is to write documentation and tests for an API that is already in production. (This happens a lot :))
 * Answers to your written questions will be recorded in _ANSWERS.md_
@@ -31,9 +29,40 @@
 
 ## DOCUMENTATION GOES HERE
 
-```
-THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
-```
+# Game Collection :video_game: API 
+### POST Route - adds a game to your list of games
+
+```POST- '/api/game/create'```
+
+| Endpoint          | Type          | Data     |
+|-------------------|:-------------:|----------|
+| /api/topping       | POST           |adds a game to your collection|
+
+### GET Route - gets a list of all the game titles in your collection
+
+```GET- '/api/game/get'```
+
+| Endpoint          | Type          | Data     |
+|-------------------|:-------------:|----------|
+| /api/game/get      | GET           |Get list of game titles in your collection|
+
+### PUT Route - update data for a game in your collection
+
+```GET- '/api/game/update/'```
+
+| Endpoint          | Type          | Data     |
+|-------------------|:-------------:|----------|
+| /api/game/update/      | PUT           |Update data for a game in your collection|
+
+### DELETE Route - delete a game from your collection
+
+
+```GET- '/api/game/destroy/:id'```
+
+| Endpoint          | Type          | Data     |
+|-------------------|:-------------:|----------|
+| /api/game/destroy/:id      | DELETE           |Delete a game from your collection|
+
 
 ## TESTS
 
