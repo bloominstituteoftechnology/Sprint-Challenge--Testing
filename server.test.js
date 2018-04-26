@@ -23,9 +23,10 @@ describe('Games', () => {
       console.log('we are disconnected');
     });
   });
-  // declare some global variables for use of testing
+  let gameId;
   // hint - these wont be constants because you'll need to override them.
   beforeEach(done => {
+
     // write a beforeEach hook that will populate your test DB with data
     // each time this hook runs, you should save a document to your db
     // by saving the document you'll be able to use it in each of your `it` blocks
@@ -38,8 +39,8 @@ describe('Games', () => {
 
   // test the GET here
 
-  // test the PUT here
-
-  // --- Stretch Problem ---
   // Test the DELETE here
+  
+  // --- Stretch Problem ---
+  // test the PUT here
 });
