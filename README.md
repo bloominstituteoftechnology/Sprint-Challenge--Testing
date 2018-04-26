@@ -10,9 +10,9 @@
 
 ## Questions - Self Study - You can exercise your Google-Fu for this and any other _Sprint Challenge_ in the future.
 
-1. In Mocha, what are the differences between `before`, `after`, `beforeEach`, and `afterEach`? When do they run? What are they used for?
-2. What is the point of Test Driven Development? What do you personally think about this approach?
-3. What is a `spy` in `sinon`? How do we use it to effectively test a `callback`?
+1.  In Mocha, what are the differences between `before`, `after`, `beforeEach`, and `afterEach`? When do they run? What are they used for?
+2.  What is the point of Test Driven Development? What do you personally think about this approach?
+3.  What is a `spy` in `sinon`? How do we use it to effectively test a `callback`?
 
 ## Initializing Project -
 
@@ -65,15 +65,15 @@ THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RI
 
 * Write your `PUT` and your `DELETE`
 
+### Write tests for the "DELETE" method
+
+* `DELETE` can take an ID off of the route parameter, or off of the req.body. It's your choice.
+
+## Stretch Problem
+
 ### Write tests for the "PUT" method
 
 * Just like in class, send up the information you want changed on the server via the `req.body`.
 * You can send up the Id and the Server will be using that to find the record and then when found, update the record with the `req.body` info you sent up
-
-## Stretch Problem
-
-### Write tests for the "DELETE" method
-
-* `DELETE` can take an ID off of the route parameter, or off of the req.body. It's your choice.
 
 ### Remember you can use any resources you want to solve these problems, but avoid copying/pasting solutions you've previously written. Also if you don't finish all of the challenges, that's fine! Just do what you can and submit your challenges in the end! HAVE FUN!
