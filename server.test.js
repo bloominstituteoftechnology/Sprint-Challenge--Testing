@@ -57,38 +57,56 @@ describe('Games', () => {
   });
 
   // test the POST here
-  describe('[POST] /api/game/create', () => {
-    it('should save the information to the database', done => {
+  // describe('[POST] /api/game/create', () => {
+  //   it('should save the information to the database', done => {
+  //     chai
+  //       .request(server)
+  //       .post('/api/game/create')
+  //       .send({
+  //         title: 'Game',
+  //         genre: 'RPG',
+  //         releaseDate: 'yes',
+  //       })
+  //       .then(res => {
+  //         done();
+  //       })
+  //       .catch(err => {
+  //         throw err;
+  //       });
+  //   });
+  // it('Should fail if bad information is provided', done => {
+  //   chai
+  //     .request(server)
+  //     .post('/api/game/create')
+  //     .send({ data: 'bad' })
+  //     .then(res => {
+  //       console.log(res.body.errors);
+  //     })
+  //     .catch(err => {
+  //       throw err;
+  //     });
+  // });
+  // This doesn't work as intended, will come back if I have time.
+  // });
+
+  // test the GET here
+  describe('[GET] /api/game/get', () => {
+    it('should retrieve information from the database', done => {
       chai
         .request(server)
-        .post('/api/game/create')
-        .send({
-          title: 'Game',
-          genre: 'RPG',
-          releaseDate: 'yes',
-        })
-        .then(response => {
+        .get('/api/game/get')
+        .then(res => {
+          const { _id, title, genre, releaseDate } = res.body[0];
+          expect(res.status).to.equal(200);
+          expect(res.body).to.be.an('array');
+          // expect(_id).to.equal(gameId);
           done();
         })
         .catch(err => {
           throw err;
         });
     });
-    it('Should fail if bad information is provided', done => {
-      chai
-        .request(server)
-        .post('/api/game/create')
-        .send({ data: 'bad' })
-        .then(response => {
-          console.log(response.body.errors);
-        })
-        .catch(err => {
-          throw err;
-        });
-    });
   });
-
-  // test the GET here
 
   // Test the DELETE here
 
