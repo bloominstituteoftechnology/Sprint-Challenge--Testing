@@ -12,7 +12,7 @@ chai.use(chaiHTTP);
 describe('Games', () => {
   before(done => {
     mongoose.Promise = global.Promise;
-    mongoose.connect('mongodb://localhost/test');
+    mongoose.connect('mongodb://localhost:27017/test');
     const db = mongoose.connection;
     db.on('error', () => console.error.bind(console, 'connection error'));
     db.once('open', () => {
@@ -106,30 +106,31 @@ describe('Games', () => {
   // Post first, then test assertions on get
   describe('[GET] /api/game/get', () => {
     it('should return list of all games', done => {
-      const madden = {
-        title: 'Madden 18',
-        genre: 'Sports',
-        releaseDate: 'August 2017'
-      };
+      // const madden = {
+      //   title: 'Madden 18',
+      //   genre: 'Sports',
+      //   releaseDate: 'August 2017'
+      // };
       
-      chai.request(server)
-      .post('/api/game/create')
-      .send(madden)
-      .end((err, res) => {
+      // // refactor
+      // chai.request(server)
+      // .post('/api/game/create')
+      // .send(madden)
+      // .end((err, res) => {
+      //   expect(res.status).to.equal(200);
+      //   done();
+      // });
 
-      });
-
       chai.request(server)
-      .get('api/game/get')
+      .get('/api/game/get')
       .end((err, res) => {
-        console.log(res);
         if (err) {
           console.log('ERROR:', err);
           done();
         }
         expect(res.status).to.equal(200);
         expect(res.body).to.be.an('array');
-        expect(res.body.length).to.equal(2);
+        expect(res.body.length).to.equal(1);
         expect(res.body[0].title).to.equal('Fortnite')
         done();
       });
