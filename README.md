@@ -49,11 +49,13 @@ In order to get your favorite games and recreate the nostalgia of your youth, ma
 
 You can add games through the create endpoint! Make sure you have the title and genre included (a release date is optional) like so:
 
-```{
+```
+{
   title: 'Kid Icarus',
   genre: 'Action-adventure',
   releaseDate: '1986' 
-}```
+}
+```
 
 ### Updating your games
 
