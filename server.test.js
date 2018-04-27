@@ -151,4 +151,48 @@ describe('Games', () => {
 
   // --- Stretch Problem ---
   // test the PUT here
+  describe('[PUT] /api/game/update', () => {
+    it('should update an existing game on the database', done => {
+      const update = {
+        id: gameId,
+        title: 'Super Mario Bros. 3',
+      };
+      chai
+        .request(server)
+        .put('/api/game/update')
+        .send(update)
+        .end((err, response) => {
+          if (err) {
+            console.log(err);
+            done();
+          } else {
+            expect(response.body).to.be.an('object');
+            expect(response.body.title).to.equal(update.title);
+            done();
+          }
+        });
+    });
+    it('should return error if incorrect id entered', done => {
+      const update = {
+        id: '5ae35dee8d540fdf89bea7bd',
+        title: 'Super Mario Bros. 3',
+      };
+      chai
+        .request(server)
+        .put('/api/game/update')
+        .send(update)
+        .end(err => {
+          if (err) {
+            console.log(err.response.body);
+            expect(err.response.body).to.be.an('object');
+            expect(err.response.body.error).to.equal(
+              'Cannot find game by that id'
+            );
+          } else {
+            console.log(response.body);
+          }
+          done();
+        });
+    });
+  });
 });
