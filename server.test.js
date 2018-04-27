@@ -7,6 +7,8 @@ const sinon = require('sinon');
 const server = require('./server');
 const Game = require('./models');
 
+chai.use(chaiHTTP);
+
 describe('Games', () => {
   before(done => {
     mongoose.Promise = global.Promise;
@@ -146,7 +148,7 @@ describe('Games', () => {
     });
   });
   // Test the DELETE here
-  describe ('[DELETE] /api/game/delete/:id', () => {
+  describe ('[DELETE] /api/game/destroy/:id', () => {
     it('should remove game from database', done => {
       const gameDBZ = {
         title: 'Dragon Ball Z: Ultimate Tenkaichi',
@@ -156,7 +158,7 @@ describe('Games', () => {
 
       chai
         .request(server)
-        .delete('/api/game/create')
+        .delete(`/api/game/destroy/${gameId}`)
         .send(gameDBZ)
         .end((error, res) => {
           if(error) {

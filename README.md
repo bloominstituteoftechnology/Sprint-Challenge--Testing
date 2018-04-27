@@ -31,7 +31,11 @@
 
 ## DOCUMENTATION GOES HERE
 
-# MyGame API
+# MyGame API Documentation
+
+### [POST] '/api/game/create'
+### [GET] '/api/game/get'
+### [DELET] '/api/game/delete'
 
 
 
