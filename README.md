@@ -32,7 +32,40 @@
 ## DOCUMENTATION GOES HERE
 
 ```
-THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
+# Video-Games API
+
+This API is for interfacing with Video-Games.
+
+## API Endpoints
+
+* Here is a list of the endpoints that are available for use when using this API.
+* Port is set to `http://localhost:5050`.
+
+### [GET] '/api/game/get'
+
+| TYPE |    URL    |                  DATA |
+| ---- | :-------: | --------------------: |
+| GET  | /api/game/get | title*, genre*, releaseDate |
+
+### [POST] '/api/game/create'
+
+| TYPE |       URL        |                  DATA |
+| ---- | :--------------: | --------------------: |
+| POST | /api/game/create | title*, genre*, releaseDate |
+
+### [PUT] '/api/game/update'
+
+| TYPE |      URL      |     DATA |
+| ---- | :-----------: | -------: |
+| PUT  | /api/game/update | title*, ID* |
+
+### [DELETE] '/api/game/destroy/:id'
+
+| TYPE   |         URL          |     DATA |
+| ------ | :------------------: | -------: |
+| DELETE | /api/game/destroy/:id | ID* |
+
+* All the fields marked with `*` are required when using the specified endpoint.
 ```
 
 ## TESTS
