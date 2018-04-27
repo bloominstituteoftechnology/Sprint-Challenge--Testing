@@ -114,4 +114,23 @@ describe('Games', () => {
 
   // --- Stretch Problem ---
   // test the PUT here
+  describe(`[PUT] /api/game/update`, () => {
+    it('should update the game in the database', done => {
+      const updateGame = {
+        id: gameId,
+        title: 'Duck Hunt'
+      }
+      chai.request(server)
+        .put('/api/game/update')
+        .send(updateGame)
+        .end((err, res) => {
+          if (err) {
+            console.log(err);
+            return done();
+          }
+          expect(res.body.title).to.equal('Duck Hunt');
+          return done();
+        })
+    })
+  })
 });
