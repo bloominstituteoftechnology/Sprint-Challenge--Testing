@@ -101,7 +101,7 @@ describe('Games', () => {
           const { _id, title} = response.body[0];
           expect(response.status).to.equal(200);
           expect(response.body).to.be.an('array');
-          expect(_id).to.equal(_id);
+          expect(_id).to.equal(gameId);
           expect(title).to.equal('California Games');
           done();
         })
@@ -112,23 +112,29 @@ describe('Games', () => {
     it.skip('Should fail if bad URL is provided', () => {}); // puts in pending state
   });
   // Test the DELETE here
-  describe(`[DELETE] /api/game/destroy/:id`, () => {
-    it('should delete a game from the db', done =>{
-      chai
-        .request(server)
-        .delete('/api/game/destroy/:id')
-        .then(response => {
-          done()
-        })
-        .catch(err => {
-          throw err;
-        });
-    });
-    it('should fail if game is not deleted', () => {
-      return chai
-        .request(server)
+  describe('[DELETE] /api/game/destroy/:id', () => {
+    it('should remove a game from the database', done => {
+      const game = new Game({
+        title: 'Gran Turismo',
+        genre: 'Auto Racing',
+        releaseDate: 'Jan 1 1998',
+      });
+      game.save((err, savedGame) => {
+        chai
+          .request(server)
+          .delete('/api/game/destroy/' + game._id)
+          .end((err, response) => {
+            if (err) {
+              console.log(err);
+              done();
+            }
+            expect(response.status).to.equal(200);
+            expect(response.body).to.be.a('object');
+            done();
+          });
+      });
     });
   });
   // --- Stretch Problem ---
   // test the PUT here
-});
+})
