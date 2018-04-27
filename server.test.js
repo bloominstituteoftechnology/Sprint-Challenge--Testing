@@ -81,8 +81,25 @@ describe('Games', () => {
     });
   });
 
-
   // test the GET here
+  describe(`[GET] /api/game/get`, () => {
+    it('should get a list of all games in the database', done => {
+      chai
+        .request(server)
+        .get('/api/game/get')
+        .end((err, res) => {
+          if (err) {
+            console.log(err);
+            return done();
+          }
+          expect(res.status).to.equal(200);
+          expect(res.body).to.be.an('array');
+          expect(res.body[0].title).to.equal('Super Mario Bros');
+          expect(res.body[0].genre).to.equal('Platform game');
+          return done();
+        });
+    });
+  });
 
   // Test the DELETE here
 
