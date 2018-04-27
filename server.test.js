@@ -2,12 +2,14 @@ const mongoose = require('mongoose');
 const chai = require('chai');
 const { expect } = chai;
 const sinon = require('sinon');
-
+const server = require('./server');
+const chaiHTTP = require('chai-http');
+chai.use(chaiHTTP);
 const Game = require('./models');
 
 describe('Games', () => {
   before(done => {
-    mongoose.Promise = global.Promise;
+    // mongoose.Promise = global.Promise;
     mongoose.connect('mongodb://localhost/test');
     const db = mongoose.connection;
     db.on('error', () => console.error.bind(console, 'connection error'));
@@ -37,6 +39,7 @@ describe('Games', () => {
       .then(response => {
         console.log(response, 'added');
         gameId = response._id;
+        done();
       })
       .catch(err => console.log(err));
   });
@@ -44,6 +47,7 @@ describe('Games', () => {
     // simply remove the collections from your DB.
     Game.remove({})
       .then(() => {
+        console.log('database cleared');
         done();
       })
       .catch(err => {
@@ -53,10 +57,97 @@ describe('Games', () => {
   });
 
   // test the POST here
+  describe('[POST] /api/game/create', () => {
+    it('should add a game to the database', done => {
+      chai
+        .request(server)
+        .post(`/api/game/create`)
+        .send({ title: 'paperboy', genre: 'fun' })
+        .end((err, response) => {
+          if (err) {
+            console.log(err);
+          } else {
+            expect(response.body).to.haveOwnProperty('_id');
+            expect(response.body.title).to.be.ok;
+            expect(response.body).to.haveOwnProperty('genre');
+            expect(response.body.title).to.equal('paperboy');
+            expect(response.body.genre).to.equal('fun');
+            done();
+          }
+        });
+      // .then(response.body => {
+      //   console.log(response.body, 'get response');
+      //   // expect(response.body).to.haveOwnProperty('id');
+      //   expect(response.body.title).to.be.ok;
+      //   expect(response.body).to.haveOwnProperty('genre');
+      //   expect(response.body.title).to.equal('paperboy');
+      //   expect(response.body.genre).to.equal('fun');
+      // })
+      // .catch(err => console.log(err, 'error'));
+    });
+  });
 
   // test the GET here
+  describe('[GET] /api/game/get', () => {
+    it('should return an array of games from the database', done => {
+      console.log(gameId, 'gameId');
+      chai
+        .request(server)
+        .get('/api/game/get')
+        .end((err, response) => {
+          if (err) {
+            console.log(err);
+          } else {
+            expect(response.body).to.be.an('array');
+            expect(response.body).to.have.lengthOf(1);
+            done();
+          }
+        });
+
+      // .then(response => {
+      //   expect(response.body).to.be.an('arbray');
+      //   expect(response.body).to.have.lengthOf(1);
+      // })
+      // .catch(err => console.log(err, 'error'));
+    });
+  });
 
   // Test the DELETE here
+  describe('[DELETE] /api/game/destroy', () => {
+    it('should destroy using params', done => {
+      chai
+        .request(server)
+        .del(`/api/game/destroy/${gameId}`)
+        .end((err, response) => {
+          if (err) {
+            console.log(err);
+          } else {
+            console.log(response.body);
+            expect(response.body).to.haveOwnProperty('success');
+            expect(response.body.success.endsWith('was removed from the DB')).to
+              .be.ok;
+            done();
+          }
+        });
+    });
+    it('should destroy using id sent in body', done => {
+      chai
+        .request(server)
+        .del(`/api/game/destroy/1`)
+        .send({ id: gameId })
+        .end((err, response) => {
+          if (err) {
+            console.log(err);
+          } else {
+            console.log(response.body);
+            expect(response.body).to.haveOwnProperty('success');
+            expect(response.body.success.endsWith('was removed from the DB')).to
+              .be.ok;
+            done();
+          }
+        });
+    });
+  });
 
   // --- Stretch Problem ---
   // test the PUT here
