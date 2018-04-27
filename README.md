@@ -32,15 +32,14 @@
 ## DOCUMENTATION GOES HERE
 
 ```
-| METHOD                               | URL                                                                | Data Required                   |
-| ------                               | ------                                                             | -----:                         |
-|  GET                                 |  /api/game/get                                                     |   None                          |
-|  POST                                |  /api/game/create                                                  |   title (string)*, genre (string)*, releaseDate (string)  |
-|  DELETE                               |  /api/game/destroy/${ID of game you wish to delete}               |       gameId (string)*          |
-|  PUT                               |  /api/game/update                                                    |     gameId(string)*  title (string)*, genre (string)*, releaseDate(string)                           |
+| METHOD                               | URL                                                                | Data Required                                                                |
+| ------                               | ------                                                             | -----:                                                                       |
+|  GET                                 |  /api/game/get                                                     |   None                                                                       |
+|  POST                                |  /api/game/create                                                  |   title (string)*, genre (string)*, releaseDate (string)                     |
+|  DELETE                              |  /api/game/destroy/${ID of game you wish to delete}                |     gameId (string)*                                                         |
+|  PUT                                 |  /api/game/update                                                  |     gameId(string)*  title (string)*, genre (string)*, releaseDate(string)   |
 
 ### Fields marked with an * are required.
-
 ```
 
 ## TESTS
