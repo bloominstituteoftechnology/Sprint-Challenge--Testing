@@ -33,7 +33,7 @@ server.get('/api/game/get', (req, res) => {
   });
 });
 
-server.put('/api/game/update', (req, res) => {
+server.put('/api/game/update/:id', (req, res) => {
   // All I care about is the game title and id.. don't worry about genre or date.
   const { title, id } = req.body;
   if (!title || !id) {
