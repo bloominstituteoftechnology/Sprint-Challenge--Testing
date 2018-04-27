@@ -10,6 +10,11 @@ server.use(morgan('combined'));
 
 server.post('/api/game/create', (req, res) => {
   const { title, releaseDate, genre } = req.body;
+  if (!title || !releaseDate || !genre) {
+    return res
+      .status(422)
+      .json({ error: 'Must Provide a title genre and release date' });
+  }
   const myGame = new Game({ title, releaseDate, genre });
   myGame
     .save()
@@ -47,7 +52,7 @@ server.put('/api/game/update', (req, res) => {
     }
     game.title = title;
     game.save((saveErr, savedGame) => {
-      if (err || game === null) {
+      if (saveErr || savedGame === null) {
         res.status(500);
         res.json({ error: 'Something really bad happened' });
         return;
