@@ -75,10 +75,43 @@ describe("Games", () => {
       });
     });
   });
+
   // test the GET here
-
+  describe('GET to /api/game/get', () => {
+    it('should get a list of all games in the DB', done => {
+      chai
+        .request(server)
+        .get('/api/game/get')
+        .end((err, response) => {
+          if(err){
+            console.log(err);
+            return done();
+          }
+          expect(response.status).equal(200);
+          expect(response.body[0].title).equal('Master Blaster');
+          return done();
+        })
+    })
+  })
   // Test the DELETE here
-
+  describe('DELETE to /api/game/destroy/:id', () => {
+    it('should delete a game with a specific ID', done => {
+      chai
+        .request(server)
+        // console.log('server===:', server)
+        .delete(`/api/game/destroy/${gameId}`)
+        .end((err, response) => {
+          if(err){
+            console.log('error', err)
+            return done();
+          }
+          // console.log(response.status);
+          expect(response.res.body.success).equal('Master Blaster was removed from the DB');
+          expect(response.status).equal(200);
+          return done()
+        })
+    })
+  })
   // --- Stretch Problem ---
   // test the PUT here
 });
