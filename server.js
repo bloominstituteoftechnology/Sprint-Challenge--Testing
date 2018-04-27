@@ -29,7 +29,7 @@ server.get('/api/game/get', (req, res) => {
       res.json({ error: 'Something really bad happened' });
       return;
     }
-    res.json(games);
+    res.status(200).json(games);
   });
 });
 

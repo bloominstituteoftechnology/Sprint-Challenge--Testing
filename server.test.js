@@ -57,13 +57,13 @@ describe('Games', () => {
   });
 
   // test the POST here
-  describe(`[POST] /api/bands`, () => {
+  describe(`[POST] /api/game/create`, () => {
     let newGame = new Game({
       title: 'Super Mario Bros',
       releaseDate: 'September 1985',
       genre: 'Platformer'
     });
-    it(`should save a new game document to the db`, done => {
+    it('should save a new game document to the db', done => {
       chai
         .request(server)
         .post('/api/game/create')
@@ -79,7 +79,7 @@ describe('Games', () => {
           done();
         });
     });
-    it(`should fail if the title, releaseDate and genre are not provided`, done => {
+    it('should fail if the title, releaseDate and genre are not provided', done => {
       chai
         .request(server)
         .post('/api/game/create')
@@ -92,7 +92,27 @@ describe('Games', () => {
   });
 
   // test the GET here
-
+  describe(`[GET] /api/game/get`, () => {
+    it('should get a list of games from the db', done => {
+      chai
+        .request(server)
+        .get('/api/game/get')
+        .end((err, res) => {
+          if (err) {
+            console.log(err);
+            return done();
+          }
+          const { title, releaseDate, genre } = res.body[0];
+          expect(res.status).to.equal(200);
+          expect(res.body.length).to.equal(1);
+          expect(Array.isArray(res.body)).to.equal(true);
+          expect(title).to.equal('Super Mario Bros');
+          expect(releaseDate).to.equal('September 1985');
+          expect(genre).to.equal('Platformer');
+          done();
+        });
+    });
+  });
   // Test the DELETE here
 
   // --- Stretch Problem ---
