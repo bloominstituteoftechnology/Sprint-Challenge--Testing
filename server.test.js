@@ -2,8 +2,13 @@ const mongoose = require('mongoose');
 const chai = require('chai');
 const { expect } = chai;
 const sinon = require('sinon');
+const chaiHttp = require("chai-http");
 
+const server = require('./server');
 const Game = require('./models');
+
+chai.use(chaiHttp);
+
 
 describe('Games', () => {
   before(done => {
@@ -30,17 +35,57 @@ describe('Games', () => {
     // write a beforeEach hook that will populate your test DB with data
     // each time this hook runs, you should save a document to your db
     // by saving the document you'll be able to use it in each of your `it` blocks
+    const newGame = new Game({
+      title: 'Super Mario Bros',
+      genre: 'Platform game',
+      releaseDate: 'September 1985'
+    });
+    newGame.save((err, savedGame) => {
+      if (err) {
+        console.log(err);
+        return done();
+      }
+      gameId = savedGame._id.toString();
+      return done();
+    });
   });
   afterEach(done => {
     // simply remove the collections from your DB.
+    Game.remove({}, err => {
+      if (err) console.log(err);
+      return done();
+    });
   });
 
   // test the POST here
+  describe(`[POST] /api/game/create`, () => {
+    it('should save a new game to the database', done => {
+      chai
+        .request(server)
+        .post('/api/game/create')
+        .send({
+          title: 'Excitebike',
+          releaseDate: 'November 1984',
+          genre: 'Racing'
+        })
+        .end((err, res) => {
+          if (err) {
+            console.log(err);
+            return done();
+          }
+          expect(res.body.title).to.equal('Excitebike');
+          expect(res.body.genre).to.equal('Racing');
+          expect(res.body.releaseDate).to.equal('November 1984');
+          return done();
+        });
+    });
+  });
+
 
   // test the GET here
 
   // Test the DELETE here
-  
+
   // --- Stretch Problem ---
   // test the PUT here
 });
