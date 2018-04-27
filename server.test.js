@@ -53,6 +53,7 @@ describe('Games', () => {
     Game.remove({}, err => {
       if (err) console.log(`There was an error removing the game.`);
       else console.log(`The game was removed successfully.`);
+      done();
     });
   });
 
@@ -87,8 +88,8 @@ describe('Games', () => {
           if (err)
             return console.log(`There was an error with the get request.`);
           expect(res.status).to.equal(200);
-          expect(res.body[0].title).to.equal('League of Legendsd');
-          expect(res.body.length).to.equal(2);
+          expect(res.body[0].title).to.equal('League of Legends');
+          expect(res.body.length).to.equal(1);
           done();
         });
     });
@@ -97,24 +98,24 @@ describe('Games', () => {
   // Test the DELETE here
   describe('[DELETE] /api/game/delete/:id', () => {
     it('should remove the game with the given id from the database', done => {
-      chai
-        .request(server)
-        .delete('/api/game/delete/:id')
-        .end((err, res) => {
-          if (err) {
-            console.log(`There was an error deleting the game.`);
-            return done(err);
-          }
-          expect(res.text).to.equal('success');
-          Game.findById(gameId, (err, res) => {
+      let newGame = new Game({
+        title: 'League of Legends',
+        genre: 'MOBA',
+        releaseDate: 'October 27, 2009'
+      });
+      newGame.save((err, newGame) => {
+        chai
+          .request(server)
+          .delete('/api/game/delete/' + newGame.id)
+          .end((err, response) => {
             if (err) {
-              console.log(`Cannot find the game.`);
-              return done(err);
+              console.log(err);
+              done();
             }
-            expect(res).to.equal(null);
+            expect(response.status).to.equal(200);
             done();
           });
-        });
+      });
     });
   });
 
