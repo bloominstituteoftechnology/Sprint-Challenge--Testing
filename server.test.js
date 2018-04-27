@@ -116,7 +116,7 @@ it('should fail if a bad request is made', () =>{
   
       it('should return status 200 after DELETING a game', done => {
        chai.request(url)
-          .delete('/api/game/destroy/ game.id)
+          .delete(`/api/game/destroy/ ${gameId}`)
           .end((err, response) => {
               if (err) {
                 throw err;
