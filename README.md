@@ -31,9 +31,28 @@
 
 ## DOCUMENTATION GOES HERE
 
-```
-THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
-```
+---
+
+* `POST` method
+
+  * endpoint `api/game/create`
+  * this adds a new object to database that looks like:
+
+  ```
+  {
+      title: "",
+      releaseDate: "",
+      genre: ""
+  }
+  ```
+
+  * error code `422` if there are issues saving to the database
+
+* `GET` method
+  * endpoint `/api/game/get`
+  * returns an array of objects previously posted.
+
+---
 
 ## TESTS
 
