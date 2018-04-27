@@ -94,14 +94,27 @@ describe('Games', () => {
           }
           expect(res.status).to.equal(200);
           expect(res.body).to.be.an('array');
-          expect(res.body[0].title).to.equal('Super Mario Bros');
-          expect(res.body[0].genre).to.equal('Platform game');
           return done();
         });
     });
   });
 
   // Test the DELETE here
+  describe(`[DELETE] /api/game/destroy/:id`, () => {
+    it('should delete a game from the database', done => {
+      chai
+        .request(server)
+        .delete(`/api/game/destroy/${gameId}`)
+        .end((err, res) => {
+          if (err) {
+            console.og(err);
+            return done();
+          }
+          expect(res.body).to.be.an('object');
+          return done();
+        });
+    });
+  });
 
   // --- Stretch Problem ---
   // test the PUT here
