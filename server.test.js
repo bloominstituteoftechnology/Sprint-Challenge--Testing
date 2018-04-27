@@ -178,6 +178,16 @@ describe("Games", () => {
           done();
         });
     });
+    it("should return an error if not given a title, and Id", done => {
+      chai
+        .request(server)
+        .put("/api/game/update")
+        .send({ bad: "Data" })
+        .end((err, response) => {
+          expect(response.status).to.equal(422);
+          done();
+        });
+    });
   });
   describe(`[DELETE] /api/game/destroy/id`, () => {
     it("should return a status of 200", done => {
