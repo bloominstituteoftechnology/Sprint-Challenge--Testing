@@ -43,7 +43,7 @@ This amazing API helps you keep track of your favorite games!
 
 In order to get your favorite games and recreate the nostalgia of your youth, make a get request to:
 
-`/api/game/get'
+`/api/game/get`
 
 ### Adding games
 
