@@ -5,7 +5,7 @@ const sinon = require('sinon');
 
 const Game = require('./models');
 
-describe('NESGames Model', () => {
+describe('Games Model', () => {
   before(done => {
     mongoose.Promise = global.Promise;
     mongoose.connect('mongodb://localhost/test');
