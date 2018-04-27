@@ -81,12 +81,10 @@ This is an API that contains information on NES video games.
 
 #### [PUT]
 
-|    Name     |  Type  |                       Description                       |
-| :---------: | :----: | :-----------------------------------------------------: |
-|     id      | string | The Mongoose generated id required to update a property |
-|    title    | string |             Updates the title for the game              |
-|    genre    | string |             Updates the genre for the game              |
-| releaseDate | string |          Updates the release date for the game          |
+| Name  |  Type  |                       Description                       |
+| :---: | :----: | :-----------------------------------------------------: |
+|  id   | string | The Mongoose generated id required to update a property |
+| title | string |             Updates the title for the game              |
 
     --------------
     status: 200 OK
@@ -101,9 +99,9 @@ This is an API that contains information on NES video games.
 
 #### [DELETE]
 
-| Name |  Type  |                       Description                       |
-| :--: | :----: | :-----------------------------------------------------: |
-|  id  | string | The Mongoose generated id required to delete a property |
+| Name |  Type  |                         Description                          |
+| :--: | :----: | :----------------------------------------------------------: |
+|  id  | string | The Mongoose generated id required to delete a game document |
 
     --------------
     status: 200 OK

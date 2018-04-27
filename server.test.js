@@ -138,4 +138,26 @@ describe('Games', () => {
   });
   // --- Stretch Problem ---
   // test the PUT here
+  describe(`[PUT] /api/game/update`, () => {
+    it('should update the game document in the db', done => {
+      const update = {
+        title: 'Super Mario Bros'
+        // releaseDate: 'September 1985',
+        // genre: 'Platformer'
+      };
+      chai
+        .request(server)
+        .put(`/api/game/update`)
+        .send(update)
+        .end((err, res) => {
+          if (err) {
+            console.log(err);
+            return done();
+          }
+          expect(res.status).to.equal(200);
+          expect(res.body.title).to.equal('Super Mario Bros');
+          done();
+        });
+    });
+  });
 });
