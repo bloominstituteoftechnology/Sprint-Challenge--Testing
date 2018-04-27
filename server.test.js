@@ -61,6 +61,30 @@ describe('Games', () => {
   });
 
   // test the POST here
+  describe(`[POST] /api/game/create`, () => {
+    it('should save a new game to the database', (done) => {
+      const newGame = {
+        title: "",
+        genre: "",
+        releaseDate: "",
+      }
+    })
+    chai
+      .request(server)
+      .put('/api/game/create')
+      .send(newGame)
+      .end((err, res) => {
+        if (err) {
+          return "There was an error with POST request.";
+        } else {
+          expect(res.status).to.equal(201);
+          expect(res.body.title).to.be.a('string');
+          expect(res.body.genre).to.be.a('string');
+          expect(res.body.releaseDate).to.be.a('string');
+          done();
+        }
+      })
+  })
 
   // test the GET here
 
