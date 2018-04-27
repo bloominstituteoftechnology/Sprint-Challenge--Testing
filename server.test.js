@@ -86,6 +86,8 @@ describe('Games', () => {
         .then(response => {
           expect(response.status).to.equal(200);
           expect(response.body).to.be.an('array');
+          expect(response.body[0].title).to.equal('Test Games');
+          console.log('Games retrieved!');
         })
         .catch(err => {
           throw err;
@@ -94,7 +96,58 @@ describe('Games', () => {
   });
 
   // Test the DELETE here
+  describe(`[DELETE] /api/game/destroy/:id`, done => {
+    it('should delete the test game', () => {
+      return chai
+        .request(server)
+        .get('/api/game/get')
+        .then(response => {
+          //console.log(response.body);
+          return chai
+            .request(server)
+            .del('/api/game/destroy/' + response.body[0]._id)
+            .then(response => {
+              expect(response.status).to.equal(200);
+              expect(response.body).to.be.an('object');
+              expect(response.body.title).to.equal(undefined);
+            })
+            .catch(err => {
+              throw err;
+            });
+        })
+        .catch(err => {
+          throw err;
+        });
+    });
+  });
 
-  // --- Stretch Problem ---
-  // test the PUT here
+  //--- Stretch Problem ---
+  //test the PUT here
+  describe(`[PUT] /api/game/update/:id`, () => {
+    it('should update the test game', () => {
+      return chai
+        .request(server)
+        .get('/api/game/get')
+        .then(response => {
+          console.log(response.body);
+          return chai
+            .request(server)
+            .put('/api/game/update/' + response.body[0]._id)
+            .send({
+              title: 'Updated Put Games',
+              genre: 'Put',
+              releaseDate: 'June 2018'
+            })
+            .then(response => {
+              expect(response.status).to.equal(200);
+            })
+            .catch(err => {
+              throw err;
+            });
+        })
+        .catch(err => {
+          throw err;
+        });
+    });
+  });
 });
