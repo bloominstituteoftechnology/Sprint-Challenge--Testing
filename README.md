@@ -1,8 +1,8 @@
-#NES Game API Documentation
+# NES Game API Documentation
 
 This is an api for interfacing with a list of popular games, usually on the NES console!! While this API was initially designed for NES feel free to include your favorite games from other consoles as well!!
 
-#API Endpoints
+# API Endpoints
 
 These are the endpoints availabe for interfacing with the API, as well as required data for your CRUD requests!
 
