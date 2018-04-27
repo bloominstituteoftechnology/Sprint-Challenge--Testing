@@ -44,7 +44,7 @@ Look at all these video games. LOOK AT THEM!
 
 | TYPE | DATA                       | DESCRIPTION                              |
 | ---- | -------------------------- | ---------------------------------------- |
-| POST | title, genre, releaseDate | Create a new game entry    |
+| POST | title, genre, releaseDate (optional) | Create a new game entry    |
 
 ```js
   {
@@ -52,7 +52,7 @@ Look at all these video games. LOOK AT THEM!
     genre: 'Sports',
     releaseDate: 'June 1987'
   }
-````
+```
 
 ### `[GET]` `api/game/get`
 
@@ -66,6 +66,8 @@ Look at all these video games. LOOK AT THEM!
 | ---- | --------- | ----------------------- |
 | PUT  | title, id | Updates a selected game |
 
+* Must provide the game's ID, use [GET]
+
 ### `[DELETE]` `api/game/destroy/:id`
 
 | TYPE   | DATA | DESCRIPTION    |
@@ -73,8 +75,8 @@ Look at all these video games. LOOK AT THEM!
 | DELETE |      | Removes a game |
 
 * The ID of the game can be sent either through URL parameters or on the request body.
-
 ````
+
 ## TESTS
 
 * The provided API has already been manually tested for you.
@@ -92,8 +94,9 @@ Look at all these video games. LOOK AT THEM!
     genre: 'Sports',
     releaseDate: 'June 1987'
   }
-````
+  ```
 
+````
 ### Write tests for the "GET" method
 
 * Our get method should return the list of games.
@@ -117,3 +120,4 @@ Look at all these video games. LOOK AT THEM!
 * You can send up the Id and the Server will be using that to find the record and then when found, update the record with the `req.body` info you sent up
 
 ### Remember you can use any resources you want to solve these problems, but avoid copying/pasting solutions you've previously written. Also if you don't finish all of the challenges, that's fine! Just do what you can and submit your challenges in the end! HAVE FUN!
+````
