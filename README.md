@@ -31,9 +31,64 @@
 
 ## DOCUMENTATION GOES HERE
 
+# Games API
+
+This API is for storing and accessing a list of user entered Games along with extra relevant data for each Game.
+
+```js
+{
+  title: {
+    type: String,  // Required
+    required: true,
+    unique: true,
+    index: true,
+  },
+  genre: {
+    type: String,  // Required
+    required: true,
+    unique: true,
+    index: true,
+  },
+  releaseDate: String,
+}
 ```
-THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
-```
+
+## API Endpoints
+
+* The following is a list of endpoints avalaible for GamesAPI
+
+| Type   |          URL          | DATA (req.body)                                      |
+| :----- | :-------------------: | :--------------------------------------------------- |
+| GET    |     /api/game/get     | N/A                                                  |
+| POST   |   /api/game/create    | { name, genre, recentAlbum } all required properties |
+| PUT    | /api/game/update/:id  | Only propertys to be changed need to be sent         |
+| DELETE | /api/game/destroy/:id | Provide \_id to delete from database                 |
+
+## GET
+
+A 'get' request to '/api/game/get' will return an array of all game objects on the database.
+
+A 'get' request to '/api/game/get/:id' will return an object with the id requested.
+
+* If no Game is found with that id, will return a 404 response and `{ error: 'That id does not exist.' }`
+
+## POST
+
+A 'post' to '/api/game/post' will add a new Game object to the database. _ALL THREE_ properties are _REQUIRED_. Will return the new Game object if added successfully.
+
+## PUT
+
+A 'put' to '/api/game/update/:id' will update an existing Game in the database. Only properties to be changed need to be sent to the server. Will return the entire updated Game object.
+
+* If no Game is found with that id, will return a 404 response and `{ error: 'That id does not exist.' }`
+
+## Delete
+
+A 'delete' to '/api/game/destroy/:id' will delete an existing Game from the database. If successful, will return `{ status: 'success' }`.
+
+* If no game is found with that id, will return a 404 response and `{ error: 'That id does not exist.' }`
+
+// END OF DOCUMENTATION
 
 ## TESTS
 
