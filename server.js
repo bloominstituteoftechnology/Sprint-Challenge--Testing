@@ -76,6 +76,7 @@ server.delete('/api/game/destroy/:id', (req, res) => {
   }
   Game.findByIdAndRemove(id, (err, removedGame) => {
     // search for game by that id and remove it
+    
     if (err) {
       res.status(422);
       res.json({ error: 'Cannot find game by that id' });
