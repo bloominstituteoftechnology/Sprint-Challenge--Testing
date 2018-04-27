@@ -191,13 +191,3 @@ describe('Games', () => {
   // --- Stretch Problem ---
   // test the PUT here
 });
-
-// describe(`[POST] /api/game/create`, () => {
-//   it("should save document to the DB", done => {
-//       chai
-//           .request(server)
-//           .post()
-//           .send()
-//           .end();
-//   });
-// });
