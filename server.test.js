@@ -97,7 +97,7 @@ describe('Games', () => {
   });
 
   // test the GET here
-  describe('[GET] /api/game/create', () => {
+  describe('[GET] /api/game/get', () => {
     it('should get all the games in the database', done => {
       chai
         .request(server)
@@ -117,11 +117,11 @@ describe('Games', () => {
   });
 
   // Test the DELETE here
-  describe('[DELETE] /api/game/create', () => {
+  describe('[DELETE] /api/game/destroy/:id', () => {
     it('should remove a game from the database', done => {
       const game = new Game({
         title: 'Gran Turismo',
-        genre: 'Racing',
+        genre: 'Auto Racing',
         releaseDate: 'Jan 1 1998',
       });
       game.save((err, savedGame) => {
@@ -143,5 +143,32 @@ describe('Games', () => {
 
   // --- Stretch Problem ---
   // test the PUT here
-  // describe('[PUT] /api/game/create', () => {});
+  describe('[PUT] /api/game/update', () => {
+    it('should update a game in the database', done => {
+      const game = new Game({
+        title: 'The Legend of Zelda',
+        genre: 'RPG',
+        releaseDate: 'Jan 1 1990',
+      });
+      game.save((err, savedGame) => {
+        chai
+          .request(server)
+          .put('/api/game/update')
+          .send({
+            id: game._id,
+            title: 'The Legend of Zelda: Breath of the Wild',
+            genre: 'RPG',
+          })
+          .end((err, response) => {
+            if (err) {
+              console.log(err);
+              done();
+            }
+            // const { _id, title, genre } = response.body[1];
+            expect(response.status).to.equal(200);
+            done();
+          });
+      });
+    });
+  });
 });
