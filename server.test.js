@@ -34,11 +34,24 @@ describe('Games', () => {
   afterEach(done => {
     // simply remove the collections from your DB.
   });
-
+  
   // test the POST here
-
+  describe('[POST] /api/models',() => {
+    it('should create a title, a release date, and a genre of a game')
+  })
   // test the GET here
+describe('[GET] /api/models',() => {
+    it ('should get a list of all games in db'), done=> {
+  //  .request(server)
+   // .get('/api/models')
+    if (err) {
+      console.log(err);
+      return done();
+    }
+   // const {_id.to equal(gameId)}
+    }
 
+  })
   // Test the DELETE here
   
   // --- Stretch Problem ---
