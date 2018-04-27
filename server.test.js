@@ -87,7 +87,6 @@ describe('Games', () => {
           if (err)
             return console.log(`There was an error with the get request.`);
           expect(res.status).to.equal(200);
-          expect(Array.isArray(res.body)).to.equal(true);
           expect(res.body[0].title).to.equal('League of Legendsd');
           expect(res.body.length).to.equal(2);
           done();
