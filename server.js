@@ -13,8 +13,8 @@ server.post('/api/game/create', (req, res) => {
   const myGame = new Game({ title, releaseDate, genre });
   myGame
     .save()
-    .then(game => {
-      res.json(game);
+    .then(Game => {
+      res.json(Game);
     })
     .catch(err => {
       res.status(422);
