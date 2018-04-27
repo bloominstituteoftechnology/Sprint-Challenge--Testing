@@ -31,7 +31,8 @@
 
 ## DOCUMENTATION GOES HERE
 
-```
+------
+
 # NES Games API
 
 This amazing API helps you keep track of your favorite games!
@@ -68,7 +69,7 @@ Should the game not be as fun as your fond memories of it, removal should be don
 
 `/api/game/destroy/<id goes here>`
 
-```
+-----
 
 ## TESTS
 
