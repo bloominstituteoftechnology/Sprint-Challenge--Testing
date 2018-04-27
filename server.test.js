@@ -10,22 +10,26 @@ const Game = require('./models');
 chai.use(chaiHTTP);
 
 describe('Games', () => {
-  before(done => {
+  
+  before(() => {
     mongoose.connect('mongodb://localhost/test');
     const db = mongoose.connection;
+    
     db.on('error', () => console.error.bind(console, 'connection error'));
-    db.once('open', () => {
+    db.on('connected', () => {
       console.log('we are connected');
-      done();
     });
   });
 
-  after(done => {
-    mongoose.connection.db.dropDatabase(() => {
-      mongoose.connection.close(done);
-      console.log('we are disconnected');
+  after(() => {
+    const db = mongoose.connection;
+    
+    db.dropDatabase();
+    db.close(() => {
+        console.log('we are disconnected');
+      });
     });
-  });
+
   let gameId;
   
   // hint - these wont be constants because you'll need to override them.
@@ -47,7 +51,6 @@ describe('Games', () => {
       .then((savedGame) => {
         gameId = savedGame._id;
       });
-
   });
 
   afterEach(() => {
