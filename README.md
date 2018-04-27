@@ -31,9 +31,51 @@
 
 ## DOCUMENTATION GOES HERE
 
+````
+# Video Game API
+
+Look at all these video games. LOOK AT THEM!
+
+## API Endpoints
+
+* The following is a list of all of the endpoints that are available for use with our API.
+
+### `[POST]` `api/game/create`
+
+| TYPE | DATA                       | DESCRIPTION                              |
+| ---- | -------------------------- | ---------------------------------------- |
+| POST | title, genre, releaseDate (optional) | Create a new game entry    |
+
+```js
+  {
+    title: 'California Games',
+    genre: 'Sports',
+    releaseDate: 'June 1987'
+  }
 ```
-THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
-```
+
+### `[GET]` `api/game/get`
+
+| TYPE | DATA | DESCRIPTION    |
+| ---- | ---- | -------------- |
+| GET  |      | View all games |
+
+### `[PUT]` `api/game/update`
+
+| TYPE | DATA      | DESCRIPTION             |
+| ---- | --------- | ----------------------- |
+| PUT  | title, id | Updates a selected game |
+
+* Must provide the game's ID, use [GET]
+
+### `[DELETE]` `api/game/destroy/:id`
+
+| TYPE   | DATA | DESCRIPTION    |
+| ------ | ---- | -------------- |
+| DELETE |      | Removes a game |
+
+* The ID of the game can be sent either through URL parameters or on the request body.
+````
 
 ## TESTS
 
@@ -54,6 +96,7 @@ THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RI
   }
   ```
 
+````
 ### Write tests for the "GET" method
 
 * Our get method should return the list of games.
@@ -77,3 +120,4 @@ THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RI
 * You can send up the Id and the Server will be using that to find the record and then when found, update the record with the `req.body` info you sent up
 
 ### Remember you can use any resources you want to solve these problems, but avoid copying/pasting solutions you've previously written. Also if you don't finish all of the challenges, that's fine! Just do what you can and submit your challenges in the end! HAVE FUN!
+````
