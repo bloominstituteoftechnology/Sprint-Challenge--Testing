@@ -113,7 +113,7 @@ describe('Games', () => {
 
       chai
         .request(server)
-        .get('/api/game/create')
+        .get('/api/game/get')
         .send(gameDBZ)
         .end((error, res) => {
           if(error) {
@@ -134,7 +134,7 @@ describe('Games', () => {
 
         chai
           .request(server)
-          .post('/api/game/create')
+          .post('/api/game/get')
           .send(gameDBZ)
           .end((error,res) => {
             if(error) {
