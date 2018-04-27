@@ -72,9 +72,7 @@ describe('Games', () => {
           // console.log(res.body);
           const { _id, title, releaseDate, genre } = res.body;
           expect(res).to.be.json;
-
           expect(_id, title, releaseDate, genre).to.exist;
-
           done();
         })
         .catch(error => {
@@ -100,7 +98,44 @@ describe('Games', () => {
     });
   });
   // Test the DELETE here
+  describe('DELETE on /api/game/destroy/:id', () => {
+    it('should remove a document from db', done => {
+      chai
+        .request(server)
+        .delete(`/api/game/destroy/${gameId}`)
 
+        .then(res => {
+          console.log(`${gameId}`);
+          const { success } = res.body;
+          expect(success).to.be.a('string');
+          done();
+        })
+        .catch(err => {
+          throw err;
+        });
+    });
+  });
   // --- Stretch Problem ---
   // test the PUT here
+  describe('PUT on /api/game/update', () => {
+    it('should update a game title, releaseDate, genre', done => {
+      chai
+        .request(server)
+        .put('/api/game/update')
+        .send({
+          title: 'Super Mario Bros.',
+          releaseDate: '1980',
+          genre: 'platform?'
+        })
+        .end((err, res) => {
+          if (err) {
+            return err;
+          }
+          const { _id, title, releaseDate, genre } = res.body;
+          expect(title).to.equal('Super Mario Bros.');
+          expect(releaseDate).to.equal('1980');
+        });
+      done();
+    });
+  });
 });
