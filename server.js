@@ -14,7 +14,7 @@ server.post('/api/game/create', (req, res) => {
   myGame
     .save()
     .then(game => {
-      res.json(game);
+      res.status(201).json(game);
     })
     .catch(err => {
       res.status(422);
@@ -29,7 +29,7 @@ server.get('/api/game/get', (req, res) => {
       res.json({ error: 'Something really bad happened' });
       return;
     }
-    res.json(games);
+    res.status(200).json(games);
   });
 });
 
@@ -45,14 +45,14 @@ server.put('/api/game/update', (req, res) => {
       res.json({ error: 'Cannot find game by that id' });
       return;
     }
-    game.title = title;
+    game.title = title; // !! what is this doing?
     game.save((saveErr, savedGame) => {
       if (err || game === null) {
         res.status(500);
         res.json({ error: 'Something really bad happened' });
         return;
       }
-      res.json(game);
+      res.status(204).json(game);
     });
   });
 });
@@ -81,7 +81,9 @@ server.delete('/api/game/destroy/:id', (req, res) => {
       res.json({ error: 'Cannot find game by that id' });
       return;
     }
-    res.json({ success: `${removedGame.title} was removed from the DB` });
+    res
+      .status(204)
+      .json({ success: `${removedGame.title} was removed from the DB` });
   });
 });
 
