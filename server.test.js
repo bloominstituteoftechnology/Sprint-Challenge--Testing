@@ -37,18 +37,157 @@ describe('Games', () => {
       genre: 'Adventure Game',
       releaseDate: 'September 7, 2005'
     });
-  
+
+    newGame.save((error,savedGame) => {
+      if (error) {
+        console.log(error);
+        return done();
+      }
+      gameId = saveGame._id;
+      done();
+    });
+
   });
+
   afterEach(done => {
     // simply remove the collections from your DB.
+    Game.remove({}, error => {
+      if(error) console.log(error);
+      done();
+    });
   });
 
+
+
   // test the POST here
+    describe ('[POST] /api/game/create', () => {
+      it('should add new game', done => {
+        const gameDBZ = {
+          title: 'Dragon Ball Z: Ultimate Tenkaichi',
+          genre: 'Fighting Game',
+          releaseDate: 'October 25, 2011'
+        };
 
+        chai
+          .request(server)
+          .post('/api/game/create')
+          .send(gameDBZ)
+          .end((error, res) => {
+            if(error) {
+              console.error(error);
+              done();
+            }
+            expect(res.status).to.equal(200);
+            expect(res.body.title).to.equal('Dragon Ball Z: Ultimate Tenkaichi')
+            done();
+          });
+      });
+      it('should return error if unable to add new game', done => {
+          const gameDBZ = {
+            title: 'Dragon Ball Z: Ultimate Tenkaichi',
+            genre: 'Fighting Game',
+            releaseDate: 'October 25, 2011'
+          };
+
+          chai
+            .request(server)
+            .post('/api/game/create')
+            .send(gameDBZ)
+            .end((error,res) => {
+              if(error) {
+                console.error(error);
+                done();
+              }
+              expect(error.status).to.equal(400)
+            });
+      });
+    });
   // test the GET here
+  describe ('[GET] /api/game/get', () => {
+    it('should return list of all games', done => {
+      const gameDBZ = {
+        title: 'Dragon Ball Z: Ultimate Tenkaichi',
+        genre: 'Fighting Game',
+        releaseDate: 'October 25, 2011'
+      };
 
+      chai
+        .request(server)
+        .get('/api/game/create')
+        .send(gameDBZ)
+        .end((error, res) => {
+          if(error) {
+            console.error(error);
+            done();
+          }
+          expect(res.status).to.equal(200);
+          expect(res.body.title).to.equal('Dragon Ball Z: Ultimate Tenkaichi')
+          done();
+        });
+    });
+    it('should return error if unable get list from database', done => {
+        const gameDBZ = {
+          title: 'Dragon Ball Z: Ultimate Tenkaichi',
+          genre: 'Fighting Game',
+          releaseDate: 'October 25, 2011'
+        };
+
+        chai
+          .request(server)
+          .post('/api/game/create')
+          .send(gameDBZ)
+          .end((error,res) => {
+            if(error) {
+              console.error(error);
+              done();
+            }
+            expect(error.status).to.equal(400)
+          });
+    });
+  });
   // Test the DELETE here
-  
+  describe ('[DELETE] /api/game/delete/:id', () => {
+    it('should remove game from database', done => {
+      const gameDBZ = {
+        title: 'Dragon Ball Z: Ultimate Tenkaichi',
+        genre: 'Fighting Game',
+        releaseDate: 'October 25, 2011'
+      };
+
+      chai
+        .request(server)
+        .delete('/api/game/create')
+        .send(gameDBZ)
+        .end((error, res) => {
+          if(error) {
+            console.error(error);
+            done();
+          }
+          expect(res.status).to.equal(200);
+          expect(res.body.title).to.equal('Dragon Ball Z: Ultimate Tenkaichi')
+          done();
+        });
+    });
+    it('should return error if unable to remove game from databe', done => {
+        const gameDBZ = {
+          title: 'Dragon Ball Z: Ultimate Tenkaichi',
+          genre: 'Fighting Game',
+          releaseDate: 'October 25, 2011'
+        };
+
+        chai
+          .request(server)
+          .post('/api/game/create')
+          .send(gameDBZ)
+          .end((error,res) => {
+            if(error) {
+              console.error(error);
+              done();
+            }
+            expect(error.status).to.equal(400)
+          });
+    });
+  });
   // --- Stretch Problem ---
   // test the PUT here
 });

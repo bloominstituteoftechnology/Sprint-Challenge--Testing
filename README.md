@@ -31,7 +31,10 @@
 
 ## DOCUMENTATION GOES HERE
 
-# Game API
+# MyGame API
+
+
+
 
 ## TESTS
 
