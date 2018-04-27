@@ -1,9 +1,13 @@
 const mongoose = require('mongoose');
 const chai = require('chai');
+const chaiHTTP = require('chai-http');
 const { expect } = chai;
 const sinon = require('sinon');
 
+const server = require('./server');
 const Game = require('./models');
+
+chai.use(chaiHTTP);
 
 describe('Games', () => {
   before(done => {
@@ -55,8 +59,85 @@ describe('Games', () => {
   });
 
   // test the POST here
+  describe(`[POST] /api/game/create`, () => {
+    it('should save a document to the db', done => {
+      chai
+        .request(server)
+        .post('/api/game/create')
+        .send({
+          title: 'Game Title 1',
+          genre: 'Game Genre 1',
+          releaseDate: 'Game Release Date 1',
+        })
+        .then(response => {
+          const { body } = response;
+          expect(response.status).to.equal(201);
+          expect(body.length).to.equal(3);
+          expect(body).to.be.an('object');
+          expect(body).to.have.own.property('title');
+          expect(body).to.have.own.property('genre');
+          expect(body).to.have.own.property('releaseDate');
+          expect(body.title).to.equal('Game Title 1');
+          done();
+        })
+        .catch(err => {
+          throw err;
+        });
+    });
+    it(`Should fail if title and genre aren't provided`, () => {
+      return chai
+        .request(server)
+        .post('/api/game/create')
+        .send({ badRequest: 'bad request' })
+        .then(response => {
+          const titleMessage = response.body.errors.title.message;
+          const genreMessage = response.body.errors.genre.message;
+          expect(response.status).to.equal(422);
+          expect(titleMessage).to.equal('Path `title` is required.');
+          expect(genreMessage).to.equal('Path `genre` is required.');
+          done();
+        })
+        .catch(err => {
+          throw err;
+        });
+    });
+  });
 
   // test the GET here
+  describe(`[GET] /api/game/get`, () => {
+    it('should get a list of all the games in the db', done => {
+      chai
+        .request(server)
+        .get('/api/game/get')
+        .then(response => {
+          // console.log(response.body);
+          const { _id, title, genre, releaseDate } = response.body[0]; // !! release date is not required
+          expect(response.status).to.equal(200);
+          expect(response.body).to.be.an('array');
+          expect(response.body[0]).to.be.an('object');
+          expect(_id).to.equal(gameId);
+          expect(title).to.equal('Game Title 1');
+          done();
+        })
+        .catch(err => {
+          throw err;
+        });
+    });
+    it('Should fail if bad URL is provided', () => {
+      return chai // !! why need return? promises?
+        .request(server)
+        .get('/api/game/bad-get')
+        .then(response => {
+          console.log('+++', response, '+++');
+          // const errorMessage = error.x
+          // expect(errorMessage).to.equal('x');
+          done();
+        })
+        .catch(err => {
+          throw err;
+        });
+    });
+  });
 
   // Test the DELETE here
 
