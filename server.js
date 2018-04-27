@@ -8,6 +8,15 @@ const server = express();
 server.use(bodyParser.json());
 server.use(morgan('combined'));
 
+// const mongoose = require('mongoose');
+// mongoose.connect('mongodb://localhost/test');
+//     const db = mongoose.connection;
+//     db.on('error', () => console.error.bind(console, 'connection error'));
+//     db.once('open', () => {
+//       console.log('we are connected');
+//     });
+
+
 server.post('/api/game/create', (req, res) => {
   const { title, releaseDate, genre } = req.body;
   const myGame = new Game({ title, releaseDate, genre });
