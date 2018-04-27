@@ -35,6 +35,18 @@
 THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
 ```
 
+# API ENDPOINTS
+
+## [POST] 'api/game/create'
+## [GET] 'api/game/get'
+## [DELETE] 'api/game/destroy/:id'
+
+|TYPE    |URL                    |DATA                      |
+|:------:|:---------------------:|:------------------------:|
+|POST    |/api/game/create       | title, releaseDate, genre|
+| GET    | /api/game/get         |                          |
+| DELETE | /api/game/destroy/:id | \_id\                    |
+
 ## TESTS
 
 * The provided API has already been manually tested for you.
