@@ -10,6 +10,9 @@ const Game = require('./models');
 chai.use(chaiHTTP);
 
 describe('Games', () => {
+
+  let gameId;
+
   before(done => {
     mongoose.Promise = global.Promise;
     mongoose.connect('mongodb://localhost/test');
@@ -27,25 +30,21 @@ describe('Games', () => {
       console.log('we are disconnected');
     });
   });
-  let gameId;
-  // hint - these wont be constants because you'll need to override them.
+
   beforeEach(done => {
-    // write a beforeEach hook that will populate your test DB with data
-    // each time this hook runs, you should save a document to your db
-    // by saving the document you'll be able to use it in each of your `it` blocks
-    const testGame = {
+    const testGame = new Game({
       title: 'Super Mario World',
       genre: 'Platforming',
       releaseDate: 'November 1990',
-    };
-    Game.create(testGame, (err, test) => {
-      gameId = test._id;
-      if (err) return err;
     });
+    testGame.save()
+    .then(saved => {
+      gameId = saved._id;
+    })
     done();
   });
+
   afterEach(done => {
-    // simply remove the collections from your DB.
     Game.remove({}, err => {
       if (err) return err;
     });
@@ -63,6 +62,7 @@ describe('Games', () => {
           'releaseDate': 'June 1987',
         })
         .end(function(err, res) {
+          if (err) expect(err).to.have.status(422);
           expect(res.body[0]._id).to.equal(`${gameId}`);
         });
         done();
@@ -88,7 +88,7 @@ describe('Games', () => {
         .request(server)
         .get('/api/game/get')
         .end(function(err, res) {
-          if (err) expect(err).to.have.status(666);
+          if (err) expect(err).to.have.status(500);
           expect(res.body[0]._id).to.equal(`${gameId}`);
         });
     });
@@ -97,9 +97,10 @@ describe('Games', () => {
   describe('[DELETE] to /api/game/destroy/:id', done => {
     it('should delete an id', () => {
       chai
-        .request(server)
-        .delete(`/api/game/destroy/${gameId}`)
-        .end(function(err, res) {
+      .request(server)
+      .delete(`/api/game/destroy/${gameId}`)
+      .send({id: gameId})
+      .end(function(err, res) {
           if (err) expect(err).to.have.status(422);
           expect(res.body).to.have.property('success')
           done();
@@ -115,20 +116,20 @@ describe('Games', () => {
     });
   });
 
-  // describe('[PUT] to /api/game/update', done => {
-  //   it('should do x', () => {
-  //     chai
-  //       .request(server)
-  //       .put('/api/game/update')
-  //       .send({
-  //         'title': 'California Gamez',
-  //         'id': '999',
-  //       })
-  //       .end(function(err, res) {
-  //         if (err) expect(err).to.have.status(666);
-  //         expect(res).to.have.status(666);
-  //         done();
-  //       });
-  //   });
-  // });
+  describe('[PUT] to /api/game/update', done => {
+    it('should update a game', () => {
+      chai
+        .request(server)
+        .put('/api/game/update')
+        .send({
+          'title': 'California Gamez',
+          'id': `${gameId}`,
+        })
+        .end(function(err, res) {
+          if (err) expect(err).to.have.status(422);
+          expect(res.body[0].title).to.equal('California Gamez');
+          done();
+        });
+    });
+  });
 });
