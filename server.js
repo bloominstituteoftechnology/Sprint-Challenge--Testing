@@ -52,7 +52,7 @@ server.put('/api/game/update', (req, res) => {
         res.json({ error: 'Something really bad happened' });
         return;
       }
-      res.json(game);
+      res.status(204).json(game);
     });
   });
 });
