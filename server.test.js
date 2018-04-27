@@ -55,6 +55,7 @@ describe('Games', () => {
           done();
         } else {
           return "Game removed successfully.";
+          done();
         }
       })
   });
