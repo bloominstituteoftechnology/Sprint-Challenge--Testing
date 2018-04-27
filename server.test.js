@@ -44,7 +44,15 @@ describe('Games', () => {
   });
 
   afterEach(done => {
-    
+    Game
+      .remove({}, err => {
+        if (err) {
+          return "Game could not be removed.";
+          done();
+        } else {
+          return "Game removed successfully.";
+        }
+      })
   });
 
   // test the POST here
