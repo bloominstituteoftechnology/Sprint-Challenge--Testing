@@ -31,9 +31,40 @@
 
 ## DOCUMENTATION GOES HERE
 
-```
-THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
-```
+## Games API
+This API is for games with information of its title release-date and genre
+
+### API endpoints
+The following is a list of endpoints that are available for use with our API.
+
+### [POST] `api/game/create`
+
+|Type  | URL     |   DATA
+| ------ | ----  |  ---- |
+| POST  | /api/game/create | new data
+| game name | some data | create new game
+
+### [GET] `api/game/get`
+
+|Type  | URL     |   DATA
+| ------ | ----  |  ---- |
+| GET  | /api/game/get |  data
+| game name | some data | retrieve all games list
+
+
+### [PUT] `api/game/update`
+
+|Type  | URL     |   DATA
+| ------ | ----  |  ---- |
+| PUT  | /api/game/update |  data
+| game name | some data | updates a game
+
+### [DELETE] `api/game/destroy/:id`
+
+|Type  | URL     |   DATA
+| ------ | ----  |  ---- |
+| PUT  | /api/game/destroy/:id |  data
+| game name | some data | deletes game
 
 ## TESTS
 
