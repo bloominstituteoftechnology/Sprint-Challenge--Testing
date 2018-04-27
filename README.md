@@ -32,7 +32,15 @@
 ## DOCUMENTATION GOES HERE
 
 ```
-THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
+| METHOD                               | URL                                                                | Data Required                   |
+| ------                               | ------                                                             | -----:                         |
+|  GET                                 |  /api/game/get                                                     |   None                          |
+|  POST                                |  /api/game/create                                                  |   title (string)*, genre (string)*, releaseDate (string)  |
+|  DELETE                               |  /api/game/destroy/${ID of game you wish to delete}               |       gameId (string)*          |
+|  PUT                               |  /api/game/update                                                    |     gameId(string)*  title (string)*, genre (string)*, releaseDate(string)                           |
+
+### Fields marked with an * are required.
+
 ```
 
 ## TESTS
