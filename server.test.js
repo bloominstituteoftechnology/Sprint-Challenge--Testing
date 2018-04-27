@@ -68,10 +68,7 @@ describe('Games', () => {
         .post('/api/game/create')
         .send(game)
         .end((err, res) => {
-          if (err) {
-            console.log(err);
-            done();
-          }
+          if (err) console.log(err);
           expect(res.status).to.equal(200); // not passing test w/ 201?
           expect(res.body.title).to.equal('Galaga');
           done();
@@ -80,11 +77,19 @@ describe('Games', () => {
   });
 
   // test the GET here
-  // describe('[GET] to /api/game/get', () => {
-  //   it('should get a list of all games from the database', done => {
-  //     chai
-  //   })
-  // })
+  describe('[GET] to /api/game/get', () => {
+    it('should get a list of all games from the database', done => {
+      chai
+        .request(server)
+        .get('/api/game/get')
+        .end((err, res) => {
+          if (err) console.log(err);
+          expect(res.status).to.equal(200);
+          expect(res.body).to.be.lengthOf(1);
+          done();
+        });
+    });
+  });
 
   // Test the DELETE here
 
