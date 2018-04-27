@@ -2,8 +2,12 @@ const mongoose = require('mongoose');
 const chai = require('chai');
 const { expect } = chai;
 const sinon = require('sinon');
+const server = require('./server');
+const chaiHttp = require("chai-http");
 
 const Game = require('./models');
+
+chai.use(chaiHttp);
 
 describe('Games', () => {
   before(done => {
