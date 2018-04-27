@@ -31,10 +31,50 @@
 
 ## DOCUMENTATION GOES HERE
 
-```
-THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
-```
+````
+# Video Game API
 
+Look at all these video games. LOOK AT THEM!
+
+## API Endpoints
+
+* The following is a list of all of the endpoints that are available for use with our API.
+
+### `[POST]` `api/game/create`
+
+| TYPE | DATA                       | DESCRIPTION                              |
+| ---- | -------------------------- | ---------------------------------------- |
+| POST | title, genre, releaseDate | Create a new game entry    |
+
+```js
+  {
+    title: 'California Games',
+    genre: 'Sports',
+    releaseDate: 'June 1987'
+  }
+````
+
+### `[GET]` `api/game/get`
+
+| TYPE | DATA | DESCRIPTION    |
+| ---- | ---- | -------------- |
+| GET  |      | View all games |
+
+### `[PUT]` `api/game/update`
+
+| TYPE | DATA      | DESCRIPTION             |
+| ---- | --------- | ----------------------- |
+| PUT  | title, id | Updates a selected game |
+
+### `[DELETE]` `api/game/destroy/:id`
+
+| TYPE   | DATA | DESCRIPTION    |
+| ------ | ---- | -------------- |
+| DELETE |      | Removes a game |
+
+* The ID of the game can be sent either through URL parameters or on the request body.
+
+````
 ## TESTS
 
 * The provided API has already been manually tested for you.
@@ -52,7 +92,7 @@ THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RI
     genre: 'Sports',
     releaseDate: 'June 1987'
   }
-  ```
+````
 
 ### Write tests for the "GET" method
 
