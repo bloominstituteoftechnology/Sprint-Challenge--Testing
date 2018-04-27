@@ -7,6 +7,7 @@ This is an api for interfacing with a list of popular games, usually on the NES 
 These are the endpoints availabe for interfacing with the API, as well as required data for your CRUD requests!
 
 |METHOD               |URL                 |DATA               |
+|---------------------|--------------------|-------------------|
 |GET                  |/api/game/get       |                   |
 |POST                 |/api/game/create    |title, genre       |
 |PUT                  |/api/game/update    |id*, title         |
