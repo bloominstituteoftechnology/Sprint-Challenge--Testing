@@ -57,6 +57,10 @@ You can add games through the create endpoint! Make sure you have the title and 
 }
 ```
 
+and then send it to:
+
+`/api/game/create`
+
 ### Updating your games
 
 If you messed up while entering games into the database and broken your inner child's heart, you can fix it using the update endpoint:
