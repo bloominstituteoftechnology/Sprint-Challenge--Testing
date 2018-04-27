@@ -78,11 +78,11 @@ describe('Games', () => {
           expect(body).to.have.own.property('genre');
           expect(body).to.have.own.property('releaseDate');
           expect(body.title).to.equal('Game Title 1');
-          done();
         })
         .catch(err => {
           throw err;
         });
+      done();
     });
     it(`Should fail if title and genre aren't provided`, () => {
       return chai
@@ -95,11 +95,11 @@ describe('Games', () => {
           expect(response.status).to.equal(422);
           expect(titleMessage).to.equal('Path `title` is required.');
           expect(genreMessage).to.equal('Path `genre` is required.');
-          done();
         })
         .catch(err => {
           throw err;
         });
+      done();
     });
   });
 
@@ -117,11 +117,11 @@ describe('Games', () => {
           expect(response.body[0]).to.be.an('object');
           expect(_id).to.equal(gameId);
           expect(title).to.equal('Game Title 1');
-          done();
         })
         .catch(err => {
           throw err;
         });
+      done();
     });
     it('Should fail if bad URL is provided', () => {
       return chai // !! why need return? promises?
@@ -131,15 +131,32 @@ describe('Games', () => {
           console.log('+++', response, '+++');
           // const errorMessage = error.x
           // expect(errorMessage).to.equal('x');
-          done();
         })
         .catch(err => {
           throw err;
         });
+      done();
     });
   });
 
   // Test the DELETE here
+  describe(' [DELETE] /api/game/destroy/:id', (req, res) => {
+    it('Should delete a document from the db', done => {
+      chai
+        .request(server)
+        .delete('/api/game/destroy/' + gameId) // !! not sure if this will work
+        .send({ id: gameId })
+        .then(response => {
+          // const successMessage = response.success;
+          // expect(successMessage).to.equal('Game Title 1 was removed from the DB');
+          expect(response.status).to.equal(204);
+        })
+        .catch(err => {
+          throw err;
+        });
+      done();
+    });
+  });
 
   // --- Stretch Problem ---
   // test the PUT here
