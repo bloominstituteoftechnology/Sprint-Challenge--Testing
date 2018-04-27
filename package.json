@@ -1,10 +1,10 @@
 {
-  "name": "Sprint-Challenge--Testing",
+  "name": "sprint-challenge--testing",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "mocha *.test.js --exit",
+    "test": "mocha server.test.js --exit",
     "start": "nodemon app.js"
   },
   "repository": {

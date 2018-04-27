@@ -29,7 +29,7 @@ describe('NESGames Model', () => {
       const game = new Game({
         title: 'California Games',
         date: 'June 1987',
-        genre: 'Sports'
+        genre: 'Sports',
       });
       expect(game.getGameTitle()).to.equal('California Games');
     });
@@ -42,8 +42,8 @@ describe('NESGames Model', () => {
         {
           title: 'California Games',
           date: 'June 1987',
-          genre: 'Sports'
-        }
+          genre: 'Sports',
+        },
       ]);
       Game.getGames(returnObject => {
         expect(returnObject.length).to.equal(1);

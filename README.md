@@ -35,6 +35,60 @@
 THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
 ```
 
+# Video Game Database API
+
+This API is for holding a database of NES games with some essential information about each game.
+
+## Data Structure
+
+```js
+NESGame = {
+  title, // Required - String
+  genre, // Required - String
+  releaseDate, // Not-Required - String
+};
+```
+
+## API EndPoints
+
+| TYPE   | URL                     | BODY DATA                       |
+| ------ | ----------------------- | ------------------------------- |
+| GET    | `/api/game/get/`        | N/A                             |
+| POST   | `/api/game/create/`     | *title, *genre, releaseDate     |
+| PUT    | `/api/game/update/`     | *id, *title, genre, releaseDate |
+| DELETE | `/api/game/destroy/:id` | id                              |
+
+DATA marked with a `*` is required.
+
+### GET
+
+* Sending a request to `/api/game/get/` required no data.
+* Will return an array of all NES Games in the database.
+* Server error will return `{ error: 'Something really bad happened' }`.
+
+### POST
+
+* Sending a `POST` erquest to `/api/game/create/` can accept `{ title, genre, releaseDate }`. `title` and `genre` are REQUIRED.
+* Success will return the new NESGame object.
+* Failure will return `{ error: 'Error saving data to the DB', message: err }`
+
+### PUT
+
+* Sending a `PUT` request to `/api/game/update` can accept `{ id, title, genre, releaseDate }`. `id` and `title` are REQUIRED.
+* Success will return the updated NESGame object.
+* If required information is not provided, will return a response of `{ error: 'Must Provide a title && Id' }`.
+* If `id` is invalid, will return a response of `{ error: 'Cannot find game by that id' }`.
+* Server error will return `{ error: 'Something really bad happened' }`.
+
+### DELETE
+
+* Sending a `DELETE` request to `/api/game/destroy/` can accept `{ id }`. Using this method, `id` is REQUIRED.
+* Alternatively, you can send a `DELETE` request to `/api/game/destroy/:id`. No data is required.
+* Sending a `DELETE` request to `/api/game/destroy/:id` and providing data if `{ id }`, the data sent in the body will take priority over the param in the address.
+* Success will return `{ success: '{title} was removed from the DB' }`
+* If no `id` was provided, will return a response of `{ error: 'You need to give me an ID' }`.
+* If the `id` does not exist in the database, will return a response of `{ error: 'Cannot find game by that id' }`.
+
 ## TESTS
 
 * The provided API has already been manually tested for you.
