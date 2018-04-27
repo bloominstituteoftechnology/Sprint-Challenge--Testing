@@ -31,9 +31,16 @@
 
 ## DOCUMENTATION GOES HERE
 
-```
-THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
-```
+# Video Games API
+ ### This is a Restful api for accessing a Mongo Database that stores information about Video Games.
+
+ |Type|URL|Data|
+ |-|-|-|-|
+ |[GET]|/api/game/get|none|
+ |[POST]|/api/game/create|Game Title*, Genre*, Release Date|
+ |[PUT]|/api/game/update|Current Game Title*, new Game Title, New Genre, new Release Date|
+ |[DELETE]|/api/game/destroy/:id|Id of game to delete*
+
 
 ## TESTS
 
