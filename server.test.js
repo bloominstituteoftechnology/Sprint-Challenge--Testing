@@ -161,9 +161,8 @@ describe('Games', () => {
   describe(`[PUT] /api/game/update`, () => {
     it('should update the game document in the db', done => {
       const update = {
+        id: gameId,
         title: 'Super Mario Bros'
-        // releaseDate: 'September 1985',
-        // genre: 'Platformer'
       };
       chai
         .request(server)
