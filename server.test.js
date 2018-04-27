@@ -114,7 +114,28 @@ describe('Games', () => {
     });
   });
   // Test the DELETE here
-
+  describe(`[DELETE] /api/game/destroy/:id`, () => {
+    it('should delete the game document from the db', done => {
+      chai
+        .request(server)
+        .delete(`/api/game/destroy/${gameId}`)
+        .end((err, res) => {
+          if (err) {
+            console.log(err);
+            return done;
+          }
+          Game.findById(gameId, (err, deletedGame) => {
+            if (err) {
+              console.log(err);
+              return done;
+            }
+            expect(deletedGame).to.equal(null);
+          });
+          expect(res.status).to.equal(200);
+          done();
+        });
+    });
+  });
   // --- Stretch Problem ---
   // test the PUT here
 });
