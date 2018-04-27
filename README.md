@@ -31,9 +31,30 @@
 
 ## DOCUMENTATION GOES HERE
 
+# NES Game API
+
+### Game Schema and Model
+
+Each _Game_ document should conform to the following object structure:
+
+```js
+  {
+    title: "Kirby's Adventure",
+    genre: 'Action, Adventure',
+    releaseDate: 'May 1993',
+  }
 ```
-THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
-```
+
+### CRUD Endpoints
+
+| Method | Endpoint              | Description                                                |
+| ------ | --------------------- | ---------------------------------------------------------- |
+| POST\* | /api/game/create      | Creates a new _Game_ object, sent w/in the `request body`. |
+| GET    | /api/game/get         | Returns all _Game_ objects in the database.                |
+| PUT    | /api/game/update      | Updates the _Game_ object, returns modified document.      |
+| DELETE | /api/game/destroy/:id | Removes the _Game_ object from the database.               |
+
+`*` Properties _title_ and _genre_ are **required**
 
 ## TESTS
 

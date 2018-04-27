@@ -1,9 +1,13 @@
 const mongoose = require('mongoose');
 const chai = require('chai');
+const chaiHTTP = require('chai-http');
 const { expect } = chai;
 const sinon = require('sinon');
 
 const Game = require('./models');
+const server = require('./server');
+
+chai.use(chaiHTTP);
 
 describe('Games', () => {
   before(done => {
@@ -26,7 +30,6 @@ describe('Games', () => {
   let gameId;
   // hint - these wont be constants because you'll need to override them.
   beforeEach(done => {
-
     // write a beforeEach hook that will populate your test DB with data
     // each time this hook runs, you should save a document to your db
     // by saving the document you'll be able to use it in each of your `it` blocks
@@ -40,7 +43,7 @@ describe('Games', () => {
   // test the GET here
 
   // Test the DELETE here
-  
+
   // --- Stretch Problem ---
   // test the PUT here
 });
