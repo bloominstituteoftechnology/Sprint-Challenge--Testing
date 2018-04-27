@@ -33,9 +33,25 @@ describe('Games', () => {
     // write a beforeEach hook that will populate your test DB with data
     // each time this hook runs, you should save a document to your db
     // by saving the document you'll be able to use it in each of your `it` blocks
+    const newGame = new Game({
+      title: "Kirby's Adventure",
+      genre: 'Action, Adventure',
+      releaseDate: 'May 1993',
+    });
+    newGame
+      .save()
+      .then(game => {
+        console.log(game, 'You added a new game to your library!');
+        gameId = game._id.toString();
+      })
+      .catch(err => console.log(err));
   });
   afterEach(done => {
     // simply remove the collections from your DB.
+    Game.remove({}, err => {
+      if (err) console.log(err);
+      return done();
+    });
   });
 
   // test the POST here
