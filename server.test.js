@@ -118,4 +118,24 @@ describe('Games', () => {
   
   // --- Stretch Problem ---
   // test the PUT here
+  describe(`[PUT] /api/game/update/:id`, () => {
+    it('Updates the game', function() {
+        const update = {
+          id: gameId,
+          title: 'Final Fantasy'
+        }
+        return chai.request(server)
+            .put(`/api/game/update/`)
+            .send(update)
+            .then(function(res) {
+              const updated = res.body;
+              expect(res).to.have.status(200);
+              expect(res).to.be.json;
+              expect(updated.title).to.equal(update.title);
+            })
+            .catch(function(err) {
+                throw err;
+            });
+        });
+    });
 });

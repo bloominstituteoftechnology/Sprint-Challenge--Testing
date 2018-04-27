@@ -31,9 +31,24 @@
 
 ## DOCUMENTATION GOES HERE
 
-```
-THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
-```
+# NES Games API
+This API is for interfacting with classic NES/Famicom games. This is an open source project. For contributing please reference [this contribution guide](www.github.com).
+
+## API Endpoints
+
+* The following is a list of all of the endpoints that you have available for use with our API. Fields with an asterisk are required in the body of the request.
+
+|   TYPE          | URL                 | DATA               |
+| --------------- | ------------------- | ------------------------- |
+| POST            | /api/game/create    | title*, genre*, releaseDate |
+| GET             | /api/game/get       | title, genre, releaseDate, id|
+| PUT             | /api/game/update/:id    | id*, title, genre, releaseDate|
+| DELETE          | /api/game/destroy/:id| number deleted
+
+
+----
+
+
 
 ## TESTS
 
