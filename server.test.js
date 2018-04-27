@@ -115,8 +115,21 @@ describe('Games', () => {
           done();
         });
     });
+    it('should handle a bad request', done => {
+      chai
+        .request(server)
+        .get('/api/game/getify')
+        .end((err, res) => {
+          if (err) {
+            console.log(err);
+            expect(res.status).to.equal(404);
+            return done();
+          }
+          done();
+        });
+    });
+    // Test the DELETE here
   });
-  // Test the DELETE here
   describe(`[DELETE] /api/game/destroy/:id`, () => {
     it('should delete the game document from the db', done => {
       chai

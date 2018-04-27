@@ -1,12 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const morgan = require('morgan');
+// const morgan = require('morgan');
 
 const Game = require('./models');
 
 const server = express();
 server.use(bodyParser.json());
-server.use(morgan('combined'));
+// server.use(morgan('combined'));
 
 server.post('/api/game/create', (req, res) => {
   const { title, releaseDate, genre } = req.body;
