@@ -28,18 +28,18 @@ describe('Games', () => {
     });
   });
   let gameId = null;
-  let testGame = null;
+  let testedGame = null;
   // hint - these wont be constants because you'll need to override them.
   beforeEach(done => {
     // write a beforeEach hook that will populate your test DB with data
     // each time this hook runs, you should save a document to your db
     // by saving the document you'll be able to use it in each of your `it` blocks
-    const testGame = new Game({
+    const testedGame = new Game({
       title: 'Hello Kitty',
       genre: 'Kitty World',
       releaseDate: 'January, 2001'
     });
-    testGame
+    testedGame
       .save()
       .then(game => {
         testGame = game;
@@ -59,8 +59,46 @@ describe('Games', () => {
     });
   });
 
-  
   // test the POST here
+  
+describe(`[POST] /api/game/create`, () => {
+  it('should add a new game to the collection', done => {
+    const testGame = {
+      title: 'Hello Kitty',
+      genre: 'Kitty World',
+      releaseDate: 'January, 2001'
+    };
+    chai
+      .request(server)
+      .post('/api/game/create')
+      .send(testGame)
+      .end((err, res) => {
+        console.log(res.body);
+        expect(res.status).to.equal(200);
+        expect(res.body.title).to.equal('Hello Kitty')
+        done();
+      });
+  });
+  it (`should send back '422: Invalid input data sent to Server' upon bad data`, () => {
+    const testGame = {
+      title: 'Hello Kitty',
+      genre: 'Kitty World',
+      releaseDate: 'January, 2001'
+    };
+    chai
+      .request(server)
+      .post('/api/game/create')
+      .send(testGame)
+      .end((err, res) => {
+        if(err) {
+          expect(err.status).to.equal(422);
+          const { error } = err.response.body;
+          expect(error).to.equal('Invalid input data sent to the Server')
+          done();
+        }
+      });
+  });
+});  
 
   // test the GET here
 
