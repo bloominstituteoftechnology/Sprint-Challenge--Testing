@@ -52,7 +52,28 @@ describe('Games', () => {
   });
 
   // test the POST here
-
+  describe(`[POST] /api/game/create`, () => {
+    it('should save a new game to the database', done => {
+      chai
+        .request(server)
+        .post('/api/game/create')
+        .send({
+          title: 'Excitebike',
+          releaseDate: 'November 1984',
+          genre: 'Racing'
+        })
+        .end((err, res) => {
+          if (err) {
+            console.log(err);
+            return done();
+          }
+          expect(res.body.title).to.equal('Excitebike');
+          expect(res.body.genre).to.equal('Racing');
+          expect(res.body.releaseDate).to.equal('November 1984');
+          return done();
+        });
+    });
+  });
   // test the GET here
   describe(`[GET] /api/game/get`, () => {
     it('should get a list of all games in the database', done => {
