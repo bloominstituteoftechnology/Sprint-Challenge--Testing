@@ -31,9 +31,51 @@
 
 ## DOCUMENTATION GOES HERE
 
+------
+
+# NES Games API
+
+This amazing API helps you keep track of your favorite games!
+
+## How to use
+
+### Retrieving the games list
+
+In order to get your favorite games and recreate the nostalgia of your youth, make a get request to:
+
+`/api/game/get`
+
+### Adding games
+
+You can add games through the create endpoint! Make sure you have the title and genre included (a release date is optional) like so:
+
+```js
+{
+  title: 'Kid Icarus',
+  genre: 'Action-adventure',
+  releaseDate: '1986' 
+}
 ```
-THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
-```
+
+and then send it to:
+
+`/api/game/create`
+
+### Updating your games
+
+If you messed up while entering games into the database and broken your inner child's heart, you can fix it using the update endpoint:
+
+`/api/game/update`
+
+Note: It's important to provide the Id along with the corrected title.
+
+### Removing games
+
+Should the game not be as fun as your fond memories of it, removal should be done using the following:
+
+`/api/game/destroy/<id goes here>`
+
+-----
 
 ## TESTS
 
