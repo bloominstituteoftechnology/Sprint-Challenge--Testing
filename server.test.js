@@ -25,14 +25,33 @@ describe('Games', () => {
   });
   let gameId;
   // hint - these wont be constants because you'll need to override them.
-  beforeEach(done => {
 
+  beforeEach(done => {
     // write a beforeEach hook that will populate your test DB with data
     // each time this hook runs, you should save a document to your db
     // by saving the document you'll be able to use it in each of your `it` blocks
+    const newGame = new Game({
+      title: 'Game Title',
+      genre: 'Game Genre',
+      releaseDate: 'Game Release Date',
+    });
+    newGame
+      .save()
+      .then(savedGame => {
+        gameId = savedGame._id.toString();
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    done();
   });
+
   afterEach(done => {
     // simply remove the collections from your DB.
+    Game.remove({}, err => {
+      if (err) console.log(err);
+      return done();
+    });
   });
 
   // test the POST here
@@ -40,7 +59,7 @@ describe('Games', () => {
   // test the GET here
 
   // Test the DELETE here
-  
+
   // --- Stretch Problem ---
   // test the PUT here
 });
