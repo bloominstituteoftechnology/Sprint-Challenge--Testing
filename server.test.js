@@ -10,6 +10,7 @@ const Game = require('./models');
 const server = require('./server');
 
 describe('Games', () => {
+  let gameId;
   before(done => {
     mongoose.Promise = global.Promise;
     mongoose.connect('mongodb://localhost/test');
@@ -27,7 +28,6 @@ describe('Games', () => {
       console.log('we are disconnected');
     });
   });
-  let gameId;
   // hint - these wont be constants because you'll need to override them.
   beforeEach(done => {
     // write a beforeEach hook that will populate your test DB with data
