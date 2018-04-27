@@ -11,6 +11,8 @@ const Game = require('./models');
 chai.use(chaiHTTP);
 
 describe('Games', () => {
+  let gameId;
+  let gameTitle;
   before(done => {
     mongoose.Promise = global.Promise;
     mongoose.connect('mongodb://localhost/test');
@@ -28,13 +30,12 @@ describe('Games', () => {
       console.log('we are disconnected');
     });
   });
-  let gameId;
   // hint - these wont be constants because you'll need to override them.
   beforeEach(done => {
     // write a beforeEach hook that will populate your test DB with data
     // each time this hook runs, you should save a document to your db
     // by saving the document you'll be able to use it in each of your `it` blocks
-    let newGame = new Game({
+    const newGame = new Game({
       title: 'Super Mario Bros',
       releaseDate: 'September 1985',
       genre: 'Platformer'
@@ -44,7 +45,7 @@ describe('Games', () => {
         console.log(err);
         done();
       }
-      gameId = savedGame.id;
+      gameId = savedGame._id.toString();
       done();
     });
   });
@@ -52,13 +53,15 @@ describe('Games', () => {
     // simply remove the collections from your DB.
     Game.remove({}, err => {
       if (err) console.log(err);
+      gameId = null;
+      gameTitle = null;
       done();
     });
   });
 
   // test the POST here
   describe(`[POST] /api/game/create`, () => {
-    let newGame = new Game({
+    const newGame = new Game({
       title: 'Super Mario Bros',
       releaseDate: 'September 1985',
       genre: 'Platformer'
@@ -131,11 +134,28 @@ describe('Games', () => {
             }
             expect(deletedGame).to.equal(null);
           });
+          const { success } = res.body;
+          expect(success).to.be.a('string');
           expect(res.status).to.equal(200);
           done();
         });
     });
+    it('should handle a bad id', done => {
+      chai
+        .request(server)
+        .delete(`/api/game/destroy/badid`)
+        .end((err, response) => {
+          if (err) {
+            const { error } = err.response.body;
+            expect(error).to.be.a('string');
+            expect(err.response.status).to.equal(422);
+            expect(error).to.equal('Cannot find game by that id');
+          }
+          done();
+        });
+    });
   });
+
   // --- Stretch Problem ---
   // test the PUT here
   describe(`[PUT] /api/game/update`, () => {
