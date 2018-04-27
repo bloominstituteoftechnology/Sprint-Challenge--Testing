@@ -114,4 +114,23 @@ describe("Games", () => {
   })
   // --- Stretch Problem ---
   // test the PUT here
+  describe('PUT to /api/game/update', () => {
+    it('should update a game with a specific ID', done => {
+      chai
+        .request(server)
+        .put('/api/game/update')
+        .send({title: "Dabbing Dogs", id: gameId})
+        .end((err, response) => {
+          if(err){
+            console.log('error', err)
+            return done();
+          }
+          expect(response.body.title).equal('Dabbing Dogs')
+          expect(response.body._id).equal(gameId)
+          expect(response.status).equal(200)
+          // console.log(response);
+          return done();
+        })
+    })
+  })
 });
