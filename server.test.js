@@ -83,7 +83,22 @@ describe('Games', () => {
     });
   });
   // test the GET here
-
+  describe('GET on /api/game/get', () => {
+    it('should get an array of all games', done => {
+      chai
+        .request(server)
+        .get('/api/game/get')
+        .then(res => {
+          const { _id, title, releaseDate, genre } = res.body[0];
+          expect(res.body).to.be.an('array');
+          expect(res.body[0]).to.be.an('object');
+          done();
+        })
+        .catch(error => {
+          throw error;
+        });
+    });
+  });
   // Test the DELETE here
 
   // --- Stretch Problem ---
