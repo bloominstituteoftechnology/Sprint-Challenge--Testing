@@ -164,11 +164,35 @@ describe('Games', () => {
               console.log(err);
               done();
             }
-            // const { _id, title, genre } = response.body[1];
+            const { _id, title, genre } = response.body;
             expect(response.status).to.equal(200);
+            expect(response.body).to.be.an('object');
+            expect(title).to.equal('The Legend of Zelda: Breath of the Wild');
+            expect(genre).to.equal('RPG');
+            expect(_id).to.equal(game._id.toString());
             done();
           });
       });
+    });
+    it('should return an error if the required fields, id and title, are not supplied', done => {
+      chai
+        .request(server)
+        .put('/api/game/update')
+        .send({})
+        .then(response => {
+          expect(response.status).to.equal(422);
+          expect(response.body.errors.title.message).to.equal(
+            'Path `title` is required.'
+          );
+          expect(response.body.errors.id.message).to.equal(
+            'Path `id` is required.'
+          );
+          done();
+        })
+        .catch(err => {
+          console.log(err);
+          done();
+        });
     });
   });
 });
