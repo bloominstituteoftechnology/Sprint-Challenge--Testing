@@ -60,7 +60,7 @@ describe('Games', () => {
       chai
         .request(server)
         .post('/api/game/create')
-        .send({ title: 'Super Mario Bros', genre: 'Adventure' })
+        .send({ title: 'California Games', genre: 'Sports', releaseDate: 'June 1987' })
         .then(response => {
           done();
         })
@@ -87,8 +87,22 @@ describe('Games', () => {
     });
   });
   // Test the DELETE here
-  
+  describe('/api/game/destroy/:id game', () => {
+    it('it should DELETE a game given the id', (done) => {
+      let game = new Game({title: "Super Mario Bros", genre: "Adventure" })
+      game.save((err, game) => {
+              chai
+              .request(server)
+              .delete('/api/game/destroy/' + game.id)
+              .end((err, response) => {
+                expect(response.status).to.equal(200);
+                expect(response.body).to.be.an('object');               
+                done();
+              });
+        });
+    });
+  });
   // --- Stretch Problem ---
-  // test the PUT here
+  // test the PUT here  
 });
 });
