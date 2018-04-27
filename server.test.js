@@ -95,6 +95,22 @@ describe('Games', () => {
   });
 
   // Test the DELETE here
+  describe(`[DELETE] /api/game/destroy/:id`, () => {
+    it('should delete a game from the database', done => {
+      chai
+        .request(server)
+        .delete(`/api/game/destroy/${gameId}`)
+        .end((err, res) => {
+          if (err) {
+            console.og(err);
+            return done();
+          }
+          expect(res.body).to.be.an('object');
+          expect(res.text).to.equal('{"success":"Super Mario Bros was removed from the DB"}');
+          return done();
+        });
+    });
+  });
 
   // --- Stretch Problem ---
   // test the PUT here
