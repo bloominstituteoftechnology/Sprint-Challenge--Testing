@@ -43,6 +43,7 @@ describe('Games', () => {
       .then(game => {
         console.log(game, 'You added a new game to your library!');
         gameId = game._id.toString();
+        done();
       })
       .catch(err => console.log(err));
   });
@@ -55,8 +56,35 @@ describe('Games', () => {
   });
 
   // test the POST here
+  describe('[POST] /api/game/create', () => {
+    it('should post a new game to the database', done => {
+      const game = {
+        title: 'Galaga',
+        genre: 'Action, Adventure',
+        releaseDate: 'September 1988',
+      };
+      chai
+        .request(server)
+        .post('/api/game/create')
+        .send(game)
+        .end((err, res) => {
+          if (err) {
+            console.log(err);
+            done();
+          }
+          expect(res.status).to.equal(200); // not passing test w/ 201?
+          expect(res.body.title).to.equal('Galaga');
+          done();
+        });
+    });
+  });
 
   // test the GET here
+  // describe('[GET] to /api/game/get', () => {
+  //   it('should get a list of all games from the database', done => {
+  //     chai
+  //   })
+  // })
 
   // Test the DELETE here
 
