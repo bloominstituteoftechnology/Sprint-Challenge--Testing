@@ -35,6 +35,31 @@
 THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
 ```
 
+# Video Game Database API
+
+This API is for holding a database of NES games with some essential information about each game.
+
+## Data Structure
+
+```js
+NESGame = {
+  title, // Required - String
+  genre, // Required - String
+  releaseDate, // Not-Required - String
+};
+```
+
+## Routes
+
+| TYPE   | URL                     | BODY DATA                       |
+| ------ | ----------------------- | ------------------------------- |
+| GET    | `/api/game/get/`        | N/A                             |
+| POST   | `/api/game/create/`     | *title, *genre, releaseDate     |
+| PUT    | `/api/game/update/`     | *id, *title, genre, releaseDate |
+| DELETE | `/api/game/destroy/:id` | id                              |
+
+DATA marked with a `*` is required.
+
 ## TESTS
 
 * The provided API has already been manually tested for you.
