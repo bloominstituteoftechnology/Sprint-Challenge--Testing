@@ -10,7 +10,6 @@ const Game = require('./models');
 chai.use(chaiHTTP);
 
 describe('Games', () => {
-
   let gameId;
 
   before(done => {
@@ -29,6 +28,7 @@ describe('Games', () => {
       mongoose.connection.close(done);
       console.log('we are disconnected');
     });
+    gameId = null;
   });
 
   beforeEach(done => {
@@ -37,18 +37,17 @@ describe('Games', () => {
       genre: 'Platforming',
       releaseDate: 'November 1990',
     });
-    testGame.save()
-    .then(saved => {
-      gameId = saved._id;
+    testGame.save((err, saved) => {
+      gameId = saved._id.toString();
+      done();
     })
-    done();
   });
 
   afterEach(done => {
-    Game.remove({}, err => {
-      if (err) return err;
+    Game.remove((err, removed) => {
+      gameId = null;
+      done();
     });
-    done();
   });
 
   describe('[POST] to /api/game/create', () => {
@@ -63,9 +62,12 @@ describe('Games', () => {
         })
         .end(function(err, res) {
           if (err) expect(err).to.have.status(422);
-          expect(res.body[0]._id).to.equal(`${gameId}`);
+          expect(res.body).to.have.property('_id');
+          expect(res.body.title).to.equal('California Games');
+          expect(res.body.genre).to.equal('Sports');
+          expect(res.body.releaseDate).to.equal('June 1987');
+          done();
         });
-        done();
     });
     it('if title and genre are not provided throws error', done => {
       chai
@@ -77,25 +79,26 @@ describe('Games', () => {
         })
         .end(function(err, res) {
           expect(res).to.have.status(422);
+          done();
         });
-        done();
     });
   });
 
-  describe('[GET] to /api/game/get', done => {
-    it('should return games in the database', () => {
+  describe('[GET] to /api/game/get', () => {
+    it('should return games in the database', done => {
       chai
         .request(server)
         .get('/api/game/get')
         .end(function(err, res) {
           if (err) expect(err).to.have.status(500);
-          expect(res.body[0]._id).to.equal(`${gameId}`);
+          expect(res.body.length).to.equal(1);
+          done();
         });
     });
   });
 
-  describe('[DELETE] to /api/game/destroy/:id', done => {
-    it('should delete an id', () => {
+  describe('[DELETE] to /api/game/destroy/:id', () => {
+    it('should delete an id', done => {
       chai
       .request(server)
       .delete(`/api/game/destroy/${gameId}`)
@@ -106,18 +109,19 @@ describe('Games', () => {
           done();
         });
     });
-    it('if not found throws an error', () => {
+    it('if not found throws an error', done => {
       chai
         .request(server)
         .delete(`/api/game/destroy/3`)
         .end(function(err, res) {
           if (err) expect(err).to.have.status(422);
+          done();
         });
     });
   });
 
-  describe('[PUT] to /api/game/update', done => {
-    it('should update a game', () => {
+  describe('[PUT] to /api/game/update', () => {
+    it('should update a game', done => {
       chai
         .request(server)
         .put('/api/game/update')
@@ -127,7 +131,7 @@ describe('Games', () => {
         })
         .end(function(err, res) {
           if (err) expect(err).to.have.status(422);
-          expect(res.body[0].title).to.equal('California Gamez');
+          expect(res.body.title).to.equal('California Gamez');
           done();
         });
     });
