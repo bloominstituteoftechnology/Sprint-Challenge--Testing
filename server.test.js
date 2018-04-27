@@ -102,8 +102,53 @@ describe(`[POST] /api/game/create`, () => {
 
   // test the GET here
 
+describe(`[GET] /api/game/get`, () => {
+  it('should retreive a list of all the games', done => {
+    chai
+      .request(server)
+      .get('/api/game/get')
+      .then(response => {
+        const { _id, name, genre, releaseDate } = response.body[0];
+        expect(response.status).to.equal(200);
+        //expect(response.body).to.be.an('array');
+        //expect(_id).to.equal(gameId);
+        expect(name).to.equal('Hello Kitty');
+        done();
+      })
+      .catch(err => {
+        throw err;
+      });
+    });
+    it.skip('Should fail if bad URL is provided', () => {});
+  });
+}); 
+
   // Test the DELETE here
+
+describe(`[DELETE] /api/game/destroy/:id`, () => {
+  it('should delete a game with the provided id from the collection', done => {
+    chai  
+    .request(server)
+    .delete(`/api/game/destroy/${gameId}` )
+    .end((err, res) => {
+      if (err) {
+        console.error(err);
+        return done();
+      }
+      expect(res.status).to.equal(200);
+      expect(res.text).to.equal('success');
+      Game.findById(gameId, (err, deletedGame) => {
+        if(err) {
+          console.log(err);
+          return done();
+        }
+        expect(deleteGame).to.equal(null);
+        done();
+      });
+    });
+  });
+});  
+
   
   // --- Stretch Problem ---
   // test the PUT here
-});
