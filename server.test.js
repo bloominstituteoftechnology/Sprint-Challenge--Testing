@@ -1,9 +1,13 @@
 const mongoose = require('mongoose');
 const chai = require('chai');
+const chaiHttp = require('chai-http');
 const { expect } = chai;
 const sinon = require('sinon');
 
+const server = require('./server');
 const Game = require('./models');
+
+chai.use(chaiHttp)
 
 describe('Games', () => {
   before(done => {
@@ -25,23 +29,92 @@ describe('Games', () => {
   });
   let gameId;
   // hint - these wont be constants because you'll need to override them.
-  beforeEach(done => {
 
-    // write a beforeEach hook that will populate your test DB with data
-    // each time this hook runs, you should save a document to your db
-    // by saving the document you'll be able to use it in each of your `it` blocks
-    
-
+  beforeEach(() => {
+    const newGame = new Game({
+      title: 'Castlevania',
+      genre: 'Action'
+    });
+    return newGame
+      .save()
+      .then(savedGame => {
+        gameId = savedGame._id.toString();
+      });
   });
+  
+  afterEach(done => {
+    Game.remove({}, err => {
+      if (err) console.log(err);
+      done();
+    });
+  });
+
   afterEach(done => {
     // simply remove the collections from your DB.
+    Game.remove({})
+      .then(done())
+      .catch(err => {
+        console.log(err);
+        done();
+      })
   });
 
   // test the POST here
 
+  describe(`[POST] /api/game/create`, () => {
+    it('Posts a Game', () => {
+        const newGame = {
+            'title': 'The Legend of Zelda',
+            'genre': 'Action-adventure'
+        } 
+
+        return chai.request(server)
+            .post('/api/game/create')
+            .send(newGame)
+            .then(function(res) {
+                expect(res).to.have.status(200);
+                expect(res).to.be.json;
+                expect(res.body.title).to.equal(newGame.title);
+                expect(res.body.genre).to.equal(newGame.genre);
+                                                          
+            })
+            .catch(function(err) {
+                throw err;
+            });
+        });
+    });
+
   // test the GET here
 
+  describe(`[GET] /api/game`, () => {
+    it('Returns all them games', () => {
+      return chai.request(server)
+        .get('/api/game/get')
+        .then(function(game) {
+            expect(game).to.have.status(200);
+            expect(game).to.be.json;
+            expect(game.body).to.have.length(1);
+            expect(game.body[0]._id).to.equal(gameId);
+        })
+        .catch(function(err) {
+            throw err;
+        });
+    });
+    
+  });
+
   // Test the DELETE here
+  describe('[DELETE] /api/games/destroy/:id', () => {
+    it('should delete the identified game from the database', () => {
+      return chai.request(server)
+        .delete(`/api/game/destroy/${gameId}`)
+        .then(res => {
+          expect(res).to.have.status(200);
+        }).catch(err => {
+          throw(err);
+        });
+    });
+  });
   
   // --- Stretch Problem ---
   // test the PUT here
