@@ -74,6 +74,26 @@ describe('Games', () => {
           done();
         });
     });
+    it('should return an error if the required fields are not supplied', done => {
+      chai
+        .request(server)
+        .post('/api/game/create')
+        .send({})
+        .then(response => {
+          expect(response.status).to.equal(422);
+          expect(response.body.errors.title.message).to.equal(
+            'Path `title` is required.'
+          );
+          expect(response.body.errors.genre.message).to.equal(
+            'Path `genre` is required.'
+          );
+          done();
+        })
+        .catch(err => {
+          console.log(err);
+          done();
+        });
+    });
   });
 
   // test the GET here
