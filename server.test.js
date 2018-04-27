@@ -80,6 +80,18 @@ describe("Games", () => {
           return done();
         });
     });
+    it("should return an error if given a bad URL", done => {
+      chai
+        .request(server)
+        .get("/api/games/get")
+        .end((err, response) => {
+          // if (err) {
+          //   console.log(err);
+          // }
+          expect(response.status).to.equal(404);
+          done();
+        });
+    });
   });
   describe(`[POST] /api/game/create`, () => {
     let game = {
@@ -106,17 +118,28 @@ describe("Games", () => {
           return done();
         });
     });
+    it("should return an error if given a bad URL", done => {
+      chai
+        .request(server)
+        .get("/api/games/created")
+        .end((err, response) => {
+          // if (err) {
+          //   console.log(err);
+          // }
+          expect(response.status).to.equal(404);
+          done();
+        });
+    });
     it("should return an error if not given a title, genre, and releaseDate", done => {
       chai
         .request(server)
         .post("/api/game/create")
         .send({ bad: "Data" })
-        .then(response => {
-          expect(response.status).to.equal(421);
-          done();
-        })
-        .catch(err => {
-          console.log("ERROR: ", err);
+        .end((err, response) => {
+          // if (err) {
+          //   console.log("Error inside the if test: ", err);
+          // }
+          expect(response.status).to.equal(422);
           done();
         });
     });
@@ -143,6 +166,18 @@ describe("Games", () => {
           return done();
         });
     });
+    it("should return an error if given a bad URL", done => {
+      chai
+        .request(server)
+        .get("/api/games/updat")
+        .end((err, response) => {
+          // if (err) {
+          //   console.log(err);
+          // }
+          expect(response.status).to.equal(404);
+          done();
+        });
+    });
   });
   describe(`[DELETE] /api/game/destroy/id`, () => {
     it("should return a status of 200", done => {
@@ -161,6 +196,18 @@ describe("Games", () => {
           );
 
           return done();
+        });
+    });
+    it("should return an error if given a bad URL", done => {
+      chai
+        .request(server)
+        .get("/api/games/destro")
+        .end((err, response) => {
+          // if (err) {
+          //   console.log(err);
+          // }
+          expect(response.status).to.equal(404);
+          done();
         });
     });
   });
