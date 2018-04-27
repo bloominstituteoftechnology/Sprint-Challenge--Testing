@@ -31,9 +31,40 @@
 
 ## DOCUMENTATION GOES HERE
 
-```
-THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
-```
+# Game API
+
+This is an api for interfacing with a game of some kind. This is a closed source project so if you want to contribute, too bad. [Here's]() a cat video though.
+
+* You should have stopped reading already...
+
+## API Endpoints
+
+* following is a list of endpoints
+
+### [POST] /api/game/create
+
+| TYPE | URL             | DATA                   |
+| ---- | --------------- | ---------------------- |
+| POST | api/game/create | gameTitle*, gameGenre* |
+
+### [GET] /api/game/get
+
+| TYPE | URL               | DATA     |
+| ---- | ----------------- | -------- |
+| GET  | /api/game/get     |          |
+| GET  | /api/game/get/:id | gameId\* |
+
+### [DELETE] /api/game/destroy/:id
+
+| TYPE   | URL                   | DATA     |
+| ------ | --------------------- | -------- |
+| DELETE | /api/game/destroy/:id | gameId\* |
+
+### [PUT] /api/game/update
+
+| TYPE | URL              | DATA                             |
+| ---- | ---------------- | -------------------------------- |
+| PUT  | /api/game/update | gameId*, gameTitle*, gameGenre\* |
 
 ## TESTS
 
