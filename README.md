@@ -32,7 +32,17 @@
 ## DOCUMENTATION GOES HERE
 
 ```
-THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
+## [POST] /api/game/create
+* Creates a new game to be saved in the database
+
+## [GET] /api/game/get
+* Find a game within the database
+
+## [PUT] /api/game/update
+* Update a game within the database
+
+## [DELETE] /api/game/destroy/:id
+* Delete a game by using the game id in the database
 ```
 
 ## TESTS
