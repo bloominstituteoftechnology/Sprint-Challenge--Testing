@@ -31,7 +31,7 @@
 
 ## DOCUMENTATION GOES HERE
 
-```
+
 | METHOD                               | URL                                                                | Data Required                                                                |
 | ------                               | ------                                                             | -----:                                                                       |
 |  GET                                 |  /api/game/get                                                     |   None                                                                       |
@@ -40,7 +40,7 @@
 |  PUT                                 |  /api/game/update                                                  |     gameId(string)*  title (string)*, genre (string)*, releaseDate(string)   |
 
 ### Fields marked with an * are required.
-```
+
 
 ## TESTS
 
