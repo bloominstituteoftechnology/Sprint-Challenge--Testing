@@ -32,7 +32,47 @@
 ## DOCUMENTATION GOES HERE
 
 ```
-THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
+# Battlefield API
+
+_This API is for creating,updating, rendering or deleting information on your game database. This is an open sourced project._
+
+## API Endpoints
+
+_The following is a list of all the endpoints that you have available for use with our API_
+
+## [GET] /api/game/get
+
+* Getting all of the battlesfield's users in our API.
+
+## [PUT] /api/get/update
+
+* Updating a particular user to update their stats by their user ID.
+
+## [POST] /api/game/create
+
+* Creating and saving a new user to our API.
+* Example
+```
+
+  {
+     title: 'James Bond 007',
+     genre: 'action',
+     releaseDate: '2011'
+  }
+
+```
+## [DELETE] /api/game/destroy/:id
+
+* Find and delete a user in our API by their user ID.
+
+---
+
+| Type   |       URL             |            Info |
+| ------ | :--------------:      | --------------: |
+| GET    | /api/game/get         |    Get all game |
+| PUT    | /api/game/update      |   Update a game |
+| POST   | /api/game/create      | Create and save |
+| DELETE | /api/game/destroy/:id |   Delete a game |
 ```
 
 ## TESTS
