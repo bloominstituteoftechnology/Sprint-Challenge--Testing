@@ -31,9 +31,49 @@
 
 ## DOCUMENTATION GOES HERE
 
+# Games API
+
+_This API is for creating,updating, rendering or deleting your games. This is an open sourced project._
+
+## API Endpoints
+
+_The following is a list of all the endpoints that you have available for use with our API._
+
+### The Port is set to `localhost://5050`.
+
+## [POST] /api/game/create
+
+* Creating and saving a new user to our API.
+
+* Example:
+
 ```
-THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
+{
+    title: "battlefield 4",
+    genre: "first person shooter",
+    releaseDate: "October 29, 2013"
+}
 ```
+
+## [GET] /api/game/get
+
+* Get all of the games in our API.
+
+## [DELETE] /api/game/destroy/:id
+
+* Find and delete a game in our API by its ID.
+
+## [PUT] /api/game/update
+
+* Update the title of a particular game.
+
+---
+| Type   |       URL        |            Info |
+| ------ | :--------------: | --------------: |
+| POST   | /api/game/create | Create and Save |
+| GET    | /api/game/get |   Get all Games |
+| DELETE | /api/game/destroy/:id |          Delete |
+| PUT    | /api/game/update |   Update a a Game's Title |
 
 ## TESTS
 
