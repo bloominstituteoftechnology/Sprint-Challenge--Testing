@@ -131,9 +131,9 @@ describe('Games', () => {
   describe('[DELETE] /api/game/destroy/:id', () => {
     it('should remove a game from the database', (done) => {
       const game = new Game({
-        title: 'Gran Turismo',
-        genre: 'Auto Racing',
-        releaseDate: 'Jan 1 1998',
+        title: 'Uncharted',
+        genre: 'Adventure',
+        releaseDate: '2007 to 2017',
       });
       game.save((err, savedGame) => {
         chai
