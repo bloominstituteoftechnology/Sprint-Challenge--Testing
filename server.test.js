@@ -29,7 +29,7 @@ describe('Games', () => {
       new Game ({ 
         title: "",
         genre: "",
-        genre: "",
+        releaseDate: "",
       })
         .save((err, savedGame) => {
           if (err) {
