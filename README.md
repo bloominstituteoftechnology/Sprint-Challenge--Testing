@@ -31,9 +31,30 @@
 
 ## DOCUMENTATION GOES HERE
 
-```
-THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
-```
+# Game API Docs:
+
+### Sprint-Challenge--Testing
+
+* The following docs are in reference to the Games API.
+
+### API Endpoints
+
+#### [POST] `/api/game/create`
+
+#### [GET] `/api/game/get`
+
+#### [PUT] `/api/game/update`
+
+#### [DELETE] `/api/game/destroy/:id`
+
+| Type   | URL                   | Data                        |
+| ------ | --------------------- | --------------------------- |
+| POST   | /api/game/create      | title*, genre*, releaseDate |
+| GET    | /api/game/get         |                             |
+| PUT    | /api/game/update      | title*, \_id*               |
+| DELETE | /api/game/destroy/:id | \_id\*                      |
+
+* all fields marked with `*` are required
 
 ## TESTS
 
