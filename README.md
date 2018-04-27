@@ -35,6 +35,45 @@
 THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
 ```
 
+* API title
+
+# Spring Challenge Testing API
+
+* API description in theory
+  This RESTful API allows the manipulation of a server dedicated to video game details
+
+- API endpoints and URL's description
+
+```
+/api/game/create
+creates a new video game with title, genre, and release date info
+```
+
+```
+/api/game/get
+displays a list of video games in json format from the db
+```
+
+```
+/api/game/update
+updates a video game by providing an id
+```
+
+```
+/api/game/destroy/:id
+deletes a document in the db using a video game's id
+```
+
+* Endpoint that can be used to interface with API
+
+- A table with endpoints, url, and type
+  |TYPE|URL|DATA|
+  |----|---|----|
+  |POST|/api/game/create|title*, genre*, releaseDate*|
+  |GET|/api/game/get|-|
+  |PUT|/api/game/update|title*, genre*, releaseDate*|
+  |DELETE|/api/game/destroy/:id|id\*|
+
 ## TESTS
 
 * The provided API has already been manually tested for you.
