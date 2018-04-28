@@ -26,6 +26,7 @@ describe('Games', () => {
     });
   });
   let gameId;
+  let gameId1;
   // hint - these wont be constants because you'll need to override them.
   beforeEach(done => {
     // write a beforeEach hook that will populate your test DB with data
@@ -36,13 +37,33 @@ describe('Games', () => {
       genre: 'Action',
       releaseDate: '2011'
     });
-    newGame
-      .save()
-      .then(savedGame => {
-        gameId = savedGame._id.toString();
-      })
-      .catch(error => console.log(error));
-    done();
+    // gameId = savedGame._id.toString();
+
+    newGame.save((error, savedGame) => {
+      if (error) {
+        console.log(error);
+        done();
+      }
+      gameId1 = savedGame._id.toString();
+    });
+
+    const newGame1 = new Game({
+      title: 'GTA',
+      genre: 'Action',
+      releaseDate: '2013'
+    });
+
+    newGame1.save((error, savedGame) => {
+      if (error) {
+        console.log(error);
+        done();
+      }
+
+      gameId = savedGame._id.toString();
+      console.log(gameId);
+      done();
+    });
+    // done();
   });
   afterEach(done => {
     // simply remove the collections from your DB.
@@ -82,6 +103,36 @@ describe('Games', () => {
     });
   });
 
+  describe('[PUT] /api/game/update', () => {
+    it('should be able to update a game in the database', done => {
+      //let gameid = gameId;
+      const updateGame = { id: gameId, title: 'Changed' };
+
+      chai
+        .request(server)
+        .put(`/api/game/update`)
+        .send(updateGame)
+        .end((error, response) => {
+          //expect(response.status).to.equal(200);
+          if (error) {
+            console.log(response);
+            done();
+          }
+          expect(response.status).to.equal(200);
+
+          expect(response.body).to.be.an('object');
+          expect(response.body.title).to.equal('Changed');
+
+          // expect(response.body.title).to.equal('Changed');
+          done();
+        });
+      // done();
+      // done();
+    });
+    // .catch(error => {
+    //   throw error;
+    // });
+  });
   // Test the DELETE here
 
   describe('[DELETE] /api/game/destroy/:id', () => {
@@ -89,40 +140,25 @@ describe('Games', () => {
       chai
         .request(server)
         .delete(`/api/game/destory/${gameId}`)
-        .end((error, response) => {
-          expect(response.body).to.be.an('object');
-
+        .then(response => {
+          expect(response.status).to.be.equal(200);
           done();
+        })
+        .catch(error => {
+          throw error;
         });
+      Game.findByIdAndRemove(gameId)
+        .then(response => {
+          expect(response).to.equal(null);
+          done();
+        })
+        .catch(error => {
+          console.log(error);
+        });
+      done();
     });
   });
 });
 
 // --- Stretch Problem ---
 // test the PUT here
-
-describe('[PUT] /api/game/update', () => {
-  it('should be able to update a game in the database', done => {
-    const updateGame = { id: gameId, title: 'Changed' };
-
-    chai
-      .request(server)
-      .put(`/api/game/update`)
-      .send()
-      .end((error, response) => {
-        //expect(response.status).to.equal(200);
-        if (error) {
-          console.log(response);
-        }
-        expect(response.body).to.be.an('object');
-
-        // expect(response.body.title).to.equal('Changed');
-        done();
-      });
-    // done();
-    // done();
-  });
-  // .catch(error => {
-  //   throw error;
-  // });
-});
