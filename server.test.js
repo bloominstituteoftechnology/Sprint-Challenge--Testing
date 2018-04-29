@@ -38,7 +38,7 @@ describe('Games', () => {
     const newGame = new Game({
       title: 'fifa 2018',
       genre: 'soccer',
-      releaseDate: 'JAN 2018'
+      releaseDate: '2018'
 
     });
     newGame.save((err, savedGame) =>{
@@ -111,23 +111,36 @@ it('should fail if a bad request is made', () =>{
   })
 
   // Test the DELETE here
-  describe(`[DELETE] /api/game/destroy/:id`, ()  => {
-    var url = 'http://localhost:5050';
-  
-      it('should return status 200 after DELETING a game', done => {
-       chai.request(url)
-          .delete(`/api/game/destroy/ ${gameId}`)
-          .end((err, response) => {
-              if (err) {
-                throw err;
-              }
-              response.should.have.status(200);
-              done();
-          });
-      });
+  describe('Delete', () => {
+    it('should delete a record removing from db', done => {
+      chai
+        .request(server)
+        .delete(`/api/game/destroy/${gameId}`)
+        .end((err, response) => {
+          if (err) console.log(err);
+          const { success } = response.body;
+          expect(response.status).to.equal(200);
+          expect(success).to.be.a('string');
+          expect(success).to.equal(`${gameTitle} was removed from the DB`);
+          done();
+        });
+    });
+
+    it('should handle a bad id', done => {
+      chai
+        .request(server)
+        .delete(`/api/game/destroy/noop`)
+        .end((err, response) => {
+          if (err) {
+            const { error } = err.response.body;
+            expect(error).to.be.a('string');
+            expect(error).to.equal('Cannot find game by that id');
+            expect(err.response.clientError).to.be.ok;
+            expect(err.response.status).to.equal(422);
+          }
+          done();
+        });
+    });
   });
-  
-  // --- Stretch Problem ---
-  // test the PUT here
 });
 });
