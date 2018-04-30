@@ -8,10 +8,10 @@ const server = express();
 server.use(bodyParser.json());
 server.use(morgan('combined'));
 
-server.post('/api/game/create', (req, res) => {
+server.post('/api/game/post', (req, res) => {
   const { title, releaseDate, genre } = req.body;
-  const myGame = new Game({ title, releaseDate, genre });
-  myGame
+  const newGame = new Game({ title, releaseDate, genre });
+  newGame
     .save()
     .then(game => {
       res.json(game);
@@ -57,7 +57,7 @@ server.put('/api/game/update', (req, res) => {
   });
 });
 
-server.delete('/api/game/destroy/:id', (req, res) => {
+server.delete('/api/game/delete/:id', (req, res) => {
   // to delete a game you can send up an id on the request body or the params
   let id = undefined;
   if (req.params.id) {
