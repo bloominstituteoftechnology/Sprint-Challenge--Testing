@@ -33,6 +33,13 @@
 
 ```
 THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
+
+
+| Parameter         |         Type         |          Description |
+| ------------- | :-----------------: | ------------: |
+| `Title`        | `String` | Game Title      |
+| `genre`      |      `string`      |           Game Genre |
+| `releaseDate`  |      `string`       |            Game Release Date |
 ```
 
 ## TESTS
