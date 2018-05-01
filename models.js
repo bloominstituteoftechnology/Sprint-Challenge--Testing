@@ -6,13 +6,13 @@ const { Schema } = mongoose;
 const NESGameSchema = new Schema({
   title: {
     type: String,
-    required: true
+    required: true,
   },
   genre: {
     type: String,
-    required: true
+    required: true,
   },
-  releaseDate: String
+  releaseDate: String,
 });
 
 NESGameSchema.methods.getGameTitle = function() {
