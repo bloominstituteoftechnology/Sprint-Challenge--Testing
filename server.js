@@ -1,12 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const morgan = require('morgan');
+// const morgan = require('morgan');
 
 const Game = require('./models');
 
 const server = express();
 server.use(bodyParser.json());
-server.use(morgan('combined'));
+// server.use(morgan('combined'));
 
 server.post('/api/game/create', (req, res) => {
   const { title, releaseDate, genre } = req.body;
@@ -14,7 +14,7 @@ server.post('/api/game/create', (req, res) => {
   myGame
     .save()
     .then(game => {
-      res.json(game);
+      res.status(201).json(game);
     })
     .catch(err => {
       res.status(422);
@@ -29,7 +29,7 @@ server.get('/api/game/get', (req, res) => {
       res.json({ error: 'Something really bad happened' });
       return;
     }
-    res.json(games);
+    res.status(200).json(games);
   });
 });
 
@@ -81,7 +81,9 @@ server.delete('/api/game/destroy/:id', (req, res) => {
       res.json({ error: 'Cannot find game by that id' });
       return;
     }
-    res.json({ success: `${removedGame.title} was removed from the DB` });
+    res
+      .status(200)
+      .json({ success: `${removedGame.title} was removed from the DB` });
   });
 });
 

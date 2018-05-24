@@ -31,9 +31,84 @@
 
 ## DOCUMENTATION GOES HERE
 
+# Video Games API
+
 ```
-THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
+This is an API that contains information on NES video games.
 ```
+
+### Method & URL
+
+|      GET      |       POST       |       PUT        |        DELETE         |
+| :-----------: | :--------------: | :--------------: | :-------------------: |
+| /api/game/get | /api/game/create | /api/game/update | /api/game/destroy/:id |
+
+### Response
+
+#### [GET]
+
+    --------------
+    status: 200 OK
+    --------------
+    [
+        {
+            "_id": "5ae35dea56f3e3ad0368b350",
+            "title": "Super Mario Bros",
+            "releaseDate": "September 1985",
+            "genre": "Platformer",
+            "__v": 0
+        }
+    ]
+
+#### [POST]
+
+|    Name     |  Type  |              Description              |
+| :---------: | :----: | :-----------------------------------: |
+|    title    | string |    Creates the title for the game     |
+|    genre    | string |    Creates the genre for the game     |
+| releaseDate | string | Creates the release date for the game |
+
+    -------------------
+    status: 201 Created
+    -------------------
+    {
+        "_id": "5ae35dea56f3e3ad0368b350",
+        "title": "Super Mario Bros",
+        "releaseDate": "September 1985",
+        "genre": "Platformer",
+        "__v": 0
+    }
+
+#### [PUT]
+
+| Name  |  Type  |                       Description                       |
+| :---: | :----: | :-----------------------------------------------------: |
+|  id   | string | The Mongoose generated id required to update a property |
+| title | string |             Updates the title for the game              |
+
+    --------------
+    status: 200 OK
+    --------------  
+    {
+        "_id": "5ae35dea56f3e3ad0368b350",
+        "title": "Super Mario Bros",
+        "releaseDate": "September 1985",
+        "genre": "Platformer",
+        "__v": 0
+    }
+
+#### [DELETE]
+
+| Name |  Type  |                         Description                          |
+| :--: | :----: | :----------------------------------------------------------: |
+|  id  | string | The Mongoose generated id required to delete a game document |
+
+    --------------
+    status: 200 OK
+    --------------  
+    {
+        "success":  "5ae35dea56f3e3ad0368b350 was removed from the DB"
+    }
 
 ## TESTS
 
