@@ -13,7 +13,7 @@
 1.  In Jest, what are the differences between `beforeAll`, `afterAll`, `beforeEach`, and `afterEach`? When do they run? What are they used for?
 1.  What is the point of Test Driven Development? What do you personally think about this approach?
 1.  What is a `mock function`? How do we use it to test a `callback` passed to a function?
-1.  Mention three types of test.
+1.  Mention three types of tests.
 1.  What type of test performs database operations against a real server.
 
 ## Initializing Project
@@ -28,13 +28,13 @@
 
 ## Project Description
 
-* You're going to be writing the documentation and the tests for a CRD API.
+* You're going to be writing the tests for a CRUD API.
 * The API itself is really simple. Your task is to peek at the endpoints found in the `server.js` file and write the tests for them.
 
 ## TESTS
 
 * The provided API has already been manually tested.
-* Your job is to write unit tests to ensure that the endpoints do what they're supposed to do.
+* Your job is to write `unit and integration tests` to ensure that the endpoints do what they're supposed to do.
 * Each endpoint should have multiple tests to ensure that different sorts of input are handled correctly/as expected. As a guideline, write at least two tests for each endpoint.
 * THERE IS NO NEED TO `YARN START`, BUT YOU'LL WANT TO ENSURE THAT YOU HAVE A `MONGO` INSTANCE UP AND RUNNING.
 
