@@ -2,11 +2,14 @@ const mongoose = require('mongoose');
 const server = require('./server');
 
 const port = 5050;
-mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/video-games', {}, err => {
-  if (err) throw new Error(err);
-  console.log('DB up and running');
-});
+mongoose
+  .connect('mongodb://localhost/games')
+  .then(() => {
+    console.log('connected to production database');
+  })
+  .catch(err => {
+    console.log('error connecting to production database');
+  });
 
 server.listen(port, () => {
   console.log(`Magic happening on port ${port}`);

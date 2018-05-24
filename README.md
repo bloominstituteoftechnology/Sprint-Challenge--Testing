@@ -1,20 +1,22 @@
 # Assessing your Testing Fu
 
 * Keep Calm! Test On!
-* Now that you're familiar with the concepts of testing, your goal is to write documentation and tests for an API that is already in production. (This happens a lot :))
+* Now that you're familiar with the concepts of testing, your goal is to write tests for an API that is already in production. (This happens a lot :))
 * Answers to your written questions will be recorded in _ANSWERS.md_
-* This is to be worked on alone but you can use outside resources. You can _reference_ any old code you may have, and the React Documentation, however, please refrain from copying and pasting any of your answers. Try and understand the question and put your responses in your own words. Be as thorough as possible when explaining something.
+* This is to be worked on alone, but you can use outside resources. You can _reference_ any old code you may have, and the React Documentation, however, please refrain from copying and pasting any of your answers. Try and understand the question and put your responses in your own words. Be as thorough as possible when explaining something.
 * **Just a friendly Reminder** Don't fret or get anxious about this, this is a no-pressure assessment that is only going to help guide you here in the near future. This is NOT a pass/fail situation.
 
 ## Start by forking and cloning this repository.
 
 ## Questions - Self Study - You can exercise your Google-Fu for this and any other _Sprint Challenge_ in the future.
 
-1.  In Mocha, what are the differences between `before`, `after`, `beforeEach`, and `afterEach`? When do they run? What are they used for?
-2.  What is the point of Test Driven Development? What do you personally think about this approach?
-3.  What is a `spy` in `sinon`? How do we use it to effectively test a `callback`?
+1.  In Jest, what are the differences between `beforeAll`, `afterAll`, `beforeEach`, and `afterEach`? When do they run? What are they used for?
+1.  What is the point of Test Driven Development? What do you personally think about this approach?
+1.  What is a `mock function`? How do we use it to test a `callback` passed to a function?
+1.  Mention three types of test.
+1.  What type of test performs database operations against a real server.
 
-## Initializing Project -
+## Initializing Project
 
 * Fork/Clone this project into a directory on your machine.
 * `cd` into your forked local copy.
@@ -22,23 +24,17 @@
 * run `yarn` to download and install all the dependencies you need for this project.
 * run `yarn test` to start your tests.
 * Keep an active log of your changes by committing with Git and pushing often to GitHub.
-* Write all of your tests in the `server.test.js` file. This is where you're going to be doing your API mocking/testing.
+* Write all of your tests in the `server.test.js` file.
 
 ## Project Description
 
-* You're going to be writing the documentation and the tests for a CRUD API.
-* The API itself is really simple. Your task is to peek at the endpoints found in the `server.js` file and write docs for each one, then write the tests for the end points.
-
-## DOCUMENTATION GOES HERE
-
-```
-THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RIGHT DURING THE PROJECT YOU SHOULD BE ABLE TO PORT OVER YOUR WORK, AND CHANGE IT TO FIT THE NEW API.
-```
+* You're going to be writing the documentation and the tests for a CRD API.
+* The API itself is really simple. Your task is to peek at the endpoints found in the `server.js` file and write the tests for them.
 
 ## TESTS
 
-* The provided API has already been manually tested for you.
-* Your job is to write unit tests to ensure that the end points do what they're supposed to do.
+* The provided API has already been manually tested.
+* Your job is to write unit tests to ensure that the endpoints do what they're supposed to do.
 * Each endpoint should have multiple tests to ensure that different sorts of input are handled correctly/as expected. As a guideline, write at least two tests for each endpoint.
 * THERE IS NO NEED TO `YARN START`, BUT YOU'LL WANT TO ENSURE THAT YOU HAVE A `MONGO` INSTANCE UP AND RUNNING.
 
@@ -63,17 +59,14 @@ THIS NEEDS TO BE FILLED IN WITH YOUR BEAUTIFUL DOCUMENTATION. IF YOU DID THIS RI
   expect(res.data[0].foo).to.equal(bar.foo);
   ```
 
-* Write your `PUT` and your `DELETE`
-
 ### Write tests for the "DELETE" method
 
-* `DELETE` can take an ID off of the route parameter, or off of the req.body. It's your choice.
+* `DELETE` can take an ID off of the route parameter and delete the corresponding game if it exists or return a 404 and an object with a message if the game does not exist in the database.
 
 ## Stretch Problem
 
 ### Write tests for the "PUT" method
 
 * Just like in class, send up the information you want changed on the server via the `req.body`.
-* You can send up the Id and the Server will be using that to find the record and then when found, update the record with the `req.body` info you sent up
 
 ### Remember you can use any resources you want to solve these problems, but avoid copying/pasting solutions you've previously written. Also if you don't finish all of the challenges, that's fine! Just do what you can and submit your challenges in the end! HAVE FUN!
