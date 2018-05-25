@@ -100,5 +100,27 @@ describe("Games", () => {
     expect(game.genre).toEqual(expectedBody.genre);
     expect(game.releaseDate).toEqual(expectedBody.releaseDate);
   });
-  // Test the DELETE here
+
+  // Test the DELETE here [IN PROGRES......]
+  it("should have an ID of an existing game in the route parameter", async () => {
+    const game = await request(server).get("/api/games");
+    const gameId = game.body[0]._id;
+
+    expect(game.body[0]).toBeTruthy();
+    expect(typeof gameId).toEqual("string");
+    expect(gameId.length).toBeGreaterThan(0);
+  });
+
+  it("should delete a book give an ID", async () => {
+    const game = await request(server).get("/api/games");
+    const gameId = game.body[0]._id;
+
+    const response = await request(server).delete(`/api/games/${gameId}`);
+
+    expect(response.status).toEqual(204);
+    expect(typeof response.body).toBe("object");
+    expect(response.body.title).toBeFalsy();
+    expect(response.body.genre).toBeFalsy();
+    expect(response.body.releaseDate).toBeFalsy();
+  });
 });
