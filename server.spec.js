@@ -42,10 +42,20 @@ describe("Games", () => {
 
   afterEach(() => {
     //   // clear collection.
-    Game.remove();
+    return Game.remove();
   });
 
   it("runs the tests", () => {});
+
+  // test the GET here
+  describe("GET /api/games", () => {
+    it("should return OK games as JSON objects", async () => {
+      const response = await request(server).get("/api/games");
+
+      expect(response.status).toEqual(200);
+      expect(response.type).toBe("application/json");
+    });
+  });
 
   // test the POST here
   describe("POST /api/games", () => {
@@ -78,11 +88,6 @@ describe("Games", () => {
 
       expect(response.status).toEqual(500);
     });
-  });
-
-  // test the GET here
-  describe("GET /api/games", () => {
-    it("should return OK games as JSON objects", () => {});
   });
 
   // Test the DELETE here
