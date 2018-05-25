@@ -147,6 +147,17 @@ describe('Games', () => {
         .expect(res => res.body.title === 'jeffrey')
         .expect(res => res.body.genre === 'flynn')
     });
+
+    it('should return an error for a PUT request with no title', async () => {
+      const savedGame = await Game.create(newGame)
+      const updates = { genre: 'jeffrey' }
+      request(server)
+        .put(`/api/games/${savedGame._id}`)
+        .send(updates)
+        .expect(422)
+        .expect('Content-Type', /json/)
+        .expect(res => res.message === 'Must Provide a title && Id')
+    });
   })
 
 });
