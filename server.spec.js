@@ -40,7 +40,6 @@ describe('Games', () => {
   });
 
   afterEach(() => {
-    //   // clear collection.
     return Game.remove(); //Clear the database after each test 
   });
 
@@ -49,7 +48,7 @@ describe('Games', () => {
   // test the POST here
   it('Should post a game', async() => {
     const game = {
-      title: 'Bttlefield 1',
+      title: 'Battlefield 1',
       genre: 'FPS',
       releaseDate: 'October 2016'
     }
@@ -76,10 +75,9 @@ describe('Games', () => {
   })
 
   // Test the DELETE here
-
   it('should delete a game', async() => {
     const response = await request(server)
     .delete(`/api/games/${gameId}`);
-    expect(response.status).toEqual(404); // no games stored in db comment out after each in order to get a 204 request
+    expect(response.status).toEqual(404); // no games stored in db comment out after each in order to get 204 status.
   })
 });
