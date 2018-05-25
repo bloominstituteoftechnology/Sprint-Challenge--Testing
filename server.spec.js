@@ -31,6 +31,8 @@ describe('Games', () => {
     // each time this hook runs, you should save a document to your db
     // by saving the document you'll be able to use it in each of your `it` blocks
   });
+
+
   afterEach(() => {
     //    clear collection.
     Game.remove({}, err => {
@@ -46,7 +48,7 @@ describe('Games', () => {
   it('runs the tests', () => {});
 
   // test the POST here
-  it('tests the POST at api/games', async () => {
+  it('should the POST at api/games for saving a new game if title and genre is provided', async () => {
 
     const newGame = {
       title: 'Pokemon Super Myster Dungeon',
@@ -68,6 +70,33 @@ describe('Games', () => {
     expect(response.type).toBe('application/json');
     expect(response.body).toEqual(newGame);
 
+
+  })
+
+
+
+
+
+
+  it('should send server error status code  if  both title and genre is  not provided', async () => {
+
+    const newGame = {
+      title: 'Pokemon Super Myster Dungeon',
+      releaseDate: 'November 20, 2015'
+    };
+    let response;
+
+    try {
+      response = await request(server).post('/api/games').send(newGame);
+    } catch (err) {
+      console.log(err);
+    }
+    //removing the excess body._V and body._id to match our input
+    delete response.body.__v;
+    delete response.body._id;
+
+    expect(response.status).toBe(500);
+    expect(response.type).toBe('application/json');
 
   })
 
