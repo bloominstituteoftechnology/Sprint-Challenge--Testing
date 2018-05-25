@@ -86,6 +86,17 @@ describe('Games', () => {
         .expect(200)
         .expect(res => res.length === 2)
     })
+    
+    it('should fetch a game with provided ID', async () => {
+      const savedGame = await Game.create(newGame)
+      request(server)
+        .get(`/api/games/${savedGame._id}`)
+        .expect(200)
+        .expect('Content-Type', /json/)
+        .expect(res => res.body.title === newGame.title)
+        .expect(res => res.body.genre === newGame.genre)
+        .expect(res => res.body.releaseDate === newGame.releaseDate)
+    })
   })
 
 
