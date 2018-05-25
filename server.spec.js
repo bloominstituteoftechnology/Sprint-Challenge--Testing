@@ -30,7 +30,7 @@ describe('Games', () => {
     Game.create(newGame)
     .then(savedGame => {
       gameId = savedGame._id.toString();
-      //console.log(savedGame);
+      console.log(gameId);
     })
     .catch(err => console.log(err));
   
@@ -39,7 +39,7 @@ describe('Games', () => {
   afterEach(() => {
     //   // clear collection.
     //console.log(gameId);
-    return Game.remove({});
+    return Game.remove();
   });
 
   // test the POST here
@@ -48,7 +48,7 @@ describe('Games', () => {
         title: "Need For Speed",
         genre: "arcade",
         releaseDate: "90s something"
-      }
+      };
       
       const response = await request(server).post('/api/games').send(anotherGame);
       //gameId = response.body._id;
@@ -78,7 +78,7 @@ describe('Games', () => {
   it('should get the list of the games from database', async () => {
     
     const response = await request(server).get('/api/games');
-    console.log(response.body);
+    //console.log(response.body);
     
     expect(response.status).toEqual(200);
     expect(Array.isArray(response.body)).toBe(true);
@@ -88,4 +88,25 @@ describe('Games', () => {
   });
 
   // Test the DELETE here
+  
+  it('should delete game given its id', async () => {
+    
+    const anotherGame = {
+      title: "Need For Speed",
+      genre: "arcade",
+      releaseDate: "90s something"
+    };
+    
+    const mockData = await request(server).post('/api/games').send(anotherGame);
+    
+    const response = await request(server).del(`/api/games/${gameId}`);
+    console.log(gameId);
+    console.log(response.body);
+    expect(response.status).toEqual(204);
+    expect(response.body).toEqual({});
+  
+  
+  
+  });
+  
 });
