@@ -46,6 +46,13 @@ describe('Games', () => {
   });
 
   // test the GET here
+  it('Should GET List of Games', async () => {
+    const response = await request(server).get('/api/games');
+
+    expect(response.status).toEqual(200);
+    expect(response.type).toEqual('application/json');
+    expect(response.body[0].title).toEqual('Mad Max');
+  });
 
   // Test the DELETE here
 });
