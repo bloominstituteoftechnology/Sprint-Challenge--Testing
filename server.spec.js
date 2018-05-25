@@ -1,3 +1,4 @@
+const server = require("./server");
 const mongoose = require('mongoose');
 
 const Game = require('./games/Game');
@@ -19,13 +20,24 @@ describe('Games', () => {
   // // hint - these wont be constants because you'll need to override them.
 
   beforeEach(() => {
+    beforeEach(() => {
+      const newGame = new Game({
+        title: 'Mario',
+        genre: 'Action'
+      });
+      return newGame
+        .save()
+        .then(savedGame => {
+          gameId = savedGame._id.toString();
+        });
+    });
     //   // write a beforeEach hook that will populate your test DB with data
     //   // each time this hook runs, you should save a document to your db
     //   // by saving the document you'll be able to use it in each of your `it` blocks
   });
 
   afterEach(() => {
-    //   // clear collection.
+    return Game.remove();//   // clear collection.
   });
 
   it('runs the tests', () => {});
