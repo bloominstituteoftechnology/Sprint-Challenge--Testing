@@ -72,5 +72,19 @@ describe('Games', () => {
     expect(response.type).toBe('')
   });
 
+  // Test the PUT here
+  it('should respond to a put request', async () => {
+    const game = { title: 'title', genre: 'genre', releaseDate: 'releaseDate' }
+    const updatedGame = { title: 'title' }
+    const document = new Game(game)
+    const { _id } = document
+    return document.save()
+      .then(async () => {
+        const response = await request(server).put(`/api/games/${_id}`).send(updatedGame)
+        expect(response.status).toBe(422)
+        expect(response.type).toBe('application/json')
+      })
+  });
+
 
 });
