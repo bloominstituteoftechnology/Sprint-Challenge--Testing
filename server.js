@@ -1,12 +1,30 @@
 const express = require('express');
 const morgan = require('morgan');
-
+const mongoose = require('mongoose');
 const Game = require('./games/Game');
 
 const server = express();
 
 server.use(express.json());
 server.use(morgan('combined'));
+
+const port = 5050;
+mongoose
+  .connect('mongodb://localhost/games')
+  .then(() => {
+    console.log('connected to production database');
+  })
+  .catch(err => {
+    console.log('error connecting to production database');
+  });
+
+
+
+server.get('/', (req, res) => {
+  res.status(200).json({ msg: 'api is running' })
+
+})
+
 
 server.post('/api/games', (req, res) => {
   Game.create(req.body)
@@ -77,5 +95,15 @@ server.delete('/api/games/:id', (req, res) => {
       .catch(err => res.status(500).json(err));
   }
 });
+
+
+if (process.env.NODE_ENV !== 'test') {
+  server.listen(port, () => {
+    console.log(`connected to port  ${port}`);
+  });
+}
+
+
+
 
 module.exports = server;

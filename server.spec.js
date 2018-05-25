@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
-
 const Game = require('./games/Game');
+const server = require('./server.js')
+const request = require('supertest');
 
 describe('Games', () => {
   beforeAll(() => {
@@ -15,24 +16,50 @@ describe('Games', () => {
       .then(() => console.log('\n=== disconnected from TEST DB ==='));
   });
 
-  let gameId;
-  // // hint - these wont be constants because you'll need to override them.
+  let gameId = "5b084971d57d93a692028836";
+
 
   beforeEach(() => {
+
+    return Game.find({})
     //   // write a beforeEach hook that will populate your test DB with data
     //   // each time this hook runs, you should save a document to your db
     //   // by saving the document you'll be able to use it in each of your `it` blocks
   });
 
   afterEach(() => {
-    //   // clear collection.
+    return Game.remove()
   });
 
-  it('runs the tests', () => {});
+  it('server is running ', async () => {
+    const expected = { msg: "api is running" }
+    const response = await request(server).get('/');
+    expect(response.body).toEqual(expected);
+    expect(response.status).toBe(200);
+    expect(response.type).toBe('application/json');
 
-  // test the POST here
 
-  // test the GET here
+  });
+  it('server is posting ', async () => {
+    const obj = { title: "zzzzzzzzzzzz", genre: 'hahahahahah' };
+    const savedGame = await Game.create(obj);
+    const response = await request(server).get('/api/games');
+    const realRespond = response.body.map(game => { return game.title })
+    expect(realRespond).toContain(obj.title);
+    expect(response.status).toBe(200);
+    expect(response.type).toBe('application/json');
 
-  // Test the DELETE here
+
+  });
+  it('server is deleting  ', async () => {
+    await Game.findById({ _id: gameId }).remove()
+    const response = await request(server).get('/api/games');
+    const realRespond = response.body.map(game => { return game._id })
+    expect(realRespond).not.toContain(gameId);
+    expect(response.status).toBe(200);
+    expect(response.type).toBe('application/json');
+
+
+  });
+
 });
