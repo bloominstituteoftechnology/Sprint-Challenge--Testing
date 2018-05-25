@@ -49,7 +49,6 @@ describe('Games', () => {
   it('should respond to a post', async () => {
     const game = { title: 'title', genre: 'genre', releaseDate: 'releaseDate' }
     const response = await request(server).post('/api/games').send(game)
-
     expect(response.status).toBe(201)
     expect(response.type).toBe('application/json')
   })
@@ -60,11 +59,31 @@ describe('Games', () => {
     const { _id } = document
     return document.save()
       .then(async () => {
-        const response = await request(server).get(`/api/games/${_id}`)
-        
+        const response = await request(server).get(`/api/games/${_id}`) 
         expect(response.status).toBe(404)
         expect(response.type).toBe('text/html')
       })
     })
   // Test the DELETE here
+  it('should respond to a delete request', async () => {
+    const game = { title: 'title', genre: 'genre', releaseDate: 'releaseDate' }
+    const testGame = await Game.create(game)
+    const { _id } = testGame
+    const response = await request(server).delete(`/api/games/${_id}`)
+    expect(response.status).toBe(204)
+    expect(response.type).toBe('')
+  })
+  // Test the PUT here
+  it('should respond to a put request', async () => {
+    const game = { title: 'title', genre: 'genre', releaseDate: 'releaseDate' }
+    const updatedGame = { title: 'title' }
+    const document = new Game(game)
+    const { _id } = document
+    return document.save()
+      .then(async () => {
+        const response = await request(server).put(`/api/games/${_id}`).send(updatedGame)
+        expect(response.status).toBe(422)
+        expect(response.type).toBe('application/json')
+      })
+  })
 });
