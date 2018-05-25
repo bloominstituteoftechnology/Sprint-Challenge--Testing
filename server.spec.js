@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Request = require("supertest");
 const server = require("./server");
+const app = require("./app");
 
 const Game = require("./games/Game");
 
@@ -32,7 +33,7 @@ const defaultGames = [defaultGame1, defaultGame2, defaultGame3];
 
 describe("Games", () => {
   beforeAll(() => {
-    return mongoose.connect("mongodb://localhost/test").then(() => {
+    return mongoose.connect("mongodb://localhost/games").then(() => {
       console.log("\n=== connected to TEST DB ===");
       return defaultGames.forEach(game => {
         return Game.create(game);
@@ -125,7 +126,7 @@ describe("Games", () => {
 
       expect(status).toEqual(200);
       expect(type).toEqual("application/json");
-      expect(games).toHaveLength(4);
+      expect(games.length).toEqual(4);
       games.forEach(game => {
         expect(game._id).toBeTruthy();
         expect(game.title).toBeTruthy();
@@ -160,19 +161,21 @@ describe("Games", () => {
   });
 
   //couldn't get PUT testing stretch problem solved
-  // describe("Putting games should work", () => {
-  //   it("putting with the route /api/games/:id should update the game with the given id", async () => {
-  //     const getResponse = await Request(server).get("/api/games");
-  //     const id = getResponse.body[0]._id;
-  //     const response = await Request(server)
-  //       .put(`/api/games/${id}`)
-  //       .send({ title: "newTitle" })
-  //       .set("Accept", "application/json");
+  describe("Putting games should work", () => {
+    it("putting with the route /api/games/:id should update the game with the given id", async () => {
+      const getResponse = await Request(server).get("/api/games");
+      const id = getResponse.body[0]._id;
+      const response = await Request(server)
+        .put(`/api/games/${id}`)
+        .send({ id: id, title: "newTitle" })
+        .set("Accept", "application/json");
 
-  //     const { status, type, body } = response;
+      const { status, type, body } = response;
 
-  //     expect(status).toEqual(200);
-  //     expect(game.title).toEqual("newTitle");
-  //   });
-  // });
+      expect(status).toEqual(200);
+      expect(type).toEqual("application/json");
+      expect(body.title).toEqual("newTitle");
+      expect(body._id).toEqual(id);
+    });
+  });
 });
