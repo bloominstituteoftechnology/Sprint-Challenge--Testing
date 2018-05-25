@@ -69,9 +69,8 @@ describe("Games", () => {
         .set("Accept", "application/json");
 
       const { status, type, body } = response;
-      const game = body;
-      const titleInGame = "title" in game;
-      const _idInGame = "_id" in game;
+      const titleInGame = "title" in body;
+      const _idInGame = "_id" in body;
 
       expect(status).toEqual(201);
       expect(type).toEqual("application/json");
@@ -88,9 +87,8 @@ describe("Games", () => {
         .set("Accept", "application/json");
 
       const { status, type, body } = noTitleResponse;
-      const game = body;
-      const titleInGame = "title" in game;
-      const _idInGame = "_id" in game;
+      const titleInGame = "title" in body;
+      const _idInGame = "_id" in body;
 
       expect(status).toEqual(500);
       expect(type).toEqual("application/json");
@@ -107,9 +105,8 @@ describe("Games", () => {
         .set("Accept", "application/json");
 
       const { status, type, body } = noGenreResponse;
-      const game = body;
-      const genreInGame = "genre" in game;
-      const _idInGame = "_id" in game;
+      const genreInGame = "genre" in body;
+      const _idInGame = "_id" in body;
 
       expect(status).toEqual(500);
       expect(type).toEqual("application/json");
@@ -146,20 +143,18 @@ describe("Games", () => {
       const id = getResponse.body[0]._id;
       const response = await Request(server).delete(`/api/games/${id}`);
 
-      const { status, type, body } = response;
-      const game = body;
+      const { status, body } = response;
 
       expect(status).toEqual(204);
-      expect(game).not.toContain("_id");
+      expect(body).not.toContain("_id");
     });
     it("trying to delete using an id that does not exist should return an error", async () => {
       const id = "thisisnotavalididman";
       const response = await Request(server).delete(`/api/games/${id}`);
 
-      const { status, type, body } = response;
+      const { status, body } = response;
 
       expect(status).toEqual(500);
-      expect(type).toEqual("application/json");
       expect(body).not.toContain("_id");
     });
   });
@@ -175,7 +170,6 @@ describe("Games", () => {
   //       .set("Accept", "application/json");
 
   //     const { status, type, body } = response;
-  //     const game = body;
 
   //     expect(status).toEqual(200);
   //     expect(game.title).toEqual("newTitle");
