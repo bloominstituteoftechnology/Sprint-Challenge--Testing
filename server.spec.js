@@ -36,10 +36,10 @@ describe('Games', () => {
   });
 
   afterEach(() => {
-    //   // clear collection.
+    return Game.remove();
   });
 
-  describe('POST /games', () => {
+  describe('POST /api/games', () => {
     it('should create a new game', async () => {
       const testGameData = {
         title: faker.random.word(),
@@ -56,7 +56,16 @@ describe('Games', () => {
 
     });
   });
-  // test the POST here
+
+  describe('GET /api/games', () => {
+    it('should get list of games', async () => {
+
+      const response = await request(server).get('/api/games');
+
+      expect(response.status).toBe(200);
+      expect(response.body[0]._id).toBe(String(gameId));
+    });
+  });
 
   // test the GET here
 
