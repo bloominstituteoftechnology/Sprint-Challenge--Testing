@@ -5,7 +5,7 @@ const Game = require('./games/Game');
 
 describe('Games', () => {
 
-    const testGame = {title: 'test game', genre: 'FPS', releaseDate: 'July 04 2018'};
+
     beforeAll(() => {
         return mongoose
             .connect('mongodb://localhost/test')
@@ -22,21 +22,9 @@ describe('Games', () => {
     // // hint - these wont be constants because you'll need to override them.
 
     beforeEach(() => {
-        const newGame = new Game({
-            title: 'Batman',
-            genre: 'MOBA',
-            releaseDate: 'May 25 2018'
-        }).save((err, saveGame) => {
+        const newGame = new Game ({title: 'Buster', genre: 'RST', releaseDate: 'May 25 1948'}).save();
+        const newGame2 = new Game ({title: 'Buster', genre: 'RST', releaseDate: 'May 25 1948'}).save();
 
-            if (err) {
-                console.log('There was a problem saving the game');
-                return;
-            }
-            else {
-                gameId = saveGame.id;
-                console.log('Game was saved');
-            }
-        });
 
     });
 
@@ -67,5 +55,14 @@ describe('Games', () => {
         expect(respone.body.releaseDate).toEqual('May 25 2018');
     });
     // test the GET here
+    it('should get the game(s)', async () => {
+
+        let response = await request(server)
+            .get('/api/games');
+        expect(response.status).toBe(200);
+        expect(response.body).toHaveLength(2);
+
+    });
+
     // Test the DELETE here
 });
