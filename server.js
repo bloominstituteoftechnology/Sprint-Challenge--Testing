@@ -1,6 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
-
+// const server = require('./server');
 const Game = require('./games/Game');
 
 const server = express();
@@ -45,7 +45,7 @@ server.put('/api/games/:id', (req, res) => {
     new: true,
   };
 
-  Game.findByIdAndUpdate(id, update, options)
+  Game.findByIdAndUpdate(id, changes, options)
     .then(game => {
       if (game) {
         res.status(200).json(game);
@@ -59,6 +59,8 @@ server.put('/api/games/:id', (req, res) => {
         .json({ message: 'Something really bad happened', error: err });
     });
 });
+
+
 
 server.delete('/api/games/:id', (req, res) => {
   const { id } = req.params;
