@@ -20,7 +20,11 @@ describe('Games', () => {
   let gameId;
   // // hint - these wont be constants because you'll need to override them.
 
- 
+  const game = {
+    title: 'Black Desert Online',
+    genre: 'Fantasy',
+    releaseDate: 'July 2016'
+  };
   
   beforeEach(() => {
     //   // write a beforeEach hook that will populate your test DB with data
