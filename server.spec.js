@@ -77,5 +77,13 @@ describe('Games', () => {
     expect(response.body[0].title).toBe('jest testing');
   });
 
+  /**
+   * @param The server successfully processed the request, but is not returning any content. Unlike a 204 response, this response requires that the requester reset the document view. The server is delivering only part of the resource (byte serving) due to a range header sent by the client.
+   */
   // Test the DELETE here
+  it('should delete an existing game with an ID', async () => {
+    request(server)
+      .delete(`/api/games/${gameId}`)
+      .expect(204);
+  });
 });
