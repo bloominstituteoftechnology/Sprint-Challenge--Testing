@@ -26,16 +26,27 @@ describe('Games', () => {
   it('should throw an error when a new game POST does not meet all requirements', () => {
     const noTitle = { genre: 'sci-fi', releaseDate: '3141' }
     const noGenre = { title: 'messing with mongoose', releaseDate: '3141' }
+
     request(server)
       .post('/api/games')
       .send(noTitle)
       .expect('Content-Type', /json/)
       .expect(500)
+
     request(server)
       .post('/api/games')
       .send(noGenre)
       .expect('Content-Type', /json/)
       .expect(500)
+  })
+
+  it('should allow a user to POST a game without a release date', () => {
+    const noRelease = { title: 'messing with mongoose', genre: 'sci-fi' }
+    request(server)
+      .post('/api/games')
+      .send(noRelease)
+      .expect('Content-Type', /json/)
+      .expect(201)
   })
 
   // test the GET here
