@@ -68,14 +68,12 @@ describe('Games', () => {
       expect(response.body.title).toEqual(anotherGame.title);
       expect(response.body.genre).toEqual(anotherGame.genre);
       expect(response.body.releaseDate).toEqual(anotherGame.releaseDate);
-
       expect(response.status).toBe(201);
       expect(response.type).toBe('application/json');
 
     })
 
     it('should send server error status code  if  both title and genre is  not provided', async () => {
-
       let response;
 
       try {
@@ -83,10 +81,7 @@ describe('Games', () => {
       } catch (err) {
         console.log(err);
       }
-
       expect(response.status).toBe(500);
-      expect(response.type).toBe('application/json');
-
     })
 
   })
@@ -120,9 +115,7 @@ describe('Games', () => {
     })
 
     it('should the GET at api/games for fetching all the games', async () => {
-
       let response;
-
       try {
         response = await request(server).get('/api/games');
       } catch (err) {
@@ -159,9 +152,9 @@ describe('Games', () => {
     }
     const document = new Game(game)
     const {_id} = document
-    return document.save().then(async () => {
+    return document.save()
+    .then(async () => {
       const response = await request(server).delete(`/api/games/${_id}`)
-
       expect(response.status).toBe(204)
     })
   })

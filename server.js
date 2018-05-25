@@ -32,6 +32,25 @@ server.get('/api/games', (req, res) => {
     });
 });
 
+server.delete('/api/games/:id', (req, res) => {
+  const { id } = req.params;
+console.log('from server.js --- id', id)
+  if (!id) {
+    res.status(422).json({ message: 'You need to give me an ID' });
+  } else {
+    Game.findByIdAndRemove(id)
+      .then(game => {
+        if (game) {
+          res.status(204).end();
+        } else {
+          res.status(404).json({ message: 'Game not found' });
+        }
+      })
+      .catch(err => res.status(500).json(err));
+  }
+});
+
+
 server.put('/api/games/:id', (req, res) => {
   const { id } = req.params;
   const changes = req.body;
@@ -58,24 +77,6 @@ server.put('/api/games/:id', (req, res) => {
         .status(500)
         .json({ message: 'Something really bad happened', error: err });
     });
-});
-
-server.delete('/api/games/:id', (req, res) => {
-  const { id } = req.params;
-console.log('from server.js --- id', id)
-  if (!id) {
-    res.status(422).json({ message: 'You need to give me an ID' });
-  } else {
-    Game.findByIdAndRemove(id)
-      .then(game => {
-        if (game) {
-          res.status(204).end();
-        } else {
-          res.status(404).json({ message: 'Game not found' });
-        }
-      })
-      .catch(err => res.status(500).json(err));
-  }
 });
 
 module.exports = server;
