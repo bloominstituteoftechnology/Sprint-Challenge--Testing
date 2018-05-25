@@ -131,7 +131,7 @@ describe('Games', () => {
 
   // Test the DELETE here
 
-  // describe('delete', () => {
+  describe('delete', () => {
   //   it('should delete a document if proper id is given', async () => {
   //
   //     let response;
