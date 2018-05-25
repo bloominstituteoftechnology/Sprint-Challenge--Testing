@@ -45,7 +45,7 @@ server.put('/api/games/:id', (req, res) => {
     new: true,
   };
 
-  Game.findByIdAndUpdate(id, update, options)
+  Game.findByIdAndUpdate(id, changes, options)
     .then(game => {
       if (game) {
         res.status(200).json(game);
@@ -74,7 +74,10 @@ server.delete('/api/games/:id', (req, res) => {
           res.status(404).json({ message: 'Game not found' });
         }
       })
-      .catch(err => res.status(500).json(err));
+      .catch(err => {
+        console.log(err)
+        res.status(500).json(err)
+      });
   }
 });
 
