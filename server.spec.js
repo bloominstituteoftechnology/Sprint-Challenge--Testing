@@ -46,6 +46,13 @@ describe('Games', () => {
 
   // test the POST here
   describe('[POST] /api/games', () => {
+    it('take in and object without throwing error', async () => {
+      const response = await request(server).post("/api/games").send(game);
+      const { title, genre, releaseDate } = response.body;
+
+      expect(response.status).toEqual(201);
+      expect(response.type).toEqual("application/json");
+    });
 
   });
   
