@@ -35,6 +35,7 @@ describe('Games', () => {
 
   afterEach(() => {
     //   // clear collection.
+    Game.remove()
   });
 
   it('runs the tests', () => {});
