@@ -76,7 +76,7 @@ describe('Games', () => {
 
   // test the GET here
   it('GET', async() => {
-    let response = await request(server)
+    const response = await request(server)
       .get('/api/games');
 
     expect(response.status).toBe(200);
@@ -84,6 +84,9 @@ describe('Games', () => {
   });
 
   // Test the DELETE here
+  it('DELETE', () => {
+    
+  })
 
 
 });
