@@ -28,7 +28,7 @@ describe('Games', () => {
       releaseDate: 'March 2017',
     });
     testGame.save((err, saved) => {
-      gameId = saved._id.toString();
+      gameId = testGame._id;
     })
   });
 
@@ -51,6 +51,7 @@ describe('Games', () => {
     const response = await request(server).post('/api/games').send(game)
     expect(response.status).toBe(201)
     expect(response.type).toBe('application/json')
+    expect(response.body.title).toMatch('title')
   })
   // test the GET here
   it('should respond to get request', async () => {
