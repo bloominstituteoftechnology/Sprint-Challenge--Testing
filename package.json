@@ -4,8 +4,10 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "mocha *.test.js --exit",
-    "start": "nodemon app.js"
+    "test": "cross-env NODE_ENV=test jest --watch --verbose"
+  },
+  "jest": {
+    "testEnvironment": "node"
   },
   "repository": {
     "type": "git",
@@ -19,8 +21,13 @@
   },
   "homepage":
     "https://github.com/LambdaSchool/Sprint-Challenge--Testing#readme",
+  "devDependencies": {
+    "cross-env": "^5.1.6",
+    "jest": "^22.4.4",
+    "supertest": "^3.1.0"
+  },
   "dependencies": {
-    "body-parser": "^1.18.2",
+    "bcrypt": "*",
     "chai": "^4.1.2",
     "chai-http": "^3.0.0",
     "express": "^4.16.2",
