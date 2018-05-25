@@ -20,4 +20,4 @@
 -Unit testing, integration tests, behavioral tests
 
 6. What type of test performs database operations against a real server.
--Unit tests
+-Unit testing
