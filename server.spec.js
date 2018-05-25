@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
+const request = require("supertest");
 
 const Game = require("./games/Game");
+const server = require("./server");
 
 describe("Games", () => {
   beforeAll(() => {
@@ -34,20 +36,40 @@ describe("Games", () => {
         gameId = game._id.toString();
       })
       .catch(error => {
-        console.log(error)
-      })
+        console.log(error);
+      });
   });
 
   afterEach(() => {
     //   // clear collection.
-    Game.remove()
+    Game.remove();
   });
 
   it("runs the tests", () => {});
 
   // test the POST here
+  describe("POST /api/games", () => {
+    it("should post a new game to database as a JSON object", async () => {
+      const duckHunt = {
+        title: "Duck Hunt",
+        genre: "Shooter",
+        releaseDate: "1985"
+      };
+
+      const response = await request(server)
+        .post("/api/games")
+        .send(duckHunt);
+
+      expect(response.status).toEqual(201);
+      expect(response.type).toBe("application/json");
+      expect(response.body).toMatchObject(duckHunt);
+    });
+  });
 
   // test the GET here
+  describe("GET /api/games", () => {
+    it("should return OK games as JSON objects", () => {});
+  });
 
   // Test the DELETE here
 });
