@@ -1,7 +1,5 @@
 const mongoose = require("mongoose");
-
 const request = require("supertest");
-
 const server = require("./server");
 
 const Game = require("./games/Game");
@@ -22,12 +20,12 @@ const faker = describe("Games", () => {
   let gameId;
   // // hint - these wont be constants because you'll need to override them.
 
-  beforeEach(() => {
+  beforeEach(async () => {
     //   // write a beforeEach hook that will populate your test DB with data
     //   // each time this hook runs, you should save a document to your db
     //   // by saving the document you'll be able to use it in each of your `it` blocks
     const game = { title: "Starcraft", genre: "RTS", releaseDate: "1998" };
-    const savedGame = Game.create(game); // new + save
+    const savedGame = await Game.create(game); // new + save
   });
 
   afterEach(() => {
@@ -68,6 +66,14 @@ const faker = describe("Games", () => {
 
   // Test the DELETE here
   describe("DELETE /api/games", () => {
+    it("should return the proper game.title", () => {
+      const game = new Game({
+        title: "California Games",
+        date: "June 1987",
+        genre: "Sports"
+      });
+      expect(game.getGameTitle()).toEqual("California Games");
+    });
     // it("should respond with json; 200 if successful", () => {
     //   request(server)
     //     .del("/api/game" + )
