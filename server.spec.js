@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
-
 const Game = require('./games/Game');
+const server = require('./server');
+
 
 describe('Games', () => {
   beforeAll(() => {
@@ -19,12 +20,24 @@ describe('Games', () => {
   // // hint - these wont be constants because you'll need to override them.
 
   beforeEach(() => {
+    const body = {
+      title: "Halo 5",
+      genre: "FPS",
+      releaseDate: "2015"
+    }
+
+    Game.create(body).then(success => {
+      console.log("Game Saved")
+    }).catch(err => {
+      console.log(err);
+    })
     //   // write a beforeEach hook that will populate your test DB with data
     //   // each time this hook runs, you should save a document to your db
     //   // by saving the document you'll be able to use it in each of your `it` blocks
   });
 
   afterEach(() => {
+    return Game.remove()
     //   // clear collection.
   });
 
@@ -33,6 +46,12 @@ describe('Games', () => {
   // test the POST here
 
   // test the GET here
+  it('Should return OK and json object from index route and have 1 game', async() => {
+    const response = await request(server).get('/api/games');
+    expect(response.status).toEqual(200);
+    expect(response.type).toEqual('application/json');
+    expect(response.body).toHaveLength(1)
+})
 
   // Test the DELETE here
 });
