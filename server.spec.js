@@ -42,6 +42,7 @@ const faker = describe("Games", () => {
         .post("/api/games")
         .send({ title: "CS:GO", genre: "FPS", releaseDate: "2011" });
       expect(response.status).toEqual(201);
+      expect(response.body.genre).toEqual("FPS");
     });
 
     it("should return POST as method", async () => {
@@ -49,6 +50,7 @@ const faker = describe("Games", () => {
         .post("/api/games")
         .send({ title: "Warcraft 3", genre: "RTS", releaseDate: "2002" });
       expect(response.body.title).toEqual("Warcraft 3");
+      expect(response.status).toEqual(201);
     });
   });
 
@@ -57,25 +59,20 @@ const faker = describe("Games", () => {
     it("should respond with json; 200 if successful", async () => {
       const response = await request(server).get("/api/games");
       expect(response.status).toEqual(200);
-      expect(response.body[0].title).toEqual(200);
+      expect(response.body[0].title).toEqual("Starcraft");
     });
   });
 
   // Test the DELETE here
   describe("DELETE /api/games", () => {
-    it("should return server OK (200)", async () => {
+    it("should return 'No Content' (204)", async () => {
+      // inquire for id with GET first
       const response = await request(server).get("/api/games");
-      expect(response.status).toEqual(200);
-      expect(response.body[0].title).toEqual(200);
+      const id = response.body[0]._id
 
-      const response = request(server).delete("/api/games/:id");
+      // use id to DELETE
+      const responseDel = await request(server).delete(`/api/games/${id}`);
+      expect(responseDel.status).toEqual(204);
     });
   });
-  // it("should respond with json; 200 if successful", () => {
-  //   request(server)
-  //     .del("/api/game" + )
-  //     .set("Accept", "application/json")
-  //     .expect("Content-Type", /json/)
-  //     .expect(200);
-  // });
 });
