@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
+const request = require('supertest');
 
+const server = require('./server');
 const Game = require('./games/Game');
 
 describe('Games', () => {
@@ -28,7 +30,7 @@ describe('Games', () => {
     Game.create(newGame)
     .then(savedGame => {
       gameId = savedGame._id.toString();
-      console.log(savedGame);
+      //console.log(savedGame);
     })
     .catch(err => console.log(err));
   
@@ -36,13 +38,40 @@ describe('Games', () => {
 
   afterEach(() => {
     //   // clear collection.
-    console.log(gameId);
+    //console.log(gameId);
     return Game.remove({});
   });
 
-  it('runs the tests', () => {});
-
   // test the POST here
+  it('should save a document to the database', async () => {
+      const anotherGame = {
+        title: "Need For Speed",
+        genre: "arcade",
+        releaseDate: "90s something"
+      }
+      
+      const response = await request(server).post('/api/games').send(anotherGame);
+      gameId = response.body._id;
+      //console.log('response: ', response.body);
+      
+      expect(response.status).toEqual(201);
+      expect(response.type).toEqual('application/json');
+      expect(response.body.title).toEqual(anotherGame.title);
+      expect(response.body._id).toEqual(gameId)
+    });
+    
+    it('should fail if name or genre arent provided', async () => {
+        const anotherGame = {
+          genre: "arcade",
+          releaseDate: "90s something"
+        }
+        
+        const response = await request(server).post('/api/games').send(anotherGame);
+        
+        expect(response.status).toEqual(500);
+        expect(response.body.message).toEqual('Error saving data to the DB');
+        
+      });
 
   // test the GET here
 
