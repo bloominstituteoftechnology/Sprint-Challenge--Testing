@@ -51,6 +51,15 @@ describe("Games", () => {
           expect(response.statusCode).toBe(201);
         });
     });
+    it("It should fail when sent insufficient data", () => {
+      let tempTitle = { title: "LOTR" };
+      return request(server)
+        .post(`/api/games/`)
+        .send(tempTitle)
+        .then(response => {
+          expect(response.statusCode).toBe(500);
+        });
+    });
   });
 
   // test the GET here
@@ -61,11 +70,11 @@ describe("Games", () => {
       expect(response.status).toEqual(200);
       expect(response.type).toEqual("application/json");
     });
-    it("It should to get requests at /api/games/", async () => {
+    it("It should return values of items in database", async () => {
       const response = await request(server).get("/api/games/");
 
       expect(response.status).toEqual(200);
-      expect(response.type).toEqual("application/json");
+      expect(response.body).toMatchObject([{ genre: "Middle Earth" }]);
     });
   });
 
