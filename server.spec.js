@@ -78,18 +78,20 @@ it("should fetch a game",async()=>{
     console.log('id',gameId )
     const response = await request(server)
     .delete(`/api/games/${gameId}`)
-    expect(response.status).toEqual(200)
+    expect(response.status).toEqual(204)
   })
-  // it('should delete a game',async ()=>{
-  //   const update = {
-  //     title: 'California Gamez',
-  //     genre: 'Sportz',
-  //     releaseDate: 'June 1999'
-  //   }
-  //   const response = await request(server)
-  //   .put(`/api/games/${gameId}`)
-  //   .send(update);
-  //   console.log('aaa',update)
-  //   expect(response.status).toEqual(200)
-  // })
+  it('should edit a game',async ()=>{
+    const update = {
+      title: 'California Gamez',
+      genre: 'Sportz',
+      releaseDate: 'June 1999'
+    }
+    const response = await request(server)
+    .put(`/api/games/${gameId}`)
+    .send(update);
+    console.log('aaa',update)
+    expect(response.status).toEqual(204)
+  })
 });
+
+
