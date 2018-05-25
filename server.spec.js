@@ -49,20 +49,27 @@ describe('Games', () => {
 
       expect(newGame.title).toBe("Sonic");
     })
+
     it('should return an error if title or genre is missing' , async () => { 
       // arrange
-      const newGame = { releaseDate: "A long time ago" }
+      const noGenreGame = { title: "Sonic", releaseDate: "A long time ago" }
+      const noTitleGame = { genre: "action", releaseDate: "A long time ago" }
 
       // act
-      const game = request(server).post('/api/games').send(newGame);
+      const ggame = request(server).post('/api/games').send(noGenreGame);
+      const tgame = request(server).post('/api/games').send(noTitleGame);
 
       // assert
+      expect(500);
       expect(500);
 
     })
   })
 
   // test the GET here
+  describe('GET /games' , () => {
+    it('should return ')
+  })
 
   // Test the DELETE here
 });
