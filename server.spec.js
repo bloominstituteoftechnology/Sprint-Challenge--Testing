@@ -67,6 +67,37 @@ describe('Games', () => {
     });
   })
   // test the GET here
+  describe('GET', () => {
+    it('should fetch all games from database', async() => {
+      request(server)
+        .get('/api/games')
+        .expect(200)
+        .expect(res => res.length === 0)
 
+      const savedGame = await Game.create(newGame);
+      const anotherGame = await Game.create({ title: 'Marvel', genre:'sci-fi', releaseDate: '042017'});
+      request(server)
+        .get('/api/games')
+        .expect(200)
+        .expect(res => res.length === 2)
+    });
+    it('should fetch a gme with provided ID', async() => {
+      const savedGame = await Game.create(newGame);
+      request(server)
+        .get(`/api/games/${savedGame._id}`)
+        .expect(200)
+        .expect('Content-Type', /json/)
+        .expect(res => res.body.title === newGame.title)
+        .expect(res => res.body.genre === newGame.genre)
+        .expect(res => res.body.releaseDate === newGame.releaseDate)
+    });
+    it('should return an error if an invalid ID is provided', async() => {
+      request(server)
+        .get('/api/games/222')
+        .expect(404)
+        .expect('Content-Type', /json/)
+        .expect(res => res.message === 'Game not found')
+    });
+  });
   // Test the DELETE here
 });
