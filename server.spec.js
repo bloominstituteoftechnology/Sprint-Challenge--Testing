@@ -109,4 +109,22 @@ describe('Games', () => {
       expect(response.body.message).toBe("Game not found");
     });
   });
+
+  describe('PUT /api/games', () => {
+    it('should update a new game with correct data', async () => {
+      const testGameData = {
+        title: faker.random.word(), 
+        genre: faker.random.word(),
+        releaseDate: faker.date.recent().toLocaleDateString('en-US')
+      };
+
+      const response = await request(server)
+        .put(`/api/games/${gameId}`)
+        .send(testGameData);
+
+      expect(response.status).toBe(200);
+      expect(response.body).toMatchObject(testGameData);
+    });
+
+  });
 });
