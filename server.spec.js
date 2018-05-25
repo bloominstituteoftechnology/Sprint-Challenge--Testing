@@ -67,7 +67,11 @@ describe('Games', () => {
 
   // test the GET here
   describe('[GET] /api/games', () => {
-
+    it('returns a body in the response', async () => {
+      const response = await request(server).get("/api/games");
+  
+      expect(response.body).not.toBe('undefined');
+    });
   })
   
   // Test the DELETE here
