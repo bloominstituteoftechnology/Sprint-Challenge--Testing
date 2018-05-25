@@ -30,10 +30,10 @@ describe('Games', () => {
     })
 
     newGame.save((err, savedGame) => {
-      if (err) {
+      if(err) {
         console.log(err);
       } else {
-        gameId = savedGame.id;
+        gameId = savedGame._id;
         console.log(gameId);
       }
     })
@@ -41,7 +41,7 @@ describe('Games', () => {
   });
 
   afterEach(() => {
-    //   // clear collection.
+    // clear collection.
     return Game.remove({}, err => {
       if(err) {
         console.log('Error removing game');
@@ -54,7 +54,7 @@ describe('Games', () => {
   it('runs the tests', () => {});
 
   // test the POST here
-  it('Post', async() => {
+  it('POST', async() => {
     const game = {
       title: 'Overwatch',
       genre: 'pewpew',
@@ -62,19 +62,23 @@ describe('Games', () => {
     }
 
     const response = await request(server)
-      .post('./api/games')
-      .send(game);
+    .post('/api/games')
+    .send(game);
 
-      expect(response.status).toBe(201);
-      expect(response.body).toHaveProperty("id");
-      expect(response.body).toHaveProperty("title");
-      expect(response.body).toHaveProperty("genre");
-      // releaseDate is NOT required. skip the test.
-      expect(response.body.title).toEqual('Overwatch');
-      expect(response.body.genre).toEqual('pewpew');
+    expect(response.status).toBe(201);
+    expect(response.body).toHaveProperty("_id");
+    expect(response.body).toHaveProperty("title");
+    expect(response.body).toHaveProperty("genre");
+    // releaseDate is NOT required. skip the test.
+    expect(response.body.title).toEqual('Overwatch');
+    expect(response.body.genre).toEqual('pewpew');
   });
 
   // test the GET here
+  it('GET', async() => {
+    let response = await request(server)
+    .get('/api/games')
+  })
 
   // Test the DELETE here
 });
