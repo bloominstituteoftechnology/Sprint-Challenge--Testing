@@ -109,4 +109,12 @@ describe('Games', () => {
       .expect('Content-Type', /json/)
       .expect(res => res.message === 'Must Provide a title && Id')
   })
+
+  it('should return an error for a PUT request with an invalid ID', async () => {
+    request(server)
+      .put('/api/games/123')
+      .expect(404)
+      .expect('Content-Type', /json/)
+      .expect(res => res.message === 'Game not found')
+  })
 });
