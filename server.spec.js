@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const request = require("supertest")
 const Game = require('./games/Game');
 const server = require('./server');
 
@@ -50,7 +51,7 @@ describe('Games', () => {
     const response = await request(server).get('/api/games');
     expect(response.status).toEqual(200);
     expect(response.type).toEqual('application/json');
-    expect(response.body).toHaveLength(1)
+    expect(response.body).toHaveLength(2)
 })
 
   // Test the DELETE here
