@@ -30,7 +30,7 @@ describe('Games', () => {
     //   // write a beforeEach hook that will populate your test DB with data
     //   // each time this hook runs, you should save a document to your db
     //   // by saving the document you'll be able to use it in each of your `it` blocks
-    Game.create(game, (err, savedGame) => {
+    return Game.create(game, (err, savedGame) => {
       if(err) return err;
       gameId = savedGame._id;
       console.log('\n=== game added to test db ===');
@@ -39,7 +39,10 @@ describe('Games', () => {
 
   afterEach(() => {
     //   // clear collection.
-    Game.remove().then(console.log('\n=== game deleted from test db ==='));
+    return Game.remove().then(() => {
+      gameId = null;
+      console.log('\n=== game deleted from test db ===')
+    });
   });
 
   it('runs the tests', () => {});
@@ -94,7 +97,32 @@ describe('Games', () => {
   
   // Test the DELETE here
   describe('[DELETE] /api/games/:id', () => {
+    it('not fuck up', async () => {
+      await request(server)
+        .delete(`/api/games${gameId}`)
+        .then(response => {
+          console.log(gameId, response.status);
+          Game.find({}, (err, games) => {
+            if(err) return err;
+            console.log(games);
+          });
+        });
+      
 
+      // await request(server)
+      //   .delete(`/api/games/${gameId}`)
+      //   .set('Accept', 'application/json')
+      //   .expect('Content-Type', /json/)
+      //   // .expect(res => console.log(gameId))
+      //   .expect(200)
+        
+
+        
+
+      // console.log(gameId);
+      // const responsew = await request(server).delete(`/api/games${gameId}`);
+      // console.log(gameId);
+    });
   });
  
 });
