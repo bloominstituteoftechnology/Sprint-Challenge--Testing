@@ -68,10 +68,20 @@ describe('Games', () => {
 
   // test the GET here
   describe('GET /games' , () => {
-    it('should return games from the database', () => {
 
-      request(server).get('/api/games').expect(res => res.length > 0);
+    it('should show there are games in the database', () => {
+
+      request(server)
+        .get('/api/games')
+        .expect(res => res.length > 0)
+       
     })
+
+    it('should return the proper status code', () => {
+    request(server)
+        .get('/api/games')
+        .expect(200)
+      })
   })
 
   // Test the DELETE here
