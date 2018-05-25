@@ -30,7 +30,11 @@ describe('Games', () => {
     //   // write a beforeEach hook that will populate your test DB with data
     //   // each time this hook runs, you should save a document to your db
     //   // by saving the document you'll be able to use it in each of your `it` blocks
-
+    Game.create(game, (err, savedGame) => {
+      if(err) return err;
+      gameId = savedGame._id;
+      console.log('\n=== game added to test db ===');
+    });
   });
 
   afterEach(() => {
