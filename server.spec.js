@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-
+const server = require('./server.js');
+const request = require('supertest');
 const Game = require('./games/Game');
 
 describe('Games', () => {
