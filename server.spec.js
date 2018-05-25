@@ -72,6 +72,15 @@ describe('Games', () => {
   
       expect(response.body).not.toBe('undefined');
     });
+  
+    it('returns a list of games', async () => {
+      const response = await request(server).get("/api/games");
+
+      expect(response.body.length).toBeGreaterThan(0);
+      expect(response.body).toContain(response.body[0]);
+    });
+
+
   })
   
   // Test the DELETE here
