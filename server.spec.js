@@ -50,6 +50,12 @@ describe('Games', () => {
   it('runs the tests', () => {});
 
   // test the POST here
+  describe('[POST] /api/games', () => {
+    it('should save a document to the db', done => {
+      .request(server)
+
+    })
+  })
 
   // test the GET here
 
