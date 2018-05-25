@@ -55,9 +55,9 @@ describe("Games", () => {
 
   // test the POST here
   const expectedBody = {
-    title: "California Games",
-    genre: "Sports",
-    releaseDate: "June 1987"
+    title: "Street Fighter",
+    genre: "fighting",
+    releaseDate: "1980"
   };
   const { title, genre, releaseDate } = expectedBody;
 
@@ -90,6 +90,15 @@ describe("Games", () => {
     expect(Array.isArray(response.body)).toBeTruthy();
     expect(response.body).toHaveLength(1);
     expect(typeof game).toBe("object");
+  });
+
+  it("should return a game object from /api/games", async () => {
+    const response = await request(server).get("/api/games");
+    const game = response.body[0];
+
+    expect(game.title).toEqual(expectedBody.title);
+    expect(game.genre).toEqual(expectedBody.genre);
+    expect(game.releaseDate).toEqual(expectedBody.releaseDate);
   });
   // Test the DELETE here
 });
