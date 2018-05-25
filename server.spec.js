@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
+const request = require('supertest');
 
+const server = require('./server');
 const Game = require('./games/Game');
 
 describe('Games', () => {
@@ -18,8 +20,9 @@ describe('Games', () => {
   let gameId, game;
 
   beforeEach(async () => {
-    game = await Game.create({title: 'testgame', genre: 'test', releaseDate: 'never'});
-    gameId = game._id;
+    game = {title: 'testgame', genre: 'test', releaseDate: 'never'};
+    const bigGame = await Game.create(game);
+    gameId = bigGame._id;
   });
 
   afterEach(() => {
@@ -29,6 +32,13 @@ describe('Games', () => {
   it('runs the tests', () => {});
 
   // test the POST here
+  it('POST', async () => {
+    const response = await request(server).post('/api/games').send(game);
+
+    expect(response.status).toEqual(201);
+    expect(response.type).toEqual('application/json');
+    expect(response.body.title).toEqual('testgame');
+  });
 
   // test the GET here
 
