@@ -120,4 +120,32 @@ describe('Games', () => {
 
   })
 
+  describe('[UPDATE] /api/games/:id', () => {
+    it('should update the requested game', async () => {
+      const game = new Game({
+        title: 'Contra Games',
+        genre: 'Action',
+        releaseDate: 'June 1990',
+      });
+      const newGame = await Game.create(game);
+      
+      const updatedGame = {
+        id: newGame._id,
+        title: 'Spiderverse Games',
+        genre: 'Action',
+        releaseDate: 'June 2005',
+      };
+      const response = await request(server).put(`/api/games/${newGame._id}`).send(updatedGame);
+
+      expect(response.status).toEqual(200);
+      expect(response.type).toEqual('application/json');
+      expect(response.body).toMatchObject({
+        title: updatedGame.title,
+        genre: game.genre,
+        releaseDate: updatedGame.releaseDate
+      });
+      expect(response.body).toHaveProperty('_id');
+    })
+  })
+
 });
