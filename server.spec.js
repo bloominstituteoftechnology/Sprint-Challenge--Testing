@@ -122,4 +122,35 @@ describe('Games', () => {
         .expect(404)
     });
   });
+  // PUT Stretch Goal
+  describe('PUT', () => {
+    it('should be able to update an existing movie', async() => {
+      const savedGame = await Game.create(newGame);
+      const updates = { title: 'marvel', genre: 'sci-fi'};
+      request(server)
+        .put(`/api/games/${savedGame._id}`)
+        .send(updates)
+        .expect(200)
+        .expect('Content-Type', /json/)
+        .expect(res => res.body.title === 'marvel')
+        .expect(res => res.body.genre = 'sci-fi')
+    });
+    it('should return an error for a PUT request with no title', async() => {
+      const savedGame = await Game.create(newGame);
+      const updates = { genre: 'sci-fi'};
+      request(server)
+        .put(`/api/games/${savedGame._id}`)
+        .send(updates)
+        .expect(422)
+        .expect('Content-Type', /json/)
+        .expect(res => res.message === 'Must Provide a title and Id')
+    });
+    it('should return an erro for a PUT request with an invalid ID', async() => {
+      request(server)
+      .put('/api/games/222')
+      .expect(404)
+      .expect('Content-Type', /json/)
+      .expect(res => res.message === 'Game not found')
+    });
+  });
 });
