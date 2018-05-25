@@ -71,6 +71,23 @@ describe('Games', () => {
   })
 
   // test the GET here
+  describe('GET', () => {
+    it('should fetch all games from database', async () => {
+      request(server)
+        .get('/api/games')
+        .expect(200)
+        .expect(res => res.length === 0)
+  
+      const savedGame = await Game.create(newGame)
+      const anotherGame = await Game.create({ title: 'jeffrey', genre: 'flynn' })
+  
+      request(server)
+        .get('/api/games')
+        .expect(200)
+        .expect(res => res.length === 2)
+    })
+  })
+
 
   // Test the DELETE here
 });
