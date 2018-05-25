@@ -23,6 +23,21 @@ describe('Games', () => {
       .expect(201)
   })
 
+  it('should throw an error when a new game POST does not meet all requirements', () => {
+    const noTitle = { genre: 'sci-fi', releaseDate: '3141' }
+    const noGenre = { title: 'messing with mongoose', releaseDate: '3141' }
+    request(server)
+      .post('/api/games')
+      .send(noTitle)
+      .expect('Content-Type', /json/)
+      .expect(500)
+    request(server)
+      .post('/api/games')
+      .send(noGenre)
+      .expect('Content-Type', /json/)
+      .expect(500)
+  })
+
   // test the GET here
 
   // Test the DELETE here
