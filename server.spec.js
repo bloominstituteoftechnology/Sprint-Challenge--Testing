@@ -63,4 +63,14 @@ describe('Games', () => {
     });
 
   // Test the DELETE here
+  it('should respond to a delete request', async () => {
+    const game = { title: 'title', genre: 'genre', releaseDate: 'releaseDate' }
+    const prototypeGame = await Game.create(game)
+    const { _id } = prototypeGame
+    const response = await request(server).delete(`/api/games/${_id}`)
+    expect(response.status).toBe(204)
+    expect(response.type).toBe('')
+  });
+
+
 });
