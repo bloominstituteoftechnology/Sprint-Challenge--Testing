@@ -46,20 +46,35 @@ describe('Games', () => {
       .post('/api/games')
       .send(fakeBody)
     expect(res.status).toBe(201)
-    expect(res.body).toHaveProperty('_id')
-    expect(res.body).toHaveProperty('title')
-    expect(res.body).toHaveProperty('genre')
+    expect(res.body).toEqual(
+      expect.objectContaining(
+        {
+          _id: expect.any(String),
+          title: expect.any(String),
+          genre: expect.any(String)
+        }))
   })
 
   it('get', async () => {
     const res = await request(server).get('/api/games')
     expect(res.status).toBe(200)
+    expect(res.body[0]).toMatchObject({
+      title: 'eh',
+      genre: 'uh',
+      'releaseDate': '22'
+    })
   })
 
   it('delete', async () => {
     const res = await request(server).delete(`/api/games/${gameId}`)
     expect(res.status).not.toBe(404)
     expect(res.status).toBe(204)
+  })
+
+  it('deletes only existing items', async () => {
+    const res = await request(server).delete('/api/games/5b088922dc41262be0b83faf')
+
+    expect(res.status).toBe(404)
   })
 
   describe('stretch', () => {
