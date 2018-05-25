@@ -11,12 +11,6 @@ describe('Games', () => {
       .then(() => console.log('\n=== connected to TEST DB ==='));
   });
 
-  afterAll(() => {
-    return mongoose
-      .disconnect()
-      .then(() => console.log('\n=== disconnected from TEST DB ==='));
-  });
-
   let gameId;
   // // hint - these wont be constants because you'll need to override them.
 
@@ -28,7 +22,7 @@ describe('Games', () => {
       title: 'California Games',
       genre: 'Sports',
       releaseDate: 'June 1987',
-    });
+    }); //refactor later using faker
     newGame.save().then(savedGame => {
       gameId = savedGame._id;
     }).catch(err => console.log(err))
@@ -36,7 +30,15 @@ describe('Games', () => {
 
   afterEach(() => {
     //   // clear collection.
-    return Game.remove();
+    Game.remove({}, function(err) {
+      console.log('collection removed')
+    });
+  });
+
+  afterAll(() => {
+    return User.remove().then(() => mongoose
+      .disconnect()
+      .then(() => console.log('\n=== disconnected from TEST DB ===')));
   });
 
   it('runs the tests', () => {});
@@ -86,5 +88,36 @@ describe('Games', () => {
   });
 
   // Test the DELETE here
-  
+  describe('[DELETE] /api/games/:id', () => {
+    it('should delete a user', async () => {
+      const game = {
+        title: 'California Games',
+        genre: 'Sports',
+        releaseDate: 'June 1987',
+      };
+      const newGame = await Game.create(game);
+      const response = await request(server).delete(`/api/games/${newGame._id}`);
+      expect(response.status).toEqual(204);
+    })
+
+    it('should ensure that a game ID is provided', async () => {
+      const game = new Game();
+      const response = await request(server).delete('/api/games');
+      // expect(response.status).toEqual(422);
+      // expect(response.body.message).toEqual('You need to give me an ID');        
+    });
+
+    it('should ensure that the game ID is valid', async () => {
+      const response = await request(server).delete('/api/games');
+      expect(response.status).toEqual(404);
+      // expect(response.message).toEqual('Game not found');
+    });
+
+    it('should detect server error', async () => {
+      const response = await request(server).delete('/api/games/null');
+      expect(response.status).toEqual(500);
+    });
+
+  })
+
 });
