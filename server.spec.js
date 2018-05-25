@@ -77,4 +77,11 @@ describe('Games', () => {
       .expect('Content-Type', /json/)
       .expect(422)
   })
+
+  it('should return an error if an invalid ID is provided for DELETE', async () => {
+    request(server)
+      .delete('/api/game/123')
+      .expect('Content-Type', /json/)
+      .expect(404)
+  })
 });
