@@ -41,6 +41,18 @@ describe('Games', () => {
   });
 
   // test the GET here
+  it('GET', async () => {
+    const response = await request(server).get('/api/games');
+
+    expect(response.status).toEqual(200);
+    expect(response.type).toEqual('application/json');
+    expect(response.body[0].title).toEqual('testgame');
+  });
 
   // Test the DELETE here
+  it('DELETE', async () => {
+    const response = await request(server).delete(`/api/games/${gameId}`);
+    
+    expect(response.status).toEqual(204);
+  });
 });
