@@ -64,5 +64,10 @@ describe('Games', () => {
       .expect(res => res.length === 2)
   })
 
-  // Test the DELETE here
+  it('should delete an existing game if a proper ID is provided', async () => {
+    const savedGame = await Game.create(newGame)
+    request(server)
+      .delete(`/api/games/${savedGame._id}`)
+      .expect(204) // game exists and has been removed 
+  })
 });
