@@ -59,6 +59,7 @@ describe("Games", () => {
       releaseDate: "June 1987"
     };
     const { title, genre, releaseDate } = expectedBody;
+
     it("should have a request body with a title, genre, and releaseDate as strings", () => {
       expect(typeof title).toBe("string");
       expect(title.length).toBeGreaterThan(0);
@@ -66,6 +67,18 @@ describe("Games", () => {
       expect(genre.length).toBeGreaterThan(0);
       expect(typeof releaseDate).toBe("string");
       expect(releaseDate.length).toBeGreaterThan(0);
+    });
+
+    it("should return status code 201 and json game object from /api/games", async () => {
+      const response = await request(server)
+        .post("/api/games")
+        .send(expectedBody);
+
+      expect(response.status).toEqual(201);
+      expect(response.type).toEqual("application/json");
+      expect(response.body.title).toEqual(expectedBody.title);
+      expect(response.body.genre).toEqual(expectedBody.genre);
+      expect(response.body.releaseDate).toEqual(expectedBody.releaseDate);
     });
   });
 
