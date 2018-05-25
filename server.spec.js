@@ -44,20 +44,20 @@ describe('Games', () => {
       if (err) console.log(err);
       return done();
     })
-    //   // clear collection.
+    
   });
 
   it('runs the tests', () => {});
 
   // test the POST here
-  describe('[POST] /api/games', () => {
-    it('should save a document to the db', done => {
-      .request(server)
+  
 
-    })
-  })
+    
+  
 
   // test the GET here
 
   // Test the DELETE here
+
+  // test the PUT here
 });
