@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const request = require("supertest");
 const server = require("./server");
 const Game = require("./games/Game");
 
@@ -29,14 +29,9 @@ describe("Games", () => {
       releaseDate: "1980"
     };
     const game = new Game(expectedBody);
-    game
-      .save()
-      .then(game => {
-        res.status(201).json(game);
-      })
-      .catch(err => {
-        res.send(err);
-      });
+    return game.save().then(game => {
+      console.log(game);
+    });
   });
 
   afterEach(() => {
@@ -44,7 +39,17 @@ describe("Games", () => {
     Game.remove();
   });
 
-  it("runs the tests", () => {});
+  it("runs the tests", () => {
+    const expectedBody = { api: "running!" };
+
+    request(server)
+      .get("/")
+      .then(res => {
+        expect(res.status).toEqual(200);
+        expect(res.type).toEqual("application/json");
+        expect(res.body).toEqual(expectedBody);
+      });
+  });
 
   // test the POST here
 
