@@ -47,13 +47,12 @@ server.put('/api/games/:id', (req, res) => {
 
   Game.findByIdAndUpdate(id, update, options)
     .then(game => {
-      if (game) {
+     
         res.status(200).json(game);
-      } else {
-        res.status(404).json({ message: 'Game not found' });
-      }
+  
     })
     .catch(err => {
+      console.log(id)
       res
         .status(500)
         .json({ message: 'Something really bad happened', error: err });
@@ -68,11 +67,9 @@ server.delete('/api/games/:id', (req, res) => {
   } else {
     Game.findByIdAndRemove(id)
       .then(game => {
-        if (game) {
+ 
           res.status(204).end();
-        } else {
-          res.status(404).json({ message: 'Game not found' });
-        }
+      
       })
       .catch(err => res.status(500).json(err));
   }
