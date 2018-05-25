@@ -28,11 +28,37 @@ describe('Games', () => {
     //   // clear collection.
   });
 
-  it('runs the tests', () => {});
+  it('runs the tests', async () => {
+
+  });
 
   // test the POST here
-
+  it('should get ok msg and json object from /api/games', async () => {
+    const response = await request(server).post('/api/games');
+  
+    expect(response.status).toEqual(201);
+    expect(response.type).toEqual('application/json');
+  });
   // test the GET here
+it('should get ok msg and json object from /api/games', async () => {
+  const response = await request(server).get('/api/games');
 
+  expect(response.status).toEqual(200);
+  expect(response.type).toEqual('application/json');
+});
   // Test the DELETE here
+  it('should get ok msg and json object from /api/games', async () => {
+    const response = await request(server).get('/api/games/:id');
+  
+    expect(response.status).toEqual(204);
+    expect(response.type).toEqual('application/json');
+  });
+});
+
+it('should return Ok and a json object from the index route', async () => {
+  const expectedBody = { api: 'running!' };
+  const response = await request(server).get('/');
+  expect(response.status).toEqual(200);
+  expect(response.type).toEqual('application/json');
+  expect(response.body).toEqual(expectedBody);
 });
