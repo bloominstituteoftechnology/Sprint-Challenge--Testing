@@ -124,5 +124,13 @@ describe('Games', () => {
         .expect(res => res.message === 'You need to give me an ID')
         .expect(422)
     });
+
+    it('should return an error if an invalid ID is provided for DELETE', async () => {
+      request(server)
+        .delete('/api/game/123')
+        .expect('Content-Type', /json/)
+        .expect(res => res.message === 'Game not found')
+        .expect(404)
+    });
   })
 });
