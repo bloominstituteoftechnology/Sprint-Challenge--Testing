@@ -85,4 +85,12 @@ describe("Games", () => {
       .delete("api/games/${game.id}")
       .expect(204);
   });
+
+  it("should return an error if a bad ID is sent", async () => {
+    request(server)
+      .delete("/api/game/222")
+      .expect("Content-Type", /json/)
+      .expect(res => res.message === "Game not found")
+      .expect(404);
+  });
 });
