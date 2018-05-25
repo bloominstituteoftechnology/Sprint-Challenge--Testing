@@ -7,6 +7,9 @@
     "test": "jest --watch --verbose",
     "start": "nodemon app.js"
   },
+  "jest": {
+    "testEnvironment": "node"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/LambdaSchool/Sprint-Challenge--Testing.git"
