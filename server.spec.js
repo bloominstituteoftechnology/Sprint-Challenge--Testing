@@ -49,8 +49,8 @@ describe('Games', () => {
   it("Should post a user and return it", async() => {
     const game = {
       title: "Halo 5",
-      date: "2015",
-      genre: "FPS"
+      genre: "FPS",
+      releaseDate: "2015"
     };
     // body = JSON.stringify(body)
     // server.use(express.json())
@@ -75,5 +75,15 @@ describe('Games', () => {
     const responseDel = await request(server).delete(`/api/games/${gameId}`);
     expect(responseDel.body).toEqual({});
     expect(responseDel.status).toEqual(204);
+});
+
+  //Test the PUT here
+  it("Should update a user", async() => {
+    const response = await request(server).get('/api/games');
+    gameId = response.body[0]._id;
+    // console.log(gameId)
+    const responsePut = await request(server).put(`/api/games/${gameId}`).send({title: "SKYRIM", id: 2});
+    expect(responsePut.body.title).toEqual("SKYRIM");
+    expect(response.status).toEqual(200)
 });
 });

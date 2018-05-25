@@ -45,7 +45,7 @@ server.put('/api/games/:id', (req, res) => {
     new: true,
   };
 
-  Game.findByIdAndUpdate(id, update, options)
+  Game.findByIdAndUpdate(id, changes, options)
     .then(game => {
       if (game) {
         res.status(200).json(game);
