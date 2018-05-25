@@ -4,7 +4,7 @@ const Game = require("./games/Game");
 const server = require("./server");
 
 async function createGame() {
-  const game = { title: "LOTR", genre: "Middle Earth" };
+  const game = { title: "Metal Gear", genre: "Tactical Espionage Action" };
 
   const savedGame = await Game.create(game);
   return savedGame._id;
