@@ -1,88 +1,81 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const morgan = require('morgan');
+const express = require("express");
+const morgan = require("morgan");
 
-const Game = require('./models');
+const Game = require("./games/Game");
 
 const server = express();
-server.use(bodyParser.json());
-server.use(morgan('combined'));
 
-server.post('/api/game/create', (req, res) => {
-  const { title, releaseDate, genre } = req.body;
-  const myGame = new Game({ title, releaseDate, genre });
-  myGame
-    .save()
+server.use(express.json());
+server.use(morgan("combined"));
+
+server.post("/api/games", (req, res) => {
+  Game.create(req.body)
     .then(game => {
-      res.json(game);
+      res.status(201).json(game);
     })
     .catch(err => {
-      res.status(422);
-      res.json({ error: 'Error saving data to the DB', message: err });
+      res
+        .status(500)
+        .json({ message: "Error saving data to the DB", error: err });
     });
 });
 
-server.get('/api/game/get', (req, res) => {
-  Game.find({}, (err, games) => {
-    if (err) {
-      res.status(500);
-      res.json({ error: 'Something really bad happened' });
-      return;
-    }
-    res.json(games);
-  });
+server.get("/api/games", (req, res) => {
+  Game.find({})
+    .then(games => {
+      res.status(200).json(games);
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ message: "Something really bad happened", error: err });
+    });
 });
 
-server.put('/api/game/update', (req, res) => {
-  // All I care about is the game title and id.. don't worry about genre or date.
-  const { title, id } = req.body;
-  if (!title || !id) {
-    return res.status(422).json({ error: 'Must Provide a title && Id' });
+server.put("/api/games/:id", (req, res) => {
+  const { id } = req.params;
+  const changes = req.body;
+
+  // All we care about is the game title and id. Don't worry about genre or date.
+  if (!changes.title || !changes.id) {
+    return res.status(422).json({ error: "Must Provide a title && Id" });
   }
-  Game.findById(id, (err, game) => {
-    if (err || game === null) {
-      res.status(422);
-      res.json({ error: 'Cannot find game by that id' });
-      return;
-    }
-    game.title = title;
-    game.save((saveErr, savedGame) => {
-      if (err || game === null) {
-        res.status(500);
-        res.json({ error: 'Something really bad happened' });
-        return;
+
+  const options = {
+    new: true
+  };
+
+  Game.findByIdAndUpdate(id, changes, options)
+    .then(game => {
+      if (game) {
+        res.status(200).json(game);
+      } else {
+        res.status(404).json({ message: "Game not found" });
       }
-      res.json(game);
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ message: "Something really bad happened", error: err });
     });
-  });
 });
 
-server.delete('/api/game/destroy/:id', (req, res) => {
-  // to delete a game you can send up an id on the request body or the params
-  let id = undefined;
-  if (req.params.id) {
-    // if it's on the params set it.
-    id = req.params.id;
+server.delete("/api/games/:id", (req, res) => {
+  const { id } = req.params;
+
+  if (!id) {
+    res.status(422).json({ message: "You need to give me an ID" });
+  } else {
+    Game.findByIdAndRemove(id)
+      .then(game => {
+        if (game) {
+          res.status(204).end();
+        } else {
+          res.status(404).json({ message: "Game not found" });
+        }
+      })
+      .catch(err => res.status(500).json(err));
   }
-  if (req.body.id) {
-    // if it's on the body set it.
-    id = req.body.id;
-  }
-  if (id === undefined) {
-    // if it's undefined throw error back to client
-    res.status(422);
-    res.json({ error: 'You need to give me an ID' });
-    return;
-  }
-  Game.findByIdAndRemove(id, (err, removedGame) => {
-    // search for game by that id and remove it
-    if (err) {
-      res.status(422);
-      res.json({ error: 'Cannot find game by that id' });
-      return;
-    }
-    res.json({ success: `${removedGame.title} was removed from the DB` });
-  });
 });
 
 module.exports = server;
