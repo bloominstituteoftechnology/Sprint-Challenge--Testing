@@ -41,6 +41,13 @@ describe('Games', () => {
   it('runs the tests', () => {});
 
   // test the POST here
+  it('should respond to a post', async () => {
+    const game = { title: 'title', genre: 'genre', releaseDate: 'releaseDate' }
+    const response = await request(server).post('/api/games').send(game)
+    expect(response.status).toBe(201)
+    expect(response.type).toBe('application/json')
+    expect(response.body.title).toMatch('title')
+  });
 
   // test the GET here
 
