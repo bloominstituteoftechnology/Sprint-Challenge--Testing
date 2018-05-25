@@ -18,6 +18,9 @@ Kind of like a quality assurance test where you repeat tests in order to meet sp
 Mock function is self-explanatory. It simulates a function by capturing calls to the function and instances of constructor functions, returning test-time configuration of return value, rather than relying on acutal implementation of a function.
 
 1. Mention three types of tests.
-Unit test, Integration test, 
+Unit test, Integration test, Smoke test, Regression test
+
+related: https://stackoverflow.com/questions/520064/what-is-unit-test-integration-test-smoke-test-regression-test
 
 1. What type of test performs database operations against a real server.
+Integration test
