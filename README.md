@@ -1,3 +1,5 @@
+![](./test-overview.png)
+
 # Assessing your Testing Fu
 
 * Keep Calm! Test On!
