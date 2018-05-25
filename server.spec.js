@@ -52,12 +52,24 @@ describe('Games', () => {
       const response = await r(server).get('/api/games');
       expect(response.body[0].title).toEqual('hello world')
     })
+    it ('should return the list of games', async () => {
+      const response = await r(server).get('/api/games');
+      expect(response.body[0].title).toEqual('hello world')
+    })
   })
   // Test the DELETE here
   describe('delete', () => {
     it ('should delete a document', async () => {
       const response = await r(server).delete(`/api/games/${gameId}`);
       expect(response.status).toEqual(204);
+    })
+    it ('should return a 500 because the id doesnt exist', async () => {
+      const response = await r(server).delete(`/api/games/123as`);
+      expect(response.status).toEqual(500);
+    })
+    it ('should return a 404 because of a missing id', async () => {
+      const response = await r(server).delete(`/api/games/`);
+      expect(response.status).toEqual(404);
     })
   })
 });
