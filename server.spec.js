@@ -53,7 +53,15 @@ describe('Games', () => {
       expect(response.status).toEqual(201);
       expect(response.type).toEqual("application/json");
     });
-
+  
+    it('return created game object in server response', async () => {
+      const response = await request(server).post("/api/games").send(game);
+      const { title, genre, releaseDate } = response.body;
+  
+      expect(title).toEqual(game.title);
+      expect(genre).toEqual(game.genre);
+      expect(releaseDate).toEqual(game.releaseDate);
+    });
   });
   
 
