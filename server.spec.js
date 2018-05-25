@@ -167,4 +167,22 @@ describe("Games", () => {
       expect(body).not.toContain("_id");
     });
   });
+
+  //couldn't get PUT testing stretch problem solved
+  // describe("Putting games should work", () => {
+  //   it("putting with the route /api/games/:id should update the game with the given id", async () => {
+  //     const getResponse = await Request(server).get("/api/games");
+  //     const id = getResponse.body[0]._id;
+  //     const response = await Request(server)
+  //       .put(`/api/games/${id}`)
+  //       .send({ title: "newTitle" })
+  //       .set("Accept", "application/json");
+
+  //     const { status, type, body } = response;
+  //     const game = body;
+
+  //     expect(status).toEqual(200);
+  //     expect(game.title).toEqual("newTitle");
+  //   });
+  // });
 });
