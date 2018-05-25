@@ -85,7 +85,7 @@ describe("Games", () => {
     });
   });
   describe("server GET route", () => {
-    it("should display all games from db", async () => {
+    it("should display all games from db with correct info", async () => {
       const response = await request(server).get("/api/games");
 
       expect(response.status).toEqual(200);
@@ -93,12 +93,67 @@ describe("Games", () => {
       expect(response.body[0]).toHaveProperty("_id");
       expect(response.body[0]).toHaveProperty("title");
       expect(response.body[0]).toHaveProperty("genre");
+      expect(response.body[0].title).toEqual("Ducktales");
+      expect(response.body[0].genre).toEqual("platformer");
       expect(response.body.message).not.toEqual(
         "Something really bad happened"
       );
     });
     it("should throw 404 if wrong path provided", async () => {
       const response = await request(server).delete(`/api/gam`);
+
+      expect(response.status).toEqual(404);
+    });
+  });
+  describe("server PUT route", () => {
+    it("should update a game if provided correct info", async () => {
+      const updates = { id: `${gameId}`, title: "Goal 3", genre: "sports" };
+      const response = await request(server)
+        .put(`/api/games/${gameId}`)
+        .send(updates);
+
+      expect(response.status).toEqual(200);
+      expect(response.type).toEqual("application/json");
+      expect(response.body).toHaveProperty("_id");
+      expect(response.body).toHaveProperty("title");
+      expect(response.body).toHaveProperty("genre");
+      expect(response.body.title).toEqual("Goal 3");
+    });
+    it("should not update if id is not present", async () => {
+      const updates = { title: "Goal 3", genre: "sports" };
+      const response = await request(server)
+        .put(`/api/games/${gameId}`)
+        .send(updates);
+
+      expect(response.status).toEqual(422);
+    });
+    it("should not update if title is not present", async () => {
+      const updates = { id: `${gameId}`, genre: "sports" };
+      const response = await request(server)
+        .put(`/api/games/${gameId}`)
+        .send(updates);
+
+      expect(response.status).toEqual(422);
+    });
+    it("should throw 404 if game is not found", async () => {
+      const updates = {
+        id: `5b0846b93f1c8b3a504f2caa`,
+        title: "Goal 3",
+        genre: "sports"
+      };
+      const response = await request(server)
+        .put(`/api/games/5b0342b93f1c8b3a504f2caa`)
+        .send(updates);
+
+      expect(response.status).toEqual(404);
+    });
+    it("should throw 404 if reached wrong route", async () => {
+      const updates = {
+        id: `${gameId}`,
+        title: "Goal 3",
+        genre: "sports"
+      };
+      const response = await request(server).put(`/api/games`);
 
       expect(response.status).toEqual(404);
     });
@@ -123,8 +178,4 @@ describe("Games", () => {
       expect(response.status).toEqual(500);
     });
   });
-
-  // test the GET here
-
-  // Test the DELETE here
 });
