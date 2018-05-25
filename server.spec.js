@@ -54,6 +54,7 @@ describe("Games", () => {
 
       expect(response.status).toEqual(200);
       expect(response.type).toBe("application/json");
+      expect(response.body).toHaveLength(2);
     });
   });
 
@@ -91,4 +92,18 @@ describe("Games", () => {
   });
 
   // Test the DELETE here
+  describe("DELETE /api/games", () => {
+    it("should delete game :id", async () => {
+      const fortnite = {
+        title: "Fortnite",
+        genre: "BR"
+      };
+
+      const badGame = await Game.create(fortnite);
+
+      const response = await request(server).delete(`/api/games/${badGame._id}`);
+
+      expect(response.status).toEqual(204);      
+    });
+  });
 });
