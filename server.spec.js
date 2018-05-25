@@ -13,9 +13,9 @@ describe('Games', () => {
 
   afterEach(() => Game.remove())
 
-  it.skip('runs the tests', () => {});
+  it('runs the tests', () => {});
 
-  describe.skip('POST', () => {
+  describe('POST', () => {
     it('should create a new game', async () => {
       await request(server).post('/api/games').send(newGame).then(res => {
         expect(res.status).toBe(201)
@@ -39,7 +39,7 @@ describe('Games', () => {
     })
   })
 
-  describe.skip('GET', () => {
+  describe('GET', () => {
     it('should fetch all games from database', async () => {
       const savedGame = await Game.create(newGame)
       const anotherGame = await Game.create({ title: 'jeffrey', genre: 'flynn' })

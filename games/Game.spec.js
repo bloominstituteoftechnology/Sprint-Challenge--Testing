@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const Game = require('./Game');
 
-describe.skip('NESGames Model', () => {
+describe('NESGames Model', () => {
   beforeAll(() => mongoose.connect('mongodb://localhost/test').then(() => console.log('\n=== connected to TEST DB ===')));
 
   afterAll(() => mongoose.disconnect().then(() => console.log('\n=== disconnected from TEST DB ===')));
