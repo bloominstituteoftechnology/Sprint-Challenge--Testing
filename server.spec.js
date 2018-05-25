@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const request = require("supertest")
 const Game = require('./games/Game');
 const server = require('./server');
+const express = require('express')
 
 
 describe('Games', () => {
@@ -45,17 +46,29 @@ describe('Games', () => {
 
   // test the POST here
 
+  it("Should post a user and return it", async() => {
+    let body = {
+      "title": "Halo 5",
+      "genre": "FPS",
+      "releaseDate": "2015"
+    };
+    // body = JSON.stringify(body)
+    // server.use(express.json())
+    const response = await request(server).post('/api/games', body);
+    console.log(response)
+  })
+
   // test the GET here
-  it('Should return OK and json object from index route and have 1 game', async() => {
+  it('Should return OK and json object from index route and have 2 game', async() => {
     const response = await request(server).get('/api/games');
     expect(response.status).toEqual(200);
     expect(response.type).toEqual('application/json');
-    expect(response.body).toHaveLength(2)
+    expect(response.body).toHaveLength(1)
     // console.log(response.body)
 })
 
   // Test the DELETE here
-  it("Should delete a user and return it's name", async() => {
+  it("Should delete a user", async() => {
     const response = await request(server).get('/api/games');
     gameId = response.body[0]._id;
     const responseDel = await request(server).delete(`/api/games/${gameId}`);
