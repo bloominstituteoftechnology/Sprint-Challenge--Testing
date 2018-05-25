@@ -37,12 +37,12 @@ describe('Games', () => {
   it('runs the tests', () => {});
   describe('post', () => {
     it ('should create a new game document within the games collection', async () => {
-      const response = await r(server).post('/api/games').send({"title": "hello", "genre": "ya mum", "releaseDate": Date.now()})
+      const response = await r(server).post('/api/games').send({"title": "hello", "genre": "sports", "releaseDate": Date.now()})
       expect(response.status).toBe(201)
     })
-    it ('should accept a second game document', async() => {
-      const response = await r(server).post('/api/games').send({"title": "oonga oonga", "genre": "hardcore", "releaseDate": "idk"})
-      expect(response.body.title).toBe('oonga oonga');
+    it ('should accept a second game document', async () => {
+      const response = await r(server).post('/api/games').send({"title": "this title", "genre": "hardcore", "releaseDate": "idk"})
+      expect(response.body.title).toBe('this title');
     })
   })
 
@@ -70,6 +70,12 @@ describe('Games', () => {
     it ('should return a 404 because of a missing id', async () => {
       const response = await r(server).delete(`/api/games/`);
       expect(response.status).toEqual(404);
+    })
+  })
+  describe('put', () => {
+    it ('should update my document', async () => {
+      const response = await r(server).put(`/api/games/${gameId}`).send({"title": "updated title!"})
+      expect(response.body.title).toEqual('updated title!')
     })
   })
 });
