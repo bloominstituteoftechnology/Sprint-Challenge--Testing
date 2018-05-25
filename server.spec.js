@@ -2,7 +2,7 @@ const request = require("supertest")
 const mongoose = require('mongoose');
 const server = require('./server')
 const Game = require('./games/Game');
-
+let gameId;
 describe('Games', () => {
   beforeAll(() => {
     return mongoose
@@ -16,7 +16,7 @@ describe('Games', () => {
       .then(() => console.log('\n=== disconnected from TEST DB ==='));
   });
 
-  let gameId;
+ 
   // // hint - these wont be constants because you'll need to override them.
 
   beforeEach(() => {
@@ -73,4 +73,23 @@ it("should fetch a game",async()=>{
   expect(response.type).toEqual("application/json")
 })
   // Test the DELETE here
+  it('should delete a game',async ()=>{
+ 
+    console.log('id',gameId )
+    const response = await request(server)
+    .delete(`/api/games/${gameId}`)
+    expect(response.status).toEqual(200)
+  })
+  // it('should delete a game',async ()=>{
+  //   const update = {
+  //     title: 'California Gamez',
+  //     genre: 'Sportz',
+  //     releaseDate: 'June 1999'
+  //   }
+  //   const response = await request(server)
+  //   .put(`/api/games/${gameId}`)
+  //   .send(update);
+  //   console.log('aaa',update)
+  //   expect(response.status).toEqual(200)
+  // })
 });
