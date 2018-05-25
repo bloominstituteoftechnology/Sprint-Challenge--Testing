@@ -49,7 +49,14 @@ describe('Games', () => {
       .expect(201)
   })
 
-  // test the GET here
+  it('should fetch all games from database', async () => {
+    const savedGame = await Game.create(newGame)
+    const anotherGame = await Game.create({ title: 'jeffrey', genre: 'flynn' })
+    request(server)
+      .get('/api/games')
+      .expect(200)
+      .expect(res => res.length === 2)
+  })
 
   // Test the DELETE here
 });
