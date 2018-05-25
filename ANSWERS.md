@@ -34,3 +34,4 @@
 * There is sometimes a confusion between integration tests and functional tests as they both require multiple components to interact with each other. The difference is that an integration test may simply verify that you can query the database while a functional test would expect to get a specific value from the database as defined by the product requirements.
 
 5.  What type of test performs database operations against a real server.
+    * serverside/database testing
