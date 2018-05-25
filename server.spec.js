@@ -68,6 +68,13 @@ describe('Games', () => {
     const savedGame = await Game.create(newGame)
     request(server)
       .delete(`/api/games/${savedGame._id}`)
-      .expect(204) // game exists and has been removed 
+      .expect(204) // game exists and has been removed test
+  })
+
+  it('should return an error if no ID is provided for DELETE', async () => {
+    request(server)
+      .delete('/api/games')
+      .expect('Content-Type', /json/)
+      .expect(422)
   })
 });
