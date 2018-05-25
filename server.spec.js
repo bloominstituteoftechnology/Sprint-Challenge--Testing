@@ -18,13 +18,13 @@ describe('Games', () => {
   let gameId;
   // // hint - these wont be constants because you'll need to override them.
 
-  beforeEach(() => {
+  beforeEach( async () => {
     //   // write a beforeEach hook that will populate your test DB with data
     //   // each time this hook runs, you should save a document to your db
     //   // by saving the document you'll be able to use it in each of your `it` blocks
-    const newGame = { title: "Sonic", genre: "action", releaseData: "A long time ago" }
+    const newGame = { title: "Sonic", genre: "actions", releaseDate: "A long time ago" }
 
-    Game.create(newGame);
+    const game = await Game.create(newGame);
     
   })
 
@@ -36,6 +36,11 @@ describe('Games', () => {
   it('runs the tests', () => {});
 
   // test the POST here
+  describe('POST /games', () => {
+    it('should check if games are being properly posted',  () => {
+
+    })
+  })
 
   // test the GET here
 
