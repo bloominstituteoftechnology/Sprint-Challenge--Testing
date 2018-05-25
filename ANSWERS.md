@@ -8,7 +8,7 @@
 - afterEach: acts after each test is ran
 
 1. What is the point of Test Driven Development? What do you personally think about this approach?
-
+The point of test driven development is to enstill standards amongst a team of developers. It also helps to gain an idea of what you would like a peice of software to do before you actually build it.
 
 1. What is a mock function? How do we use it to test a callback passed to a function?
 
