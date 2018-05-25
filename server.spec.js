@@ -1,18 +1,19 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const Game = require('./games/Game');
+const server = require("./server");
+const Game = require("./games/Game");
 
-describe('Games', () => {
+describe("Games", () => {
   beforeAll(() => {
     return mongoose
-      .connect('mongodb://localhost/test')
-      .then(() => console.log('\n=== connected to TEST DB ==='));
+      .connect("mongodb://localhost/test")
+      .then(() => console.log("\n=== connected to TEST DB ==="));
   });
 
   afterAll(() => {
     return mongoose
       .disconnect()
-      .then(() => console.log('\n=== disconnected from TEST DB ==='));
+      .then(() => console.log("\n=== disconnected from TEST DB ==="));
   });
 
   let gameId;
@@ -22,13 +23,28 @@ describe('Games', () => {
     //   // write a beforeEach hook that will populate your test DB with data
     //   // each time this hook runs, you should save a document to your db
     //   // by saving the document you'll be able to use it in each of your `it` blocks
+    const expectedBody = {
+      title: "Street Fighter",
+      genre: "fighting",
+      releaseDate: "1980"
+    };
+    const game = new Game(expectedBody);
+    game
+      .save()
+      .then(game => {
+        res.status(201).json(game);
+      })
+      .catch(err => {
+        res.send(err);
+      });
   });
 
   afterEach(() => {
     //   // clear collection.
+    Game.remove();
   });
 
-  it('runs the tests', () => {});
+  it("runs the tests", () => {});
 
   // test the POST here
 
