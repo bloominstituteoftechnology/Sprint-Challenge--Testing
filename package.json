@@ -17,10 +17,10 @@
   "bugs": {
     "url": "https://github.com/LambdaSchool/Sprint-Challenge--Testing/issues"
   },
-  "homepage":
-    "https://github.com/LambdaSchool/Sprint-Challenge--Testing#readme",
+  "homepage": "https://github.com/LambdaSchool/Sprint-Challenge--Testing#readme",
   "dependencies": {
     "express": "^4.16.3",
+    "faker": "^4.1.0",
     "mongoose": "^5.1.2"
   },
   "devDependencies": {
