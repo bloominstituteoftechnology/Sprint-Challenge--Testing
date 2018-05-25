@@ -37,7 +37,6 @@ const faker = describe("Games", () => {
 
   // test the POST here
   describe("POST to /api/games", () => {
-
     it("should return server OK (200) and proper genre", async () => {
       const response = await request(server)
         .post("/api/games")
@@ -70,7 +69,7 @@ const faker = describe("Games", () => {
     it("should return 'No Content' (204); return empty object", async () => {
       // inquire for id with GET first
       const response = await request(server).get("/api/games");
-      const id = response.body[0]._id
+      const id = response.body[0]._id;
 
       // use id to DELETE
       const responseDel = await request(server).delete(`/api/games/${id}`);
@@ -79,4 +78,24 @@ const faker = describe("Games", () => {
     });
   });
 
+  // Test the PUT here
+  describe("PUT /api/games", () => {
+    it("should return Server OK (200); return empty object", async () => {
+      // inquire for id with GET first
+      const response = await request(server).get("/api/games");
+      const id = response.body[0]._id;
+
+      // use id to DELETE
+      const responseUpdate = await request(server)
+        .put(`/api/games/${id}`)
+        .send({
+          title: "Half-Life",
+          genre: "FPS/Adventure",
+          releaseDate: "2000",
+          id: '1'
+        });
+      // expect(responseUpdate.status).toEqual(200);
+      expect(responseUpdate.body.genre).toEqual("FPS/Adventure");
+    });
+  });
 });
