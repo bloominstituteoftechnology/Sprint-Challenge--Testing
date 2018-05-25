@@ -100,4 +100,26 @@ describe('Games', () => {
     });
   });
   // Test the DELETE here
+  describe('DELETE', () => {
+    it('should delete an existing game if a proper ID is provided', async() => {
+      const savedGame = await Game.create(newGame);
+      request(server)
+        .delete(`/api/games/${savedGame._id}`)
+        .expect(204) // game exists and has been removed
+    });
+    it('should return an error if no ID is provided for DELETE', async() => {
+      request(server)
+        .delete('/api/games')
+        .expect('Content-Type', /json/)
+        .expect(res => res.message === 'You need to give and ID')
+        .expect(422)
+    });
+    it('should return an error if an invalid ID is provided', async() => {
+      request(server)
+        .delete('/api/game/222')
+        .expect('Content-Type', /json/)
+        .expect(res => res.message === 'Game not found')
+        .expect(404)
+    });
+  });
 });
