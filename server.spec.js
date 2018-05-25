@@ -95,5 +95,15 @@ describe('Games', () => {
       expect(204);
 
     })
+
+    it('should return an error for a invalid ID', () => {
+
+      gameId = 'zzzzz';
+
+      request(server).delete(`/api/game/${gameId}`)
+
+      expect(404);
+
+    })
   })
 });
