@@ -50,6 +50,17 @@ describe('Games', () => {
   });
 
   // test the GET here
+  it('should respond to get request', async () => {
+    const game = { title: 'title', genre: 'genre', releaseDate: 'releaseDate' }
+    const document = new Game(game)
+    const { _id } = document
+    return document.save()
+      .then(async () => {
+        const response = await request(server).get(`/api/games/${_id}`) 
+        expect(response.status).toBe(404)
+        expect(response.type).toBe('text/html')
+      })
+    });
 
   // Test the DELETE here
 });
