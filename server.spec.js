@@ -47,15 +47,16 @@ describe('Games', () => {
   // test the POST here
 
   it("Should post a user and return it", async() => {
-    let body = {
-      "title": "Halo 5",
-      "genre": "FPS",
-      "releaseDate": "2015"
+    const game = {
+      title: "Halo 5",
+      date: "2015",
+      genre: "FPS"
     };
     // body = JSON.stringify(body)
     // server.use(express.json())
-    const response = await request(server).post('/api/games', body);
-    console.log(response)
+    const response = await request(server).post('/api/games').send(game)
+    expect(response.status).toEqual(201);
+    expect(response.body.title).toEqual("Halo 5")
   })
 
   // test the GET here
