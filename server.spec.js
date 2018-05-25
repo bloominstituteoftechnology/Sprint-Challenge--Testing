@@ -68,8 +68,18 @@ describe('Games', () => {
 
   // test the GET here
   it('should get a game from db', async () => {
-    const re
+    const response = await request(server)
+    .get('/api/games')
+    expect(response.status).toEqual(200)
+    expect(response.type).toEqual('application/json')
+    expect(response.body[0].title).toEqual('Battlefield 1');
   })
 
   // Test the DELETE here
+
+  it('should delete a game', async() => {
+    const response = await request(server)
+    .delete(`/api/games/${gameId}`);
+    expect(response.status).toEqual(404); // no games stored in db comment out after each in order to get a 204 request
+  })
 });
