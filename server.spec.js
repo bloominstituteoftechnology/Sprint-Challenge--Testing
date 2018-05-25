@@ -133,4 +133,20 @@ describe('Games', () => {
         .expect(404)
     });
   })
+
+  // PUT
+  describe('PUT', () => {
+    it('should be able to update an existing user', async () => {
+      const savedGame = await Game.create(newGame)
+      const updates = { title: 'jeffrey', genre: 'flynn' }
+      request(server)
+        .put(`/api/games/${savedGame._id}`)
+        .send(updates)
+        .expect(200)
+        .expect('Content-Type', /json/)
+        .expect(res => res.body.title === 'jeffrey')
+        .expect(res => res.body.genre === 'flynn')
+    });
+  })
+
 });
