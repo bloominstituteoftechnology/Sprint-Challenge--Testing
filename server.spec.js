@@ -40,46 +40,42 @@ const faker = describe("Games", () => {
     it("should return server OK (200)", async () => {
       const response = await request(server)
         .post("/api/games")
-        .send({ title: "Starcraft", genre: "RTS", releaseDate: "1998" });
+        .send({ title: "CS:GO", genre: "FPS", releaseDate: "2011" });
       expect(response.status).toEqual(201);
     });
 
-    it("should return POST as method", () => {
-      const response = request(server)
+    it("should return POST as method", async () => {
+      const response = await request(server)
         .post("/api/games")
-        .send({ title: "Starcraft", genre: "RTS", releaseDate: "1998" });
-      expect(response.method).toEqual("POST");
+        .send({ title: "Warcraft 3", genre: "RTS", releaseDate: "2002" });
+      expect(response.body.title).toEqual("Warcraft 3");
     });
   });
 
   // test the GET here
   describe("GET /api/games", () => {
-    it("should respond with json; 200 if successful", () => {
-      const response = request(server).get("/api/games");
-      request(server)
-        .get("/api/game")
-        .set("Accept", "application/json")
-        .expect("Content-Type", /json/)
-        .expect(200);
+    it("should respond with json; 200 if successful", async () => {
+      const response = await request(server).get("/api/games");
+      expect(response.status).toEqual(200);
+      expect(response.body[0].title).toEqual(200);
     });
   });
 
   // Test the DELETE here
   describe("DELETE /api/games", () => {
-    it("should return the proper game.title", () => {
-      const game = new Game({
-        title: "California Games",
-        date: "June 1987",
-        genre: "Sports"
-      });
-      expect(game.getGameTitle()).toEqual("California Games");
+    it("should return server OK (200)", async () => {
+      const response = await request(server).get("/api/games");
+      expect(response.status).toEqual(200);
+      expect(response.body[0].title).toEqual(200);
+
+      const response = request(server).delete("/api/games/:id");
     });
-    // it("should respond with json; 200 if successful", () => {
-    //   request(server)
-    //     .del("/api/game" + )
-    //     .set("Accept", "application/json")
-    //     .expect("Content-Type", /json/)
-    //     .expect(200);
-    // });
   });
+  // it("should respond with json; 200 if successful", () => {
+  //   request(server)
+  //     .del("/api/game" + )
+  //     .set("Accept", "application/json")
+  //     .expect("Content-Type", /json/)
+  //     .expect(200);
+  // });
 });
