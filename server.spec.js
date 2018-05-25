@@ -39,7 +39,7 @@ describe('Games', () => {
 
   afterEach(() => {
     //   // clear collection.
-
+    Game.remove().then(console.log('\n=== game deleted from test db ==='));
   });
 
   it('runs the tests', () => {});
