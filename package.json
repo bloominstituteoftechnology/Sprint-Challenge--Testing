@@ -4,8 +4,11 @@
   "description": "Testing Sprint Challenge",
   "main": "app.js",
   "scripts": {
-    "test": "jest --watch --verbose",
+    "test": "cross-env NODE_ENV=test jest --watch --verbose",
     "start": "nodemon app.js"
+  },
+  "jest": {
+    "testEnvironment": "node"
   },
   "repository": {
     "type": "git",
@@ -24,6 +27,7 @@
     "mongoose": "^5.1.2"
   },
   "devDependencies": {
+    "cross-env": "^5.1.6",
     "jest": "^23.0.0",
     "morgan": "^1.9.0",
     "supertest": "^3.1.0"
