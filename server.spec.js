@@ -49,8 +49,12 @@ describe('Games', () => {
   });
 
 describe('POST /api/game/create', () => {
-  it('POST a new game to the database', () => {
-
+  it('POST a new game to the database', async () => {
+    request(server)
+      .post('/api/game/create')
+      .send(newGame)
+      .expect('Content-Type', /json/)
+      .expect(201)
   });
 
   // test the POST here
