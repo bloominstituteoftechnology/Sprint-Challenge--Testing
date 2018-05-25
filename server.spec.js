@@ -17,9 +17,10 @@ describe('Games', () => {
 
   describe('POST', () => {
     it('should create a new game', async () => {
-      const response = await request(server).post('/api/games').send(newGame)
-      expect(response.status).toBe(201)
-      expect(response.type).toBe('application/json')
+      await request(server).post('/api/games').send(newGame).then(res => {
+        expect(res.status).toBe(201)
+        expect(res.type).toBe('application/json')
+      })
     })
   
     it('should throw an error when a new game POST does not meet all requirements', async () => {
@@ -39,7 +40,6 @@ describe('Games', () => {
     it('should fetch all games from database', async () => {
       const savedGame = await Game.create(newGame)
       const anotherGame = await Game.create({ title: 'jeffrey', genre: 'flynn' })
-
       await request(server).get('/api/games').then(res => {
         expect(res.status).toBe(200)
         expect(res.type).toBe('application/json')
@@ -48,11 +48,12 @@ describe('Games', () => {
 
     it('should fetch a game with provided ID', async () => {
       const savedGame = await Game.create(newGame)
-      const response = await request(server).get(`/api/games/${savedGame._id}`)
-      expect(response.status).toBe(200)
-      expect(response.body.title).toEqual(newGame.title)
-      expect(response.body.genre).toEqual(newGame.genre)
-      expect(response.body.releaseDate).toEqual(newGame.releaseDate)
+      await request(server).get(`/api/games/${savedGame._id}`).then(res => {
+        expect(res.status).toBe(200)
+        expect(res.body.title).toEqual(newGame.title)
+        expect(res.body.genre).toEqual(newGame.genre)
+        expect(res.body.releaseDate).toEqual(newGame.releaseDate)
+      })
     })
 
     it('should return an error if an invalid ID is provided', async () => {
