@@ -41,8 +41,8 @@ describe('Games', () => {
     const response = await request(server).post('/api/games').send(game);
 
     expect(response.status).toEqual(201);
-    exepct(response.type).toEqual('application/json');
-    expect(reponse.body.title).toEqual('Mad Max');
+    expect(response.type).toEqual('application/json');
+    expect(response.body.title).toEqual('Mad Max');
   });
 
   // test the GET here
