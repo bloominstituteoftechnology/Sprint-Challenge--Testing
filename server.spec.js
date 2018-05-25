@@ -78,11 +78,22 @@ describe('Games', () => {
     })
 
     it('should return the proper status code', () => {
-    request(server)
-        .get('/api/games')
-        .expect(200)
-      })
+      
+      request(server)
+          .get('/api/games')
+          .expect(200)
+        })
   })
 
   // Test the DELETE here
+  describe('DELETE /game', () => {
+    it('should delete a game given its id', async () => {
+      gameId = '5b083df427909f205c605369';
+
+      await Game.findByIdAndRemove(gameId);
+
+      expect(204);
+
+    })
+  })
 });
