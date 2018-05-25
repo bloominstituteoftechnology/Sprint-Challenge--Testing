@@ -4,7 +4,7 @@
   "description": "Testing Sprint Challenge",
   "main": "app.js",
   "scripts": {
-    "test": "jest --watch --verbose",
+    "test": "cross-env NODE_ENV=test jest test --watch --verbose",
     "start": "nodemon app.js"
   },
   "repository": {
