@@ -37,7 +37,7 @@ describe('Games', () => {
   it('runs the tests', () => {});
 
   // test the POST here
-  it('Should post a game', async() => {
+  it('Should post a game to database', async() => {
     const game = {
       title: 'Madden 18',
       genre: 'Sports',
@@ -56,7 +56,7 @@ describe('Games', () => {
   })
 
   // test the GET here
-  it('Should get a game from database', async () => {
+  it('Should get game from database', async () => {
     const response = await request(server)
     .get('/api/games')
     expect(response.status).toEqual(200)
@@ -65,4 +65,9 @@ describe('Games', () => {
   })
 
   // Test the DELETE here
+  it('Should delete game from database', async() => {
+    const response = await request(server)
+    .delete(`/api/games/${gameId}`);
+    expect(response.status).toEqual(404);
+  })
 });
