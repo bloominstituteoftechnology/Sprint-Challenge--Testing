@@ -14,6 +14,8 @@ The point of test driven development is to enstill standards amongst a team of d
 A mock function is a special type of function that it custom make to track information. One way of using this information is to track how many times it ran.
 
 1. Mention three types of tests.
-
+- Unit testing
+- Integration testing
+- End-to-end testing
 
 1. What type of test performs database operations against a real server.
