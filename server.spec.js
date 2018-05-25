@@ -36,7 +36,7 @@ describe('Games', () => {
 
   afterEach(() => {
     //   // clear collection.
-    return Game.remove()
+    return Game.remove();
   });
 
   it('runs the tests', () => {});
@@ -45,9 +45,9 @@ describe('Games', () => {
   describe('[POST] /api/games', () => {
     it('should create a new game', async () => {
       const game = new Game({
-        title: 'California Games',
-        genre: 'Sports',
-        releaseDate: 'June 1987',
+        title: 'Contra Games',
+        genre: 'Action',
+        releaseDate: 'June 1990',
       });
       const response = await request(server).post(`/api/games`).send(game);
 
@@ -59,7 +59,7 @@ describe('Games', () => {
         releaseDate: game.releaseDate
       });
       expect(response.body).toHaveProperty('_id');
-    })
+    });
 
     it('should ensure that title and genre fields are provided', async () => {
       const game = new Game()
@@ -74,6 +74,16 @@ describe('Games', () => {
   })
 
   // test the GET here
+  describe('[GET] /api/games', () => {
+    it('should fetch all games', async () => {
+      const response = await request(server).get('/api/games');
+      expect(response.status).toEqual(200);
+      expect(response.type).toEqual('application/json');
+      expect(response.body).not.toBeUndefined();
+      expect(response.body).toHaveLength(2);
+      expect(response.body[0].title).toEqual('California Games');
+    });
+  });
 
   // Test the DELETE here
   
