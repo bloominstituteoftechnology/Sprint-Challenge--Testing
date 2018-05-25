@@ -26,11 +26,11 @@ describe("Games", () => {
   let gameId;
   // // hint - these wont be constants because you'll need to override them.
 
-  beforeEach(() => {
+  beforeEach(async () => {
     //   // write a beforeEach hook that will populate your test DB with data
     //   // each time this hook runs, you should save a document to your db
     //   // by saving the document you'll be able to use it in each of your `it` blocks
-    gameId = createGame();
+    gameId = await createGame();
   });
 
   afterEach(() => {
@@ -41,34 +41,49 @@ describe("Games", () => {
   it("runs the tests", () => {});
 
   // test the POST here
-  test("It should respond to post requests", () => {
-    let tempTitle = { title: "LOTR", genre: "Middle Earth" };
-    return request(server)
-      .post(`/api/games/`)
-      .send(tempTitle)
-      .then(response => {
-        expect(response.statusCode).toBe(201);
-      });
+  describe("POST Testing", () => {
+    it("It should respond to post requests", () => {
+      let tempTitle = { title: "LOTR", genre: "Middle Earth" };
+      return request(server)
+        .post(`/api/games/`)
+        .send(tempTitle)
+        .then(response => {
+          expect(response.statusCode).toBe(201);
+        });
+    });
   });
 
   // test the GET here
-  it("It should respond 200 to get requests at /api/games/", async () => {
-    const response = await request(server).get("/api/games/");
+  describe("GET Testing", () => {
+    it("It should respond 200 to get requests at /api/games/", async () => {
+      const response = await request(server).get("/api/games/");
 
-    expect(response.status).toEqual(200);
-    expect(response.type).toEqual("application/json");
+      expect(response.status).toEqual(200);
+      expect(response.type).toEqual("application/json");
+    });
+    it("It should to get requests at /api/games/", async () => {
+      const response = await request(server).get("/api/games/");
+
+      expect(response.status).toEqual(200);
+      expect(response.type).toEqual("application/json");
+    });
   });
 
   // Test the DELETE here
-  test("It should respond to delete requests on game id", () => {
-    setTimeout(waitForThis, 2000);
-    function waitForThis() {
-      console.log(gameId);
+  describe("DEL Testing", () => {
+    it("It should respond to delete requests on game id", () => {
       return request(server)
         .delete(`/api/games/${gameId}`)
         .then(response => {
           expect(response.statusCode).toBe(204);
         });
-    }
+    });
+    it("It should fail when sent wrong id", () => {
+      return request(server)
+        .delete(`/api/games/${gameId}1123`)
+        .then(response => {
+          expect(response.statusCode).toBe(500);
+        });
+    });
   });
 });
