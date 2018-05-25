@@ -80,7 +80,16 @@ describe('Games', () => {
       expect(response.body).toContain(response.body[0]);
     });
 
+    it('returns data stored withing test db', async () => {
+      const response = await request(server).get("/api/games");
 
+      await Game.find({}, (err, games) => {
+        if(err) return err;
+        gameList = JSON.stringify(games);
+      });
+
+      expect(JSON.stringify(response.body)).toEqual(gameList);
+    });
   })
   
   // Test the DELETE here
