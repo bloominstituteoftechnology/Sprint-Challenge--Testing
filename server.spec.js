@@ -3,11 +3,7 @@ const server = require('./server');
 const request = require('supertest');
 const Game = require('./games/Game');
 
-const newGame = new Game({
-    title: 'California Games',
-    genre: 'Sports',
-    releaseDate: 'June 1987'
-})
+const newGame = new Game({title: 'California Games', genre: 'Sports', releaseDate: 'June 1987'})
 
 describe('Games', () => {
   beforeAll(() => {
@@ -26,9 +22,9 @@ describe('Games', () => {
   // // hint - these wont be constants because you'll need to override them.
 
   beforeEach(() => {
-    //   // write a beforeEach hook that will populate your test DB with data
-    //   // each time this hook runs, you should save a document to your db
-    //   // by saving the document you'll be able to use it in each of your `it` blocks
+    //   // write a beforeEach hook that will populate your test DB with data   //
+    // each time this hook runs, you should save a document to your db   // by
+    // saving the document you'll be able to use it in each of your `it` blocks
   });
 
   afterEach(() => {
@@ -37,23 +33,20 @@ describe('Games', () => {
   });
 
   it('runs the tests', () => {});
-  // test the POST here 
-  describe('POST testing', () => {
-    it('Should create a new game and add it to the DB', () => {
-      request(server)
-      .post('api/games')
-      .send(newGame)
-      .expect('string', /json/)
-      .expect(201)
+  //testing get
+  describe('get testing', () => {
+    it('Should retrieve the list of games', async () => {
+      const response = await request(server).get('/api/games')
+      expect(response.status).toBe(200)
+      expect(response.type).toBe('application/json')
     })
-    .catch(err => {
-      res
-      .status(500)
-      .json({ message: 'whoops'})
+  });
+  describe('post testing', () => {
+    it('Should create a post request ', async () =>{
+      const response = await request(server).post('/api/games').send(newGame);
+      expect(response.status).toBe(201);
+      expect(response.type).toBe('application/json');
+      expect(response.body.title).toBe('California Games');
     })
   })
-
-  // test the GET here
-
-  // Test the DELETE here
 });
