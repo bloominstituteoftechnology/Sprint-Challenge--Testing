@@ -22,10 +22,15 @@ describe('Games', () => {
     //   // write a beforeEach hook that will populate your test DB with data
     //   // each time this hook runs, you should save a document to your db
     //   // by saving the document you'll be able to use it in each of your `it` blocks
-  });
+    const newGame = { title: "Sonic", genre: "action", releaseData: "A long time ago" }
+
+    Game.create(newGame);
+    
+  })
 
   afterEach(() => {
     //   // clear collection.
+    Game.remove();
   });
 
   it('runs the tests', () => {});
