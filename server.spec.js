@@ -62,8 +62,8 @@ describe('Games', () => {
     }
 
     const response = await request(server)
-    .post('/api/games')
-    .send(game);
+      .post('/api/games')
+      .send(game);
 
     expect(response.status).toBe(201);
     expect(response.body).toHaveProperty("_id");
@@ -77,8 +77,13 @@ describe('Games', () => {
   // test the GET here
   it('GET', async() => {
     let response = await request(server)
-    .get('/api/games')
-  })
+      .get('/api/games');
+
+    expect(response.status).toBe(200);
+    expect(response.type).toEqual('application/json');
+  });
 
   // Test the DELETE here
+
+
 });
