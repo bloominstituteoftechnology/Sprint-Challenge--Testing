@@ -1,5 +1,6 @@
+const request = require("supertest")
 const mongoose = require('mongoose');
-
+const server = require('./server')
 const Game = require('./games/Game');
 
 describe('Games', () => {
@@ -27,7 +28,7 @@ describe('Games', () => {
         genre: 'Sports',
         releaseDate: 'June 1987'
     })
-      newGame.save((eer,savedGame)=>{
+      newGame.save((err,savedGame)=>{
     if(err){
       console.log(err)
     }else{
@@ -44,9 +45,32 @@ return Game.remove()
 
   it('runs the tests', () => {});
 
+
   // test the POST here
+it('should create a game', async()=>{
+const game = {
+  title: 'California Games',
+  genre: 'Sports',
+  releaseDate: 'June 1987'
+}
+const response = await request(server)
+.post('/api/games')
+.send(game)
 
+
+expect(response.body).toHaveProperty("_id")
+expect(response.body).toHaveProperty("title")
+expect(response.body).toHaveProperty("genre")
+expect(response.body).toHaveProperty("releaseDate")
+expect(response.status).toEqual(201)
+expect(response.type).toEqual("application/json")
+})
   // test the GET here
-
+it("should fetch a game",async()=>{
+  const response = await request(server)
+  .get('/api/games')
+  expect(response.status).toEqual(200)
+  expect(response.type).toEqual("application/json")
+})
   // Test the DELETE here
 });
