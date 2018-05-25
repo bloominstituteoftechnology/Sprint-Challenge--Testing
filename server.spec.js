@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
-
 const Game = require('./games/Game');
+const server = require('./server');
+const request = require('supertest');
 
 describe('Games', () => {
   beforeAll(() => {
