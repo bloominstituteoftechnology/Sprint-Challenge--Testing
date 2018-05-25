@@ -28,7 +28,6 @@ describe('Games', () => {
     }
 
     Game.create(body).then(success => {
-      console.log("Game Saved")
     }).catch(err => {
       console.log(err);
     })
@@ -52,7 +51,15 @@ describe('Games', () => {
     expect(response.status).toEqual(200);
     expect(response.type).toEqual('application/json');
     expect(response.body).toHaveLength(2)
+    // console.log(response.body)
 })
 
   // Test the DELETE here
+  it("Should delete a user and return it's name", async() => {
+    const response = await request(server).get('/api/games');
+    gameId = response.body[0]._id;
+    const responseDel = await request(server).delete(`/api/games/${gameId}`);
+    expect(responseDel.body).toEqual({});
+    expect(responseDel.status).toEqual(204);
+});
 });
