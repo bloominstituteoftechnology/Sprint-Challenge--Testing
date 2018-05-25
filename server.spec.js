@@ -13,13 +13,16 @@ describe('Games', () => {
 
   afterEach(() => Game.remove())
 
-  it('runs the tests', () => {});
+  it.skip('runs the tests', () => {});
 
-  describe('POST', () => {
+  describe.skip('POST', () => {
     it('should create a new game', async () => {
       await request(server).post('/api/games').send(newGame).then(res => {
         expect(res.status).toBe(201)
         expect(res.type).toBe('application/json')
+        expect(res.body.title).toBe('messing with mongoose')
+        expect(res.body.genre).toBe('sci-fi')
+        expect(res.body.releaseDate).toBe('3141')
       })
     })
   
@@ -36,13 +39,14 @@ describe('Games', () => {
     })
   })
 
-  describe('GET', () => {
+  describe.skip('GET', () => {
     it('should fetch all games from database', async () => {
       const savedGame = await Game.create(newGame)
       const anotherGame = await Game.create({ title: 'jeffrey', genre: 'flynn' })
       await request(server).get('/api/games').then(res => {
         expect(res.status).toBe(200)
         expect(res.type).toBe('application/json')
+        expect(res.body).toHaveLength(2)
       })
     })
 
@@ -59,6 +63,7 @@ describe('Games', () => {
     it('should return an error if an invalid ID is provided', async () => {
       await request(server).get('/api/games/123').then(res => {
         expect(res.status).toBe(500)
+        expect(res.body.message).toBe('oh no')
         expect(res.type).toBe('application/json')
       })
     })
@@ -86,7 +91,8 @@ describe('Games', () => {
       await request(server).put(`/api/games/${savedGame._id}`).send(updates).then(res => {
         expect(res.status).toBe(200)
         expect(res.type).toBe('application/json')
-        expect(res.text).toContain('jeffrey')
+        expect(res.body.title).toBe('jeffrey')
+        expect(res.body.genre).toBe('flynn')
       })
     })
   
@@ -96,13 +102,15 @@ describe('Games', () => {
       await request(server).put(`/api/games/${savedGame._id}`).send(updates).then(res => {
         expect(res.status).toBe(422)
         expect(res.type).toBe('application/json')
+        expect(res.body.error).toBe('Must Provide a title && Id')
       })
     })
   
     it('should return an error for a PUT request with an invalid ID', async () => {
-      await request(server).put('/api/games/123').then(res => {
-        expect(res.status).toBe(422)
+      await request(server).put('/api/games/123').send({ title: 'jeffrey', genre: 'flynn' }).then(res => {
+        expect(res.status).toBe(500)
         expect(res.type).toBe('application/json')
+        expect(res.body.message).toBe('Something really bad happened')
       })
     })
   })
