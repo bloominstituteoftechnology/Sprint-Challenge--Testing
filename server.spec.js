@@ -15,17 +15,15 @@ describe('Games', () => {
       .then(() => console.log('\n=== disconnected from TEST DB ==='));
   });
 
-  let gameId;
-  // // hint - these wont be constants because you'll need to override them.
+  let gameId, game;
 
-  beforeEach(() => {
-    //   // write a beforeEach hook that will populate your test DB with data
-    //   // each time this hook runs, you should save a document to your db
-    //   // by saving the document you'll be able to use it in each of your `it` blocks
+  beforeEach(async () => {
+    game = await Game.create({title: 'testgame', genre: 'test', releaseDate: 'never'});
+    gameId = game._id;
   });
 
   afterEach(() => {
-    //   // clear collection.
+    return Game.remove();
   });
 
   it('runs the tests', () => {});
