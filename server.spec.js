@@ -67,7 +67,14 @@ describe('Games', () => {
     });
   });
 
-  // test the GET here
+  describe('Delete /api/games/:id', () => {
+    it('should delete a game by id', async () => {
+
+      const response = await request(server).delete(`/api/games/${gameId}`);
+
+      expect(response.status).toBe(204);
+    });
+  });
 
   // Test the DELETE here
 });
