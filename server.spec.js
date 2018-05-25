@@ -46,11 +46,11 @@ const faker = describe("Games", () => {
       expect(response.status).toEqual(201);
     });
 
-    it("should return matching title after POST", () => {
+    it("should return POST as method", () => {
       const response = request(server)
         .post("/api/games")
         .send({ title: "Starcraft", genre: "RTS", releaseDate: "1998" });
-      expect(response.data).toEqual("something");
+      expect(response.method).toEqual("POST");
     });
   });
 
