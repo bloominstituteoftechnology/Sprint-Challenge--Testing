@@ -64,6 +64,20 @@ describe("Games", () => {
       expect(response.type).toBe("application/json");
       expect(response.body).toMatchObject(duckHunt);
     });
+
+    it("should respond to invalid POST if title or genre fields missing", async () => {
+      const mysteryGame = {
+        title: "",
+        genre: "",
+        releaseDate: "1985"
+      };
+
+      const response = await request(server)
+        .post("/api/games")
+        .send(mysteryGame);
+
+      expect(response.status).toEqual(500);
+    });
   });
 
   // test the GET here
