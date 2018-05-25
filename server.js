@@ -35,7 +35,7 @@ server.get('/api/games', (req, res) => {
 server.put('/api/games/:id', (req, res) => {
   const { id } = req.params;
   const changes = req.body;
-
+  const update = req.body;
   // All we care about is the game title and id. Don't worry about genre or date.
   if (!changes.title || !changes.id) {
     return res.status(422).json({ error: 'Must Provide a title && Id' });
