@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-
+const request = require('supertest');
+const server = require('./server');
 const Game = require('./games/Game');
 
 describe('Games', () => {
@@ -22,10 +23,18 @@ describe('Games', () => {
     //   // write a beforeEach hook that will populate your test DB with data
     //   // each time this hook runs, you should save a document to your db
     //   // by saving the document you'll be able to use it in each of your `it` blocks
+    const newGame = new Game({
+      title: 'Ratchet and Clank - Tools of Destruction',
+      genre: 'platformer',
+      releaseDate: '11/23/2007'
+    });
+    console.log('game has been ran through before each');
   });
 
   afterEach(() => {
     //   // clear collection.
+    Game.remove;
+    console.log('game has been cleared');
   });
 
   it('runs the tests', () => {});
