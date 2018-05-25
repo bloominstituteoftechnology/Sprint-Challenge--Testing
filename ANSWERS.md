@@ -19,3 +19,4 @@ A mock function is a special type of function that it custom make to track infor
 - End-to-end testing
 
 1. What type of test performs database operations against a real server.
+Model testing?... Seems like there can be several ways to preform automated tests on a real server but none stick out to me as being unique for in the sense that it does only that.
