@@ -52,6 +52,22 @@ describe("Games", () => {
   });
 
   // test the POST here
+  describe("POST request", () => {
+    const expectedBody = {
+      title: "California Games",
+      genre: "Sports",
+      releaseDate: "June 1987"
+    };
+    const { title, genre, releaseDate } = expectedBody;
+    it("should have a request body with a title, genre, and releaseDate as strings", () => {
+      expect(typeof title).toBe("string");
+      expect(title.length).toBeGreaterThan(0);
+      expect(typeof genre).toBe("string");
+      expect(genre.length).toBeGreaterThan(0);
+      expect(typeof releaseDate).toBe("string");
+      expect(releaseDate.length).toBeGreaterThan(0);
+    });
+  });
 
   // test the GET here
 
