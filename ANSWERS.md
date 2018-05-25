@@ -11,7 +11,7 @@
 The point of test driven development is to enstill standards amongst a team of developers. It also helps to gain an idea of what you would like a peice of software to do before you actually build it.
 
 1. What is a mock function? How do we use it to test a callback passed to a function?
-
+A mock function is a special type of function that it custom make to track information. One way of using this information is to track how many times it ran.
 
 1. Mention three types of tests.
 
