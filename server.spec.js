@@ -83,7 +83,8 @@ describe('Games', () => {
         const response = await request(server).put(`/api/games/${_id}`).send(updatedGame)
         expect(response.status).toBe(422)
         expect(response.type).toBe('application/json')
-      })
+      });
+      
   });
 
 
