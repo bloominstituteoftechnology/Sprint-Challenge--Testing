@@ -24,7 +24,7 @@
 * run `yarn` to download and install all the dependencies you need for this project.
 * run `yarn test` to start your tests.
 * Keep an active log of your changes by committing with Git and pushing often to GitHub.
-* Write all of your tests in the `server.test.js` file.
+* Write all of your tests in the `server.spec.js` file.
 
 ## Project Description
 
