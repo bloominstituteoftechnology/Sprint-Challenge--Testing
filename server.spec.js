@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
+const request = require('supertest');
 
+const server = require('./server');
 const Game = require('./games/Game');
 
 describe('Games', () => {
@@ -38,6 +40,24 @@ describe('Games', () => {
   // test the POST here
   describe('POST /games', () => {
     it('should check if games are being properly posted',  () => {
+      
+      // arrange
+
+      const newGame = { title: "Sonic", genre: "actions", releaseDate: "A long time ago" }
+
+      // assert
+
+      expect(newGame.title).toBe("Sonic");
+    })
+    it('should return an error if title or genre is missing' , async () => { 
+      // arrange
+      const newGame = { releaseDate: "A long time ago" }
+
+      // act
+      const game = request(server).post('/api/games').send(newGame);
+
+      // assert
+      expect(500);
 
     })
   })
