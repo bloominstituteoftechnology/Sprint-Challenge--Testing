@@ -2,7 +2,18 @@
 
 
 1. In Jest, what are the differences between beforeAll, afterAll, beforeEach, and afterEach? When do they run? What are they used for?
+- beforeAll: acts before any tests start to run
+- afterAll: acts after all tests have ran
+- beforeEach: acts before eash test is run
+- afterEach: acts after each test is ran
+
 1. What is the point of Test Driven Development? What do you personally think about this approach?
+
+
 1. What is a mock function? How do we use it to test a callback passed to a function?
+
+
 1. Mention three types of tests.
+
+
 1. What type of test performs database operations against a real server.
