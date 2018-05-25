@@ -22,10 +22,24 @@ describe('Games', () => {
     //   // write a beforeEach hook that will populate your test DB with data
     //   // each time this hook runs, you should save a document to your db
     //   // by saving the document you'll be able to use it in each of your `it` blocks
+    const newGame = new Game({
+        title: 'California Games',
+        genre: 'Sports',
+        releaseDate: 'June 1987'
+    })
+      newGame.save((eer,savedGame)=>{
+    if(err){
+      console.log(err)
+    }else{
+      gameId = savedGame._id
+      console.log(gameId)
+    }
+  })
+
   });
 
   afterEach(() => {
-    //   // clear collection.
+return Game.remove()
   });
 
   it('runs the tests', () => {});
