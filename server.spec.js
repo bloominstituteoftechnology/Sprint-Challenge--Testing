@@ -7,6 +7,7 @@ const server = require('./server');
 // ______________VARIABLES______________
 let gameId;
 let game;
+let idToDelete;
 
 describe('Games', () => {
   beforeAll(() => {
@@ -34,6 +35,7 @@ describe('Games', () => {
       releaseDate: 'Sep 28, 2017',  // not required
     }
     gameId = await Game.create(game);
+    idToDelete = gameId._id;
   });
 
   afterEach(() => {
@@ -55,34 +57,26 @@ describe('Games', () => {
     response = request(server)
       .post('/api/games')
       .send(game)
-      .expect(201)
-      .end(function(err, res) {
-        if(err) throw err;
-      });
+      .expect(201);
 
     expect(response._data.title).toEqual(game.title);
     expect(response._data.genre).toEqual(game.genre);
     expect(response._data.releaseDate).toEqual(game.releaseDate);
 
-    console.log('_id', response._data);
-    console.log('\n YAYAYAYAYAYAAYAY \n')
-      
-
   // test the GET here
     response = await request(server).get('/api/games');
     expect(response.status).toEqual(200);
-    console.log(response.body);
-    let idToDelete = response.body[1]._id;
-    console.log(idToDelete);
+
   // Test the DELETE here
-    request(server)
+    response = await request(server).get('/api/games');
+    const testLength = response.body.length;
+
+    await request(server)
       .del(`/api/games/${idToDelete}`)
-      .expect(500)
-      .end(function(err, res) {
-        if(err) throw err;
-      })
+      .expect(204);
       
-      response = await request(server).get('/api/games');
-      console.log(response.body);
+    response = await request(server).get('/api/games');
+    expect(response.body.length).toEqual(testLength-1);
+
   });
 });
