@@ -30,36 +30,32 @@ const defaultGame3 = {
 
 const defaultGames = [defaultGame1, defaultGame2, defaultGame3];
 
-const errorTestGame = {
-  title: 3,
-  genre: "",
-  releaseDate: "2011"
-};
-
 describe("Games", () => {
   beforeAll(() => {
-    return mongoose
-      .connect("mongodb://localhost/test")
-      .then(() => console.log("\n=== connected to TEST DB ==="));
-  });
-
-  afterAll(() => {
-    return mongoose
-      .disconnect()
-      .then(() => console.log("\n=== disconnected from TEST DB ==="));
-  });
-
-  let gameId;
-  // // hint - these wont be constants because you'll need to override them.
-
-  beforeEach(() => {
-    return defaultGames.forEach(game => {
-      return Game.create(game);
+    return mongoose.connect("mongodb://localhost/test").then(() => {
+      console.log("\n=== connected to TEST DB ===");
+      return defaultGames.forEach(game => {
+        return Game.create(game);
+      });
     });
   });
 
+  afterAll(() => {
+    Game.remove().then(then => {
+      return mongoose
+        .disconnect()
+        .then(() => console.log("\n=== disconnected from TEST DB ==="));
+    });
+  });
+
+  beforeEach(() => {
+    // return defaultGames.forEach(game => {
+    //   return Game.create(game);
+    // });
+  });
+
   afterEach(() => {
-    return Game.remove();
+    // return Game.remove();
   });
 
   it("runs the tests", () => {});
@@ -132,7 +128,7 @@ describe("Games", () => {
 
       expect(status).toEqual(200);
       expect(type).toEqual("application/json");
-      expect(games).toHaveLength(3);
+      expect(games).toHaveLength(4);
       games.forEach(game => {
         expect(game._id).toBeTruthy();
         expect(game.title).toBeTruthy();
