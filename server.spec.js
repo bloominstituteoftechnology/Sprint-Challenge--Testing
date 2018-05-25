@@ -75,6 +75,7 @@ describe('Games', () => {
     request(server)
       .delete('/api/games')
       .expect('Content-Type', /json/)
+      .expect(res => res.message === 'You need to give me an ID')
       .expect(422)
   })
 
@@ -82,6 +83,19 @@ describe('Games', () => {
     request(server)
       .delete('/api/game/123')
       .expect('Content-Type', /json/)
+      .expect(res => res.message === 'Game not found')
       .expect(404)
+  })
+
+  it('should be able to update an existing user', async () => {
+    const savedGame = await Game.create(newGame)
+    const updates = { title: 'jeffrey', genre: 'flynn' }
+    request(server)
+      .put(`/api/games/${savedGame._id}`)
+      .send(updates)
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .expect(res => res.body.title === 'jeffrey')
+      .expect(res => res.body.genre === 'flynn')
   })
 });
