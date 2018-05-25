@@ -17,9 +17,9 @@
   "bugs": {
     "url": "https://github.com/LambdaSchool/Sprint-Challenge--Testing/issues"
   },
-  "homepage":
-    "https://github.com/LambdaSchool/Sprint-Challenge--Testing#readme",
+  "homepage": "https://github.com/LambdaSchool/Sprint-Challenge--Testing#readme",
   "dependencies": {
+    "expres": "^0.0.5",
     "express": "^4.16.3",
     "mongoose": "^5.1.2"
   },
