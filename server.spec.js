@@ -40,14 +40,12 @@ describe('Games', () => {
     //   // by saving the document you'll be able to use it in each of your `it` blocks
   });
 
-  afterEach(() => {
-    Game.remove({}, err => {
-      if (err) console.log(err);
-      return();
-    });
+  afterEach(() =>
+    Game.remove())
     //   // clear collection.
-  });
+})
 
+  // test the POST here
 describe('POST /api/game/create', () => {
   it('POST a new game to the database', async () => {
     request(server)
@@ -56,11 +54,24 @@ describe('POST /api/game/create', () => {
       .expect('Content-Type', /json/)
       .expect(201)
   });
-
-  // test the POST here
+})
 
   // test the GET here
+describe('GET /api/game', () => {
+  it('GET the list of games from database', async () => {
+    request(server)
+      .get('/api/game')
+      .expect('Content-Type', /json/)
+      .expect(200)
+  });
+})
 
   // Test the DELETE here
-})
+describe('DELETE /api/game/remove/:id', () => {
+  it('DELETE game from database', async () => {
+    const savedGame = await Game.create(newGame)
+    request(server)
+      .delete(`api/game/${savedGame._id}`)
+      .expect(204)
+  })
 });
