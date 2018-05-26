@@ -5,6 +5,8 @@ const server = require('./server.js');
 const Game = require('./games/Game');
 
 describe('Games', () => {
+
+
   beforeAll(() => {
     return mongoose.connect('mongodb://localhost/test').then(() => console.log('\n=== connected to TEST DB ==='));
   });
@@ -132,40 +134,63 @@ describe('Games', () => {
   // Test the DELETE here
 
   describe('delete', () => {
-  //   it('should delete a document if proper id is given', async () => {
-  //
-  //     let response;
-  //
-  //     try {
-  //       response = await response(server).delete(`/api/games/${gameId}`);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //      expect(response.status).toEqual(204);---------------------------------------------ask austin
-  //   })
+    //   it('should delete a document if proper id is given', async () => {
+    //
+    //     let response;
+    //
+    //     try {
+    //       response = await response(server).delete(`/api/games/${gameId}`);
+    //     } catch (err) {
+    //       console.log(err);
+    //     }
+    //      expect(response.status).toEqual(204);---------------------------------------------ask austin
+    //   })
 
-  it('should delete a document if proper id is given with a 204 status code', async () => {
-    const game = {
-      title: "test test delete",
-      genre: "DELETE",
-      releaseDate: "October 27, 2009"
-    }
-    const document = new Game(game)
-    const {_id} = document
-    return document.save()
-    .then(async () => {
-      const response = await request(server).delete(`/api/games/${_id}`)
-      expect(response.status).toBe(204)
+    it('should delete a document if proper id is given with a 204 status code', async () => {
+      const game = {
+        title: "test test delete",
+        genre: "DELETE",
+        releaseDate: "October 27, 2009"
+      }
+      const document = new Game(game)
+      const {_id} = document
+      return document.save().then(async () => {
+        const response = await request(server).delete(`/api/games/${_id}`)
+        expect(response.status).toBe(204)
+      })
+    })
+
+    it('should return a 500 because the id doesnt exist', async () => {
+      const response = await request(server).delete(`/api/games/123as`);
+      expect(response.status).toEqual(500);
+    })
+    it('should return a 404 because of a missing id', async () => {
+      const response = await request(server).delete(`/api/games/`);
+      expect(response.status).toEqual(404);
     })
   })
 
-  it('should return a 500 because the id doesnt exist', async () => {
-    const response = await request(server).delete(`/api/games/123as`);
-    expect(response.status).toEqual(500);
+  describe('update', () => {
+
+    it('should update with the updated document', async () => {
+
+    const game = { title: "to update", genre: "UPDATE...", releaseDate: "October 27, 2009" }
+
+    const document = new Game(game)
+
+    const { _id } = document
+    // console.log('from test update... _id', _id);
+
+    const update = { title: "After update", id: _id, genre: "UPDATE..."}
+    return document.save()
+      .then(async () => {
+        const response = await request(server).put(`/api/games/${_id}`).send(update)
+
+        expect(response.status).toBe(200)
+        expect(response.type).toBe('application/json')
+        expect(response.body).toMatchObject({ title: update.title })
+      })
   })
-  it('should return a 404 because of a missing id', async () => {
-    const response = await request(server).delete(`/api/games/`);
-    expect(response.status).toEqual(404);
   })
-})
+
 });
