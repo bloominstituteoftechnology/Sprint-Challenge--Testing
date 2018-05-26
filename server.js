@@ -1,6 +1,5 @@
 const express = require('express');
 const morgan = require('morgan');
-
 const Game = require('./games/Game');
 
 const server = express();
@@ -9,27 +8,17 @@ server.use(express.json());
 server.use(morgan('combined'));
 
 server.post('/api/games', (req, res) => {
-  Game.create(req.body)
-    .then(game => {
-      res.status(201).json(game);
-    })
-    .catch(err => {
-      res
-        .status(500)
-        .json({ message: 'Error saving data to the DB', error: err });
-    });
+  Game
+    .create(req.body)
+    .then(game => res.status(201).json(game))
+    .catch(err => res.status(500).json({ message: 'Error saving data to the DB', error: err }));
 });
 
 server.get('/api/games', (req, res) => {
-  Game.find({})
-    .then(games => {
-      res.status(200).json(games);
-    })
-    .catch(err => {
-      res
-        .status(500)
-        .json({ message: 'Something really bad happened', error: err });
-    });
+  Game
+    .find({})
+    .then(games => res.status(200).json(games))
+    .catch(err => res.status(500).json({ message: 'Something really bad happened', error: err }));
 });
 
 server.get('/api/games/:id', (req, res) => {
