@@ -43,7 +43,10 @@ describe("Games", () => {
   // test the POST here
   describe("POST Testing", () => {
     it("It should respond to post requests", () => {
-      let tempTitle = { title: "LOTR", genre: "Middle Earth" };
+      let tempTitle = {
+        title: "Metal Gear",
+        genre: "Tactical Espionage Action"
+      };
       return request(server)
         .post(`/api/games/`)
         .send(tempTitle)
@@ -74,7 +77,7 @@ describe("Games", () => {
       const response = await request(server).get("/api/games/");
 
       expect(response.status).toEqual(200);
-      expect(response.body).toMatchObject([{ genre: "Middle Earth" }]);
+      expect(response.body).toMatchObject([{ title: "Metal Gear" }]);
     });
   });
 
