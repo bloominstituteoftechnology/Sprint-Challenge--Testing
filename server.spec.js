@@ -28,8 +28,9 @@ describe('Games', () => {
 
     const newGame = new Game({
       title: 'Game Title',
-      id: '4444'
-    })
+      id: '4444',
+      genre: 'scifi'
+    });
     newGame.save((err, saveGame) => {
       if (err) {
         console.log(err);
@@ -72,10 +73,22 @@ describe('Games', () => {
 
   // Test the DELETE here
   it('should delete a game', () => {
-    console.log('id', gameId)
     const response = await request(server)
     .delete(`/api/games/${gameId}`)
 
     expect(response.status).toEqual(204)
   })
+  it('should return 404 if no id is found', () => {
+    const response = await request(server)
+    .delete(`/api/games/${gameId}`)
+
+    expect(response.status).toEqual(404)
+  })
+  it('should return 500 if it is a bad request', () => {
+    const response = await request(server)
+    .delete(`/api/games/${gameId}`)
+
+    expect(response.status).toEqual(500)
+  })
+
 });
