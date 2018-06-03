@@ -65,10 +65,17 @@ describe('Games', () => {
   // test the GET here
   it('should get a game', async () => {
     const response = await request(server)
+    .get('/api/games')
+    
+    expect(response.status).toEqual(200)
   })
 
   // Test the DELETE here
   it('should delete a game', () => {
+    console.log('id', gameId)
+    const response = await request(server)
+    .delete(`/api/games/${gameId}`)
 
+    expect(response.status).toEqual(204)
   })
 });
