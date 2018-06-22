@@ -28,7 +28,9 @@ describe.only('The API Server', () => {
       genre: 'Platform',
       releaseDate: 'June 1986'
     });
-    return Game.create(mario);
+    return Game.create(mario).then(game => {
+      gameId = game._id;
+    });
   });
 
   afterEach(() => {
@@ -60,7 +62,7 @@ describe.only('The API Server', () => {
       const response = await request(server)
         .post('/api/games')
         .send(zelda);
-      
+
       expect(response.status).toBe(expected.status);
       expect(response.type).toBe(expected.type);
       expect(response.body).toMatchObject(expected.body);
@@ -86,5 +88,17 @@ describe.only('The API Server', () => {
     });
   });
 
-  describe('DELETE endpoint to /api/games', () => {});
+  describe('DELETE endpoint to /api/games/:id', () => {
+    it('should delete game matching given id and return No Content status code', async () => {
+      const expected = {
+        status: 204,
+        foundGame: 0
+      };
+      const response = await request(server).delete(`/api/games/${gameId}`);
+      const foundGame = await Game.find({ _id: gameId });
+
+      expect(response.status).toBe(expected.status);
+      expect(foundGame.length).toBe(expected.foundGame);
+    });
+  });
 });
