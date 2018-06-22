@@ -97,5 +97,36 @@ describe('Games', () => {
     expect(deletion.status).toBe(404)
   })
 
+  // Testing the PUT here
 
+  it('returns a status 201 along with the updated document', async () => {
+    const saveGame = await Game.create({
+      title: 'newest Games',
+      genre: 'Shooter',
+      releaseDate: 'June 1987'
+    })
+
+    const updatedGame = await request(server).put(`/api/games/${saveGame._id}`).send({ title: 'newest Film' })
+
+    expect(updatedGame.status).toBe(200)
+    expect(updatedGame.body).toMatchObject({
+      title: 'newest Film',
+      genre: 'Shooter',
+      releaseDate: 'June 1987'
+    })
+
+  })
+
+  it('returns a status 422 if title of put request is not present', async () => {
+    let saveGame;
+    const updated = await request(server).put(`/api/games/${saveGame}`).send({ genre: 'newest Film' })
+
+    expect(updated.status).toBe(422)
+  })
+
+  it('returns a status 404 if ID is present but not found in the db', async () => {
+    const updated = await request(server).put(`/api/games/5b2c49a276949f4351110b42`).send({ title: 'newest Film' })
+
+    expect(updated.status).toBe(404)
+  })
 });
