@@ -18,7 +18,13 @@ describe('The Game Model', () => {
       .then(() => console.log('\n=== disconnected from TEST DB ==='));
   });
 
-  it('runs the tests', () => {});
+  it('should return the game title', async () => {
+    const game1 = { title: 'game', genre: 'idontevenknow' };
+    const savedGame = await Game.create(game1);
+    expect(savedGame.title).toEqual(game1.title);
+    expect(savedGame.genre).toEqual(game1.genre);
+  });
+
 
   // test away!
 });
