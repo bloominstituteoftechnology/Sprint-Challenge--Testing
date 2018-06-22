@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 
 const Game = require('./games/Game');
+const server = require('./api/server');
+const request = require('supertest')
 
 describe('The API Server', () => {
   beforeAll(() => {
@@ -32,7 +34,7 @@ describe('The API Server', () => {
     Game.remove();
   });
 
-  it('runs the tests', async(done) => {
+  it('runs the POST tests', async(done) => {
       // test the POST here
     const NESGameSchema = { title: "Super Mario Bros.", genre: "platformer", releaseDate: "09-22-1984" }
     const userGame = await Game.create(NESGameSchema)
@@ -41,21 +43,31 @@ describe('The API Server', () => {
     done();
   });
 
-  it('has the correct title', async (done) => {
-    // test the POST here
-    const NESGameSchema = { title: "Super Mario Bros.", genre: "platformer", releaseDate: "09-22-1984" }
-    const userGame = await Game.create(NESGameSchema)
-
-    expect(userGame.title).toEqual("Super Mario Bros.")
-    done();
-  });
 
 
-  it('runs the tests', () => {
+
+  it('runs the GET tests', async() => {
     // test the GET here
-    
+    const expectedStatusCode = 200;
+    const NESGameSchema = { title: "Super Mario Bros.", genre: "platformer", releaseDate: "09-22-1984" }
+
+
+    const response = await request(server).get('/api/games')
+
+    expect(response.status).toEqual(expectedStatusCode);
+ //expect(response.body).toEqual(NESGameSchema);
+    expect(response.type).toEqual('application/json')
   });
   
+  it('runs a DELETE test ', async (done) => {
+    const NESGameSchema = { title: "Super Mario Bros.", genre: "platformer", releaseDate: "09-22-1984" }
 
+    //do a post request to our API server(server.js)
+    const deleteGame = await Game.remove(NESGameSchema)
+
+
+    expect(deleteGame.tile).not.toEqual('Super Mario bros.');
+    done();
+  })
   // Test the DELETE here
 });

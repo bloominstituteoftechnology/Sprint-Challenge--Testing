@@ -17,8 +17,14 @@ describe('The Game Model', () => {
       .disconnect()
       .then(() => console.log('\n=== disconnected from TEST DB ==='));
   });
+  it('has the correct title', async (done) => {
+    const NESGameSchema = { title: "Super Mario Bros.", genre: "platformer", releaseDate: "09-22-1984" }
+    const userGame = await Game.create(NESGameSchema)
 
-  it('runs the tests', () => {});
+    expect(userGame.title).toEqual("Super Mario Bros.")
+    done();
+  });
+  //it('runs the tests', () => {});
 
   // test away!
 });
