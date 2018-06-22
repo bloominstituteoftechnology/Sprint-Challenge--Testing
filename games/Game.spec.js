@@ -57,7 +57,7 @@ describe('The Game Model', () => {
 
   test('Game has a method called getGAmeTitle', () => {
     const game = new Game(goodData);
-    expect(game.getGameTitle()).toEqual('Super game');
+    expect(game.getGameTitle()).toEqual('Super Game');
   });
   // test away!
 });
