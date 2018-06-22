@@ -41,26 +41,29 @@ describe('Game', () => {
 //Does it run GET requests?
 
     it('should return status 200', async () => {
-        const game = await request(server).get('/api/games')
-        expect(game.status).toBe(200)
-    });
-
+        const response = await supertest(server)
+            .get('/api/games')
+        });
+        
     it('should return an array with game objects, and the first object should be the initial gameObj object', async () => {
-        const game = await request(server).get('/api/games')
-        expect(games.body[0]).toMatchObject(gameObj)
+        const game = await supertest(server).get('/api/games')
+            expect(game.body[0]).toMatchObject(gameObj)
+            expect(status).toEqual(200)
     });
 
 //Does it run POST requests?
 
     it('should return status 201', async () => {
-        const game = await request(server).post('/api/games').send(gameObj)
+        const game = await supertest(server).post('/api/games').send(gameObj)
         expect(game.status).toBe(201)
     });
 
     it('should return status 500 if request is incomplete', async () => {
-        const game = await request(server).post('/api/games').send({
-            title: 'Monopoly', genre: 'How-to-ruin-a-friendship'
-        })
+        const game = await supertest(server)
+            .post('/api/games')
+            .send({
+                title: 'Monopoly', releasedYear: 'How-to-ruin-a-friendship'
+            })
         expect(game.status).toBe(500)
     });
 
