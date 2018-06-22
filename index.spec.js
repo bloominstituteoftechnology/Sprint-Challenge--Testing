@@ -122,7 +122,7 @@ describe('The API Server', () => {
       .send(newGenre)
 
     const { status, body } = response;
-    console.log(body)
+    
     expect(status).toEqual(422)
   })
 });

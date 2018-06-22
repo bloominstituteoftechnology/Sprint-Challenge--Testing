@@ -34,11 +34,11 @@ describe('The Game Model', () => {
     await Game.remove()
   });
 
-  it('runs the tests', async () => {
+  it('getGameTitle method should return the game title', async () => {
 
   // test away!
   const findGame = await Game.findOne({title: 'California Games'})
-  console.log(findGame.getGameTitle())
+  
   expect(findGame.getGameTitle()).toEqual('California Games')
   });
 });
