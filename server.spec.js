@@ -43,7 +43,23 @@ describe('Games', () => {
   it('runs the tests', () => {});
 
   // test the POST here
+  it('should post a game', async () => {
+    const game = {
+      title: 'FIFA 2018',
+      genre: 'Sports',
+      releaseDate: 'October 2018'
+    }
+    const response = await request(server)
+      .post('/api/games')
+      .send(game)
 
+    expect(response.body).toHaveProperty('_id')
+    expect(response.body.title).toEqual('FIFA 2018')
+    expect(response.body.genre).toEqual('Sports')
+    expect(response.body.releaseDate).toEqual('October 2018')
+    expect(response.status).toEqual(201)
+    expect(response.type).toEqual('application/json')
+  })
   // test the GET 
   
   it('should get a game from db', async () => {
