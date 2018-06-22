@@ -53,5 +53,10 @@ describe('The API Server', () => {
 
   // test the GET here
 
+  it('Should return list of games', async () => {
+
+
+  });
+
   // Test the DELETE here
 });
