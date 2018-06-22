@@ -93,5 +93,31 @@ describe.only('The API Server', () => {
       expect(response.status).toBe(expected.status);
       expect(foundGame.length).toBe(expected.foundGame);
     });
+
+    it('should return Internal Server Error status code and JSON error message if request is made with invalid id', async () => {
+      const expected = {
+        status: 500,
+        type: 'application/json'
+      };
+      const invalidId = '2';
+      const response = await request(server).delete(`/api/games/${invalidId}`);
+
+      expect(response.status).toBe(expected.status);
+      expect(response.type).toBe(expected.type);
+    });
+
+    it('should return Not Found status code and JSON error message if game to delete cannot be found', async () => {
+      const expected = {
+        status: 404,
+        type: 'application/json',
+        body: { message: 'Game not found' }
+      };
+      const deletedGame = await request(server).delete(`/api/games/${gameId}`);
+      const response = await request(server).delete(`/api/games/${gameId}`);
+
+      expect(response.status).toBe(expected.status);
+      expect(response.type).toBe(expected.type);
+      expect(response.body).toMatchObject(expected.body);
+    });
   });
 });
