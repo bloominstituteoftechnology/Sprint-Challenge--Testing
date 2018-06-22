@@ -47,7 +47,7 @@ describe('Game', () => {
         
     it('should return an array with game objects, and the first object should be the initial gameObj object', async () => {
         const game = await supertest(server).get('/api/games')
-            expect(game.body[0]).toMatchObject(gameObj)
+            expect(game.body[0]).toMatchObject(game)
             expect(status).toEqual(200)
     });
 
