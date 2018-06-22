@@ -18,7 +18,13 @@ describe('The Game Model', () => {
       .then(() => console.log('\n=== disconnected from TEST DB ==='));
   });
 
-  it('runs the tests', () => {});
+  it('should return proper title and genre', async () => {
+    const newGame = {title: 'Madden18', genre: "SPORTS", releaseDate: "2018"};
+    const postGame = await Game.create(newGame);
+    expect(postGame.title).toEqual(newGame.title);
+    expect(postGame.genre).toEqual(newGame.genre);
+    expect(postGame.releaseDate).toEqual(newGame.releaseDate);
+  });
 
   // test away!
 });
