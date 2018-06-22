@@ -82,10 +82,15 @@ describe('The API Server', () => {
         .delete(`/api/games/${gameId}`);
       expect(response.status).toEqual(204)
     })
+    // it('should return a 422 if no id given', async () => {
+    //   const response = await request(server)
+    //     .delete('/api/games/');
+    //   expect(response.status).toEqual(422) // it is recieving a 404
+    // })
     // it('should return a 404 if the gameId doesn\'t exist', async () => {
     //   const response = await request(server)
-    //     .delete('/api/games/12')
-    //   expect(response.status).toEqual(404)
+    //     .delete('/api/games/123')
+    //   expect(response.status).toEqual(404) //it is recieving a 500
     // })
   })
 });
