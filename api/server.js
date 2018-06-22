@@ -1,12 +1,12 @@
 const express = require('express');
-const morgan = require('morgan');
+// const morgan = require('morgan');
 
 const Game = require('../games/Game');
 
 const server = express();
 
 server.use(express.json());
-server.use(morgan('combined'));
+// server.use(morgan('combined'));
 
 server.post('/api/games', (req, res) => {
   Game.create(req.body)

@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 
 const Game = require('./games/Game');
+const server = require('./api/server')
+const request = require('supertest')
 
 describe('The API Server', () => {
   beforeAll(() => {
@@ -10,7 +12,7 @@ describe('The API Server', () => {
       .catch(err => {
         console.log('error connecting to TEST database, is MongoDB running?');
       });
-  });
+  }); 
 
   afterAll(() => {
     return mongoose
@@ -21,21 +23,72 @@ describe('The API Server', () => {
   let gameId;
   // // hint - these wont be constants because you'll need to override them.
 
-  beforeEach(() => {
+  beforeEach(async () => {
     //   // write a beforeEach hook that will populate your test DB with data
     //   // each time this hook runs, you should save a document to your db
     //   // by saving the document you'll be able to use it in each of your `it` blocks
+    await Game.create({
+      title: 'California Games',
+      genre: 'Sports',
+      releaseDate: 'June 1987'
+    })
   });
 
-  afterEach(() => {
+  afterEach(async () => {
     //   // clear the games collection.
+    await Game.remove()
   });
 
   it('runs the tests', () => {});
 
   // test the POST here
+    it('should should create a new game', async  () => {
+      const texasGame = {
+        title: 'Texas Games',
+        genre: 'Drinking',
+        releaseDate: 'May 1887'
+      }
+      const response = await request(server)
+        .post('/api/games')
+        .send(texasGame);
+      
+      const { status, body } = response;
+      const { title } = body;
+      const _gameId = '_id' in body;
+      
+      expect(status).toEqual(201)
+      expect(title).toEqual(texasGame.title)
+      expect(_gameId).toBeTruthy()
+    })
 
   // test the GET here
+    it('should return all games', async () => {
+      const response = await request(server)
+        .get('/api/games');
+
+      const {status, type, body } = response;
+      const _gameId = '_id' in body[0];
+      
+      
+      expect(status).toEqual(200);
+      expect(type).toEqual('application/json');
+      expect(_gameId).toBeTruthy();
+    })
 
   // Test the DELETE here
+
+  it('should delete', async () => {
+    const findGame = await Game.find({title: 'California Games'})
+    const { _id } = findGame[0];
+    
+
+    const response = await request(server)
+      .delete(`/api/games/${_id}`);
+    const findGameAfter = await Game.find({title: 'California Games'})
+    // console.log(findGameAfter)
+    const {status} = response;
+    // console.log(status)
+    expect(status).toEqual(204)
+    expect(findGameAfter.length).toBeFalsy()
+  })
 });
