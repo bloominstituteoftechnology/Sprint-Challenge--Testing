@@ -50,7 +50,14 @@ describe('The API Server', () => {
   afterAll(async () => {
     await Game.deleteMany({ genre: 'The engagest' })
       .then(deleteAll => {
-        console.log('deleteAll', deleteAll);
+        console.log('deleteAll MOCK DATA', deleteAll);
+      })
+      .catch(e => {
+        console.log('error', e);
+      });
+    await Game.deleteMany({ releaseDate: 'After tee time' })
+      .then(deleteAll => {
+        console.log('deleteAll POST DATA', deleteAll);
       })
       .catch(e => {
         console.log('error', e);
@@ -71,6 +78,7 @@ describe('The API Server', () => {
     //   // clear the games collection.
   });
 
+  // test the GET here
   it('GET', async () => {
     const response = await request(server).get('/api/games');
     expect(response.status).toEqual(200);
@@ -106,7 +114,19 @@ describe('The API Server', () => {
     expect(res.body.error._message).toEqual('Game validation failed');
     expect(res.status).toEqual(500);
   });
-  // test the GET here
 
   // Test the DELETE here
+  test('DELETE passing a Id that is in the database', async () => {
+    const { id } = await Game.findOne({ title: 'Super Game 3' }, { _id: 1 });
+    console.log('DELETE ID', id);
+    const res = await request(server).delete(`/api/games/${id}`);
+    expect(res.body).toEqual({});
+    expect(res.status).toEqual(204);
+  });
+  test('DELETE passing a Id that is NOT in the database', async () => {
+    const id = 'A_NOT_VALID_ID';
+    const res = await request(server).delete(`/api/games/${id}`);
+    expect(res.body.name).toEqual('CastError');
+    expect(res.status).toEqual(500);
+  });
 });
