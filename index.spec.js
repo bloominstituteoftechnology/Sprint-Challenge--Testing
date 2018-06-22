@@ -120,4 +120,38 @@ describe("The API Server", () => {
       expect(response.status).toEqual(404);
     });
   });
+  describe('PUT method', () => {
+    it('should update a game if a title and ID are provided and return the updated game', async () => {
+    const actual = { title: "Meowsker Rises Again", genre: "Horror" }
+      const response = await request(server).put(`/api/games/${gameId}`).send(actual)
+
+      expect(response.status).toEqual(200)
+      expect(response.body.title).toEqual(actual.title)
+      expect(response.body.genre).toEqual(actual.genre)
+
+      const databaseResponse = await Game.findOne(response.body.id)
+
+      expect(databaseResponse.title).toBe(actual.title)
+    })
+    it('should not update if no title is provided', async () => {
+      const actual = { genre: "Cats" }
+      const response = await request(server).put(`/api/games/${gameId}`)
+
+      expect(response.status).toEqual(422)
+    })
+    it('should not update if incorrect id provided', async () => {
+      const actual = { title: "Feynman's Six Easy Pieces", genre: "Science" }
+
+      const response = await request(server).put(`/api/games/5aa995c2b97194b732c16803`).send(actual)
+
+      expect(response.status).toEqual(404)
+    })
+    it('should give a 500 status code if no valid ID is found in the parameter', async () => {
+      const actual = { title: "Paradise Found", genre: "Historical Mockumentary" }
+
+      const response = await request(server).put(`/api/games/wabble`).send(actual)
+
+      expect(response.status).toEqual(500)
+    })
+  })
 });
