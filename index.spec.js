@@ -9,6 +9,10 @@ const testCase = {
   genre: 'Sports',
   releaseDate: 'June 1987'
 }
+const badTest = {
+  user: 'andrew',
+  password: 'password'
+}
 
 describe('The API Server', () => {
   beforeAll(() => {
@@ -49,6 +53,12 @@ describe('The API Server', () => {
         .send(testCase)
       expect(response.status).toEqual(201);  
     });
+    it('should return a 500 code when posting a bad model', async () => {
+      const response = await request(server)
+        .post('/api/games')
+        .send(badTest)
+      expect(response.status).toEqual(500); 
+    })
   })
 
   // test the GET here

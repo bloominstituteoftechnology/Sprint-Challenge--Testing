@@ -8,7 +8,7 @@ const testCase = {
   releaseDate: 'June 1987'
 }
 
-describe('The Game Model', () => {
+describe.skip('The Game Model', () => {
   beforeAll(() => {
     return mongoose
       .connect('mongodb://localhost/test')
@@ -24,7 +24,7 @@ describe('The Game Model', () => {
       .then(() => console.log('\n=== disconnected from TEST DB ==='));
   });
 
-  it('runs the tests', () => {});
+  it('should...', () => {});
 
   // test away!
 });
