@@ -22,13 +22,13 @@ describe('The Game Model', () => {
   });
 
   describe('Test validators', () => {
-    const testData = new Game({
+    const badData = new Game({
       title: 'testing required fields',
       releaseDate: 'June 2018',
     });
 
     afterEach(() => {
-      return Game.deleteOne({ title: testData.title })
+      return Game.deleteOne({ title: badData.title })
         .then(response => {
           console.log('deleteOne response: ', response);
         })
@@ -38,7 +38,7 @@ describe('The Game Model', () => {
     });
 
     it('If required fields are no provided return an error', () => {
-      return Game.create(testData)
+      return Game.create(badData)
         .then(response => {
           console.log(response);
           expect(
