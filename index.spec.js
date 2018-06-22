@@ -35,7 +35,6 @@ describe('The API Server', () => {
     };
 
     gameId = await Game.create(testGame);
-    deleteGame = gameId._id;
   });
 
   afterEach(() => {
@@ -52,10 +51,20 @@ describe('The API Server', () => {
     const response = await request(server).post('/api/games').send(newGame);
 
     expect(response.status).toEqual(201);
-
-    
+    expect(response.body).toHaveProperty('_id');
+    expect(response.body).toHaveProperty('title');
+    expect(response.body).toHaveProperty('genre');    
   });
 
+  it('should return error if post is missing required information', async() => {
+    const game2 = { genre: 'what', releaseDate: '2018' };
+    const response = await request(server).post('/api/games').send(game2);
+
+    expect(response.status).toEqual(500);
+    expect(response.body.message).toEqual('Error saving data to the DB');
+    
+  });
+  
   // test the GET here
 
   it('should return a status of 200 from the /api/games route', async() => {
@@ -70,4 +79,17 @@ describe('The API Server', () => {
   });
 
   // Test the DELETE here
+
+  it('should return 204 status upon successfully deleting', async() => {
+    const response = await request(server).delete(`/api/games/${gameId._id}`);
+    expect(response.status).toEqual(204);
+  });
+
+  it('should return 404 status if game is not found in database', async() => {
+    const response = await request(server).delete('/api/games/5b2d220eb2a5af1f79d324af'); //I used an existing game id and switched the last 2 letters around
+    expect(response.status).toBe(404);
+    expect(response.body.message).toBe('Game not found');
+  });
 });
+
+// PUT
