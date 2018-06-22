@@ -29,13 +29,33 @@ describe('The API Server', () => {
 
   afterEach(() => {
     //   // clear the games collection.
+    Game.remove();
   });
 
-  it('runs the tests', () => {});
+  it('runs the tests', async(done) => {
+      // test the POST here
+    const NESGameSchema = { title: "Super Mario Bros.", genre: "platformer", releaseDate: "09-22-1984" }
+    const userGame = await Game.create(NESGameSchema)
 
-  // test the POST here
+    expect(userGame.title).toEqual("Super Mario Bros.")
+    done();
+  });
 
-  // test the GET here
+  it('has the correct title', async (done) => {
+    // test the POST here
+    const NESGameSchema = { title: "Super Mario Bros.", genre: "platformer", releaseDate: "09-22-1984" }
+    const userGame = await Game.create(NESGameSchema)
+
+    expect(userGame.title).toEqual("Super Mario Bros.")
+    done();
+  });
+
+
+  it('runs the tests', () => {
+    // test the GET here
+    
+  });
+  
 
   // Test the DELETE here
 });
