@@ -21,7 +21,7 @@ describe('The API Server', () => {
   })
 
   let gameId
-  // // hint - these wont be constants because you'll need to override them.
+  // hint - these wont be constants because you'll need to override them.
 
   beforeEach(async () => {
     await Game.create({
@@ -33,7 +33,7 @@ describe('The API Server', () => {
 
   afterEach(async () => {
     // clear the games collection.
-    Game.remove()
+    await Game.remove()
   })
 
   it('runs the tests', () => {})
@@ -47,8 +47,13 @@ describe('The API Server', () => {
     }
     const response = await request(server).post('/api/games').send(godOfWar)
 
-    const { status, body } = response
-    const { title } = body
+    const {
+      status,
+      body
+    } = response
+    const {
+      title
+    } = body
     const _gameId = '_id' in body
 
     expect(status).toEqual(201)
@@ -59,7 +64,11 @@ describe('The API Server', () => {
   it('should return all games', async () => {
     const response = await request(server).get('/api/games')
 
-    const { status, type, body } = response
+    const {
+      status,
+      type,
+      body
+    } = response
     const _gameId = '_id' in body[0]
 
     expect(status).toEqual(200)
