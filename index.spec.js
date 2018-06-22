@@ -70,6 +70,18 @@ describe('The API Server', () => {
     expect(response.body.releaseDate).toEqual(expectedBody.releaseDate);
   })
 
+  it('should return status 500 if a field required by schema is missing', async () => {
+    const expectedBodyMissingTitle = {
+      genre: 'Sports',
+      releaseDate: 'June 1987'
+    }
+
+    const response = await request(server).post('/api/games').send(expectedBodyMissingTitle);
+
+    expect(response.status).toEqual(500);
+    expect(response.body.error.message).toEqual( "Game validation failed: title: Path `title` is required.")
+  })
+
   // test the GET here
   it('returns a status code 200 & a JSON array/list containing game objects', async () => {
 

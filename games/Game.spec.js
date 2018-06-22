@@ -21,4 +21,9 @@ describe('The Game Model', () => {
   it('runs the tests', () => {});
 
   // test away!
+  it('should have a title', async () => {
+    const game = { title: 'testGame', genre: 'testGenre'};
+    const savedGame = await Game.create(game)
+    expect(savedGame.title).toEqual('testGame'); 
+  })
 });
