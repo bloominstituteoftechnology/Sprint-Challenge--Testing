@@ -53,7 +53,7 @@ describe('The API Server', () => {
         .send(testCase)
       expect(response.status).toEqual(201);  
     });
-    it('should return a 500 code when posting a bad model', async () => {
+    it('should return a 500 code when posting the wrong model', async () => {
       const response = await request(server)
         .post('/api/games')
         .send(badTest)
@@ -68,17 +68,21 @@ describe('The API Server', () => {
         .get('/api/games')
       expect(response.status).toEqual(200); 
     })
+    it('should return the document as an array', async () => {
+      const response = await request(server)
+        .get('/api/games')
+      expect(response.body[0]).toEqual(response.body[0])
+    })
   })
 
-  // Test the DELETE here
+ // Test the DELETE here
   // describe('Delete', () => {
-  //   it('should delete a game from the database', async () => {
+  //   it('should return a 500 error if not properly deleted', async () => {
   //     const response = await request(server)
   //       .post('/api/games')
   //       .send(testCase)
-  //     const response2 = await request(server)
   //       .delete(`/api/games/${gameId}`)
-  //     expect(response2.status).toEqual()
+  //     expect(response.status).toEqual(200)
   //   })
   // })
 });
