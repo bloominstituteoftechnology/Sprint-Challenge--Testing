@@ -8,7 +8,7 @@
 
 ## Friendly Reminder
 
-Don't fret or get anxious. This is a no-pressure assessment designed to help us discover better ways to help you move forward in your learning. This is NOT a pass/fail situation.
+Don't fret or get anxious. This is a no-pressure assessment designed to help us discover better ways to help you move forward in your learning.
 
 ## Start by forking and cloning this repository.
 
@@ -28,7 +28,7 @@ Don't fret or get anxious. This is a no-pressure assessment designed to help us 
 - run `yarn` to download and install all the dependencies you need for this project.
 - run `yarn test` to start your tests.
 - Keep an active log of your changes by committing and pushing often to your fork.
-- Write all of your tests in the `index.spec.js` and `./games/Game.spec.js` files.
+- Write all of your tests in the `./api/server.spec.js` and `./games/Game.spec.js` files.
 
 ## Project Description
 
