@@ -21,6 +21,7 @@ server.post('/api/games', (req, res) => {
 });
 
 server.get('/api/games', (req, res) => {
+  console.log('here')
   Game.find({})
     .then(games => {
       res.status(200).json(games);
@@ -49,7 +50,8 @@ server.put('/api/games/:id', (req, res) => {
     .then(game => {
       if (game) {
         res.status(200).json(game);
-      } else {
+      }
+      else {
         res.status(404).json({ message: 'Game not found' });
       }
     })
@@ -65,12 +67,14 @@ server.delete('/api/games/:id', (req, res) => {
 
   if (!id) {
     res.status(422).json({ message: 'You need to give me an ID' });
-  } else {
+  }
+  else {
     Game.findByIdAndRemove(id)
       .then(game => {
         if (game) {
           res.status(204).end();
-        } else {
+        }
+        else {
           res.status(404).json({ message: 'Game not found' });
         }
       })
