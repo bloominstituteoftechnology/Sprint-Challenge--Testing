@@ -60,6 +60,27 @@ describe('The API Server', () => {
 
 
   // test the GET here
+  it('should return OK status code and a JSON object w/ games from get /api/games', async () => {
+    const expectedStatusCode = 200;
+    const expectedBody = { title: "test-game", genre: "test-genre", releaseDate: "test-date" };
+
+    const response = await request(server).get('/api/games');
+
+    expect(response.status).toEqual(expectedStatusCode);
+    expect(response.body[0]).toMatchObject(expectedBody);
+    expect(response.type).toEqual('application/json');
+  });
+
+  it('should return 404 status code when sending bad request param to GET /api/games', async () => {
+    const expectedStatusCode = 404;
+    const expectedBody = undefined;
+
+    const response = await request(server).get('/api/games/bullshit');
+    expect(response.status).toEqual(expectedStatusCode);
+    expect(response.body[0]).toEqual(expectedBody);
+    expect(response.type).toEqual('text/html');
+  });
+
 
   // Test the DELETE here
 });
