@@ -21,13 +21,13 @@ describe('The Game Model', () => {
   it('runs the tests',  async () => {});
 
   // test away!
-  const game = {
-    title: 'Call of Duty Modern Warfare 2',
-    genre: 'Action',
-    releaseDate: 'April 30, 2018'
-  }
+  // const game = {
+  //   title: 'Call of Duty Modern Warfare 2',
+  //   genre: 'Action',
+  //   releaseDate: 'April 30, 2018'
+  // }
 
-  const newGame = await Game.create(game);
+  // const newGame = await Game.create(game);
 
-  expect(newGame.title).toEqual(Game.title);
+  // expect(newGame.title).toEqual(Game.title);
 });

@@ -43,36 +43,38 @@ describe('The API Server', () => {
   });
 
   // test the POST here
- 
-    it('should return a 201 and create a new logged game', async () => {
-      const newGame = {title: 'NewGame', genre: 'lifestyle', releaseDate: '01/01/2019'};
-      const expectedStatusCode = 201;
+ describe('it run tests', () => {
+  it('should return a 201 and create a new logged game', async () => {
+    const newGame = {title: 'NewGame', genre: 'lifestyle', releaseDate: '01/01/2019'};
+    const expectedStatusCode = 201;
 
-      const response = await request(server).post('/api/games').send(newGame);
-      
-      expect(response.body.title).toEqual('NewGame');
-      expect(response.status).toEqual(expectedStatusCode);
-      expect(response.type).toEqual('application/json');
-    });
+    const response = await request(server).post('/api/games').send(newGame);
+    
+    expect(response.body.title).toEqual('NewGame');
+    expect(response.status).toEqual(expectedStatusCode);
+    expect(response.type).toEqual('application/json');
+  });
+});
+
+// test the GET here
+  it('should get the games and return 200', async () => {
+    const response = await request(server).get('/api/games');
+
+    expect(response.status).toBe(200);
+    expect(response.type).toEqual('application/json')
   });
 
-  // test the GET here
-    it('should get the games and return 200', async () => {
-      const response = await request(server).get('/api/games');
 
-      expect(response.status).toBe(200);
-      expect(response.type).toEqual('application/json')
-    });
+  // Test the DELETE here
+  it('should delete a game and send 204', async () => {
+    const newGame = {title: 'NewGame', genre: 'lifestyle', releaseDate: '01/01/2019'};
+    const expectedStatusCode = 204;
 
-  
-    // Test the DELETE here
-    it('should delete a game and send 204', async () => {
-      const newGame = {title: 'NewGame', genre: 'lifestyle', releaseDate: '01/01/2019'};
-      const expectedStatusCode = 204;
-
-      const makeGame = await Game.create(newGame)
-      const response = await request(server).delete(`/api/games/${makeGame._id}`);
-      
-      expect(response.status).toEqual(expectedStatusCode);
-      expect(response.type).toEqual('application/json')
+    const makeGame = await Game.create(newGame)
+    const response = await request(server).delete(`/api/games/${makeGame._id}`);
+    
+    expect(response.status).toEqual(expectedStatusCode);
+    expect(response.type).toEqual('application/json')
   });
+ });
+    
