@@ -71,7 +71,7 @@ describe('The API Server', () => {
   })
 
   // test the GET here
-  it('returns a status code 200 & a JSON array containing game objects', async () => {
+  it('returns a status code 200 & a JSON array/list containing game objects', async () => {
 
     const response = await request(server).get('/api/games');
     const game = response.body[0];
@@ -93,9 +93,31 @@ describe('The API Server', () => {
     expect(response.body[0].genre).toEqual(expectedBody.genre)
     expect(response.body[0].releaseDate).toEqual(expectedBody.releaseDate)
   })
+
+    // Test the DELETE here
+    it('returns a status code 204 upon deleting resource', async () => {
+  
+      const response = await request(server).get('/api/games')
+      const idToBeDeleted = response.body[0]._id;
+      const responseForDelete = await request(server).delete(`/api/games/${idToBeDeleted}`);
+
+      expect(responseForDelete.status).toEqual(204);
+    })
+
+    it('returns a 404 and an object with a message if the game does not exist in the database', async () => {
+      const response = await request(server).delete('/api/games/1b2c49a076949f4651110b33'); // must provide mongoose id format otherwise test returns 500
+
+      expect(response.status).toBe(404);
+      expect(response.body).toEqual({"message": "Game not found"});
+    })
+
+    // it('should return a 422 if no id is provided', async () => {
+    //   const response = await request(server).delete('/api/games');
+    //   expect(response.status).toEqual(422);
+    // })
   })
 
   
 
-  // Test the DELETE here
+
 
