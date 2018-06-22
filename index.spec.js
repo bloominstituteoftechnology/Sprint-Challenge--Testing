@@ -29,6 +29,7 @@ describe('The API Server', () => {
 
   afterEach(() => {
     //   // clear the games collection.
+    Game.remove();
   });
 
   it('runs the tests', () => {});
