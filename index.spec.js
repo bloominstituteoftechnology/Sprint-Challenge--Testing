@@ -59,6 +59,14 @@ describe('The API Server', () => {
     expect(response.body.message).toEqual("Error saving data to the DB");
   });
   // test the GET here
-
+  it('it should return title and genre for each game in the db', async() => {
+    const response = await request(server).get('/api/games');
+    expect(response.body[0]).toHaveProperty('title');
+    expect(response.body[0]).toHaveProperty('genre');
+  });
+  it('should return the status code 200', async() => {
+    const response = await request(server).get('/api/games');
+    expect(response.status).toEqual(200);
+  })
   // Test the DELETE here
 });
