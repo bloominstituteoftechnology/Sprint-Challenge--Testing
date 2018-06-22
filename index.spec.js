@@ -25,17 +25,40 @@ describe('The API Server', () => {
     //   // write a beforeEach hook that will populate your test DB with data
     //   // each time this hook runs, you should save a document to your db
     //   // by saving the document you'll be able to use it in each of your `it` blocks
+    // http://mongoosejs.com/docs/populate.html
+    // NESGameSchema.pre
+
+
   });
 
   afterEach(() => {
     //   // clear the games collection.
+    return Game.remove();
   });
 
   it('runs the tests', () => {});
 
   // test the POST here
+  it('POST api/games', () => {
+
+  })
 
   // test the GET here
+  it('GET api/games', async () => {
+    const expectedStatusCode = 200;
+    const response = await requestAnimationFrame(server).get('api/games');
+
+    expect(response.status).toEqual(expectedStatusCode);
+    expect(response.type).toEqual('application/json');
+  })
 
   // Test the DELETE here
+  it('DELETE api/games/:id', () => {
+    const expectedStatusCode = 204;
+    const response = await request(server).delete(`/api/games/${gameId}`);
+
+    expect(response.status).toEqual(expectedStatusCode);
+    expect(response.type).toEqual('application/json');
+  })
+
 });
