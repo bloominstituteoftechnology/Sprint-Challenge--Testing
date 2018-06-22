@@ -50,7 +50,13 @@ describe.only('The API Server', () => {
   it('gets a list of all the games', async () => {
       await Game.insertMany(gamesArray);
       const response = await request(server).get('/api/games');
+      const status = 200;
       expect(response.body.length).toBe(3);
   });
-
+  it('adds a game to the database', async () => {
+      const response = await request(server).post('/api/games').send(zelda);
+      const status = 201;
+      expect(response.status).toBe(status);
+      expect(response.body).toMatchObject(zelda);
+  })
 });
