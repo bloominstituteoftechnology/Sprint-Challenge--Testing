@@ -19,7 +19,6 @@ describe('The API Server', () => {
       .then(() => console.log('\n=== disconnected from TEST DB ==='));
   });
 
-  let gameId;
   let game = {};
   // // hint - these wont be constants because you'll need to override them.
 
@@ -94,6 +93,61 @@ describe('The API Server', () => {
 
     expect(gameArray.status).toBe(expectedStatusCode);
   })
+
+
+  // Test the PUT here for Stretch
+  it('Returns a JSON object of the edited game and an OK status code of 201', async () => {
+    const expectedStatusCode = 200;
+    const expectedEditedGame = {
+      title: 'Uncharted',
+      genre: 'Adventure',
+      releaseDate: 'Nov 2007'
+    };
+
+    const existingGame = await request(server).get('/api/games');
+    const existingGameId = existingGame.body[0]._id;
+    const editedGame = await request(server).put(`/api/games/${existingGameId}`).send(expectedEditedGame);
+
+    expect(existingGame.body[0].title).toBe(game.title);
+    expect(existingGame.body[0].genre).toBe(game.genre);
+    expect(existingGame.body[0].releaseDate).toBe(game.releaseDate);
+    expect(editedGame.body.title).toBe(expectedEditedGame.title);
+    expect(editedGame.body.genre).toBe(expectedEditedGame.genre);
+    expect(editedGame.body.releaseDate).toBe(expectedEditedGame.releaseDate);
+    expect(editedGame.status).toBe(expectedStatusCode);
+  })
+
+  it('Returns an error when not provided a title', async () => {
+    const expectedStatusCode = 422;
+    const expectedErrorMessage = 'Must Provide a title && Id';
+    const expectedEditedGame = {
+      genre: 'Adventure',
+      releaseDate: 'Nov 2007'
+    };
+
+    const existingGame = await request(server).get('/api/games');
+    const existingGameId = existingGame.body[0]._id;
+    const editedGame = await request(server).put(`/api/games/${existingGameId}`).send(expectedEditedGame);
+
+    expect(editedGame.body.error).toBe(expectedErrorMessage);
+    expect(editedGame.status).toBe(expectedStatusCode);
+  })
+
+  it('Returns an error when not provided a correct id', async () => {
+    const expectedStatusCode = 422;
+    const expectedErrorMessage = 'Game not found';
+    const expectedEditedGame = {
+      title: 'Uncharted',
+      genre: 'Adventure',
+      releaseDate: 'Nov 2007'
+    };
+
+    const existingGameId = '5aa995a3b97194b732c167b1';
+    const editedGame = await request(server).put(`/api/games/${existingGameId}`).send(expectedEditedGame);
+
+    expect(editedGame.body.message).toBe(expectedErrorMessage);
+  })
+
 
 
   // Test the DELETE here
