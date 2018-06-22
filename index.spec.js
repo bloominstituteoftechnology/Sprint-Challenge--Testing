@@ -32,6 +32,7 @@ describe('The API Server', () => {
     // return gameId.clear().then(() => {
     // return gameId.insert({ testData: 'foo' })
     // })
+    // removeAll(done)
   })
 
   afterEach(() => {
@@ -60,10 +61,11 @@ describe('The API Server', () => {
     expect(response.body.title).toEqual('California Games')
     expect(response.body.genre).toEqual('Sports')
   })
-  it('should return 200 if deleted', async () => {
+  it('deletes an existing game', async () => {
     const expectedStatusCode = 200
-    gameId = mongoose.Schema.Types.ObjectId
-    const response = await request(server).delete('/api/games/:id').send(gameId)
-    expect(response.status).toEqual(expectedStatusCode)
+    let ObjectId = mongoose.Schema.Types.ObjectId
+    // const response = await request(server).del(`/api/games/:id`).send(ObjectId)
+    request(server).delete(`/api/games/:${ObjectId}`)
+    expect(expectedStatusCode)
   })
 })
