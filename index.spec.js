@@ -13,7 +13,7 @@ describe("The API Server", () => {
       });
   });
 
-  afterAll(() => {
+  afterAll(async () => {
     return mongoose
       .disconnect()
       .then(() => console.log("\n=== disconnected from TEST DB ==="));
@@ -23,7 +23,7 @@ describe("The API Server", () => {
   let game = {};
   // // hint - these wont be constants because you'll need to override them.
 
-  beforeEach(() => {
+  beforeEach(async () => {
     //   // write a beforeEach hook that will populate your test DB with data
     //   // each time this hook runs, you should save a document to your db
     //   // by saving the document you'll be able to use it in each of your `it` blocks
@@ -35,7 +35,7 @@ describe("The API Server", () => {
     return Game.create(game);
   });
 
-  afterEach(() => {
+  afterEach(async () => {
     //   // clear the games collection.
     return Game.remove(game);
   });
@@ -87,13 +87,37 @@ describe("The API Server", () => {
     expect(newGame.body[0].releaseDate).toBe(game.releaseDate);
     expect(newGame.status).toBe(expectedStatusCode);
   });
-  it('Returns 404 if endpoint cant be reached', async () => {
+  it("Returns 404 if endpoint cant be reached", async () => {
     const expectedStatusCode = 404;
 
-    const gameArray = await request(server).get('/api/wrongway');
+    const gameArray = await request(server).get("/api/wrongway");
 
     expect(gameArray.status).toBe(expectedStatusCode);
-  })
+  });
 
   // Test the DELETE here
+  it("Returns an empty JSON object and a No Content status code of 204", async () => {
+    const expectedStatusCode = 204;
+
+    const existingGame = await request(server).get("/api/games");
+    const existingGameId = existingGame.body[0]._id;
+    const deletedGame = await request(server).delete(
+      `/api/games/${existingGameId}`
+    );
+
+    expect(deletedGame.body).toEqual({});
+    expect(deletedGame.status).toEqual(expectedStatusCode);
+  });
+
+  it("Returns an error message if the id is not found", async () => {
+    const expectedStatusCode = 404;
+    const expectedErrorMessage = "Game not found";
+    const existingGameId = "thisaintreal";
+    const deletedGame = await request(server).delete(
+      `/api/games/${existingGameId}`
+    );
+
+    expect(deletedGame.body.message).toBe(expectedErrorMessage);
+    expect(deletedGame.status).toBe(expectedStatusCode);
+  });
 });
