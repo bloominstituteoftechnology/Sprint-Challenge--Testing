@@ -54,13 +54,18 @@ describe('The API Server', () => {
   // test the GET here
   it('should return an OK status and return a list of the games', async () => {
     const expectedStatusCode = 200;
-    const expectedBody = {};
+    const expectedBody = {
+      title: 'California Games',
+      genre: 'Sports', 
+      releaseDate: 'June 1987'
+    };
 
-    const response = await request(server).get('/');
+    let superTestResponse = await request(server).post('/api/games').send(expectedBody);
+    superTestResponse = await request(server).get('/api/games');
 
-    expect(response.status).toEqual(expectedStatusCode);
-    expect(response.body).toEqual(expectedBody);
-    // expect(response.data[0].title).toEqual(games.title); 
+    // expect(superTestResponse.status).toEqual(expectedStatusCode);
+    // expect(response.body).toEqual(expectedBody);
+    expect(superTestResponse[0].title).toEqual(expectedBody.title); 
   });
 
   // Test the DELETE here
@@ -73,8 +78,9 @@ describe('The API Server', () => {
     };
 
     const newGame = await request(server).post('/api/games').send(expectedBody);
-    const deleteGame = await request(server).delete(`/api/games/${newGame.body_id}`);
+    const deleteGame = await request(server).delete(`/api/games/${newGame._id}`);
     
+    expect(deleteGame.body.status).toEqual(expectedStatusCode); 
     expect(deleteGame.body.title).toEqual('California Games');
     expect(deleteGame.body.genre).toEqual('Sports'); 
     expect(deleteGame.body.releaseDate).toEqual('June 1987'); 
