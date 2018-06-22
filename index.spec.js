@@ -44,16 +44,7 @@ describe.only('The API Server', () => {
       releaseDate: 'August 1987'
     };
 
-    it('should save a game', async () => {
-      const response = await request(server)
-        .post('/api/games')
-        .send(zelda);
-      const savedGame = await Game.find({ title: zelda.title });
-
-      expect(savedGame.length).toBe(1);
-    });
-
-    it('should return Created status code and a JSON object with the saved game', async () => {
+    it('should save a game and return Created status code and JSON object with saved game', async () => {
       const expected = {
         status: 201,
         type: 'application/json',
@@ -62,10 +53,12 @@ describe.only('The API Server', () => {
       const response = await request(server)
         .post('/api/games')
         .send(zelda);
+      const savedGame = await Game.find({ title: zelda.title });
 
       expect(response.status).toBe(expected.status);
       expect(response.type).toBe(expected.type);
       expect(response.body).toMatchObject(expected.body);
+      expect(savedGame.length).toBe(1);
     });
   });
 
