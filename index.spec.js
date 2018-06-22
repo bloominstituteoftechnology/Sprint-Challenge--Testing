@@ -91,4 +91,38 @@ describe('The API Server', () => {
     expect(status).toEqual(204)
     expect(findGameAfter.length).toBeFalsy()
   })
+
+
+  // Test Put
+  it('should return a status of 200 and make changes to game', async () => {
+    const findGame = await Game.findOne({title: 'California Games'})
+    const { _id } = findGame;
+    const newTitle = {title: 'New California'}
+    
+
+    const response = await request(server)
+      .put(`/api/games/${_id}`)
+      .send(newTitle)
+    const { status, body } = response;
+    const { title } = body;
+    // console.log(title)
+    expect(status).toEqual(200);
+    expect(title).toEqual(newTitle.title)
+
+  })
+
+  it('should return status 422 if title is not in params', async () => {
+    const findGame = await Game.findOne({title: 'California Games'})
+    const { _id } = findGame;
+    const newGenre = {genre: 'New California'}
+    
+
+    const response = await request(server)
+      .put(`/api/games/${_id}`)
+      .send(newGenre)
+
+    const { status, body } = response;
+    console.log(body)
+    expect(status).toEqual(422)
+  })
 });
