@@ -23,7 +23,7 @@ describe('The API Server', () => {
   let game = {
     title: "Super Mario Bros.",
     genre: "Platformer",
-    releseDate: "September, 1985"
+    releaseDate: "September, 1985"
   }
   let gameId;
   // // hint - these wont be constants because you'll need to override them.
@@ -50,7 +50,7 @@ it('should return a status 201 code and a JSON object', async () => {
   const newGame = {
     title: "The Legend of Zelda: A Link to the Past",
     genre: "Action/Adventure",
-    releseDate: "November, 1991"
+    releaseDate: "November, 1991"
   }
 
   const response = await request(server).post('/api/games').send(newGame);
@@ -74,14 +74,14 @@ it('should get the games in db and return status code 200', async () => {
   // Test the DELETE here
 
 it('should delete game and return status code 204', async () => {
-  const newGame = {
+   game = {
     title: "The Legend of Zelda: A Link to the Past",
     genre: "Action/Adventure",
-    releseDate: "November, 1991"
+    releaseDate: "November, 1991"
   }
 
-  const createGame = await Game.create(newGame);
-  const response = await request(server).delete(`/api/games/${createGame._id}`);
+  const newGame = await Game.create(game);
+  const response = await request(server).delete(`/api/games/${newGame._id}`);
 
   expect(response.status).toBe(204);
   expect(response.type).toBe('')
@@ -89,8 +89,30 @@ it('should delete game and return status code 204', async () => {
 
 //Test the PUT here
 
-it('should edit a game and return status code 200', async () =>{
-  
+it('should edit a game and return status code 200', async () => {
+  game = {
+    title: "Super Contra",
+    genre: "Run and Gun",
+    releaseDate: "January, 1988"
+  };
+
+  let newGame = await Game.create(game);
+
+  let updatedGame = {
+    id: newGame._id,
+    title: "Street Fighter II",
+    genre: "Fighter",
+    releaseDate: "1991"
+  }
+
+  const response = await request(server).put(`/api/games/${newGame._id}`).send(updatedGame);
+
+  // expect(response.status).toEqual(200);
+  expect(response.type).toEqual('application/json');
+  expect(response.body.title).toEqual("Street Fighter II");
+  expect(response.body.genre).toEqual("Fighter");
+  expect(response.body.releaseDate).toEqual("1991");
+  expect(response.body).toHaveProperty("_id")
 })
 
 });
