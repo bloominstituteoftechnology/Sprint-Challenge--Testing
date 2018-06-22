@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 // This is our video game schema. Notice the two methods below
@@ -7,19 +7,19 @@ const { Schema } = mongoose;
 const NESGameSchema = new Schema({
   title: {
     type: String,
-    required: true,
+    required: true
   },
   genre: {
     type: String,
-    required: true,
+    required: true
   },
-  releaseDate: String,
+  releaseDate: String
 });
 
 NESGameSchema.methods.getGameTitle = function() {
   return this.title;
 };
 
-const Game = mongoose.model('Game', NESGameSchema);
+const Game = mongoose.model("Game", NESGameSchema, "Games");
 
 module.exports = Game;
