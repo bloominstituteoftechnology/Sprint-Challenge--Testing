@@ -86,10 +86,27 @@ describe('The API Server', () => {
   });
 
   it('should return 404 status if game is not found in database', async() => {
-    const response = await request(server).delete('/api/games/5b2d220eb2a5af1f79d324af'); //I used an existing game id and switched the last 2 letters around
+    const response = await request(server).delete('/api/games/5b2d271f9f9c341f79482fb0'); //I used an existing game id and switched the last 2 letters around
     expect(response.status).toBe(404);
     expect(response.body.message).toBe('Game not found');
   });
+
+  //Stretch - PUT testing
+
+  it('should return 422 status if put request does not include title and id', async() => {
+    const response = await request(server).put(`/api/games/${gameId._id}`);
+    expect(response.status).toEqual(422);
+    expect(response.body.error).toBe('Must Provide a title && Id');
+    
+  });
+
+  it('should return 200 status if game is successfully updated', async() => {
+    const game3 = { title: 'game3', genre: 'what', _id: `${gameId._id}` };
+    const response = await request(server).put(`/api/games/${gameId._id}`).send(game3);
+    expect(response.status).toBe(200);
+
+  });
+
+  
 });
 
-// PUT
