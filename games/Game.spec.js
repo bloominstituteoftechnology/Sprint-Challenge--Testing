@@ -11,16 +11,6 @@ const gameNoReleaseDate = { title: 'Lord of the Rings', genre: 'fantasy', releas
 
 const emptyGame = { title: '', genre: '', releaseDate: '' };
 
-// const response = (game) => Game.create(game);
-
-// function response(game) {
-//    Game.create(game)
-//     .then(res => res)
-//     .catch(err => {
-//       throw new Error(err);
-//     });
-// }
-
 
 describe('The Game Model', () => {
   beforeAll(() => {
