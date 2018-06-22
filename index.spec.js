@@ -44,7 +44,7 @@ describe('The API Server', () => {
 
   // test the POST here
  
-    it('should return a 200 and create a new logged game', async () => {
+    it('should return a 201 and create a new logged game', async () => {
       const newGame = {title: 'NewGame', genre: 'lifestyle', releaseDate: '01/01/2019'};
       const expectedStatusCode = 201;
 
@@ -56,8 +56,21 @@ describe('The API Server', () => {
     });
   });
 
-
   // test the GET here
+    it('should get the games and return 200', async () => {
+      const response = await request(server).get('/api/games');
 
-  // Test the DELETE here
+      expect(response.status).toBe(200);
+    });
 
+  
+    // Test the DELETE here
+    it('should delete a gaeme and send 204', async () => {
+      const newGame = {title: 'NewGame', genre: 'lifestyle', releaseDate: '01/01/2019'};
+      const expectedStatusCode = 204;
+
+      const makeGame = await Game.create(newGame)
+      const response = await request(server).delete(`/api/games/${makeGame._id}`);
+      
+      expect(response.status).toEqual(expectedStatusCode);
+  });
