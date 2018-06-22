@@ -19,6 +19,20 @@ describe('The Game Model', () => {
   });
 
   it('runs the tests', () => {});
+  it('Error: requires genre field', async () => {
+    const game = Game({
+      title: 'God of War'
+    });
 
+    const response = await Game
+      .create(game)
+      .then(game => {
+        expect(response).toEqual(200)
+      })
+      .catch(err => {
+        expect(err.errors.genre.message).toEqual('Path `genre` is required.')
+      })
+
+  });
   // test away!
 });
