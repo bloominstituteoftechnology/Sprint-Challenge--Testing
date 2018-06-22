@@ -18,7 +18,16 @@ describe('The Game Model', () => {
       .then(() => console.log('\n=== disconnected from TEST DB ==='));
   });
 
-  it('runs the tests', () => {});
+  it('runs the tests',  async() => {});
 
   // test away!
+  const game = {
+    title: 'Call of Duty Modern Warfare 2',
+    genre: 'Action',
+    releaseDate: 'April 30, 2018'
+  }
+
+  const newGame = await Game.create(game);
+
+  expect(newGame.title).toEqual(Game.title);
 });
