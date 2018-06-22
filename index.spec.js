@@ -78,7 +78,34 @@ describe('The API Server', () => {
   });
 
   // test the POST here
+  test('POST with valid data', async () => {
+    const newGame = {
+      title: 'Awesome Game',
+      genre: 'Awesomes!',
+      releaseDate: 'After tee time',
+    };
+    const res = await request(server)
+      .post('/api/games')
+      .send(newGame);
 
+    expect(res.body._id).toHaveLength(24);
+    expect(res.status).toEqual(201);
+  });
+
+  test('POST with no valid data', async () => {
+    // Here is missing a 'required' field for Game.model -> The missing field is: 'genre'
+    const newBadDAta = {
+      title: 'Awesome Game',
+      releaseDate: 'After tee time',
+    };
+
+    const res = await request(server)
+      .post('/api/games')
+      .send(newBadDAta);
+
+    expect(res.body.error._message).toEqual('Game validation failed');
+    expect(res.status).toEqual(500);
+  });
   // test the GET here
 
   // Test the DELETE here
