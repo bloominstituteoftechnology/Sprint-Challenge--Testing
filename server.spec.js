@@ -26,7 +26,7 @@ describe('Games', () => {
     const newGame = new Game({    //Creates a new game in the database 
       title: 'Resident Evil II',
       genre: 'Survivol Horror',
-      releaseDate: 'jaNUARY 1998'
+      releaseDate: 'January 1998'
     })
     newGame.save((err, savedGame) => {
       if (err) {
@@ -44,7 +44,15 @@ describe('Games', () => {
 
   // test the POST here
 
-  // test the GET here
+  // test the GET 
+  
+  it('should get a game from db', async () => {
+    const response = await request(server)
+    .get('/api/games')
+    expect(response.status).toEqual(200)
+    expect(response.type).toEqual('application/json')
+    expect(response.body[0].title).toEqual('Resident Evil II');
+  })
 
   // Test the DELETE here
 });
