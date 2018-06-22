@@ -55,7 +55,7 @@ describe('The API Server', () => {
     const response = await request(server).get('/api/games')
 
     expect(response.status).toEqual(expectedStatusCode);
- //expect(response.body).toEqual(NESGameSchema);
+    expect(response.body.title).toEqual("Super Mario Bros.");
     expect(response.type).toEqual('application/json')
   });
   
@@ -66,7 +66,9 @@ describe('The API Server', () => {
     const deleteGame = await Game.remove(NESGameSchema)
 
 
-    expect(deleteGame.tile).not.toEqual('Super Mario bros.');
+    expect(deleteGame.title).not.toEqual('Super Mario bros.');
+    expect(deleteGame.status)toEqual(204);
+
     done();
   })
   // Test the DELETE here
