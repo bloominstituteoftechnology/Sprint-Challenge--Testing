@@ -26,8 +26,7 @@ describe('The API Server', () => {
     //   // write a beforeEach hook that will populate your test DB with data
     //   // each time this hook runs, you should save a document to your db
     //   // by saving the document you'll be able to use it in each of your `it` blocks
-    console.log('before each ran');
-    return Game.create({ title: "test-game", genre: "test-genre", releaseDate: "test-date" });
+    return Game.create({ title: "test-game", genre: "test-genre", releaseDate: "test-date" }).then((game) => {gameId = game.id});
   });
 
   afterEach(() => {
@@ -57,8 +56,6 @@ describe('The API Server', () => {
     expect(response.type).toEqual('application/json');
   });
 
-
-
   // test the GET here
   it('should return OK status code and a JSON object w/ games from get /api/games', async () => {
     const expectedStatusCode = 200;
@@ -81,6 +78,22 @@ describe('The API Server', () => {
     expect(response.type).toEqual('text/html');
   });
 
-
   // Test the DELETE here
+
+  it('should return 204 status code and delete game when deleting to /api/games with correct ID', async () => {
+    const expectedStatusCode = 204;
+    const expectedBody = {};
+
+    const response = await request(server).delete(`/api/games/${gameId}`);
+    expect(response.status).toEqual(expectedStatusCode);
+    expect(response.body).toEqual(expectedBody);
+  });
+
+  it('should return 404 status code and when deleting to /api/games with bad ID', async () => {
+    const expectedStatusCode = 404;
+
+    const response = await request(server).delete('/api/games/');
+    expect(response.status).toEqual(expectedStatusCode);
+  });
+
 });
