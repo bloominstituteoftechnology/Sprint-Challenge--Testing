@@ -46,7 +46,6 @@ describe('The API Server', () => {
   // test the GET here
   it('GET api/games', async () => {
     const expectedStatusCode = 200;
-
     const response = await requestAnimationFrame(server).get('api/games');
 
     expect(response.status).toEqual(expectedStatusCode);
@@ -55,7 +54,11 @@ describe('The API Server', () => {
 
   // Test the DELETE here
   it('DELETE api/games/:id', () => {
+    const expectedStatusCode = 204;
+    const response = await request(server).delete(`/api/games/${gameId}`);
 
+    expect(response.status).toEqual(expectedStatusCode);
+    expect(response.type).toEqual('application/json');
   })
 
 });
