@@ -129,4 +129,32 @@ describe('The API Server', () => {
     expect(res.body.name).toEqual('CastError');
     expect(res.status).toEqual(500);
   });
+
+  // Test the PUT here
+  test('PUT with missing require params', async () => {
+    const { id } = await Game.findOne({ title: 'Super Game 2' }, { _id: 1 });
+    const dataToUpdte = {
+      genre: 'THIS WAS UPDATED',
+    };
+
+    const res = await request(server)
+      .put(`/api/games/${id}`)
+      .send(dataToUpdte);
+
+    expect(res.status).toEqual(422);
+    expect(res.body.error).toEqual('Must Provide a title && Id');
+  });
+  test('PUT with require params', async () => {
+    const { id } = await Game.findOne({ title: 'Super Game 2' }, { _id: 1 });
+    const dataToUpdte = {
+      title: 'TITLE WAS UPDATED',
+    };
+
+    const res = await request(server)
+      .put(`/api/games/${id}`)
+      .send(dataToUpdte);
+
+    expect(res.status).toEqual(200);
+    expect(res.body.title).toEqual('TITLE WAS UPDATED');
+  });
 });
