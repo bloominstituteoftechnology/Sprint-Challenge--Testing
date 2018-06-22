@@ -1,9 +1,34 @@
 const mongoose = require('mongoose');
+const request = require('supertest');
+const server = require('./api/server.js');
 
 const Game = require('./games/Game');
+const lord = {
+  title: 'Lord of the Rings',
+  genre: 'fantasy',
+  releaseDate: 'Nov-1-2001'
+};
+const finalfantasy = {
+  title: 'Final Fantasy',
+  genre: 'fantasy',
+  releaseDate: 'Apr-1-2003'
+};
+const assassins = {
+  title: 'Assassin\'s Creed',
+  genre: 'historical rpg',
+  releaseDate: 'Nov-1-2013'
+};
+const zelda = {
+  title: 'Zelda',
+  genre: 'Nintendo rpg',
+  releaseDate: 'Aug-1-1998'
+};
 
-describe('The API Server', () => {
-  beforeAll(() => {
+const gamesArray = [lord, finalfantasy, assassins];
+
+
+describe.only('The API Server', () => {
+  beforeAll(async () => {
     return mongoose
       .connect('mongodb://localhost/test')
       .then(() => console.log('\n=== connected to TEST DB ==='))
@@ -12,7 +37,8 @@ describe('The API Server', () => {
       });
   });
 
-  afterAll(() => {
+  afterAll(async () => {
+    await Game.deleteMany({title: /([A-Z]|[a-z]|[0-9])\w/ });
     return mongoose
       .disconnect()
       .then(() => console.log('\n=== disconnected from TEST DB ==='));
@@ -21,21 +47,10 @@ describe('The API Server', () => {
   let gameId;
   // // hint - these wont be constants because you'll need to override them.
 
-  beforeEach(() => {
-    //   // write a beforeEach hook that will populate your test DB with data
-    //   // each time this hook runs, you should save a document to your db
-    //   // by saving the document you'll be able to use it in each of your `it` blocks
+  it('gets a list of all the games', async () => {
+      await Game.insertMany(gamesArray);
+      const response = await request(server).get('/api/games');
+      expect(response.body.length).toBe(3);
   });
 
-  afterEach(() => {
-    //   // clear the games collection.
-  });
-
-  it('runs the tests', () => {});
-
-  // test the POST here
-
-  // test the GET here
-
-  // Test the DELETE here
 });
