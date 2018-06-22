@@ -19,11 +19,11 @@ describe('The API Server', () => {
       .then(() => console.log('\n=== disconnected from TEST DB ==='));
   });
 
-  let gameId;
+  let gameId
   // // hint - these wont be constants because you'll need to override them.
   let sampleGame;
-  let deleteGame;
-  beforeEach(() => {
+
+  beforeEach( async () => {
     //   // write a beforeEach hook that will populate your test DB with data
     //   // each time this hook runs, you should save a document to your db
     //   // by saving the document you'll be able to use it in each of your `it` blocks
@@ -32,7 +32,7 @@ describe('The API Server', () => {
       genre: '#SPORTS',
       releaseDate: '2019'
     };
-    gameId = Game.create(sampleGame);
+    gameId = await Game.create(sampleGame);
   });
 
   afterEach(() => {
@@ -71,6 +71,7 @@ describe('The API Server', () => {
   // Test the DELETE here
   it('should return the status code 204 after deleting a game from db', async() => {
     const response =  await request(server).delete(`/api/games/${gameId._id}`);
+  
     console.log(gameId._id);
     expect(response.status).toEqual(204);
   });
