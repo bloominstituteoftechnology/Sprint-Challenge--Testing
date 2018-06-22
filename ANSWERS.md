@@ -15,8 +15,6 @@ Test Driven Development is basically writing first the tests before the code. I 
 
 Mock Functions is used to test the implementation of a function and if the codes are properly linked to one another. To use it, we first declare a const for the mock and assign it this method: jest.fn(). This will become the callback when testing the functions.     
 
-
-
 4. Mention three types of tests.
 
 The 3 types are Unit Testing, Snapshot Testing, and Component Testing. 
