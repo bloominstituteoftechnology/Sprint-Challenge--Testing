@@ -65,7 +65,18 @@ describe('The Game Model', () => {
     expect(createdGame1.body.title).toEqual("First game");
     createdGame = JSON.parse(createdGame1.text); // parse to json
     let id = createdGame._id;
-    let deletedGame = await superTestRequest(server).delete(`/api/games/${id}`).set('Accept', 'application/json');;
+    let deletedGame = await superTestRequest(server).delete(`/api/games/${id}`).set('Accept', 'application/json');
     expect(deletedGame.status).toEqual(204);
   })
+
+  it("should send a status of 404 and a messege of 'Game not found' if wrong id", async() => {
+    const expectedStatusCode = 404;
+    const expectedErrorMessage = 'Game not found';
+    const existingGameId = 'thisaintreal';
+    const deletedGame = await superTestRequest(server).delete(`/api/games/${existingGameId}`);
+
+    expect(deletedGame.body.message).toBe(expectedErrorMessage);
+    expect(deletedGame.status).toBe(expectedStatusCode);
+  })
+
 });

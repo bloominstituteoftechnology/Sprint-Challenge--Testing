@@ -74,7 +74,7 @@ server.delete('/api/games/:id', (req, res) => {
           res.status(404).json({ message: 'Game not found' });
         }
       })
-      .catch(err => res.status(500).json(err));
+      .catch(err => res.status(500).json({msg: err}));
   }
 });
 
