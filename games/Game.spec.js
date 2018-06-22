@@ -1,24 +1,24 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const Game = require('./Game');
+const Game = require("./Game");
 
-describe('The Game Model', () => {
+describe("The Game Model", () => {
   beforeAll(() => {
     return mongoose
-      .connect('mongodb://localhost/test')
-      .then(() => console.log('\n=== connected to TEST DB ==='))
+      .connect("mongodb://localhost/test")
+      .then(() => console.log("\n=== connected to TEST DB ==="))
       .catch(err => {
-        console.log('error connecting to TEST database, is MongoDB running?');
+        console.log("error connecting to TEST database, is MongoDB running?");
       });
   });
 
   afterAll(() => {
     return mongoose
       .disconnect()
-      .then(() => console.log('\n=== disconnected from TEST DB ==='));
+      .then(() => console.log("\n=== disconnected from TEST DB ==="));
   });
 
-  it('runs the tests', () => {});
+  it("runs the tests", () => {});
 
   // test away!
 });
