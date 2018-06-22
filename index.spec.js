@@ -70,9 +70,32 @@ describe('The API Server', () => {
     expect(response.body.releaseDate).toEqual(expectedBody.releaseDate);
   })
 
+  // test the GET here
+  it('returns a status code 200 & a JSON array containing game objects', async () => {
+
+    const response = await request(server).get('/api/games');
+    const game = response.body[0];
+
+    expect(response.status).toEqual(200);
+    expect(Array.isArray(response.body)).toBeTruthy();
+    expect(response.type).toEqual('application/json');
+    expect(typeof(game)).toBe('object');
+  })
+  it('should return a game object that matches the expectedBody', async () => {
+    const response = await request(server).get('/api/games');
+  
+    const expectedBody = {
+      title: 'California Games',
+      genre: 'Sports',
+      releaseDate: 'June 1987'
+    }
+    expect(response.body[0].title).toEqual(expectedBody.title)
+    expect(response.body[0].genre).toEqual(expectedBody.genre)
+    expect(response.body[0].releaseDate).toEqual(expectedBody.releaseDate)
+  })
   })
 
-  // test the GET here
+  
 
   // Test the DELETE here
 
