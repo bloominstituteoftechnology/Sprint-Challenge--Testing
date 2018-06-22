@@ -60,12 +60,15 @@ describe('The API Server', () => {
     expect(response.status).toEqual(expectedStatusCode)
     expect(response.body.title).toEqual('California Games')
     expect(response.body.genre).toEqual('Sports')
+    expect(response.body.releaseDate).toEqual('June 1987')
   })
   it('deletes an existing game', async () => {
-    const expectedStatusCode = 200
+    // const expectedStatusCode = 200
     let ObjectId = mongoose.Schema.Types.ObjectId
     // const response = await request(server).del(`/api/games/:id`).send(ObjectId)
     request(server).delete(`/api/games/:${ObjectId}`)
-    expect(expectedStatusCode)
+    expect(200)
+    request(server).delete(`/api/games:!${ObjectId}`)
+    expect(404)
   })
 })
