@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const request = require('supertest');
+const server = require('./api/server');
 
 const Game = require('./games/Game');
 
@@ -39,8 +41,11 @@ describe('The API Server', () => {
     return Game.remove(testCase);
   });
 
-  it('runs the tests', () => {
-    
+  it('should post a game to the database', async () => {
+    const response = await request(server)
+      .post('/api/games')
+      .send(testCase)
+    expect(response.status).toEqual(201);  
   });
 
   // test the POST here
