@@ -75,14 +75,12 @@ describe('The API Server', () => {
     })
   })
 
- // Test the DELETE here
-  // describe('Delete', () => {
-  //   it('should return a 500 error if not properly deleted', async () => {
-  //     const response = await request(server)
-  //       .post('/api/games')
-  //       .send(testCase)
-  //       .delete(`/api/games/${gameId}`)
-  //     expect(response.status).toEqual(200)
-  //   })
-  // })
+  // Test the DELETE here
+  describe('Delete', () => {
+    it('should return a 500 error if not properly deleted', async () => {
+      const response = await request(server)
+        .delete(`/api/games/${gameId}`)
+      expect(response.status).toEqual(500)
+    })
+  })
 });
