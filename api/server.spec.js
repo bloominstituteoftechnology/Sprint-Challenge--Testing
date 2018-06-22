@@ -57,5 +57,15 @@ describe('Game', () => {
         expect(game.status).toBe(500)
     });
 
-//
+//Does it run DELETE requests?
+
+    it('should return 204 if the object was deleted', async () => {
+        const game = { 
+            title: 'Pokemon',
+            genre: 'Childhood favorite'
+        };
+        const deleted = await Game.remove(game);
+        expect(deleted.title).not.toEqual(game;)
+        expect(deleted.genre).not.toEqual(game);
+    });
 })
