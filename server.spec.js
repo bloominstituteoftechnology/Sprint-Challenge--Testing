@@ -20,23 +20,24 @@ describe('Games', () => {
   let gameId;
   // // hint - these wont be constants because you'll need to override them.
 
+  const dummyData = [
+    {
+      _id: "5b2d1983633f412f4d1d9368",
+      title: 'Mario Bros.',
+      genre: 'Platforming',
+      releaseDate: 'June 1983'
+    },
+    {
+      title: 'Tetris',
+      genre: 'Puzzle',
+      releaseDate: 'June 1984'
+    }
+  ];
+
   beforeEach(async () => {
     //   // write a beforeEach hook that will populate your test DB with data
     //   // each time this hook runs, you should save a document to your db
     //   // by saving the document you'll be able to use it in each of your `it` blocks
-    const dummyData = [
-      {
-        _id: "5b2d1983633f412f4d1d9368",
-        title: 'Mario Bros.',
-        genre: 'Platforming',
-        releaseDate: 'June 1983'
-      },
-      {
-        title: 'Tetris',
-        genre: 'Puzzle',
-        releaseDate: 'June 1984'
-      }
-    ];
     await Game.create(dummyData);
   });
 
@@ -85,7 +86,36 @@ describe('Games', () => {
     })
   })
   // test the GET here
-  
+  describe('GET Requests:', () => {
+
+    it('INTEGRATION: appropriately retrieves list of games from DB', async () => {
+      const expectedStatusCode = 200;
+      const expectedLength = 2;
+
+      const { status, body } = await request(server).get('/api/games');
+      expect(status).toBe(expectedStatusCode);
+      // Is it an array?
+      expect(typeof body).toBe('object');
+      expect(body).toHaveProperty('length',expectedLength);
+      // Does it contain dummy data?
+      expect(body).toEqual(expect.arrayContaining([expect.objectContaining(dummyData[0])]));
+      expect(body).toEqual(expect.arrayContaining([expect.objectContaining(dummyData[1])]));
+    });
+
+    it('INTEGRATION: ignores extraneous input and appropriately retrieves list of games from DB', async () => {
+      const expectedStatusCode = 200;
+      const expectedLength = 2;
+
+      const { status, body } = await request(server).get('/api/games').send({genre: "Puzzle"});
+      expect(status).toBe(expectedStatusCode);
+      // Is it an array?
+      expect(typeof body).toBe('object');
+      expect(body).toHaveProperty('length',expectedLength);
+      // Does it contain dummy data?
+      expect(body).toEqual(expect.arrayContaining([expect.objectContaining(dummyData[0])]));
+      expect(body).toEqual(expect.arrayContaining([expect.objectContaining(dummyData[1])]));
+    });
+  })
   // test the DELETE here
   describe('DELETE Requests:', () => {
     it('UNIT: rejects request if `id` is not provided.', async () => {
