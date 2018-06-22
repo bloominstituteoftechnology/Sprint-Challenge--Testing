@@ -18,7 +18,7 @@ describe('The Game Model', () => {
       .then(() => console.log('\n=== disconnected from TEST DB ==='));
   });
 
-  it('runs the tests',  async() => {});
+  it('runs the tests',  async () => {});
 
   // test away!
   const game = {

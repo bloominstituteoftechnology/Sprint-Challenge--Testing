@@ -34,12 +34,12 @@ describe('The API Server', () => {
     //   // write a beforeEach hook that will populate your test DB with data
     //   // each time this hook runs, you should save a document to your db
     //   // by saving the document you'll be able to use it in each of your `it` blocks
-    Game.create(logGame)
+     await Game.create(logGame)
   });
 
   afterEach( async() => {
     //   // clear the games collection.
-    await Game.remove()
+     await Game.remove()
   });
 
   // test the POST here
@@ -65,7 +65,7 @@ describe('The API Server', () => {
 
   
     // Test the DELETE here
-    it('should delete a gaeme and send 204', async () => {
+    it('should delete a game and send 204', async () => {
       const newGame = {title: 'NewGame', genre: 'lifestyle', releaseDate: '01/01/2019'};
       const expectedStatusCode = 204;
 
