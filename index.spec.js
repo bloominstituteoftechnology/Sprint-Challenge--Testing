@@ -35,7 +35,7 @@ describe("The API Server", () => {
       genre: "Sports",
       releaseDate: "June 1987"
     };
-    
+
     Game.create(game);
     return;
   });
