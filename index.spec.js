@@ -1,6 +1,15 @@
 const mongoose = require('mongoose');
-
+const request = require('supertest');
+const server = require('./index.js');
 const Game = require('./games/Game');
+
+// The POST method should take in an object that looks like this
+
+// {
+//   title: 'California Games',
+//   genre: 'Sports',
+//   releaseDate: 'June 1987'
+// }
 
 describe('The API Server', () => {
   beforeAll(() => {
