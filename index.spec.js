@@ -24,10 +24,16 @@ describe('The API Server', () => {
   let gameId;
   // // hint - these wont be constants because you'll need to override them.
 
-  beforeEach(() => {
+  beforeEach(async () => {
     //   // write a beforeEach hook that will populate your test DB with data
     //   // each time this hook runs, you should save a document to your db
     //   // by saving the document you'll be able to use it in each of your `it` blocks
+    const expectedBody = {
+      title: 'California Games',
+      genre: 'Sports',
+      releaseDate: 'June 1987'
+    }
+    const game = await Game.create(expectedBody)
   });
 
   afterEach( async () => {
@@ -44,12 +50,24 @@ describe('The API Server', () => {
     expect(response.status).toEqual(expectedStatusCode);
     expect(response.body).toEqual(expectedBody);
     expect(response.type).toEqual('application/json');
-
   });
 
-  // test the POST here
-  it('post request returns a 201 status code and a JSON object from the /api/games route', () => {
 
+  // test the POST here
+  it('returns a 201 status code and a JSON object from the /api/games route', async () => {
+    const expectedBody = {
+      title: 'California Games',
+      genre: 'Sports',
+      releaseDate: 'June 1987'
+    }
+
+    const response = await request(server).post('/api/games').send(expectedBody)
+
+    expect(response.status).toEqual(201);
+    expect(response.type).toEqual("application/json");
+    expect(response.body.title).toEqual(expectedBody.title);
+    expect(response.body.genre).toEqual(expectedBody.genre);
+    expect(response.body.releaseDate).toEqual(expectedBody.releaseDate);
   })
 
   })
