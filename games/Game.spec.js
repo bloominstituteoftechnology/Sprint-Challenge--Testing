@@ -18,7 +18,11 @@ describe('The Game Model', () => {
       .then(() => console.log('\n=== disconnected from TEST DB ==='));
   });
 
-  it('runs the tests', () => {});
+  it('checks title', async () => {
+    const songIn = { title: 'x', genre: 'pop' , releaseDate: '12/05/2000'};
+      const saved = await Game.create(songIn);
+      expect(saved.title).toEqual(songIn.title);
+  });
 
   // test away!
   

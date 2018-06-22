@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
-
+const request = require('supertest');
 const Game = require('./games/Game');
+const server = require('./api/server')
+
 
 describe('The API Server', () => {
   beforeAll(() => {
@@ -39,31 +41,36 @@ describe('The API Server', () => {
   describe('post', () => {
     it('should post', async () => {
       const songIn = { title: 'x', genre: 'pop' , releaseDate: '12/05/2000'};
-      const saved = await Game.create(songIn);
+      const saved = await request(server).post('/api/games').send(songIn)
       const expectedStatusCode = 201
-      expect(saved.title).toEqual(songIn.title);
-      expect(saved.genre).toEqual(songIn.genre);
-      //expect(saved.status).toEqual(expectedStatusCode);
+      //console.log(saved.body)
+      expect(saved.body.title).toEqual(songIn.title);
+      expect(saved.body.genre).toEqual(songIn.genre);
+      expect(saved.status).toEqual(expectedStatusCode);
     });
   });
 
 
   describe('get', () => {
     it('should be an object', async () => {
-      const saved = await Game.find({});
+      const saved = await request(server).get('/api/games')
       expect(typeof saved).toEqual("object")
     });
 
     it('should have some lenght', async () => {
-      const saved = await Game.find({});
-      expect(saved.length).toBeGreaterThanOrEqual(1)
+      const saved = await request(server).get('/api/games')
+      expect(saved.body.length).toBeGreaterThanOrEqual(1)
     });
 
     it('should have created latest data', async () => {
       const songIn = { title: 'samars song', genre: 'pop' , releaseDate: '12/05/2000'};
-      const saved = await Game.create(songIn);
-      const getAll = await Game.find({});
-      const getLatest = getAll[getAll.length-1]
+      const expectedStatusCode = 200
+      const getAll = await request(server).get('/api/games')
+      const getLatest = getAll.body[getAll.body.length-1]
+      //console.log(getAll.body)
+      expect(getAll.status).toEqual(expectedStatusCode);
+      console.log(getAll.body[0])
+      expect(getLatest).toMatchObject(songIn)
       expect(getLatest.title).toEqual(songIn.title);
       expect(getLatest.genre).toEqual(songIn.genre);
     });
