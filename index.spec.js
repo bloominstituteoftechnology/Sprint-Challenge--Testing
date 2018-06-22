@@ -1,8 +1,12 @@
 const mongoose = require('mongoose');
-
 const Game = require('./games/Game');
+const request = require('supertest');
+const server = require('./api/server');
 
-describe('The API Server', () => {
+describe.only('The API Server', () => {
+  let mario = {};
+  let gameId;
+
   beforeAll(() => {
     return mongoose
       .connect('mongodb://localhost/test')
@@ -18,24 +22,43 @@ describe('The API Server', () => {
       .then(() => console.log('\n=== disconnected from TEST DB ==='));
   });
 
-  let gameId;
-  // // hint - these wont be constants because you'll need to override them.
-
   beforeEach(() => {
-    //   // write a beforeEach hook that will populate your test DB with data
-    //   // each time this hook runs, you should save a document to your db
-    //   // by saving the document you'll be able to use it in each of your `it` blocks
+    mario = Object.assign({}, mario, {
+      title: 'Mario Bros.',
+      genre: 'Platform',
+      releaseDate: 'June 1986'
+    });
+    return Game.create(mario);
   });
 
   afterEach(() => {
-    //   // clear the games collection.
+    return Game.remove();
   });
 
-  it('runs the tests', () => {});
+  describe('POST endpoint to /api/games', () => {
 
-  // test the POST here
+  });
 
-  // test the GET here
+  describe('GET request to /api/games', () => {
+    it('should return OK status code and a JSON object with an array of all saved games', async () => {
+      const zelda = {
+        title: 'The Legend of Zelda',
+        genre: 'Action-Adventure',
+        releaseDate: 'August 1987'
+      };
+      const expected = {
+        status: 200,
+        type: 'application/json',
+        numGames: 2
+      };
 
-  // Test the DELETE here
+      const savedGame = await Game.create(zelda);
+      const response = await request(server).get('/api/games');
+      expect(response.body.length).toBe(expected.numGames);
+    });
+  });
+
+  describe('DELETE endpoint to /api/games', () => {
+
+  });
 });

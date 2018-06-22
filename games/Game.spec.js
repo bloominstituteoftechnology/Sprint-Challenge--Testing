@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Game = require('./Game');
 
-describe('The Game Model', () => {
+describe.skip('The Game Model', () => {
   beforeAll(() => {
     return mongoose
       .connect('mongodb://localhost/test')
