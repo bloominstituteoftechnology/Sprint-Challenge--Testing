@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const Game = require('./games/Game');
 const request = require('supertest');
-const server = require('./api/server');
+const Game = require('../games/Game');
+const server = require('./server');
 
 describe('The API Server', () => {
   let mario = {};
