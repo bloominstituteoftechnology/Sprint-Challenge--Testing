@@ -69,4 +69,15 @@ describe('The API Server', () => {
     expect(response.status).toEqual(200);
   })
   // Test the DELETE here
+  it('should return the status code 204 after deleting a game from db', async() => {
+    const response =  await request(server).delete(`/api/games/${gameId._id}`);
+    console.log(gameId._id);
+    expect(response.status).toEqual(204);
+  });
+  if('should return the status code 404 if game is not in db', async() => {
+    const response = await request(server).delete('/api/games/5b2d3930850b0b0355b8ezzz');
+    expect(response.status).toEqual(404);
+    expect(response.status.message).toEqual('Game not found');
+  });
+
 });
