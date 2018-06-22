@@ -1,21 +1,61 @@
 const mongoose = require('mongoose');
-
+const server = require('./api/server');
 const Game = require('./games/Game');
+const request = require('supertest');
+
+const mockData = [
+  {
+    title: 'Super Game',
+    genre: 'The engagest',
+    releaseDate: 'Just now',
+  },
+  {
+    title: 'Super Game 2',
+    genre: 'The engagest',
+    releaseDate: 'Just tomorrow',
+  },
+  {
+    title: 'Super Game 3',
+    genre: 'The engagest',
+    releaseDate: 'Just after tomorrow',
+  },
+];
 
 describe('The API Server', () => {
   beforeAll(() => {
     return mongoose
       .connect('mongodb://localhost/test')
-      .then(() => console.log('\n=== connected to TEST DB ==='))
+      .then(async () => {
+        console.log('\n=== connected to TEST DB ===');
+        await Game.insertMany(mockData)
+          .then(games => {
+            console.log('GAMES CREATED: ', games);
+            Game.find({})
+              .then(respoonse => {
+                console.log('respoonse', respoonse);
+              })
+              .catch(e => {
+                console.log('error', e);
+              });
+          })
+          .catch(e => {
+            console.log('error', e);
+          });
+      })
       .catch(err => {
         console.log('error connecting to TEST database, is MongoDB running?');
       });
   });
 
-  afterAll(() => {
-    return mongoose
-      .disconnect()
-      .then(() => console.log('\n=== disconnected from TEST DB ==='));
+  afterAll(async () => {
+    await Game.deleteMany({ genre: 'The engagest' })
+      .then(deleteAll => {
+        console.log('deleteAll', deleteAll);
+      })
+      .catch(e => {
+        console.log('error', e);
+      });
+    return mongoose.disconnect().then(() => console.log('\n=== disconnected from TEST DB ==='));
   });
 
   let gameId;
@@ -31,7 +71,10 @@ describe('The API Server', () => {
     //   // clear the games collection.
   });
 
-  it('runs the tests', () => {});
+  it('GET', async () => {
+    const response = await request(server).get('/api/games');
+    expect(response.data).not.toEqual();
+  });
 
   // test the POST here
 
