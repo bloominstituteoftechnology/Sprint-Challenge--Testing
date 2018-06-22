@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-
+const request = require('supertest');
+const server = require('./api/server');
 const Game = require('./games/Game');
 
 describe('The API Server', () => {
@@ -34,6 +35,21 @@ describe('The API Server', () => {
   it('runs the tests', () => {});
 
   // test the POST here
+
+  it('Should return a Created status code and the created user.', async () => {
+    const expectedStatusCode = 201;
+    const expectedBody = {
+      title: 'California Games',
+      genre: 'Sports',
+      releaseDate: 'June 1987',
+    };
+
+    const newGame = await request(server).post('/api/games').send(expectedBody);
+
+    expect(newGame.body.title).toEqual('California Games');
+    expect(newGame.body.genre).toEqual('Sports');
+    expect(newGame.body.releaseDate).toEqual('June 1987');
+  });
 
   // test the GET here
 
