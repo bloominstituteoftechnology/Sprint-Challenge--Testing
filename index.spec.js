@@ -32,6 +32,7 @@ describe('The API Server', () => {
     testGame = {
       title: 'whatever',
       genre: 'idontplaygames',
+      releaseDate: '1983',
     };
 
     gameId = await Game.create(testGame);
@@ -47,8 +48,8 @@ describe('The API Server', () => {
   // test the POST here
 
   it('should post new games', async() => {
-    const newGame = { title: 'newgame', genre: 'puzzle' };
-    const response = await request(server).post('/api/games').send(newGame);
+   // const newGame = { title: 'newgame', genre: 'puzzle', releaseDate: '2000' }; I don't need this because of the beforeEach
+    const response = await request(server).post('/api/games').send(testGame);
 
     expect(response.status).toEqual(201);
     expect(response.body).toHaveProperty('_id');
@@ -81,12 +82,12 @@ describe('The API Server', () => {
   // Test the DELETE here
 
   it('should return 204 status upon successfully deleting', async() => {
-    const response = await request(server).delete(`/api/games/${gameId._id}`);
+    const response = await request(server).delete(`/api/games/${gameId._id}`); //It took me forever to figure out how to specify an ID here
     expect(response.status).toEqual(204);
   });
 
   it('should return 404 status if game is not found in database', async() => {
-    const response = await request(server).delete('/api/games/5b2d271f9f9c341f79482fb0'); //I used an existing game id and switched the last 2 letters around
+    const response = await request(server).delete('/api/games/5b2d271f9f9c341f79482fb0'); //I tried using gameId, but I didn't work, probably because we want something NOT in the database. Regular numbers like 123 didn't work so I used an existing game id and switched the last 2 letters around. This way, it looked like a game ID but wasn't one.
     expect(response.status).toBe(404);
     expect(response.body.message).toBe('Game not found');
   });
