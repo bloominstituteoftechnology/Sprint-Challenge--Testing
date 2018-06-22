@@ -44,13 +44,11 @@ describe.only('The API Server', () => {
       .then(() => console.log('\n=== disconnected from TEST DB ==='));
   });
 
-  let gameId;
-  // // hint - these wont be constants because you'll need to override them.
-
   it('gets a list of all the games', async () => {
       await Game.insertMany(gamesArray);
       const response = await request(server).get('/api/games');
       const status = 200;
+      expect(response.status).toBe(status);
       expect(response.body.length).toBe(3);
   });
   it('adds a game to the database', async () => {
@@ -58,5 +56,16 @@ describe.only('The API Server', () => {
       const status = 201;
       expect(response.status).toBe(status);
       expect(response.body).toMatchObject(zelda);
-  })
+  });
+  it('deletes a game from the database', async () => {
+      const { title } = zelda;
+      console.log(title);
+      const game = await Game.find({title});
+      console.log(game);
+      const id = game[0]._id;
+      console.log(id);
+      const response = await request(server).delete(`/api/games/${id}`);
+      const status = 204;
+      expect(response.status).toBe(status);
+  });
 });
