@@ -73,6 +73,24 @@ it('should get the games in db and return status code 200', async () => {
 
   // Test the DELETE here
 
+it('should delete game and return status code 204', async () => {
+  const newGame = {
+    title: "The Legend of Zelda: A Link to the Past",
+    genre: "Action/Adventure",
+    releseDate: "November, 1991"
+  }
 
+  const createGame = await Game.create(newGame);
+  const response = await request(server).delete(`/api/games/${createGame._id}`);
+
+  expect(response.status).toBe(204);
+  expect(response.type).toBe('')
+})
+
+//Test the PUT here
+
+it('should edit a game and return status code 200', async () =>{
+  
+})
 
 });
