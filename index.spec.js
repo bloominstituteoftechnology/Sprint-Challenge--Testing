@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
+const request = require('supertest');
 
+const server = require('./api/server');
 const Game = require('./games/Game');
 
 describe('The API Server', () => {
@@ -19,23 +21,52 @@ describe('The API Server', () => {
   });
 
   let gameId;
-  // // hint - these wont be constants because you'll need to override them.
 
-  beforeEach(() => {
-    //   // write a beforeEach hook that will populate your test DB with data
-    //   // each time this hook runs, you should save a document to your db
-    //   // by saving the document you'll be able to use it in each of your `it` blocks
+  beforeEach(async () => {
+    const games = [
+      { title: 'A', genre: 'A', releaseDate: 'A' },
+      { title: 'B', genre: 'B', releaseDate: 'B' },
+      { title: 'C', genre: 'C', releaseDate: 'C' },
+      { title: 'D', genre: 'D', releaseDate: 'D' },
+      { title: 'E', genre: 'E', releaseDate: 'E' }
+    ];
+
+    await Game.insertMany(games);
   });
 
-  afterEach(() => {
-    //   // clear the games collection.
-  });
+  // afterEach(async () => {
+    // await Game.remove({});
+  // });
 
   it('runs the tests', () => {});
 
   // test the POST here
+  it('should create a new game and return it as JSON', async () => {
+    const body = { title: 'F', genre: 'F', releaseDate: 'F' };
+    const url = '/api/games';
+    const response = await request(server).post(url).send(body);
+    gameId = response.body._id;
+
+    expect(response.status).toEqual(201);
+    expect(response.body.genre).toEqual(body.genre);
+  })
 
   // test the GET here
+  it('should return a list of games as an array of objects', async () => {
+    const url = '/api/games';
+    const response = await request(server).get(url);
+
+    expect(response.body.length).toBeGreaterThan(0);
+  });
 
   // Test the DELETE here
+  it('should delete a game by the ID and return the deleted game as JSON', async () => {
+    const url = `/api/games/${ gameId }`;
+    const response = await request(server)
+      .delete(url)
+      .then(res => res)
+      .catch(err => err);
+
+    expect(response.status).toEqual(204);
+  })
 });
