@@ -64,6 +64,7 @@ describe.only('The API Server', () => {
       const response = await request(server).delete(`/api/games/${id}`);
       const status = 204;
       expect(response.status).toBe(status);
+      expect(response.body).toEqual({});
   });
   it('updates data of a game from the database', async () => {
       const { title } = assassins;
@@ -73,5 +74,10 @@ describe.only('The API Server', () => {
       const response = await request(server).put(`/api/games/${id}`).send(update);
       const status = 200;
       expect(response.status).toBe(status);
+      expect(response.body).toMatchObject({
+        title: 'Tony Hawk',
+        genre: 'historical rpg',
+        releaseDate: 'Nov-1-2013'
+      });
   });
 });
