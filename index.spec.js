@@ -2,6 +2,12 @@ const mongoose = require('mongoose');
 
 const Game = require('./games/Game');
 
+const testCase = {
+  title: 'California Games',
+  genre: 'Sports',
+  releaseDate: 'June 1987'
+}
+
 describe('The API Server', () => {
   beforeAll(() => {
     return mongoose
@@ -25,13 +31,17 @@ describe('The API Server', () => {
     //   // write a beforeEach hook that will populate your test DB with data
     //   // each time this hook runs, you should save a document to your db
     //   // by saving the document you'll be able to use it in each of your `it` blocks
+    return Game.create(testCase);
   });
 
   afterEach(() => {
     //   // clear the games collection.
+    return Game.remove(testCase);
   });
 
-  it('runs the tests', () => {});
+  it('runs the tests', () => {
+    
+  });
 
   // test the POST here
 

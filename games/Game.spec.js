@@ -2,6 +2,12 @@ const mongoose = require('mongoose');
 
 const Game = require('./Game');
 
+const testCase = {
+  title: 'California Games',
+  genre: 'Sports',
+  releaseDate: 'June 1987'
+}
+
 describe('The Game Model', () => {
   beforeAll(() => {
     return mongoose
