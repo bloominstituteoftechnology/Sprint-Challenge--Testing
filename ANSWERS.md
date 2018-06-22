@@ -1,5 +1,5 @@
 <!-- Answers to the Short Answer Essay Questions go here -->
-
+Start sprint
 
 1. In Jest, what are the differences between beforeAll, afterAll, beforeEach, and afterEach? When do they run? What are they used for?
 1. What is the point of Test Driven Development? What do you personally think about this approach?
