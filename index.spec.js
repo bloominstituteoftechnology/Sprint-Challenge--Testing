@@ -59,13 +59,19 @@ describe.only('The API Server', () => {
   });
   it('deletes a game from the database', async () => {
       const { title } = zelda;
-      console.log(title);
       const game = await Game.find({title});
-      console.log(game);
       const id = game[0]._id;
-      console.log(id);
       const response = await request(server).delete(`/api/games/${id}`);
       const status = 204;
+      expect(response.status).toBe(status);
+  });
+  it('updates data of a game from the database', async () => {
+      const { title } = assassins;
+      const game = await Game.find({title});
+      const id = game[0]._id;
+      const update = { title: 'Tony Hawk' };
+      const response = await request(server).put(`/api/games/${id}`).send(update);
+      const status = 200;
       expect(response.status).toBe(status);
   });
 });
