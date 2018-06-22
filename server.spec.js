@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const request = require('supertest');
-
 const Game = require('./games/Game');
 const server = require('./server');
 
