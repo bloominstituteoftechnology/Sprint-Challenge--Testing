@@ -8,7 +8,7 @@
 
 ## Friendly Reminder
 
-Don't fret or get anxious. This is a no-pressure assessment designed to help us discover better ways to help you move forward in your learning.
+Don't fret or get anxious. This is a no-pressure assessment designed to help us discover better ways to help you move forward and continue learning.
 
 ## Start by forking and cloning this repository.
 
