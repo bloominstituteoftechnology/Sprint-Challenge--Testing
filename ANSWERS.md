@@ -17,8 +17,8 @@ Mock functions give us a way to test the links between code by erasing the imple
 
 1. Mention three types of tests.
 
-snapshot, component, and unit tests.
+integration, component, and unit tests.
 
 1. What type of test performs database operations against a real server.
 
-snapshot?
+integration
