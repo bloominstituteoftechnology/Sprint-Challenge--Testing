@@ -79,4 +79,25 @@ describe('The Game Model', () => {
     expect(deletedGame.status).toBe(expectedStatusCode);
   })
 
+  it("should be able to update a game", async () => {
+    let createdGame = await superTestRequest(server).post("/api/games").send(game1);
+    expect(createdGame.status).toEqual(201);
+    expect(createdGame.body.title).toEqual("First game");
+    let id = createdGame.body._id;
+    //console.log(id);
+    let updateObj = {
+      title : "Updated game",
+      genre: 'Arcade',
+      releaseDate: 'August 1997'
+    }
+    
+    //const deletedGame = await superTestRequest(server).delete(`/api/games/${existingGameId}`);
+
+    let updatedUser = await superTestRequest(server).put(`/api/games/${id}`).send(updateObj);
+    // //updatedUser = JSON.parse(updatedUser.text); // parse to json
+    // console.log(typeof JSON.parse(updatedUser.text))
+    //console.log(updatedUser);
+    expect(updatedUser.body.title).toEqual("Updated game");
+    expect(updatedUser.status).toBe(200);
+  })
 });
