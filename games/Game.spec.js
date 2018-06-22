@@ -18,7 +18,19 @@ describe('The Game Model', () => {
       .then(() => console.log('\n=== disconnected from TEST DB ==='));
   });
 
-  it('runs the tests', () => {});
+  it('output values should match input values', async () => {
+    const game = {
+      title: "Super Contra",
+      genre: "Run and Gun",
+      releaseDate: "January, 1988"
+    }
+
+    const newGame = await Game.create(game);
+
+    expect(newGame.title).toEqual(game.title);
+    expect(newGame.genre).toEqual(game.genre);
+    expect(newGame.releaseDate).toEqual(game.releaseDate);
+  });
 
   // test away!
 });
