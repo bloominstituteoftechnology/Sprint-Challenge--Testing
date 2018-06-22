@@ -2,6 +2,9 @@ const mongoose = require('mongoose');
 
 const Game = require('./games/Game');
 
+const request = require('supertest');
+const server = require('./api/server');
+
 describe('The API Server', () => {
   beforeAll(() => {
     return mongoose
@@ -27,15 +30,31 @@ describe('The API Server', () => {
     //   // by saving the document you'll be able to use it in each of your `it` blocks
   });
 
-  afterEach(() => {
+  afterEach( async () => {
     //   // clear the games collection.
+      await Game.remove();
   });
 
-  it('runs the tests', () => {});
+  it('runs the tests and returns an OK status code and a JSON object from the index route', async () => {
+    const expectedStatusCode = 200;
+    const expectedBody = { api: 'running!' };
+
+    const response = await request(server).get('/');
+
+    expect(response.status).toEqual(expectedStatusCode);
+    expect(response.body).toEqual(expectedBody);
+    expect(response.type).toEqual('application/json');
+
+  });
 
   // test the POST here
+  it('post request returns a 201 status code and a JSON object from the /api/games route', () => {
+
+  })
+
+  })
 
   // test the GET here
 
   // Test the DELETE here
-});
+
