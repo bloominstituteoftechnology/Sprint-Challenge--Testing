@@ -29,13 +29,28 @@ describe('The API Server', () => {
 
   afterEach(() => {
     //   // clear the games collection.
+    // return Title.remove();
+    clearGamecollection();
   });
 
   it('runs the tests', () => {});
 
   // test the POST here
+  describe('post a title', () => {
+    it('Checks if game was posted correctly', async (done) => {
+      const NESGameSchema = { title: 'tron', genre: 'action', releaseDate: 'August 1989' };
+      const newTitle = await Title.create(NESGameSchema);
+      expect(newTitle.game).toEqual('tron')
+    })
+  });
 
   // test the GET here
+  it('Should return a list of all the games', async () => { 
+    const response = await request(server).get('/games/Game');
+      
+      
+
+  })
 
   // Test the DELETE here
 });

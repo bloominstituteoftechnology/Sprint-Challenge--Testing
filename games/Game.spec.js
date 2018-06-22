@@ -22,3 +22,22 @@ describe('The Game Model', () => {
 
   // test away!
 });
+it('Should be able to return the title', () => {
+  const newTitle = Title.create(testTitle);
+  const newGenre = Genre.create(testGenre);
+
+  expect(newTitle.title).toBe(true);
+
+
+});
+
+it('it should Return the releaseDate for the title', () => {
+  const tron = { title: 'tron', releaseDate: 'August 1989' };
+  // console.log(genre);
+
+  const savedTitle = Title.create(tron);
+
+  expect(savedTitle.title).toEqual(tron.title);
+  expect(savedTitle.releaseDate).toBe(true);
+
+});
