@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
-
+const request = require('supertest');
 const Game = require('./games/Game');
+const server = require('./api/server'); 
 
 describe('The API Server', () => {
   beforeAll(() => {
@@ -25,15 +26,38 @@ describe('The API Server', () => {
     //   // write a beforeEach hook that will populate your test DB with data
     //   // each time this hook runs, you should save a document to your db
     //   // by saving the document you'll be able to use it in each of your `it` blocks
+    console.log('before each ran');
+    return Game.create({ title: "test-game", genre: "test-genre", releaseDate: "test-date" });
   });
 
   afterEach(() => {
     //   // clear the games collection.
+    return Game.remove({});    
   });
 
   it('runs the tests', () => {});
 
   // test the POST here
+  it('should return 201 and JSON object with game title when posting to api/games', async () => {
+    const expectedStatusCode = 201;
+    const body = { title: "some game", genre: "some genre", releaseDate: "some date" }
+    const response = await request(server).post('/api/games').send(body);
+
+    expect(response.status).toEqual(expectedStatusCode);
+    expect(response.body).toMatchObject({ title: "some game" });
+    expect(response.type).toEqual('application/json');
+  });
+
+  it('should return 500 and JSON object with error message when posting to api/games w/o body', async () => {
+    const expectedStatusCode = 500;
+    const response = await request(server).post('/api/games').send();
+
+    expect(response.status).toEqual(expectedStatusCode);
+    expect(response.body).toMatchObject({ message: 'Error saving data to the DB' });
+    expect(response.type).toEqual('application/json');
+  });
+
+
 
   // test the GET here
 
