@@ -42,7 +42,9 @@ describe('The Game Model', () => {
   it('runs the tests', async () => {
   
     // test away!
-    let mainGamer = await tester(server).post('/api/games').send(gamer1);
+    const mainGamer = await tester(server).post('/api/games').send(gamer1);
+    // const mainGamer2 = await tester(server).get('/api/games');
+    // const mainGamer3 = await tester(server).delete('/api/games');
     
     // had to refrence server.js line 14 to get the correct status code
     expect(mainGamer.status).toEqual(201);
