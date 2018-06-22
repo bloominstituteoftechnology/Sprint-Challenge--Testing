@@ -3,6 +3,10 @@ const mongoose = require('mongoose');
 const Game = require('./Game');
 
 describe('The Game Model', () => {
+
+  let gameOne;
+  let gameTwo;
+
   beforeAll(() => {
     return mongoose
       .connect('mongodb://localhost/games')
@@ -33,7 +37,37 @@ describe('The Game Model', () => {
     expect(savedGameTwo.genre).toEqual(godofwar.genre);
     expect(savedGameTwo.releaseDate).toEqual(godofwar.releaseDate);
 
-    await Game.deleteOne({ username: fortnite.username });
-    await Game.deleteOne({ username: godofwar.username }); 
+    gameOne = savedGameOne._id;
+    gameTwo = savedGameTwo._id;
   });
+
+  it('It should return a list of games.', async () => {
+
+    const listofGames = await Game.find({});
+
+    expect(listofGames.length).toBeGreaterThanOrEqual(2);
+
+    const firstGame = await Game.findById(gameOne);
+    const secondGame = await Game.findById(gameTwo);
+
+    expect(firstGame.title).toEqual('Fortnite');
+    expect(firstGame.genre).toEqual('Survival');
+    expect(firstGame.releaseDate).toEqual('July 25, 2017');
+
+    expect(secondGame.title).toEqual('God of War 4');
+    expect(secondGame.genre).toEqual('Action-adventure');
+    expect(secondGame.releaseDate).toEqual('April 20, 2018');
+  });
+
+  it('It should delete the two games created during testing.', async () => {
+
+    await Game.findByIdAndRemove(gameOne);
+    await Game.findByIdAndRemove(gameTwo);
+
+    const deleteCheckOne = await Game.findById(gameOne);
+    const deleteCheckTwo = await Game.findById(gameTwo);
+
+    expect(deleteCheckOne).toEqual(null);
+    expect(deleteCheckTwo).toEqual(null);
+  })
 });
