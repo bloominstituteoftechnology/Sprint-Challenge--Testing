@@ -28,11 +28,16 @@ describe("The API Server", () => {
     //   // each time this hook runs, you should save a document to your db
     //   // by saving the document you'll be able to use it in each of your `it` blocks
     const game = {
-      title: "Watchout for Bananas",
-      genre: "City Builder Survivel RPG",
-      releaseDate: "1990"
+      // title: "Watchout for Bananas",
+      // genre: "City Builder Survivel RPG",
+      // releaseDate: "1990",
+      title: "California Games",
+      genre: "Sports",
+      releaseDate: "June 1987"
     };
-    return Game.create(game);
+    
+    Game.create(game);
+    return;
   });
 
   afterEach(async () => {
