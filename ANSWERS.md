@@ -21,4 +21,4 @@ Mock Functions allow us to test links between code by erasing the actual impleme
 Client Testing, React Testing, Server Testing
 
 5. What type of test performs database operations against a real server.
-Unit test?
+Integration test?
