@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const request = require('supertest');
+const server = require('./api/server');
 
 const Game = require('./games/Game');
 
@@ -25,10 +27,11 @@ describe('The API Server', () => {
     //   // write a beforeEach hook that will populate your test DB with data
     //   // each time this hook runs, you should save a document to your db
     //   // by saving the document you'll be able to use it in each of your `it` blocks
-    // http://mongoosejs.com/docs/populate.html
-    // NESGameSchema.pre
-
-
+    populateGame = {
+      title: 'World of Warcraft',
+      genre: 'MMORPG',
+      releaseDate: 'Nov. 23, 2004'
+    };
   });
 
   afterEach(() => {
@@ -36,7 +39,7 @@ describe('The API Server', () => {
     return Game.remove();
   });
 
-  it('runs the tests', () => {});
+  it('runs the tests', () => { });
 
   // test the POST here
   it('POST api/games', () => {
@@ -44,16 +47,23 @@ describe('The API Server', () => {
   })
 
   // test the GET here
-  it('GET api/games', async () => {
+  it('GET api/games, GET successful', async () => {
+    const response = await request(server).get('api/games');
     const expectedStatusCode = 200;
-    const response = await requestAnimationFrame(server).get('api/games');
 
     expect(response.status).toEqual(expectedStatusCode);
     expect(response.type).toEqual('application/json');
   })
 
+  it('GET api/games, GET not successful', async () => {
+    const response = await request(server).get('api/games');
+    console.log(response.body);
+
+    // expect(response.body[0]).toEqual();
+  })
+
   // Test the DELETE here
-  it('DELETE api/games/:id', () => {
+  it('DELETE api/games/:id', async () => {
     const expectedStatusCode = 204;
     const response = await request(server).delete(`/api/games/${gameId}`);
 
