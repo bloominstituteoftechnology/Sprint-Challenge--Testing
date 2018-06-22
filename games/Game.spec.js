@@ -18,7 +18,17 @@ describe('The Game Model', () => {
       .then(() => console.log('\n=== disconnected from TEST DB ==='));
   });
 
-  it('runs the tests', () => {});
+  afterEach(() => {
+    return Game.remove();
+  });
+
+  it('runs the tests', async () => {
+    const videoGame = { title: 'game', genre: 'rolePlay' }
+    const savedGame = await Game.create(videoGame);
+
+    expect(savedGame.title).toEqual(videoGame.title);
+    expect(savedGame.genre).toEqual(videoGame.genre);
+  });
 
   // test away!
 });
