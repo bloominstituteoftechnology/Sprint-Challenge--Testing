@@ -23,7 +23,7 @@ describe('The API Server', () => {
   let gameId;
   // // hint - these wont be constants because you'll need to override them.
 
-  beforeEach(() => {
+  beforeEach(async () => {
     //   // write a beforeEach hook that will populate your test DB with data
     //   // each time this hook runs, you should save a document to your db
     //   // by saving the document you'll be able to use it in each of your `it` blocks
@@ -32,6 +32,8 @@ describe('The API Server', () => {
       genre: 'MMORPG',
       releaseDate: 'Nov. 23, 2004'
     };
+
+    gameId = await Game.create(populateGame);
   });
 
   afterEach(() => {
@@ -55,11 +57,13 @@ describe('The API Server', () => {
     expect(response.type).toEqual('application/json');
   })
 
-  it('GET api/games, GET not successful', async () => {
+  it('GET api/games, body should have properties', async () => {
     const response = await request(server).get('api/games');
     console.log(response.body);
 
-    // expect(response.body[0]).toEqual();
+    expect(response.body[0]).toHaveProperty('title');
+    expect(response.body[0]).toHaveProperty('genre');
+    expect(response.body[0]).toHaveProperty('releaseDate');
   })
 
   // Test the DELETE here
