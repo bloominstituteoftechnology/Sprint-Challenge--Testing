@@ -49,7 +49,7 @@ describe('The Game Model', () => {
 
   it('returns the game title', async () => {;
     const response = await Game.find(game);
-    const title = await response.getGameTitle;
+    const title = await response[0].getGameTitle();
     expect(title).toEqual(game.title);
   });
 
