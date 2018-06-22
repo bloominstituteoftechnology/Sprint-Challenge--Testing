@@ -3,6 +3,11 @@ const mongoose = require('mongoose');
 const Game = require('./Game');
 
 describe('The Game Model', () => {
+  const goodData = {
+    title: 'Super Game',
+    genre: 'The engagest',
+    releaseDate: 'Just now',
+  };
   beforeAll(() => {
     return mongoose
       .connect('mongodb://localhost/test')
@@ -25,18 +30,21 @@ describe('The Game Model', () => {
     afterEach(() => {
       return Game.deleteOne({ title: testData.title })
         .then(response => {
-          console.log('response', response);
+          console.log('deleteOne response: ', response);
         })
         .catch(e => {
-          console.log('error', e);
+          console.log('error Deleting document', e);
         });
     });
 
-    it('If required fields are no provided return an error', async () => {
+    it('If required fields are no provided return an error', () => {
       return Game.create(testData)
         .then(response => {
-          expect('if we are here the test fails').toEqual(
-            'the document was created even though there were missing required-params'
+          console.log(response);
+          expect(
+            'if youo are reading this, the test fails because it was created with all the required fields. This test was suite to pass if and only if there are at lest one require-params that is no passed.'
+          ).toEqual(
+            'the document was created with all the required params, In order to test whether or not this case pass, please, remove at lest one required field.'
           );
         })
         .catch(e => {
@@ -47,5 +55,9 @@ describe('The Game Model', () => {
     });
   });
 
+  test('Game has a method called getGAmeTitle', () => {
+    const game = new Game(goodData);
+    expect(game.getGameTitle()).toEqual('Super game');
+  });
   // test away!
 });
