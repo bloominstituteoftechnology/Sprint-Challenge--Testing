@@ -6,7 +6,6 @@ const Game = require('./games/Game');
 const server = require('./api/server.js');
 
 describe('The API Server', () => {
-  let game1;
   beforeAll(() => {
     return mongoose
       .connect(`mongodb://${dbuser}:${encodeURIComponent(dbpassword)}@ds016718.mlab.com:16718/test`)
@@ -23,10 +22,12 @@ describe('The API Server', () => {
   });
 
   let gameId;
+  let game1;
   // // hint - these wont be constants because you'll need to override them.
 
   beforeEach(() => {
-    game1 = { title: 'HearthStone', type: 'card' }
+    gameId = 'existedId'
+    game1 = { id: gameId, title: 'HearthStone', genre: 'card' }
   });
 
   afterEach(() => {
@@ -57,7 +58,7 @@ describe('The API Server', () => {
   // Test the DELETE here
   it('DELETE a game', async() => {
     const invalidGameId = 'nonExistedId'
-    const validGameId = 'existedId'
+    const validGameId = gameId
 
     const invalidResponse = await request(server).delete(`/api/games/${invalidGameId}`)
     const validResponse = await request(server).delete(`/api/games/${validGameId}`)
