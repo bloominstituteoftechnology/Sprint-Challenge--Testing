@@ -23,7 +23,7 @@ describe('Games', () => {
       _id: "5b2d1983633f412f4d1d9368",
       title: 'Mario Bros.',
       genre: 'Platforming',
-      releaseDate: 'June 1983'
+      releaseDate: 'September 1983'
     },
     {
       title: 'Tetris',
@@ -116,14 +116,46 @@ describe('Games', () => {
       expect(body).toEqual(expect.arrayContaining([expect.objectContaining(dummyData[0])]));
       expect(body).toEqual(expect.arrayContaining([expect.objectContaining(dummyData[1])]));
     });
-  })
+  });
+  
+  // test the PUT here
+  describe('PUT Requests:', () => {
+
+    it('UNIT: rejects request if title or id is missing.', async () => {
+      const { _id, title, genre, releaseDate } = dummyData[0];
+      const testObj = {
+        genre,
+      };
+      
+      const { status: initStatus } = await request(server).put(`/api/games/`).send(dummyData[0]);
+      expect(initStatus).toBe(422);
+      const { status: nextStatus, body } = await request(server).put(`/api/games/${_id}`).send(testObj);
+      expect(nextStatus).toBe(422);
+
+    });
+
+    it('INTEGRATION: accepts PUT request and returns updated object.', async () => {
+      const { _id, title, genre } = dummyData[0];
+      const testObj = {
+        title,
+        genre,
+        releaseDate: 'June 1983'
+      };
+      
+      const { status, body } = await request(server).put(`/api/games/${_id}`).send(testObj);
+      expect(status).toBe(200);
+      expect(body).toEqual(expect.objectContaining(testObj));
+
+    });
+  });
+
   // test the DELETE here
   describe('DELETE Requests:', () => {
     it('UNIT: rejects request if `id` is not provided.', async () => {
       const expectedStatusCode = 422; 
       const expectedBody = { message: 'You need to give me an ID' };
 
-      const response = await request(server).delete(`/api/games`);
+      const response = await request(server).delete(`/api/games/`);
       expect(response.status).toBe(422);
       expect(response.body).toEqual(expectedBody);
     });
@@ -138,13 +170,5 @@ describe('Games', () => {
       expect(body).toEqual(expect.arrayContaining([expect.objectContaining(dummyData[1])]));
     })
   });
-
-
-  // test the PUT here
-  xdescribe('PUT Requests:', () => {
-
-    it('UNIT: rejects request if title or id is missing.', () => {
-      
-    });
-  });
 });
+
