@@ -40,17 +40,35 @@ describe('The API Server', () => {
     //   // clear the games collection.
     return Game.remove(testCase);
   });
-
-  it('should post a game to the database', async () => {
-    const response = await request(server)
-      .post('/api/games')
-      .send(testCase)
-    expect(response.status).toEqual(201);  
-  });
-
+  
   // test the POST here
+  describe('POST', () => {
+    it('should post a game to the database', async () => {
+      const response = await request(server)
+        .post('/api/games')
+        .send(testCase)
+      expect(response.status).toEqual(201);  
+    });
+  })
 
   // test the GET here
+  describe('GET', () => {
+    it('should get a game from the database', async () => {
+      const response = await request(server)
+        .get('/api/games')
+      expect(response.status).toEqual(200); 
+    })
+  })
 
   // Test the DELETE here
+  // describe('Delete', () => {
+  //   it('should delete a game from the database', async () => {
+  //     const response = await request(server)
+  //       .post('/api/games')
+  //       .send(testCase)
+  //     const response2 = await request(server)
+  //       .delete(`/api/games/${gameId}`)
+  //     expect(response2.status).toEqual()
+  //   })
+  // })
 });
