@@ -4,8 +4,8 @@ const Game = require('./Game');
 
 describe('The Game Model', () => {
 
-  let gameOne;
-  let gameTwo;
+  let gameOneId;
+  let gameTwoId;
 
   beforeAll(() => {
     return mongoose
@@ -37,8 +37,8 @@ describe('The Game Model', () => {
     expect(savedGameTwo.genre).toEqual(godofwar.genre);
     expect(savedGameTwo.releaseDate).toEqual(godofwar.releaseDate);
 
-    gameOne = savedGameOne._id;
-    gameTwo = savedGameTwo._id;
+    gameOneId = savedGameOne._id;
+    gameTwoId = savedGameTwo._id;
   });
 
   it('It should return a list of games.', async () => {
@@ -47,8 +47,8 @@ describe('The Game Model', () => {
 
     expect(listofGames.length).toBeGreaterThanOrEqual(2);
 
-    const firstGame = await Game.findById(gameOne);
-    const secondGame = await Game.findById(gameTwo);
+    const firstGame = await Game.findById(gameOneId);
+    const secondGame = await Game.findById(gameTwoId);
 
     expect(firstGame.title).toEqual('Fortnite');
     expect(firstGame.genre).toEqual('Survival');
@@ -59,13 +59,33 @@ describe('The Game Model', () => {
     expect(secondGame.releaseDate).toEqual('April 20, 2018');
   });
 
+  it('It should correctly update the two games created during testing.', async () => {
+
+    const expectedUpdateOne = { title: 'Grand Theft Auto', genre: 'Action-adventure', releaseDate: 'September 17, 2013' };
+    const expectedUpdateTwo = { title: 'Minecraft', genre: 'Sandbox, Adventure, Survival, and World', releaseDate: 'May 17, 2009' };
+
+    await Game.findByIdAndUpdate(gameOneId, expectedUpdateOne);
+    await Game.findByIdAndUpdate(gameTwoId, expectedUpdateTwo);
+
+    const newGameOne = await Game.findById(gameOneId);
+    const newGameTwo = await Game.findById(gameTwoId);
+
+    expect(newGameOne.title).toEqual(expectedUpdateOne.title);
+    expect(newGameOne.genre).toEqual(expectedUpdateOne.genre);
+    expect(newGameOne.releaseDate).toEqual(expectedUpdateOne.releaseDate);
+
+    expect(newGameTwo.title).toEqual(expectedUpdateTwo.title);
+    expect(newGameTwo.genre).toEqual(expectedUpdateTwo.genre);
+    expect(newGameTwo.releaseDate).toEqual(expectedUpdateTwo.releaseDate);
+  });
+
   it('It should delete the two games created during testing.', async () => {
 
-    await Game.findByIdAndRemove(gameOne);
-    await Game.findByIdAndRemove(gameTwo);
+    await Game.findByIdAndRemove(gameOneId);
+    await Game.findByIdAndRemove(gameTwoId);
 
-    const deleteCheckOne = await Game.findById(gameOne);
-    const deleteCheckTwo = await Game.findById(gameTwo);
+    const deleteCheckOne = await Game.findById(gameOneId);
+    const deleteCheckTwo = await Game.findById(gameTwoId);
 
     expect(deleteCheckOne).toEqual(null);
     expect(deleteCheckTwo).toEqual(null);
