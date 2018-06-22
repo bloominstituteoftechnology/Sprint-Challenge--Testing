@@ -27,11 +27,12 @@ describe("The API Server", () => {
     //   // write a beforeEach hook that will populate your test DB with data
     //   // each time this hook runs, you should save a document to your db
     //   // by saving the document you'll be able to use it in each of your `it` blocks
-    await Game.create({
+    const testGame = await Game.create({
       title: "California Games",
       genre: "Sports",
       releaseDate: "June 1987"
     });
+    gameId = testGame._id;
   });
 
   afterEach(async () => {
@@ -55,13 +56,17 @@ describe("The API Server", () => {
         releaseDate: "March 1993"
       });
 
-    const { genre, releaseDate, title } = response.body;
+    gameId =
+      `${gameId}`.slice(0, -1) +
+      (parseInt(`${gameId}`.slice(-1), 16) + 1).toString();
 
     expect(response.status).toEqual(201);
-    expect({ genre, releaseDate, title }).toEqual({
+    expect(response.body).toEqual({
+      title: "Kirby's Adventure",
       genre: "Platformer",
       releaseDate: "March 1993",
-      title: "Kirby's Adventure"
+      _id: gameId,
+      __v: 0
     });
     expect(response.type).toEqual("application/json");
   });
@@ -74,13 +79,46 @@ describe("The API Server", () => {
     const { genre, releaseDate, title } = response.body[0];
 
     expect(response.status).toEqual(200);
-    expect({ genre, releaseDate, title }).toEqual({
-      genre: "Sports",
-      releaseDate: "June 1987",
-      title: "California Games"
-    });
+    expect(response.body).toEqual([
+      {
+        title: "California Games",
+        genre: "Sports",
+        releaseDate: "June 1987",
+        _id: `${gameId}`,
+        __v: 0
+      }
+    ]);
+    expect(response.body.length).toBe(1);
     expect(response.type).toEqual("application/json");
   });
 
   // Test the DELETE here
+  it("should be able to delete a game with a delete request", async () => {
+    const response = await request(server).delete(`/api/games/${gameId}`);
+
+    expect(response.status).toEqual(204);
+    expect(response.body).toEqual({});
+    expect(response.type).toEqual("");
+  });
+
+  // Test the PUT here
+  it("should be able to edit a game with a put request", async () => {
+    const response = await request(server)
+      .put(`/api/games/${gameId}`)
+      .send({
+        title: "Kirby's Adventure",
+        genre: "Platformer",
+        releaseDate: "March 1993"
+      });
+
+    expect(response.status).toEqual(200);
+    expect(response.body).toEqual({
+      title: "Kirby's Adventure",
+      genre: "Platformer",
+      releaseDate: "March 1993",
+      _id: `${gameId}`,
+      __v: 0
+    });
+    expect(response.type).toEqual("application/json");
+  });
 });
