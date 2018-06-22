@@ -29,13 +29,13 @@ describe('The API Server', () => {
         console.log('\n=== connected to TEST DB ===');
         await Game.insertMany(mockData)
           .then(games => {
-            console.log('GAMES CREATED: ', games);
+            // console.log('GAMES CREATED: ', games);
             Game.find({})
               .then(respoonse => {
-                console.log('respoonse', respoonse);
+                console.log('======== MOCK DATA CREATED ========');
               })
               .catch(e => {
-                console.log('error', e);
+                console.log('ERROR ADDING MOCK DATA TO DATABASE');
               });
           })
           .catch(e => {
@@ -73,7 +73,8 @@ describe('The API Server', () => {
 
   it('GET', async () => {
     const response = await request(server).get('/api/games');
-    expect(response.data).not.toEqual();
+    expect(response.status).toEqual(200);
+    expect(response.body.length).toBeGreaterThan(0);
   });
 
   // test the POST here
