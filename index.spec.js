@@ -25,10 +25,13 @@ describe('The API Server', () => {
     //   // write a beforeEach hook that will populate your test DB with data
     //   // each time this hook runs, you should save a document to your db
     //   // by saving the document you'll be able to use it in each of your `it` blocks
+    return mongoose.connect('mongodb://localhost/testdb')
+
   });
 
   afterEach(() => {
     //   // clear the games collection.
+    return Game.remove();
   });
 
   it('runs the tests', () => {});
