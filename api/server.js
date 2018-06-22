@@ -31,6 +31,19 @@ server.get('/api/games', (req, res) => {
         .json({ message: 'Something really bad happened', error: err });
     });
 });
+server.get('/api/games/:id', (req, res) => {
+  const { id } = req.params;
+  Game.findById(id)
+    .then(game => {      
+      res.status(200).json(game);
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ message: 'Something really bad happened', error: err });
+    });
+});
+
 
 server.put('/api/games/:id', (req, res) => {
   const { id } = req.params;

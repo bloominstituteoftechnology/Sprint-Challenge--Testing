@@ -13,6 +13,6 @@
 
 4. Mention three types of tests.
    Unit, Functional, and Integration testing
-   
+
 5. What type of test performs database operations against a real server.
-   Unit test.
+   Integration test.
