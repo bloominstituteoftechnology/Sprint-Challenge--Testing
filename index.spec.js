@@ -63,6 +63,48 @@ describe('The API Server', () => {
       expect(response.body).toMatchObject(expected.body);
       expect(savedGames.length).toBe(expected.savedGames);
     });
+
+    it('should not save game if request is missing title and returns Internal Server Error status code and JSON error message', async () => {
+      const expected = {
+        status: 500,
+        type: 'application/json',
+        body: { message: 'Error saving data to the DB' },
+        savedGames: 1
+      };
+      const response = await request(server)
+        .post('/api/games')
+        .send({
+          genre: 'Action-Adventure',
+          releaseDate: 'August 1987'
+        });
+      const savedGames = await Game.find();
+
+      expect(response.status).toBe(expected.status);
+      expect(response.type).toBe(expected.type);
+      expect(response.body).toMatchObject(expected.body);
+      expect(savedGames.length).toBe(expected.savedGames);
+    });
+
+    it('should not save game if request is missing genre and returns Internal Server Error status code and JSON error message', async () => {
+      const expected = {
+        status: 500,
+        type: 'application/json',
+        body: { message: 'Error saving data to the DB' },
+        savedGames: 1
+      };
+      const response = await request(server)
+        .post('/api/games')
+        .send({
+          title: 'The Legend of Zelda',
+          releaseDate: 'August 1987'
+        });
+      const savedGames = await Game.find();
+
+      expect(response.status).toBe(expected.status);
+      expect(response.type).toBe(expected.type);
+      expect(response.body).toMatchObject(expected.body);
+      expect(savedGames.length).toBe(expected.savedGames);
+    });
   });
 
   describe('GET request to /api/games', () => {
