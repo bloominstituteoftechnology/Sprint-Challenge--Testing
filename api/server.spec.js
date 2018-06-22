@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const server = require('./api/server');
-const Game = require('./games/Game');
+const server = require('./server');
+const Game = require('../games/Game');
 const request = require('supertest');
 
 const mockData = [
