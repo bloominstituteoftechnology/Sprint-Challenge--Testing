@@ -70,5 +70,45 @@ describe('The API Server', () => {
 
   // test the GET here
 
+  describe('GET', () => {
+    it('should fetch all games from database', async () => {
+      const savedGame = await Game.create(newGame)
+      const anotherGame = await Game.create({ title: 'Bubble Pop', genre: 'Silly' })
+      await 
+      request(server)
+        .get('/api/games')
+        .then(res => {
+          expect(res.status).toBe(200)
+          expect(res.type).toBe('application/json')
+          expect(res.body).toHaveLength(2)
+        })
+    })
+
+    it('should fetch a game with provided ID', async () => {
+      const savedGame = await Game.create(newGame)
+      await 
+      request(server)
+        .get(`/api/games/${savedGame._id}`)
+        .then(res => {
+          expect(res.status).toBe(200)
+          expect(res.body.title).toEqual(newGame.title)
+          expect(res.body.genre).toEqual(newGame.genre)
+          expect(res.body.releaseDate).toEqual(newGame.releaseDate)
+        })
+    })
+
+    it('should return an error if an invalid ID is provided', async () => {
+      await 
+      request(server)
+        .get('/api/games/123')
+        .then(res => {
+          expect(res.status).toBe(404)
+          expect(res.body.message).toBe('Game not found')
+          expect(res.type).toBe('application/json')
+        })
+    })
+  })
+
+
   // Test the DELETE here
 });
