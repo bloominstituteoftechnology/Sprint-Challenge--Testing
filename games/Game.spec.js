@@ -17,8 +17,17 @@ describe('The Game Model', () => {
       .disconnect()
       .then(() => console.log('\n=== disconnected from TEST DB ==='));
   });
+describe('getGameTile', () => { 
+  // test away! 
 
-  it('runs the tests', () => {});
-
-  // test away!
+  it('should return the game title', () => {
+    const game = new Game({
+      title: 'Jungle Games',
+      date: 'June 2018',
+      genre: 'Sports',
+    });
+    expect(game.getGameTitle()).toEqual('Jungle Games');
+  });
+  
+    })
 });
