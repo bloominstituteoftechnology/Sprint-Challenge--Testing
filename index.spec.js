@@ -36,7 +36,35 @@ describe.only('The API Server', () => {
   });
 
   describe('POST endpoint to /api/games', () => {
+    const zelda = {
+      title: 'The Legend of Zelda',
+      genre: 'Action-Adventure',
+      releaseDate: 'August 1987'
+    };
 
+    it('should save a game', async () => {
+      const response = await request(server)
+        .post('/api/games')
+        .send(zelda);
+      const savedGame = await Game.find({ title: zelda.title });
+
+      expect(savedGame.length).toBe(1);
+    });
+
+    it('should return Created status code and a JSON object with the saved game', async () => {
+      const expected = {
+        status: 201,
+        type: 'application/json',
+        body: zelda
+      };
+      const response = await request(server)
+        .post('/api/games')
+        .send(zelda);
+      
+      expect(response.status).toBe(expected.status);
+      expect(response.type).toBe(expected.type);
+      expect(response.body).toMatchObject(expected.body);
+    });
   });
 
   describe('GET request to /api/games', () => {
@@ -51,14 +79,12 @@ describe.only('The API Server', () => {
         type: 'application/json',
         numGames: 2
       };
-
       const savedGame = await Game.create(zelda);
       const response = await request(server).get('/api/games');
+
       expect(response.body.length).toBe(expected.numGames);
     });
   });
 
-  describe('DELETE endpoint to /api/games', () => {
-
-  });
+  describe('DELETE endpoint to /api/games', () => {});
 });
