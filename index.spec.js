@@ -61,6 +61,7 @@ describe('The API Server', () => {
       const response = await request(server).get('/api/games');
 
       expect(response.status).toBe(200);
+      expect(response.type).toEqual('application/json')
     });
 
   
@@ -73,4 +74,5 @@ describe('The API Server', () => {
       const response = await request(server).delete(`/api/games/${makeGame._id}`);
       
       expect(response.status).toEqual(expectedStatusCode);
+      expect(response.type).toEqual('application/json')
   });
