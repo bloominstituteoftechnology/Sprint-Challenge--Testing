@@ -44,7 +44,18 @@ describe('The API Server', () => {
   it('runs the tests', () => { });
 
   // test the POST here
-  it('POST api/games', () => {
+  it('POST api/games, POST successful', async () => {
+    const newGame = {
+      title: 'Overwatch',
+      genre: 'pew-pew!',
+      releaseDate: 'May 24, 2016'
+    }
+    const response = await request(server).post('api/games').send(newGame);
+    const expectedStatusCode = 201;
+
+    expect(response.status).toEqual(expectedStatusCode);
+    expect(response.type).toEqual('application/json');
+
 
   })
 
