@@ -34,7 +34,7 @@ Don't fret or get anxious. This is a no-pressure assessment designed to help us 
 
 - You're going to be writing the tests for a CRUD API.
 - The API itself is really simple. Your task is to peek at the endpoints found in the `./api/server.js` file and write tests for them.
-- notice that the definition of the server (inside `./api/server.js`) is separate from the code executes the server (inside `./index.js`), this makes it easier to test the server code in isolation. It is a common pattern used to avoid starting an instace of the server and a connection to the production database that will result on `Address already in use errors`.
+- notice that the definition of the server (inside `./api/server.js`) is separate from the code that executes the server (inside `./index.js`), this makes it easier to test the server code in isolation. It is a common pattern used to avoid starting an instace of the server and a connection to the production database that will result on `Address already in use errors`.
 
 ## TESTS
 
