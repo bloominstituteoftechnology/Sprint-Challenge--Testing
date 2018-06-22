@@ -70,7 +70,7 @@ describe('The API Server', () => {
     expect(response.body.releaseDate).toEqual(expectedBody.releaseDate);
   })
 
-  it('should return status 500 if a field required by schema is missing', async () => {
+  it('should return status 500 if title (required by schema) is missing', async () => {
     const expectedBodyMissingTitle = {
       genre: 'Sports',
       releaseDate: 'June 1987'
