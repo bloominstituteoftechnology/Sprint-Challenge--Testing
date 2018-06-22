@@ -3,11 +3,24 @@ const Game = require('./games/Game');
 const request = require('supertest');
 const server = require('./api/server');
 
-describe.only('The API Server', () => {
+describe('The API Server', () => {
   let mario = {};
+  let zelda = {};
   let gameId;
 
   beforeAll(() => {
+    mario = Object.assign({}, mario, {
+      title: 'Mario Bros.',
+      genre: 'Platform',
+      releaseDate: 'June 1986'
+    });
+
+    zelda = Object.assign({}, mario, {
+      title: 'The Legend of Zelda',
+      genre: 'Action-Adventure',
+      releaseDate: 'August 1987'
+    });
+
     return mongoose
       .connect('mongodb://localhost/test')
       .then(() => console.log('\n=== connected to TEST DB ==='))
@@ -23,11 +36,6 @@ describe.only('The API Server', () => {
   });
 
   beforeEach(() => {
-    mario = Object.assign({}, mario, {
-      title: 'Mario Bros.',
-      genre: 'Platform',
-      releaseDate: 'June 1986'
-    });
     return Game.create(mario).then(game => {
       gameId = game._id;
     });
@@ -37,38 +45,28 @@ describe.only('The API Server', () => {
     return Game.remove();
   });
 
-  describe('POST endpoint to /api/games', () => {
-    const zelda = {
-      title: 'The Legend of Zelda',
-      genre: 'Action-Adventure',
-      releaseDate: 'August 1987'
-    };
-
+  describe.only('POST endpoint to /api/games', () => {
     it('should save a game and return Created status code and JSON object with saved game', async () => {
       const expected = {
         status: 201,
         type: 'application/json',
-        body: zelda
+        body: zelda,
+        savedGames: 2
       };
       const response = await request(server)
         .post('/api/games')
         .send(zelda);
-      const savedGame = await Game.find({ title: zelda.title });
+      const savedGames = await Game.find();
 
       expect(response.status).toBe(expected.status);
       expect(response.type).toBe(expected.type);
       expect(response.body).toMatchObject(expected.body);
-      expect(savedGame.length).toBe(1);
+      expect(savedGames.length).toBe(expected.savedGames);
     });
   });
 
   describe('GET request to /api/games', () => {
     it('should return OK status code and a JSON object with an array of all saved games', async () => {
-      const zelda = {
-        title: 'The Legend of Zelda',
-        genre: 'Action-Adventure',
-        releaseDate: 'August 1987'
-      };
       const expected = {
         status: 200,
         type: 'application/json',
