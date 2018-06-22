@@ -30,6 +30,7 @@ describe('Games', () => {
     })
     newGame.save((err, savedGame) => {
       if (err) {
+        console.log(err)
       } else {
         gameId = savedGame._id
       }
@@ -71,4 +72,17 @@ describe('Games', () => {
   })
 
   // Test the DELETE here
+ 
+  it("should throw an error if no game is found", async () => {
+    const response = await request(server).delete(
+      `/api/games/9b082076bae0473cc86a5d92`
+    );
+    expect(response.status).toEqual(404);
+    expect(response.body.message).toEqual("Game not found");
+  });
+  
+  it("should throw error if the id is not valid", async () => {
+    const response = await request(server).delete(`/api/games/invalidId`);
+    expect(response.status).toEqual(500);
+  });
 });
