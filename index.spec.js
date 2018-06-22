@@ -34,7 +34,7 @@ describe('The API Server', () => {
 
   it('It should return a status code of 201 and return the title, genre, and release date of the game created.', async () => {
 
-    // test the POST here
+    // Test the POST here
 
     const expectedStatusCode = 201;
 
@@ -63,13 +63,32 @@ describe('The API Server', () => {
 
   it('It should return a list of games.', async () => {
 
-    // test the GET here
+    // Test the GET here
 
     const expectedStatusCode = 200;
     const response = await request(server).get('/api/games');
 
     expect(response.status).toEqual(expectedStatusCode);
     expect(response.body.length).toBeGreaterThanOrEqual(2);
+  });
+
+  it('It should correctly update the two games created during testing.', async () => {
+
+    // Test the PUT here 
+
+    const expectedStatusCode = 200;
+
+    const expectedUpdateOne = { title: 'forty' };
+    const responseOne = await request(server).put(`/api/games/${gameOneId}`).send(expectedUpdateOne);
+
+    expect(responseOne.status).toEqual(expectedStatusCode);
+    expect(responseOne.body.title).toEqual(expectedUpdateOne.title);
+
+    const expectedUpdateTwo = { title: 'God of Peace' };
+    const responseTwo = await request(server).put(`/api/games/${gameTwoId}`).send(expectedUpdateTwo);
+
+    expect(responseTwo.status).toEqual(expectedStatusCode);
+    expect(responseTwo.body.title).toEqual(expectedUpdateTwo.title);
   });
 
   it('It should delete the two games created during testing.', async () => {
