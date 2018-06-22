@@ -6,10 +6,22 @@ describe('The Game Model', () => {
   beforeAll(() => {
     return mongoose
       .connect('mongodb://localhost/test')
-      .then(() => console.log(typeof Game.getGameTitle))
+      .then(() => console.log('\n=== connected to TEST DB ==='))
       .catch(err => {
         console.log('error connecting to TEST database, is MongoDB running?');
       });
+  });
+
+  beforeEach(async () => {
+    //   // write a beforeEach hook that will populate your test DB with data
+    //   // each time this hook runs, you should save a document to your db
+    //   // by saving the document you'll be able to use it in each of your `it` blocks
+    await Game.create({ title: "test-game", genre: "test-genre", releaseDate: "test-date" }).then((game) => {gameId = game.id});
+  });
+
+  afterEach(async () => {
+    //   // clear the games collection.
+    await Game.remove({});    
   });
 
   afterAll(() => {
@@ -18,16 +30,9 @@ describe('The Game Model', () => {
       .then(() => console.log('\n=== disconnected from TEST DB ==='));
   });
 
-  it('runs the tests', () => {
-    console.log(typeof Game.getGameTitle);
+  it('runs the tests', async () => {
+    const findGame = await Game.findOne({title: "test-game"})
+    expect(findGame.getGameTitle()).toEqual("test-game");
   });
 
-  // test away!
-  // it('should get game title from database', async () => {
-  //   const bilbo = { username: 'bilbo', password: 'baggins' };
-
-  //   const savedUser = await Game.getGameTitle();
-
-  //   expect(savedUser).toEqual(bilbo);
-  // });
 });
