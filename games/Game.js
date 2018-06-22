@@ -20,6 +20,8 @@ NESGameSchema.methods.getGameTitle = function() {
   return this.title;
 };
 
+console.log(typeof this.getGameTitle);
+
 const Game = mongoose.model('Game', NESGameSchema);
 
 module.exports = Game;
