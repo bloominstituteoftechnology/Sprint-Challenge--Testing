@@ -59,4 +59,13 @@ describe('The Game Model', () => {
     expect(allGames[0].title).toEqual("First game");
     expect(allGames[1].title).toEqual("Second game");
   })  
+
+  it("should be able to delete a game", async () => {
+    let createdGame1 = await superTestRequest(server).post("/api/games").send(game1).set('Accept', 'application/json');
+    expect(createdGame1.body.title).toEqual("First game");
+    createdGame = JSON.parse(createdGame1.text); // parse to json
+    let id = createdGame._id;
+    let deletedGame = await superTestRequest(server).delete(`/api/games/${id}`).set('Accept', 'application/json');;
+    expect(deletedGame.status).toEqual(204);
+  })
 });
