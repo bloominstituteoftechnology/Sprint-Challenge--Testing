@@ -50,14 +50,38 @@ describe('The API Server', () => {
     expect(responseOne.body.releaseDate).toEqual(fortnite.releaseDate)
     expect(responseOne.type).toEqual('application/json');
 
+    gameOneId = responseOne.body._id;
+
     expect(responseTwo.status).toEqual(expectedStatusCode);
     expect(responseTwo.body.title).toEqual(godofwar.title);
     expect(responseTwo.body.genre).toEqual(godofwar.genre);
     expect(responseTwo.body.releaseDate).toEqual(godofwar.releaseDate);
     expect(responseTwo.type).toEqual('application/json');
+
+    gameTwoId = responseTwo.body._id;
   });
 
-  // test the GET here
+  it('It should return a list of games.', async () => {
 
-  // Test the DELETE here
+    // test the GET here
+
+    const expectedStatusCode = 200;
+    const response = await request(server).get('/api/games');
+
+    expect(response.status).toEqual(expectedStatusCode);
+    expect(response.body.length).toBeGreaterThanOrEqual(2);
+  });
+
+  it('It should delete the two games created during testing.', async () => {
+
+    // Test the DELETE here
+
+    const expectedStatusCode = 204;
+
+    const responseOne = await request(server).delete(`/api/games/${gameOneId}`);
+    expect(responseOne.status).toEqual(expectedStatusCode);
+
+    const responseTwo = await request(server).delete(`/api/games/${gameTwoId}`);
+    expect(responseTwo.status).toEqual(expectedStatusCode);
+  });
 });
