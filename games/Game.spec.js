@@ -47,7 +47,7 @@ describe('The Game Model', () => {
     expect(response.releaseDate).toEqual(game.releaseDate);
   });
 
-  it('returns the game title', async () => {;
+  it('returns the game title when the Game model function getGameTitle is called', async () => {;
     const response = await Game.find(game);
     const title = await response[0].getGameTitle();
     expect(title).toEqual(game.title);
