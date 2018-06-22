@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const supertest = require('supertest');
 const express = require('express');
 const server = require('./server');
-const Game = require('./games/Game');
+const Game = require('../games/Game');
 
 const gameObj = {
     title: 'California Games',
@@ -12,21 +12,28 @@ const gameObj = {
 
 describe('Game', () => {
     beforeAll(() => {
-        .then(() => console.log('Disconnected from database'));
+        return mongoose
+            .connect('mongodb://localhost/sprintDB')
+            .then(console.log('Connected to database'))
     });
 
     beforeEach(() => {
-        const savedGame = await Game.create({
-            title: 'California Games',
-            genre: 'Sports',
-            releaseDate: 'June 1987'
-        });
+        // const savedGame = await Game.create({
+        //     title: 'California Games',
+        //     genre: 'Sports',
+        //     releaseDate: 'June 1987'
+        // });
     });
 
     afterEach(() => {
-        await Game.remove();
+        // await Game.remove();
         return Game.remove();
     });
+
+    afterAll(() => {
+        return mongoose.disconnect();
+    });
+
 //Does it run tests?
 
     it('runs tests', () => {});
@@ -65,7 +72,7 @@ describe('Game', () => {
             genre: 'Childhood favorite'
         };
         const deleted = await Game.remove(game);
-        expect(deleted.title).not.toEqual(game;)
+        expect(deleted.title).not.toEqual(game);
         expect(deleted.genre).not.toEqual(game);
     });
 })
