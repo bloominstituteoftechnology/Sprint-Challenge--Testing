@@ -78,5 +78,4 @@ server.delete('/api/games/:id', (req, res) => {
   }
 });
 
-
 module.exports = server;
