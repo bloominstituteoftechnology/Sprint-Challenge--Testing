@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const Game = require('./Game');
 
 describe('The Game Model', () => {
@@ -12,13 +11,23 @@ describe('The Game Model', () => {
       });
   });
 
+  afterEach(() => {
+    return Game.remove();
+  });
+
   afterAll(() => {
     return mongoose
       .disconnect()
       .then(() => console.log('\n=== disconnected from TEST DB ==='));
   });
 
-  it('runs the tests', () => {});
-
-  // test away!
+  it('returns the title with its getGameTitle method', async () => {
+    const testGame = {
+      title: 'Mario Bros.',
+      genre: 'Platform',
+      releaseDate: 'June 1986'
+    };
+    const savedGame = await Game.create(testGame);
+    expect(savedGame.getGameTitle()).toBe(testGame.title);
+  });
 });
