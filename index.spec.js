@@ -56,18 +56,29 @@ describe("The API Server", () => {
         releaseDate: "March 1993"
       });
 
-    gameId =
-      `${gameId}`.slice(0, -1) +
-      (parseInt(`${gameId}`.slice(-1), 16) + 1).toString();
+    const { genre, releaseDate, title, __v } = response.body;
 
     expect(response.status).toEqual(201);
-    expect(response.body).toEqual({
+    expect({ genre, releaseDate, title, __v }).toEqual({
       title: "Kirby's Adventure",
       genre: "Platformer",
       releaseDate: "March 1993",
-      _id: gameId,
       __v: 0
     });
+    expect(response.type).toEqual("application/json");
+  });
+
+  it("should return status 400 when given a bad object to post", async () => {
+    const response = await request(server)
+      .post("/api/games")
+      .send({
+        titlez: "Kirby's Adventure",
+        genrez: "Platformer",
+        releaseDatez: "March 1993"
+      });
+
+    expect(response.status).toEqual(400);
+
     expect(response.type).toEqual("application/json");
   });
 
