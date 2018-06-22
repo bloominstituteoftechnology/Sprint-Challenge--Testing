@@ -2,11 +2,14 @@ const mongoose = require('mongoose');
 
 const Game = require('./games/Game');
 
-describe('Games', () => {
+describe('The API Server', () => {
   beforeAll(() => {
     return mongoose
       .connect('mongodb://localhost/test')
-      .then(() => console.log('\n=== connected to TEST DB ==='));
+      .then(() => console.log('\n=== connected to TEST DB ==='))
+      .catch(err => {
+        console.log('error connecting to TEST database, is MongoDB running?');
+      });
   });
 
   afterAll(() => {
@@ -25,7 +28,7 @@ describe('Games', () => {
   });
 
   afterEach(() => {
-    //   // clear collection.
+    //   // clear the games collection.
   });
 
   it('runs the tests', () => {});
