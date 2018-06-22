@@ -17,9 +17,7 @@ describe('Games', () => {
       .then(() => console.log('\n=== disconnected from TEST DB ==='));
   });
 
-  let gameId;
-  // // hint - these wont be constants because you'll need to override them.
-
+  
   const dummyData = [
     {
       _id: "5b2d1983633f412f4d1d9368",
@@ -33,6 +31,9 @@ describe('Games', () => {
       releaseDate: 'June 1984'
     }
   ];
+  
+  let gameId = dummyData[0]._id;
+  // // hint - these wont be constants because you'll need to override them.
 
   beforeEach(async () => {
     //   // write a beforeEach hook that will populate your test DB with data
@@ -122,12 +123,23 @@ describe('Games', () => {
       const expectedStatusCode = 422; 
       const expectedBody = { message: 'You need to give me an ID' };
 
-      const response = await request(server).delete('/api/games');
-
+      const response = await request(server).delete(`/api/games`);
       expect(response.status).toBe(422);
       expect(response.body).toEqual(expectedBody);
     });
+    
+    it('INTEGRATION: deletes game upon request', async () => {
+      const { status: initStatus } = await request(server).delete(`/api/games/${gameId}`);
+      expect(initStatus).toBe(204);
+      
+      const { status: nextStatus, body } = await request(server).get('/api/games');
+      expect(nextStatus).toBe(200);
+      expect(body).not.toEqual(expect.arrayContaining([expect.objectContaining(dummyData[0])]));
+      expect(body).toEqual(expect.arrayContaining([expect.objectContaining(dummyData[1])]));
+    })
   });
+
+
   // test the PUT here
   xdescribe('PUT Requests:', () => {
 

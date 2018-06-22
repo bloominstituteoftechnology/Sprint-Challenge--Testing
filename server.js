@@ -8,6 +8,24 @@ const server = express();
 server.use(express.json());
 server.use(morgan('combined'));
 
+server.delete('/api/games/:id', (req, res) => {
+  const { id } = req.params;
+  console.log("id:",id);
+  if (!id) {
+    res.status(422).json({ message: 'You need to give me an ID' });
+  } else {
+    Game.findByIdAndRemove(id)
+      .then(game => {
+        if (game) {
+          res.status(204).end();
+        } else {
+          res.status(404).json({ message: 'Game not found' });
+        }
+      })
+      .catch(err => res.status(500).json(err));
+  }
+});
+
 server.post('/api/games', (req, res) => {
   Game.create(req.body)
     .then(game => {
@@ -60,22 +78,5 @@ server.put('/api/games/:id', (req, res) => {
     });
 });
 
-server.delete('/api/games/:id', (req, res) => {
-  const { id } = req.params;
-
-  if (!id) {
-    res.status(422).json({ message: 'You need to give me an ID' });
-  } else {
-    Game.findByIdAndRemove(id)
-      .then(game => {
-        if (game) {
-          res.status(204).end();
-        } else {
-          res.status(404).json({ message: 'Game not found' });
-        }
-      })
-      .catch(err => res.status(500).json(err));
-  }
-});
 
 module.exports = server;
