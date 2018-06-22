@@ -71,16 +71,24 @@ describe('The API Server', () => {
     it('should return the document as an array', async () => {
       const response = await request(server)
         .get('/api/games')
-      expect(response.body[0]).toEqual(response.body[0])
+      // expect(response.body).toBe(Array) // doesn't work
+      expect(response.body).not.toBe(String)
+      expect(response.body).not.toBe(Object)
+      expect(response.body[0].title).toBe("California Games")
     })
   })
 
   // Test the DELETE here
-  describe('Delete', () => {
-    it('should return a 500 error if not properly deleted', async () => {
-      const response = await request(server)
-        .delete(`/api/games/${gameId}`)
-      expect(response.status).toEqual(500)
-    })
-  })
+  // describe('Delete', () => {
+  //   it('should return a 500 error if not properly deleted', async () => {
+  //     const response = await request(server)
+  //       .delete(`/api/games/${gameId}`)
+  //     expect(response.status).toEqual(500)
+  //   })
+  //   it('should return a 404 if the gameId doesn\'t exist', async () => {
+  //     const response = await request(server)
+  //       .delete(`/api/games/12312`)
+  //     expect(response.status).toEqual(404)
+  //   })
+  // })
 });
