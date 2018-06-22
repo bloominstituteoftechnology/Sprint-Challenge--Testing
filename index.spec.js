@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
-
+const request = require('supertest');
+const server = require('./api/server');
 const Game = require('./games/Game');
+
+
 
 describe('The API Server', () => {
   beforeAll(() => {
@@ -18,6 +21,12 @@ describe('The API Server', () => {
       .then(() => console.log('\n=== disconnected from TEST DB ==='));
   });
 
+  const logGame = {
+    title: 'NBA 2k19',
+    genre: 'Sports',
+    releaseDate: 'September 11, 2018'
+  }
+
   let gameId;
   // // hint - these wont be constants because you'll need to override them.
 
@@ -25,12 +34,7 @@ describe('The API Server', () => {
     //   // write a beforeEach hook that will populate your test DB with data
     //   // each time this hook runs, you should save a document to your db
     //   // by saving the document you'll be able to use it in each of your `it` blocks
-    const logGame = await Game.create({
-        title: '',
-        genre: '',
-        releaseDate: ''
-      })
-    })
+    Game.create(logGame)
   });
 
   afterEach( async() => {
@@ -39,16 +43,19 @@ describe('The API Server', () => {
   });
 
   // test the POST here
-  describe('Index.js', () => {
-    it('should retunr a 200 and create a new logged game', () => {
+ 
+    it('should return a 200 and create a new logged game', async () => {
       const newGame = {title: 'NewGame', genre: 'lifestyle', releaseDate: '01/01/2019'};
+      const expectedStatusCode = 201;
 
-      const savedGame = Game.create(newGame);
-
-      expect(savedGame.title).toEqual(savedGame.title)
+      const response = await request(server).post('/api/games').send(newGame);
+      
+      expect(response.body.title).toEqual('NewGame');
+      expect(response.status).toEqual(expectedStatusCode);
+      expect(response.type).toEqual('application/json');
     });
   });
-  
+
 
   // test the GET here
 
