@@ -1,7 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 
-const Game = require('./games/Game');
+const Game = require('../games/Game');
 
 const server = express();
 
