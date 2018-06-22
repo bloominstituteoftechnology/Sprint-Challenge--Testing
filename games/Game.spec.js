@@ -18,7 +18,19 @@ describe('The Game Model', () => {
       .then(() => console.log('\n=== disconnected from TEST DB ==='));
   });
 
-  it('runs the tests', () => {});
+  it('Validation error: requiered genre', async () => {
+    const game = Game({title: 'California Games'});
+
+    const response = await Game
+      .create(game)
+      .then(game => {
+        expect(response).toEqual(200)
+      })
+      .catch(err => {
+        expect(err.errors.genre.message).toEqual('Path `genre` is required.')
+      })
+
+  });
 
   // test away!
 });
