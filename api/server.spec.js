@@ -90,12 +90,11 @@ describe('The API Server', () => {
   })
 
   describe('DELETE to /api/games', () => {
-    // For some reason, the correct error code is not being sent when the id is nonexistent
-    // it('returns status code 422 if no id is given', async () => {
-    //   const response = await request(server).delete('/api/games/');
+    it('returns status code 404 if id is invalid', async () => {
+      const response = await request(server).delete('/api/games/');
 
-    //   expect(response.status).toEqual(422)
-    // })
+      expect(response.status).toEqual(404);
+    })
 
     it('deletes the game from the db', async () => {
       let response = await request(server).get('/api/games')
