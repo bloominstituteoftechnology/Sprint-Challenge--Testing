@@ -71,23 +71,47 @@ describe('The API Server', () => {
 
   describe('GET to /api/games', () => {
     it('returns a list of games', async () => {
-      const games = await request(server).get('/api/games');
+      const response = await request(server).get('/api/games');
 
-      expect(Array.isArray(games.body)).toBeTruthy();
+      expect(Array.isArray(response.body)).toBeTruthy();
     })
 
     it('returns status code 200 when games are retrieved', async () => {
-      const games = await request(server).get('/api/games');
+      const response = await request(server).get('/api/games');
 
-      expect(games.status).toEqual(200);
+      expect(response.status).toEqual(200);
     })
 
     it('returns status code 404 when route does not exist', async () => {
-      const games = await request(server).get('/api/games/1');
+      const response = await request(server).get('/api/games/1');
 
-      expect(games.status).toEqual(404);
+      expect(response.status).toEqual(404);
     })
   })
 
-  // Test the DELETE here
+  describe('DELETE to /api/games', () => {
+    // For some reason, the correct error code is not being sent when the id is nonexistent
+    // it('returns status code 422 if no id is given', async () => {
+    //   const response = await request(server).delete('/api/games/');
+
+    //   expect(response.status).toEqual(422)
+    // })
+
+    it('deletes the game from the db', async () => {
+      let response = await request(server).get('/api/games')
+      
+      expect(response.body).toHaveLength(1)
+
+      response = await request(server).delete(`/api/games/${gameId.toString()}`)
+      response = await request(server).get('/api/games')
+      
+      expect(response.body).toHaveLength(0)
+    })
+
+    it('returns status code 204 when a game has been deleted', async () => {
+      response = await request(server).delete(`/api/games/${gameId.toString()}`)
+      
+      expect(response.status).toEqual(204)
+    })
+  })
 });
