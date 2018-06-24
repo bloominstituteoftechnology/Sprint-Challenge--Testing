@@ -20,12 +20,8 @@ describe('The API Server', () => {
   });
 
   let gameId;
-  // hint - these wont be constants because you'll need to override them.
 
   beforeEach(async () => {
-      // write a beforeEach hook that will populate your test DB with data
-      // each time this hook runs, you should save a document to your db
-      // by saving the document you'll be able to use it in each of your `it` blocks
     const californiaGames = {
       title: 'California Games',
       genre: 'Sports',
@@ -37,7 +33,6 @@ describe('The API Server', () => {
   });
 
   afterEach(() => {
-      // clear the games collection.
     return Game.remove();
   });
 
@@ -74,7 +69,25 @@ describe('The API Server', () => {
     })
   });
 
-  // test the GET here
+  describe('GET to /api/games', () => {
+    it('returns a list of games', async () => {
+      const games = await request(server).get('/api/games');
+
+      expect(Array.isArray(games.body)).toBeTruthy();
+    })
+
+    it('returns status code 200 when games are retrieved', async () => {
+      const games = await request(server).get('/api/games');
+
+      expect(games.status).toEqual(200);
+    })
+
+    it('returns status code 404 when route does not exist', async () => {
+      const games = await request(server).get('/api/games/1');
+
+      expect(games.status).toEqual(404);
+    })
+  })
 
   // Test the DELETE here
 });
