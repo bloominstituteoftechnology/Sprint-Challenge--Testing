@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
-
+const server = require('./server');
+const request = require('supertest');
 const Game = require('../games/Game');
 
 describe('The API Server', () => {
 
-  let gameId = {title: "The Legend of Zelda", genre: "Action/Adventure", releasedate:"August 22, 1987"};
+  let gameId = {title: "The Legend of Zelda", genre: "Action/Adventure", releaseDate:"August 22, 1987"};
 
   beforeAll(() => {
     return mongoose
@@ -39,9 +40,40 @@ describe('The API Server', () => {
     Game.remove();
   });
 
-  it('runs the tests', () => {});
+  it('should receive correct status when posted', async () => {
+    const response = await request(server)
+      .post('/api/games')
+      .send(gameId);
+
+    expect(response.status).toBe(201);
+  });
+
+  it('should receive correct data when posted', async () => {
+    const response = await request(server)
+    .post('/api/games')
+    .send(gameId);
+
+    expect(response.body.title).toEqual("The Legend of Zelda");
+    expect(response.body.releaseDate).toEqual("August 22, 1987");
+    expect(response.body.genre).toContain("Action");
+    expect(response.body.genre).toContain("Adventure");
+  });
+
 
   // test the POST here
+
+  it('should get an object(array) when fetched', async () => {
+    const response = await request(server)
+    .get('/api/games')
+    expect(typeof response.body).toEqual("object");
+
+  });
+
+  it('should receive correct status when fetched', async () => {
+    const response = await request(server)
+    .get('/api/games')
+    expect(response.status).toBe(200);
+  })
 
   // test the GET here
 
