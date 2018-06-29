@@ -15,11 +15,11 @@ describe('Game', () => {
   
   
 
-  // afterAll(() => {
-  //   return mongoose
-  //     .disconnect()
-  //     .then(() => console.log('\n=== disconnected from TEST DB ==='));
-  // });
+  afterAll(() => {
+    return mongoose
+      .disconnect()
+      .then(() => console.log('\n=== disconnected from TEST DB ==='));
+  });
 
   let gameId, game;
   // // hint - these wont be constants because you'll need to override them.
@@ -33,10 +33,10 @@ describe('Game', () => {
 
   });
 
-  // afterEach(() => {
-  //   //   // clear the games collection.
-  //   return Game.remove();
-  // });
+  afterEach(() => {
+    //   // clear the games collection.
+    return Game.remove();
+  });
   
   it('runs the tests', () => {});
 
