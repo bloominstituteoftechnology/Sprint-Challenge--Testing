@@ -29,7 +29,6 @@ describe('The API Server', () => {
 
 
     Game.create(gameId);
-    console.log(gameId);
     //   // write a beforeEach hook that will populate your test DB with data
     //   // each time this hook runs, you should save a document to your db
     //   // by saving the document you'll be able to use it in each of your `it` blocks
@@ -92,15 +91,30 @@ describe('The API Server', () => {
   // test the GET here
 
 
-it('should receive correct status code and message when deleted', async () => {
-  const post = await request(server)
+it('should be deleted', async () => {
+  //post
+  await request(server)
   .post('/api/games')
   .send(gameId);
 
+  //delete(although I think this deletes the whole games database bc of the way its set up)
+  await request(server)
+   .get("/api/games")
+   .then (function (){
+     const deletedPost=  request(server)
+    .delete({title: "The Legend of Zelda", genre: "Action/Adventure", releaseDate: "August 22, 1987"})
+    expect(deletedPost.method).toBe("DELETE");
+    expect(deletedPost.data).toEqual(undefined);
+   })
+     
+   });
 
-  const deleted = await request(server)
-   .delete(`/api/games/5b3639e00d2f671aa484ba80`)
-     expect(deleted.status).toBe(404);
-     expect(deleted.text).toContain("Game not found")
-   });
-   });
+
+   
+
+   
+
+    
+
+
+});

@@ -24,7 +24,6 @@ describe('The Game Model', () => {
 
   beforeEach(() => {
     Game.create(gameId);
-    console.log(gameId);
   })
 
   afterEach(() => {

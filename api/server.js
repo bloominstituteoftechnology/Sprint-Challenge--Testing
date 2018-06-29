@@ -22,7 +22,9 @@ server.post('/api/games', (req, res) => {
 
 server.get('/api/games', (req, res) => {
   Game.find({})
+    .select({_id:1, title: 1, genre: 1, releaseDate: 1})
     .then(games => {
+
       res.status(200).json(games);
     })
     .catch(err => {
