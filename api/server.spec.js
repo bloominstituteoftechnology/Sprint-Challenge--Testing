@@ -117,5 +117,20 @@ describe("GET method", () => {
   })
 });
 
-  // Test the DELETE here
+//DELETE tests
+desctibe('DELETE Method', () => {
+  it("Game should be deleted from the database", async () => {
+    const response = await request(server).delete(`/api/games/${gameId}`);
+
+    expect(response.status).toEqual(204);
+  });
+
+  it("Returns a 404 Error if the game does not exist in the database", async () => {
+    const doesItExist = await request(server).delete(`/api/games/${gameId}`);
+    const response = await request(server).delete(`/api/games/${gameId}`);
+
+    expect(response.status).toEqual(404);
+  });
+});
+
 });
