@@ -12,4 +12,5 @@ mongoose
   })
   .catch(err => {
     console.log('error connecting to production database, is MongoDB running?');
-  });
+  })
+server.get( '/', ( req, res) => res.send( 'API Running' ) );

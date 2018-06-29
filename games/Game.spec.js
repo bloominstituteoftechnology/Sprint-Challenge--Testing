@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const Game = require('./Game');
+
 
 describe('The Game Model', () => {
   beforeAll(() => {
@@ -10,14 +10,21 @@ describe('The Game Model', () => {
       .catch(err => {
         console.log('error connecting to TEST database, is MongoDB running?');
       });
-  });
+  } );
+  
+  
 
   afterAll(() => {
     return mongoose
       .disconnect()
-      .then(() => console.log('\n=== disconnected from TEST DB ==='));
-  });
-
+      .then( () => console.log( '\n=== disconnected from TEST DB ===' ) );
+    
+  } );
+  
+  beforeEach( () =>
+  {
+  
+})
   it('runs the tests', () => {});
 
   // test away!
