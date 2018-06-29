@@ -133,4 +133,28 @@ describe('DELETE Method', () => {
   });
 });
 
+//Stretch Goals:
+describe('PUT method', () => {
+  it("Updates a game and returns it", async () => {
+    const actual = { title: "Kingdom Hearts", genre: "RPG"};
+      const response = await request(server).put(`/api/games/${gameId}`).send(actual)
+
+    expect(response.status).toEqual(200)
+    expect(response.body.title).toEqual(actual.title)
+    expect(response.body.genre).toEqual(actual.genre)
+
+    const dBResponse = await Game.findOne(response.body.id)
+
+    expect(dBResponse.title).toBe(actual.title)
+
+  })
+
+  it("Will not update without a title", async () => {
+    const actual = { genre: "Simulation" }
+      const response = await request(server).put(`/api/games/${gameId}`)
+
+    expect (response.status).toEqual(422)
+  })
+});
+
 });
