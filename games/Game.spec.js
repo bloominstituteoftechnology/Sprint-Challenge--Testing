@@ -21,4 +21,30 @@ describe('The Game Model', () => {
   it('runs the tests', () => {});
 
   // test away!
+
+  it('should return game title with getGameTitle function', async () => {
+    const testGame = {
+      title: 'California Games',
+      genre: 'Sports',
+      releaseDate: 'June 1987'
+    };    
+    const saveGame = await Game.create(testGame);
+    const gameTitle = saveGame.getGameTitle();
+
+    expect(gameTitle).toEqual('California Games');
+  })
+
+  it('should be string type', async () => {
+    const testGame = {
+      title: 'California Games',
+      genre: 'Sports',
+      releaseDate: 'June 1987'
+    };    
+    const saveGame = await Game.create(testGame);
+    const gameTitle = saveGame.getGameTitle();
+
+    expect(typeof gameTitle).toEqual('string');
+    expect(typeof saveGame.genre).toEqual('string');
+    expect(typeof saveGame.releaseDate).toEqual('string');
+  })
 });
