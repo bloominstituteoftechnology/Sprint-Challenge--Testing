@@ -28,7 +28,11 @@ describe('The API Server', () => {
     //   // each time this hook runs, you should save a document to your db
     //   // by saving the document you'll be able to use it in each of your `it` blocks
 
-    testGame =  { title: 'California Games', genre: 'Sports', releaseDate: 'June 1987'};
+    testGame =  { 
+      title: 'California Games', 
+      genre: 'Sports', 
+      releaseDate: 'June 1987'
+    };
     const saveGame = await Game.create(testGame);
     gameId = testGame._id;
   });
@@ -41,6 +45,27 @@ describe('The API Server', () => {
   it('runs the tests', () => {});
 
   // test the POST here
+
+  it('should return status 201 if post new game successfully', async () => {
+    const newGame = await request(server).post('/api/games').send(testGame);
+    const expectedStatusCode = 201;
+
+    expect(newGame.status).toEqual(expectedStatusCode);
+  })
+
+  it('should check if the post is object', async () => {
+    const newGame = await request(server).post('/api/games').send(testGame);
+
+    expect(typeof newGame).toBe('object');
+  })
+
+  it('should return title, genre and release date', async () => {
+    const newGame = await request(server).post('/api/games').send(testGame);
+
+    expect(newGame.body.title).toEqual('California Games');  //req.body
+    expect(newGame.body.genre).toEqual('Sports');
+    expect(newGame.body.releaseDate).toEqual('June 1987');
+  })
 
   // test the GET here
 
