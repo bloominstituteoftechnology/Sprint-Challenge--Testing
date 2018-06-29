@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 
 const Game = require('./games/Game');
+const server = require('./server');
+const request = require('supertest')
+
 
 describe('The API Server', () => {
   beforeAll(() => {
@@ -25,17 +28,25 @@ describe('The API Server', () => {
     //   // write a beforeEach hook that will populate your test DB with data
     //   // each time this hook runs, you should save a document to your db
     //   // by saving the document you'll be able to use it in each of your `it` blocks
+    const superMarioOdyssey = { title: 'Super Mario Odyssey', genre: 'Action/Platformer', releaseDate: '29/Dec/2017' }
+    const savedGame = await Game.create(superMarioOdyssey);
   });
 
   afterEach(() => {
     //   // clear the games collection.
+    return Game.remove();
   });
 
-  it('runs the tests', () => {});
+  describe('post to /api/games', async () = {
+    const geow = {
+      title: 'Gears of War 4',
+      genre: 'Cover Shooter',
+      releaseDate: '03/04/2017'
+    };
 
-  // test the POST here
+    const response = await request(server)
+      .post('api/games')
+      .send(geow)
 
-  // test the GET here
-
-  // Test the DELETE here
-});
+      expect(response.status).toBe(201)
+  })
