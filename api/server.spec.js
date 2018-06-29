@@ -44,7 +44,7 @@ describe('The API Server', () => {
 
   it('runs the tests', () => {});
 
-  // test the POST here
+  // ======= test the POST here ========//
 
   it('should return status 201 if post new game successfully', async () => {
     const newGame = await request(server).post('/api/games').send(testGame);
@@ -57,17 +57,19 @@ describe('The API Server', () => {
     const newGame = await request(server).post('/api/games').send(testGame);
 
     expect(typeof newGame).toBe('object');
+    expect(newGame.body).toMatchObject({ title: 'California Games', genre: 'Sports', releaseDate: 'June 1987' });
   })
 
-  it('should return title, genre and release date', async () => {
+  it('should return title, genre, release date and id', async () => {
     const newGame = await request(server).post('/api/games').send(testGame);
 
     expect(newGame.body.title).toEqual('California Games');  //req.body
     expect(newGame.body.genre).toEqual('Sports');
     expect(newGame.body.releaseDate).toEqual('June 1987');
+    expect(newGame.body).toHaveProperty('_id');
   })
 
-  // test the GET here
+  // ======= test the GET here ==========//
 
   it('should return status 200 if get the list of games successfully', async () => {
     const game = await request(server).get('/api/games');
@@ -85,5 +87,26 @@ describe('The API Server', () => {
     expect(game.body[0].releaseDate).toEqual('June 1987');
   })
 
-  // Test the DELETE here
+  // ========== Test the DELETE here ============//
+
+  //204 below got error 500...ARRRRGGGGGGG
+
+  it('should return status 204 if delete games successfully', async () => {
+    const addGame = await Game.create({
+      title: 'Super Mario', 
+      genre: 'Family', 
+      releaseDate: 'September 1985'
+    })
+    const deleteGame = await request(server).delete('/api/games/${addGame._id}');
+
+    expect(deleteGame.status).toEqual(204);
+  })
+
+  it('should return status 204 if delete games successfully', async () => {
+    const deleteGame = await request(server).delete('/api/games/${gameId}'); //gameId from 
+
+    expect(deleteGame.status).toEqual(204);
+  })
+
+
 });
