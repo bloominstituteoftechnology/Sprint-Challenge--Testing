@@ -69,5 +69,21 @@ describe('The API Server', () => {
 
   // test the GET here
 
+  it('should return status 200 if get the list of games successfully', async () => {
+    const game = await request(server).get('/api/games');
+    const expectedStatusCode = 200;
+
+    expect(game.status).toEqual(expectedStatusCode);
+  })
+
+  //REMINDER That this data structure returned from Mongo will be an array, so to test your game with a beforeEach hook you'll need to make sure you test against the first item in the array. expect(res.data[0].foo).to.equal(bar.foo);
+  it('should return title, genre and release date', async () => {
+    const game = await request(server).get('/api/games');
+
+    expect(game.body[0].title).toEqual('California Games');  
+    expect(game.body[0].genre).toEqual('Sports');
+    expect(game.body[0].releaseDate).toEqual('June 1987');
+  })
+
   // Test the DELETE here
 });
