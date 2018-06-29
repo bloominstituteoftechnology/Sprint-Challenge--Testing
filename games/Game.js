@@ -14,10 +14,12 @@ const NESGameSchema = new Schema({
     required: true,
   },
   releaseDate: String,
+   
 });
 
 NESGameSchema.methods.getGameTitle = function() {
   return this.title;
+  
 };
 
 const Game = mongoose.model('Game', NESGameSchema);
