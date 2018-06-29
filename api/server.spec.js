@@ -91,23 +91,40 @@ describe('The API Server', () => {
   // test the GET here
 
 
-it('should be deleted', async () => {
+it('should show correct status when deleted', async () => {
   //post
-  await request(server)
+  const post = await request(server)
   .post('/api/games')
   .send(gameId);
 
+  let body = (JSON.parse(post.text))
+  let bodyId = body._id;
+
+  const deleted = await request(server)
+  .delete(`/api/games/${bodyId}`)
+  expect(deleted.status).toEqual(204);
+  expect(deleted.req.data).toEqual(undefined);
+
+  // const deleted = await request(server)
+  // .delete('/api/games/bodyId')
+  // expect(deleted).toEqual(bodyId);
   //delete(although I think this deletes the whole games database bc of the way its set up)
-  await request(server)
-   .get("/api/games")
-   .then (function (){
-     const deletedPost=  request(server)
-    .delete({title: "The Legend of Zelda", genre: "Action/Adventure", releaseDate: "August 22, 1987"})
-    expect(deletedPost.method).toBe("DELETE");
-    expect(deletedPost.data).toEqual(undefined);
-   })
-     
-   });
+});
+
+it("should receive correct status when fetched by ID", async () => {
+  const post = await request(server)
+  .post('/api/games')
+  .send(gameId);
+
+  let body = (JSON.parse(post.text))
+  let bodyId = body._id;
+
+  const get = await request(server)
+  .get(`/api/games/${bodyId}`)
+
+  expect(typeof bodyId).toBe("string");
+  expect(get.status).toEqual(200);
+});
 
 
    
