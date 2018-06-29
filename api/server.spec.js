@@ -82,10 +82,40 @@ describe('The API Server', () => {
     });
   });
 
+//GET Tests
+describe("GET method", () => {
+  it("Returns a list of saved games", async () => {
+    const nba2K = {
+      title: 'NBA 2K17',
+      genre: 'Sports',
+      releaseDate: 'September 2016',
+    };
 
-  
+    const fifa = {
+      title: "FIFA 18",
+      genre: 'Sports',
+      releaseDate: 'September 2017',
+    };
 
-  // test the GET here
+    const madden = {
+      title: 'Madden 18',
+      genre: 'Sports',
+      releaseDate: 'August 2017'
+    };
+
+    const response = await request(server).get("/api/games");
+
+    expect(response.body[0].title).toEqual(nba2k.title);
+    expect(response.body[1].title).toEqual(fifa.title);
+    expect(response.body[2].title).toEqual(madden.title);
+  });
+
+  it("Returns a status code of 200", async () => {
+    const response = await request(server).get('/api/games')
+
+    expect(response.status).toEqual(200)
+  })
+});
 
   // Test the DELETE here
 });
