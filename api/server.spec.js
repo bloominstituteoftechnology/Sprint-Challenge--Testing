@@ -73,6 +73,18 @@ expect(newGame.status).toBe(expectedStatusCode);
 expect(newGame.expectedError).toEqual(expectedError);
 })
   // test the GET here
-
+it('should return list of games', async() => {
+  const expectedStatusCode = 201;
+  const game = {
+    title: 'California Games',
+    genre: 'Sports',
+    releaseDate: 'June 1987'
+  };
+  const expectedNewGame={
+    title: 'Contra',
+    genre: 'Shoot em up',
+    releaseDate: 'February 1987'
+  };
+})
   // Test the DELETE here
 });
