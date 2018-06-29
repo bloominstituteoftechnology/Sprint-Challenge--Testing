@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
+const request = require('supertest'); 
+const server = require('./server');
 
-const Game = require('./games/Game');
+const Game = require('../games/Game');
 
 describe('The API Server', () => {
   beforeAll(() => {
@@ -18,17 +20,22 @@ describe('The API Server', () => {
       .then(() => console.log('\n=== disconnected from TEST DB ==='));
   });
 
-  let gameId;
+  let gameId, testGame;
   // // hint - these wont be constants because you'll need to override them.
 
-  beforeEach(() => {
+  beforeEach(async () => {
     //   // write a beforeEach hook that will populate your test DB with data
     //   // each time this hook runs, you should save a document to your db
     //   // by saving the document you'll be able to use it in each of your `it` blocks
+
+    testGame =  { title: 'California Games', genre: 'Sports', releaseDate: 'June 1987'};
+    const saveGame = await Game.create(testGame);
+    gameId = testGame._id;
   });
 
   afterEach(() => {
     //   // clear the games collection.
+    return Game.remove();
   });
 
   it('runs the tests', () => {});
