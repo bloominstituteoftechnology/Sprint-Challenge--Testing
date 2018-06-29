@@ -8,6 +8,11 @@ const server = express();
 server.use(express.json());
 server.use(morgan('combined'));
 
+//My Notes: test to make sure server is operating
+server.get('/', (req, res) => {
+      res.send('TESTING SPRINT challenge running on port 5050');
+    })
+
 server.post('/api/games', (req, res) => {
   Game.create(req.body)
     .then(game => {

@@ -12,7 +12,7 @@ Don't fret or get anxious. This is a no-pressure assessment designed to help us 
 
 ## Start by forking and cloning this repository.
 
-## Questions - Self Study - You can exercise your Google-Fu for this and any other _Sprint Challenge_ in the future.
+[x]## Questions - Self Study - You can exercise your Google-Fu for this and any other _Sprint Challenge_ in the future.
 
 1.  In Jest, what are the differences between `beforeAll`, `afterAll`, `beforeEach`, and `afterEach` and what are good uses for them?
 1.  What is the point of `Test Driven Development`? What do you think about this approach?
@@ -22,12 +22,12 @@ Don't fret or get anxious. This is a no-pressure assessment designed to help us 
 
 ## Initializing Project
 
-- Fork/Clone this project into a directory on your machine.
-- `cd` into your forked local copy.
-- notice there is a `package.json` file included. We have included all of the dev-dependencies that you'll need to build your project.
-- run `yarn` to download and install all the dependencies you need for this project.
-- run `yarn test` to start your tests.
-- Keep an active log of your changes by committing and pushing often to your fork.
+[x]- Fork/Clone this project into a directory on your machine.
+[x]- `cd` into your forked local copy.
+[x]- notice there is a `package.json` file included. We have included all of the dev-dependencies that you'll need to build your project.
+[x]- run `yarn` to download and install all the dependencies you need for this project.
+[x]- run `yarn test` to start your tests.
+[x]- Keep an active log of your changes by committing and pushing often to your fork.
 - Write all of your tests in the `./api/server.spec.js` and `./games/Game.spec.js` files.
 
 ## Project Description

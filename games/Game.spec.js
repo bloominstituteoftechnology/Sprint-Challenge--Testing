@@ -18,7 +18,13 @@ describe('The Game Model', () => {
       .then(() => console.log('\n=== disconnected from TEST DB ==='));
   });
 
-  it('runs the tests', () => {});
-
+  it.skip('should be return a list of the games', async () => {
   // test away!
+  const gameList = await Game
+    .find().then(games => games)
+    .catch(err => err);
+
+    expect(gameList.length).toBeGreaterThan(0);
+  });
+  
 });
