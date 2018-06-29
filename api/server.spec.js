@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const server = require('./server');
-const Game = require('./games/Game');
+const Game = require("../games/Game");
 const request = require('supertest');
 
 
@@ -105,7 +105,7 @@ describe("GET method", () => {
 
     const response = await request(server).get("/api/games");
 
-    expect(response.body[0].title).toEqual(nba2k.title);
+    expect(response.body[0].title).toEqual(nba2K.title);
     expect(response.body[1].title).toEqual(fifa.title);
     expect(response.body[2].title).toEqual(madden.title);
   });
@@ -118,7 +118,7 @@ describe("GET method", () => {
 });
 
 //DELETE tests
-desctibe('DELETE Method', () => {
+describe('DELETE Method', () => {
   it("Game should be deleted from the database", async () => {
     const response = await request(server).delete(`/api/games/${gameId}`);
 

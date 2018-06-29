@@ -18,7 +18,19 @@ describe('The Game Model', () => {
       .then(() => console.log('\n=== disconnected from TEST DB ==='));
   });
 
-  it('runs the tests', () => {});
+  it('Returns the title of the correct game name', async () => {
+    const fortnite = await Game.create({
+      title: "Fortnite",
+      genre: "Battle Royale",
+      releaseDate: "July 2017"
+    });
 
-  // test away!
+    const { title, genre, releaseDate } = fortnite;
+
+    expect(fortnite.getGameTitle()).toBe("Fortnite");
+    expect({ genre, releaseDate}).toEqual({
+      genre: "Battle Royale",
+      releaseDate: "July 2017"
+    });
+  });
 });
