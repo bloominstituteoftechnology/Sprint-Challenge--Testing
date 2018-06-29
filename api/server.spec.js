@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const Game = require('./games/Game');
+const Game = require('../games/Game');
 
 describe('The API Server', () => {
   beforeAll(() => {
@@ -10,7 +10,9 @@ describe('The API Server', () => {
       .catch(err => {
         console.log('error connecting to TEST database, is MongoDB running?');
       });
-  });
+  } );
+  
+  
 
   afterAll(() => {
     return mongoose
@@ -29,12 +31,13 @@ describe('The API Server', () => {
 
   afterEach(() => {
     //   // clear the games collection.
+    return Game.remove();
   });
-
+  
   it('runs the tests', () => {});
 
   // test the POST here
-
+  
   // test the GET here
 
   // Test the DELETE here
