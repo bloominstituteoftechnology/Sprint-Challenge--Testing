@@ -86,6 +86,20 @@ describe('The API Server', () => {
   })
 
   describe('DELETE to /api/games', () => {
-    it('returns ')
+    it('returns status code 422 if no id found', async () => {
+      const response = await request(server).get('/api/games/1');
+
+      expect(response.body._id).toBe(undefined);
+    })
+    it('returns status code 204 if id found and game deleted', async () => {
+      const response = await request(server).get('/api/games/' + gameId);
+
+      expect(response.status).toEqual(204);
+    })
+    it('returns status code 404 if id not available', async () => {
+      const response = await request(server).delete('/api/games/');
+
+      expect(response.status).toEqual(404);
+    })
   })
 })

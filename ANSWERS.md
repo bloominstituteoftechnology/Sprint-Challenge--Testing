@@ -17,3 +17,4 @@ snapshot test
 component test
 1. What type of test performs database operations against a real server.
 
+
