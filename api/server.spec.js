@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const Game = require('./games/Game');
+const Game = require('../games/Game');
 
 describe('The API Server', () => {
   beforeAll(() => {
