@@ -51,7 +51,7 @@ describe('The API Server', () => {
   it('should receive correct data when posted', async () => {
     const response = await request(server)
     .post('/api/games')
-    .send(gameId);
+    .send(gameId)
 
     expect(response.body.title).toEqual("The Legend of Zelda");
     expect(response.body.releaseDate).toEqual("August 22, 1987");
@@ -72,10 +72,35 @@ describe('The API Server', () => {
   it('should receive correct status when fetched', async () => {
     const response = await request(server)
     .get('/api/games')
-    expect(response.status).toBe(200);
+    .query({title: "The Legend of Zelda"})
+    .then(function (res){
+      expect(res.status).toBe(200);
+
+    });
   })
+
+  it('should receive correct data when fetched (title and genre are required)', async () => {
+    const response = await request(server)
+    .get('/api/games')
+    .query({title: "The Legend of Zelda"})
+    .then(function (res){
+      expect(res.body[0].title).toEqual("The Legend of Zelda");
+      expect(res.body[0].genre).toEqual("Action/Adventure");
+    });
+  });
 
   // test the GET here
 
-  // Test the DELETE here
-});
+
+it('should receive correct status code and message when deleted', async () => {
+  const post = await request(server)
+  .post('/api/games')
+  .send(gameId);
+
+
+  const deleted = await request(server)
+   .delete(`/api/games/5b3639e00d2f671aa484ba80`)
+     expect(deleted.status).toBe(404);
+     expect(deleted.text).toContain("Game not found")
+   });
+   });
