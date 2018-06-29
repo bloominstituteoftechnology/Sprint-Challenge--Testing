@@ -1,8 +1,11 @@
 const mongoose = require('mongoose');
 
-const Game = require('./games/Game');
+const Game = require('../games/Game');
 
 describe('The API Server', () => {
+
+  let gameId = {title: "The Legend of Zelda", genre: "Action/Adventure", releasedate:"August 22, 1987"};
+
   beforeAll(() => {
     return mongoose
       .connect('mongodb://localhost/test')
@@ -18,10 +21,14 @@ describe('The API Server', () => {
       .then(() => console.log('\n=== disconnected from TEST DB ==='));
   });
 
-  let gameId;
+
   // // hint - these wont be constants because you'll need to override them.
 
   beforeEach(() => {
+
+
+    Game.create(gameId);
+    console.log(gameId);
     //   // write a beforeEach hook that will populate your test DB with data
     //   // each time this hook runs, you should save a document to your db
     //   // by saving the document you'll be able to use it in each of your `it` blocks
@@ -29,6 +36,7 @@ describe('The API Server', () => {
 
   afterEach(() => {
     //   // clear the games collection.
+    Game.remove();
   });
 
   it('runs the tests', () => {});

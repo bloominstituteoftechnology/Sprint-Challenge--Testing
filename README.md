@@ -12,17 +12,10 @@ Don't fret or get anxious. This is a no-pressure assessment designed to help us 
 
 ## Start by forking and cloning this repository.
 
-## Questions - Self Study - You can exercise your Google-Fu for this and any other _Sprint Challenge_ in the future.
-
-1.  In Jest, what are the differences between `beforeAll`, `afterAll`, `beforeEach`, and `afterEach` and what are good uses for them?
-1.  What is the point of `Test Driven Development`? What do you think about this approach?
-1.  What are `Jest mock`? What are a good use case for them?
-1.  Mention three types of tests.
-1.  What type of test performs database operations against a real server.
 
 ## Initializing Project
 
-- Fork/Clone this project into a directory on your machine.
+
 - `cd` into your forked local copy.
 - notice there is a `package.json` file included. We have included all of the dev-dependencies that you'll need to build your project.
 - run `yarn` to download and install all the dependencies you need for this project.
