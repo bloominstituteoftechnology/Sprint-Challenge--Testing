@@ -89,7 +89,7 @@ describe('The API Server', () => {
 
   // ========== Test the DELETE here ============//
 
-  //it passes now. change to be back tick instead of quote in line 100
+  //204 below got error 500...ARRRRGGGGGGG
 
   it('should return status 204 if delete games successfully', async () => {
     const addGame = await Game.create({
@@ -100,5 +100,11 @@ describe('The API Server', () => {
     const deleteGame = await request(server).delete(`/api/games/${addGame._id}`);
 
     expect(deleteGame.status).toEqual(204);
+  })
+
+  it('should return status 404 if delete non-existing game', async () => {
+    const deleteGame = await request(server).delete('/api/games/');
+
+    expect(deleteGame.status).toEqual(404);
   })
 });
