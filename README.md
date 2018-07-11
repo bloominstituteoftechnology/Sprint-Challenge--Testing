@@ -68,9 +68,8 @@ This API is for storing and accessing a list of user entered Games along with ex
 
 A 'get' request to '/api/game/get' will return an array of all game objects on the database.
 
-A 'get' request to '/api/game/get/:id' will return an object with the id requested.
-
-* If no Game is found with that id, will return a 404 response and `{ error: 'That id does not exist.' }`
+# TODO: A 'get' request to '/api/game/get/:id' will return an object with the id requested.
+  * If no Game is found with that id, will return a 404 response and `{ error: 'That id does not exist.' }`
 
 ## POST
 
