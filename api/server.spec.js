@@ -4,8 +4,8 @@ const mongoose = require('mongoose');
 const Game = require('../games/Game');
 
 describe('The API Server', () => {
-  beforeAll(() => {
-    return mongoose
+  beforeAll(async () => {
+    await mongoose
       .connect('mongodb://localhost/test')
       .then(() => {})
       .catch(err => {
@@ -13,8 +13,8 @@ describe('The API Server', () => {
       });
   });
 
-  afterAll(() => {
-    return mongoose
+  afterAll(async () => {
+    await mongoose
       .disconnect()
       .then(() => console.log('\n=== disconnected from TEST DB ==='));
   });
@@ -42,46 +42,81 @@ describe('The API Server', () => {
 
   it('runs the tests', () => {});
 
-  it('GET endpoint successfully returns 200', async () => {
-    await request(server)
-      .get('/api/games')
-      .expect(200)
+  describe('GET', () => {
+    it('should successfully return a status 200', async () => {
+      await request(server)
+        .get('/api/games')
+        .expect(200)
+    })
+    it('should return a list of games', async () => {
+      const response = await request(server).get('/api/games')
+      const expected = {
+        title: 'Hollow Knight',
+        genre: 'Metroidvania',
+        releaseDate: 'June 2018',
+      }
+      expect(response.body).toHaveLength(2);
+      expect(response.body[0]).toMatchObject(expected);
+    })
   })
 
-  it('GET endpoint should return a list of games', async () => {
-    const response = await request(server).get('/api/games')
-    const expected = {
-      title: 'Hollow Knight',
-      genre: 'Metroidvania',
-      releaseDate: 'June 2018',
-    }
-    expect(response.body).toHaveLength(2);
-    expect(response.body[0]).toMatchObject(expected);
-  })
-
-  it('POST endpoint should successfully return 201', async () => {
-    const newGame = {
+  describe('POST', () => {
+    const validGame = {
       title: 'Pokemon',
       genre: 'JRPG',
       releaseDate: 'i dont remember lol',
     };
-    await request(server)
-      .post('/api/games')
-      .send(newGame)
-      .expect(201);
-  })
-
-  it('POST endpoint should return 500 if invalid data is given', async () => {
-    const newGame = {
+    const badGame = {
       releaseDate: 'July 2018'
     }
-    await request(server)
-      .post('/api/games')
-      .send(newGame)
-      .expect(500)
+
+    it('should successfully return status 201', async () => {
+      await request(server)
+        .post('/api/games')
+        .send(validGame)
+        .expect(201);
+    })
+
+    it('should return status 500 if invalid data is given', async () => {
+      await request(server)
+        .post('/api/games')
+        .send(badGame)
+        .expect(500)
+    })
+
+    it('should return the game that was posted', async () => {
+      const response = await request(server)
+        .post('/api/games')
+        .send(validGame)
+      expect(response.body).toMatchObject(validGame);
+      expect(response.body).toBeTruthy()
+    })
   })
 
-  // test the GET here
+  describe('DELETE', () => {
+    it('should successfully return a status 204', async () => {
+      const game = await Game.create({
+        title: "Super Mario",
+        genre: 'Platformer',
+        releaseDate: 'N/A'
+      })
+      await request(server)
+        .delete(`/api/games/${game._id}`)
+        .expect(204)
+    })
 
-  // Test the DELETE here
+    it('should return a status 404 if game does not exist', async () => {
+      const game = await Game.create({
+        title: "Super Mario",
+        genre: 'Platformer',
+        releaseDate: 'N/A'
+      })
+      await request(server)
+        .delete(`/api/games/${game._id}`)
+
+      await request(server)
+        .delete(`/api/games/${game._id}`)
+        .expect(404);
+    })
+  })
 });
