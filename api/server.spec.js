@@ -74,6 +74,37 @@ describe('The API Server', () => {
         expect(response.body.releaseDate).toBe('before any of us were born')
         expect(response.body._id).not.toBeUndefined()
 
+    });
+
+    describe('Server should GET to /api/games' , () => {
+      it('should return status code 200 at GET endpoint /api/games', async() => {
+        await request(server)
+          .get('/api/games')
+
+          .expect(200)
+      });
+
+      it('should return list of all games', async() => {
+        const MM2 = {
+          title: 'Mega Man 2',
+          genre: 'platform shooter',
+          releaseDate: '1988'
+        }
+
+        const testResponse = await request(server)
+          .post('/api/games')
+          .send(MM2)
+
+          const response = await request(server).get('/api/games')
+
+          expect(response.body).toContainEqual(testResponse.body)
+
+
+      });
+
+      describe('Server should DELETE at /api/games', () => {
+        
+      })
     })
   })
 })
