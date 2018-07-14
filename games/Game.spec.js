@@ -20,5 +20,22 @@ describe('The Game Model', () => {
 
   it('runs the tests', () => {});
 
-  // test away!
+  describe('model tests', () => {
+    const testingGame = {
+      title: 'Revenge of the Sith',
+      genre: 'science fiction',
+      releaseDate: 'A long time ago..',
+    }
+    it('Saves information to database', async () => {
+      await Game.create(testingGame);
+    })
+
+    it('creates model correctly', async () => {
+      expect(testingGame.title).toBe('Revenge of the Sith')
+      expect(testingGame.genre).toBe('science fiction')
+      expect(testingGame.releaseDate).toBe('A long time ago..')
+    })
+
+  })
+
 });
