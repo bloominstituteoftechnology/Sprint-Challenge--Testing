@@ -18,6 +18,10 @@ describe('The Game Model', () => {
       .then(() => console.log('\n=== disconnected from TEST DB ==='));
   });
 
+  afterEach(() => {
+    return Game.remove();
+  })
+
   const game = new Game({
     title: 'Hollow Knight',
     releaseDate: 'June 2018',
@@ -33,5 +37,9 @@ describe('The Game Model', () => {
 
   it('should return title when `getGameTitle` method is called', () => {
     expect(game.getGameTitle()).toBe('Hollow Knight')
+  })
+
+  it('should save a game to the database', async () => {
+    await Game.create(game);
   })
 });
