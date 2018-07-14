@@ -20,24 +20,32 @@ describe('The API Server', () => {
       .then(() => console.log('\n=== disconnected from TEST DB ==='));
   });
 
-  let gameId = 'test Id'
+  let gameId;
   // // hint - these wont be constants because you'll need to override them.
 
-  beforeEach((done,gameId) => {
+  beforeEach(() => {
 
-    const newGame = { 
+    const testGame = { 
       title: 'Final Fantasy',
       genre: 'RPG',
       releaseDate: 'before games were cool' }
 
-    request(server)
-      .post('/api/games')
-      .send(newGame)
-      .end(function (err, res) {
-        if(err) return done(err);
-        let gameId = res.body._id
-        done()
-      })
+      return Game.create(testGame)
+        .then(testGame => {
+          return testGame
+        })
+        .catch(error => {
+          return error
+        })
+
+    // request(server)
+    //   .post('/api/games')
+    //   .send(newGame)
+    //   .end(function (err, res) {
+    //     if(err) return done(err);
+    //     let gameId = res.body._id
+    //     done()
+    //   })
 
     //   // write a beforeEach hook that will populate your test DB with data
     //   // each time this hook runs, you should save a document to your db
@@ -56,7 +64,7 @@ describe('The API Server', () => {
       title: 'Final Fantasy',
       genre: 'RPG',
       releaseDate: 'before games were cool' }
-      console.log(gameId)
+      console.log(testGame)
 
     request(server)
       .post('/api/games')
@@ -104,10 +112,6 @@ describe('The API Server', () => {
     // request(server)
     // .del('/api/games')
   // })
-
-
-
-  // test the GET here
 
   // Test the DELETE here
 });
