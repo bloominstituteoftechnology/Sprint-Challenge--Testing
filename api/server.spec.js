@@ -103,7 +103,20 @@ describe('The API Server', () => {
       });
 
       describe('Server should DELETE at /api/games', () => {
-        
+        // test if id is undefined
+        it('should see if request ID is undefined', async () => {
+          const response = await request(server).delete('/api/games/20')
+
+          expect(response.body._id).toBe(undefined)
+
+        });
+
+        it('should DELETE the found game at /api/games', async() => {
+          await request(server)
+            .delete('/api/games' + gameId)
+
+          .expect(204)
+        })
       })
     })
   })
