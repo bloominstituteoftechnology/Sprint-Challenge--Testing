@@ -20,6 +20,10 @@ server.post('/api/games', (req, res) => {
     });
 });
 
+server.get('/', (req, res) => {
+  res.status(200).json({api: "running"});
+})
+
 server.get('/api/games', (req, res) => {
   Game.find({})
     .then(games => {
