@@ -8,17 +8,15 @@ const server = express();
 server.use(express.json());
 server.use(morgan('combined'));
 
-
 server.post('/api/games', (req, res) => {
   Game.create(req.body)
     .then(game => {
       res.status(201).json(game);
-      console.log('GAME', game)
     })
     .catch(err => {
       res
         .status(500)
-        .json({ message: 'Error saving data to the DB', error: err });
+        .json({ message: 'Error saving to db', error: err });
     });
 });
 
@@ -30,7 +28,7 @@ server.get('/api/games', (req, res) => {
     .catch(err => {
       res
         .status(500)
-        .json({ message: 'Something really bad happened', error: err });
+        .json({ message: 'Error retrieving from db', error: err });
     });
 });
 
