@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
-
-const Game = require('./games/Game');
+const server = require('./server');
+const Game = require('../games/Game');
+const request = require('supertest');
 
 describe('The API Server', () => {
   beforeAll(() => {
@@ -19,23 +20,61 @@ describe('The API Server', () => {
   });
 
   let gameId;
-  // // hint - these wont be constants because you'll need to override them.
+  // I think it is game._id?
 
-  beforeEach(() => {
-    //   // write a beforeEach hook that will populate your test DB with data
-    //   // each time this hook runs, you should save a document to your db
-    //   // by saving the document you'll be able to use it in each of your `it` blocks
+  let newGame;
+
+  beforeEach(async () => {
+    // do we put a mock state in here to populate before each test? If so...
+
+    const defaultGame = {
+      title: 'Bubble Bobble',
+      genre: 'comical action platformer',
+      releaseDate: '1986'
+    }
+
+    newGame = await Game.create(defaultGame)
+    gameId = newGame._id
+
   });
 
   afterEach(() => {
-    //   // clear the games collection.
+    return Game.remove()
   });
 
-  it('runs the tests', () => {});
+  describe('Server should POST to /api/games', () => {
+    it('should return a 201 code for newly created game model', async () => {
+      const tetris = {
+        title: 'Tetris',
+        genre: 'puzzle strategy',
+        releaseDate: '1984'
+      }
 
-  // test the POST here
+     const response = await request(server)
+        .post('/api/games')
+        .send(tetris)
+  
+        .expect(201)
+  
+    });
 
-  // test the GET here
+    it('should return object with title, genre, ID, and release date', async() => {
+      const contra = {
+        title: 'Contra',
+        genre: 'shooter like COD',
+        releaseDate: 'before any of us were born'
+      }
 
-  // Test the DELETE here
-});
+      const response = await request(server)
+        .post('/api/games')
+        .send(contra)
+
+        expect(response.body.title).toBe('Contra')
+        expect(response.body.genre).toBe('shooter like COD')
+        expect(response.body.releaseDate).toBe('before any of us were born')
+        expect(response.body._id).not.toBeUndefined()
+
+    })
+  })
+})
+
