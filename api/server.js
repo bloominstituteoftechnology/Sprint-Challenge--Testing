@@ -8,10 +8,12 @@ const server = express();
 server.use(express.json());
 server.use(morgan('combined'));
 
+
 server.post('/api/games', (req, res) => {
   Game.create(req.body)
     .then(game => {
       res.status(201).json(game);
+      console.log('GAME', game)
     })
     .catch(err => {
       res
