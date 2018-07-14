@@ -119,4 +119,36 @@ describe('The API Server', () => {
         .expect(404);
     })
   })
+
+  describe('PUT', () => {
+    const modified = {
+      title: 'Hollow Knight',
+      genre: 'Platformer',
+      releaseDate: 'July 2018'
+    }
+    it('should successfully return a status of 200', async () => {
+      const response = await request(server).get('/api/games')
+      const game = response.body[0]
+      await request(server)
+        .put(`/api/games/${game._id}`)
+        .send(modified)
+        .expect(200)
+    })
+    it('should return a status of 404 if game does not exist', async () => {
+      const response = await request(server).get('/api/games')
+      const game = response.body[0]
+      await request(server).delete(`/api/games/${game._id}`)
+      await request(server)
+      .put(`/api/games/${game._id}`)
+      .send(modified)
+      .expect(404)
+    })
+    it('should return a status of 500', async () => {
+      const id = '5b4a435988a2ca366e40aa8'
+      await request(server)
+      .put(`/api/games/${id}`)
+      .send(modified)
+      .expect(500)
+    })
+  })
 });
