@@ -6,7 +6,7 @@ describe('The Game Model', () => {
   beforeAll(() => {
     return mongoose
       .connect('mongodb://localhost/test')
-      .then(() => console.log('\n=== connected to TEST DB ==='))
+      .then(() => {})
       .catch(err => {
         console.log('error connecting to TEST database, is MongoDB running?');
       });
@@ -18,8 +18,8 @@ describe('The Game Model', () => {
       .then(() => console.log('\n=== disconnected from TEST DB ==='));
   });
 
-  afterEach(() => {
-    return Game.remove();
+  afterEach(async () => {
+    await Game.remove();
   })
 
   const game = new Game({
