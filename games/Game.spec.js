@@ -18,7 +18,33 @@ describe('The Game Model', () => {
       .then(() => console.log('\n=== disconnected from TEST DB ==='));
   });
 
-  it('runs the tests', () => {});
+  describe('Game model testing', () => {
+    it('model should have defined properties', async () => {
+      const gameData = {
+        title: 'BlehBleh',
+        genre: 'Blarg',
+        releaseDate: 'Blerg1995'
+      }
 
-  // test away!
+        const response = await Game.create(gameData)
+  
+        expect(response.title).not.toBeUndefined()
+        expect(response.genre).not.toBeUndefined()
+        expect(response.releaseDate).not.toBeUndefined()
+        expect(response._id).not.toBeUndefined()
+    });
+
+    it('should return the correct getGameTitle', async () => {
+      const gameData = {
+        title: 'BlehBleh2',
+        genre: 'Blarg',
+        releaseDate: 'Blerg2001'
+      }
+
+      const response = await Game.create(gameData)
+
+      expect(response.getGameTitle()).toBe('BlehBleh2')
+    });
+  })
+
 });
