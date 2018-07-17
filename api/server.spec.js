@@ -56,7 +56,8 @@ describe('The API Server', () => {
   })
 
   it('returns a list of games', async () => {
-      const response = await request(server).get('/api/games')
+      const response = await request(server)
+        .get('/api/games')
       const expected = {
         title: 'Mario',
         genre: 'Adventure',
@@ -66,12 +67,38 @@ describe('The API Server', () => {
       expect(response.body[0]).toMatchObject(expected);
   })
 
-  // it('should return user data after successfully saved to db',
-  //     async () => {
-  //         console.log('TEST', mario)
-  //         await request(server).post('/api/games/', mario)
-  //             .expect(201);
-  //     })
+  describe('POST', () => {
+    const mario = {
+      title: 'Mario',
+      genre: 'Adventure',
+      releaseDate: 'May 1980'
+    };
+    const invalidMario = {
+      releaseDate: 'May 1980'
+    }
+
+    it('should return status 201 after saving game to DB', async () => {
+      await request(server)
+        .post('/api/games')
+        .send(mario)
+        .expect(201);
+    })
+
+    it('should return status 500 if incomplete data is given', async () => {
+      await request(server)
+        .post('/api/games')
+        .send(invalidMario)
+        .expect(500)
+    })
+
+    it('should return game data when successfully posted to DB', async () => {
+      const response = await request(server)
+        .post('/api/games')
+        .send(mario)
+      expect(response.body).toMatchObject(mario);
+      expect(response.body).toBeTruthy()
+    })
+  })
 
 // it('should return status 202 after successfully deleting from db',
 //     async () => {
