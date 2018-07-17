@@ -100,15 +100,32 @@ describe('The API Server', () => {
     })
   })
 
-// it('should return status 202 after successfully deleting from db',
-//     async () => {
-//         // const testUserData = {
-//         //     username: 'Lisa',
-//         //     password: '123'
-//         // }
-//         console.log('TEST', testUserData)
-//         await request(server).delete('/', testUserData)
-//             .expect(202);
-// })
+  describe('DELETE', () => {
+    it('should return a status 204 after successful delete', async () => {
+      const mario = await Game.create({
+        title: 'Mario',
+        genre: 'Adventure',
+        releaseDate: 'May 1980'
+      })
+      
+      await request(server)
+        .delete(`/api/games/${game._id}`)
+        .expect(204)
+    })
+
+    it('should return a status 404 if game does not exist', async () => {
+      const game = await Game.create({
+        title: 'Mario',
+        genre: 'Adventure',
+        releaseDate: 'May 1980'
+      })
+      await request(server)
+        .delete(`/api/games/${game._id}`)
+
+      await request(server)
+        .delete(`/api/games/${game._id}`)
+        .expect(404);
+    })
+  })
 
 });

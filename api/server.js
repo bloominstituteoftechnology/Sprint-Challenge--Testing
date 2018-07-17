@@ -62,6 +62,7 @@ server.put('/api/games/:id', (req, res) => {
 
 server.delete('/api/games/:id', (req, res) => {
   const { id } = req.params;
+  console.log('Here is the ID:', id)
 
   if (!id) {
     res.status(422).json({ message: 'You need to give me an ID' });

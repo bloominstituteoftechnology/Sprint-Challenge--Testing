@@ -18,7 +18,28 @@ describe('The Game Model', () => {
       .then(() => console.log('\n=== disconnected from TEST DB ==='));
   });
 
-  it('runs the tests', () => {});
+  afterEach(async () => {
+    await Game.remove();
+  })
 
-  // test away!
+  const game = new Game({
+    title: 'Mario',
+    genre: 'Adventure',
+    releaseDate: 'May 1980'
+  })
+
+  it('should successfully create a Game model', () => {
+    expect(game._id).toBeTruthy();
+    expect(game.title).toBe('Mario')
+    expect(game.genre).toBe('Adventure')
+    expect(game.releaseDate).toBe('May 1980')
+  });
+
+  it('should save a game to the database', async () => {
+    await Game.create(game);
+  })
+
+  it('should return game title when getGameTitle called', () => {
+    expect(game.getGameTitle()).toBe('Mario')
+  })
 });
