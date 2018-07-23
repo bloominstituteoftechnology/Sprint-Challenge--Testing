@@ -6,10 +6,6 @@
 - Answers to your written questions should be recorded in _ANSWERS.md_
 - This is to be worked on **alone**, but you can _reference_ code from lectures and past projects, or you can go online to read documentation or search for answers. Please refrain from copying and pasting any of your answers. Try and understand the question and put your responses in your own words. Be as thorough as possible when explaining something.
 
-## Friendly Reminder
-
-Don't fret or get anxious. This is a no-pressure assessment designed to help us discover better ways to help you move forward and make the learning experience better for you.
-
 ## Start by forking and cloning this repository.
 
 ## Questions - Self Study - You can exercise your Google-Fu for this and any other _Sprint Challenge_ in the future.
