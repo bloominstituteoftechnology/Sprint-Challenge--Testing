@@ -18,7 +18,16 @@ describe('The Game Model', () => {
       .then(() => console.log('\n=== disconnected from TEST DB ==='));
   });
 
-  it('runs the tests', () => {});
+  it('getGameTitle returns the title for the game', async () => {
+    const californiaGames = {
+      title: 'California Games',
+      genre: 'Sports',
+      releaseDate: 'June 1987'
+    };
+    const game = await Game.create(californiaGames);
+    const title = game.getGameTitle();
 
-  // test away!
+    expect(title).toEqual('California Games');
+  });
+
 });
