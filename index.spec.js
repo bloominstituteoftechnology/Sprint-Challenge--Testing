@@ -12,7 +12,7 @@ describe('server test(index.js)', () => {
 
     describe('POST endpoint /games', () => {
         it('it should return a status code 201 CREATED if the request body is valid.', async () => {
-            const expected = 300;
+            const expected = 201;
             const response = await request(server)
                                     .post('/games')
                                     .send({
@@ -23,8 +23,8 @@ describe('server test(index.js)', () => {
             expect(response.status).toEqual(expected);
         });
 
-        it.skip('it should return a status code 422 UNPROCESSABLE ENTITY if the request body is invalid.', async () => {
-            const expected = 300;
+        it('it should return a status code 422 UNPROCESSABLE ENTITY if the request body is invalid.', async () => {
+            const expected = 422;
             const response = await request(server)
                                     .post('/games')
                                     .send({
