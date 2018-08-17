@@ -13,5 +13,11 @@ describe('server', () => {
       const response = await request(server).get('/games');
       expect(response.status).toEqual(200);
     });
+
+    // tests that GET endpoint returns an array, with or without any items
+    it('should return an array', async () => {
+      const response = await request(server).get('/games');
+      expect(Array.isArray(response.body)).toBe(true);
+    })
   });
 });

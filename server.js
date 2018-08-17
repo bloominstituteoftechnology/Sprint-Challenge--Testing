@@ -7,10 +7,14 @@ const server = express();
 // apply middleware
 server.use(express.json());
 
+// placeholder for array of games in memory
+let games = [];
+
 // establish GET endpoint
 server.get('/games', (req, res) => {
   res
-    .status(200).end();
+    .status(200)
+    .json(games);
 })
 
 // export server so tests can interact with it
