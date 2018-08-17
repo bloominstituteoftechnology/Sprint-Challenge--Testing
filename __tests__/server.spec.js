@@ -81,7 +81,7 @@ describe('server.js', () => {
         it('should return an error message when no title is sent', async () => {
             const expected = { message: "Please include a valid title and genre" }
 
-            const noTitle = { genre: "first person shooter"}
+            const noTitle = { genre: "first person shooter" }
 
             const response = await request(server).post('/games').send(noTitle)
             expect(response.body).toEqual(expected)
@@ -90,12 +90,19 @@ describe('server.js', () => {
         it('should return an error message when no genre is sent', async () => {
             const expected = { message: "Please include a valid title and genre" }
 
-            const noGenre = { title: "Doom"}
+            const noGenre = { title: "Doom" }
 
             const response = await request(server).post('/games').send(noGenre)
             expect(response.body).toEqual(expected)
         })
 
-        
+        it('should return the added game if successful', async () => {
+            const newGame = { title: "Doom",
+                            genre: "first person shooter" }
+
+            const response = await request(server).post('/games').send(newGame)
+            expect(response.body).toEqual(expect.objectContaining(newGame))
+        })
+
     })
 })
