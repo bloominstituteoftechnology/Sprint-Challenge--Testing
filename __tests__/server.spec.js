@@ -63,6 +63,31 @@ describe('SERVER', () => {
                 const res = await request(server).post('/');
                 expect(res.status).toEqual(200);
             });
+
+            it('should return response body, JSON', async () => {
+                const expected = {
+                    success: true,
+                    data: {
+                        title: 'Pacman',
+                        genre: 'Arcade',
+                        releaseYear: 1980
+                    }
+                };
+                const res = await request(server)
+                    .post('/')
+                    .send({
+                        title: 'Pacman',
+                        genre: 'Arcade',
+                        releaseYear: 1980
+                    });
+
+                expect(res.body).toEqual(expected);
+            });
+
+            it('should return response type, JSON', async () => {
+                const res = await request(server).post('/');
+                expect(res.type).toEqual('application/json');
+            });
         });
     });
 });
