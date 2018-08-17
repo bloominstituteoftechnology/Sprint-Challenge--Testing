@@ -28,7 +28,10 @@ server.post('/games', (req, res) => {
   if(!gameObject.title || !gameObject.genre){
     res.status(422).json({"Message": "Need title/genre"})
   }
-  res.status(200).json(gameObject.title)
+  else{
+      data.push(req.body)
+      res.status(200).json(data)
+  }
 })
 
 

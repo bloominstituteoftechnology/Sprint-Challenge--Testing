@@ -33,12 +33,22 @@ describe('post /games', () => {
       .post('/games')
       .send({
         "title": "Garry's Mod",
-        "genre": "Sandbox",
+        "genred": "Sandbox",
         "year": "2002",
       })
     expect(response.status).toEqual(422);
     // expect(Object.keys(response.body).length).toBeGreaterThan(1);
     // expect(Object.keys(response.body).length).toBeLessThan(4);
     // expect(response.body).toEqual(4)
+  });
+  it('should respond with code 200 if req paras included', async () => {
+    const response = await request(server)
+      .post('/games')
+      .send({
+        "title": "Garry's Mod",
+        "genre": "Sandbox",
+        "year": "2002",
+      })
+    expect(response.status).toEqual(200);
   });
 })
