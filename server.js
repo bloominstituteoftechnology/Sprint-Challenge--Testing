@@ -16,14 +16,15 @@ server.get('/games', (req, res) => {
 
 server.post('/games', (req, res) => {
     const newGame = req.body;
+    if(!newGame.title || !newGame.genre || !newGame.releaseYear){
+        res.status(422).json({error: 'all fields are required'})
+    }
     games.push({
         title: newGame.title,
         genre: newGame.genre,
         releaseYear: newGame.releaseYear
     })
     res.status(200).json({title: newGame.title, genre: newGame.genre, releaseYear: newGame.releaseYear})
-    if(!newGame.title || newGame.genre || newGame.releaseYear){
-        res.status(422).json({error: 'all fields are required'})
-    }
+    
 })
 module.exports = server;
