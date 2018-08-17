@@ -57,5 +57,24 @@ describe('server.js', () => {
       expect(res.body.id).toBeDefined()
       expect(typeof res.body.id).toBe('number')
     })
+    it('response body title, genre, releaseYear fields should match request input', () => {
+      expect(res.body.title).toEqual(game.title)
+      expect(res.body.genre).toEqual(game.genre)
+      expect(res.body.releaseYear).toEqual(game.releaseYear)
+    })
+  })
+
+  describe('GET /games', () => {
+    it('should return status code 200', async () => {
+      const expected = 200
+
+      const res = await request(server).get('/games')
+      expect(res.status).toEqual(expected)
+    })
+
+    it('should return an array of games', async () => {
+      const res = await request(server).get('/games')
+      expect(Array.isArray(res.body)).toBeTruthy()
+    })
   })
 })
