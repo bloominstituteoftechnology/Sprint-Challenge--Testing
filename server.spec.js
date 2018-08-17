@@ -3,6 +3,12 @@ const request = require("supertest");
 const server = require("./server.js");
 
 game = {
+  title: "Mario", // required
+  genre: "Arcade", // required
+  releaseYear: 1981 // not required
+};
+
+duplicateGame = {
   title: "Pacman", // required
   genre: "Arcade", // required
   releaseYear: 1980 // not required
@@ -48,6 +54,14 @@ describe("server.js", () => {
         });
       const actual = response.status;
       const expected = 422;
+      expect(actual).toEqual(expected);
+    });
+    it("should return HTTP status code 405 Method Not Allowed", async () => {
+      const response = await request(server)
+        .post("/games")
+        .send(duplicateGame);
+      const actual = response.status;
+      const expected = 405;
       expect(actual).toEqual(expected);
     });
     it("should return in JSON format", async () => {

@@ -8,9 +8,9 @@ const games = [
     releaseYear: 1980 // not required
   },
   {
-    title: "Pacman", // required
-    genre: "Arcade", // required
-    releaseYear: 1980 // not required
+    title: "Fortnite", // required
+    genre: "Shooter", // required
+    releaseYear: 2017 // not required
   }
 ];
 
@@ -25,8 +25,13 @@ server.post("/games", async (req, res) => {
     return res.status(422).json({
       errorMessage: "Required fields are incomplete."
     });
+  } else if (games.find(game => game.title === req.body.title) != undefined) {
+    return res.status(405).json({
+      errorMessage: "Game title already exists."
+    });
   } else {
     const game = await req.body;
+
     return res.status(201).json(game);
   }
 });
