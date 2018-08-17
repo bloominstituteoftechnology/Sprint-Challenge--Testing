@@ -15,6 +15,12 @@ describe('testing server.js', () => {
             expect(response.status).toEqual(201);
           });
 
+        it('should return new game', async () => {
+            const expected = {title: "Tetris", genre: "Arcade",  releaseYear: 1984}
+            const response = await request(server).post('/games').send({title: "Tetris", genre: "Arcade",  releaseYear: 1984});
+            expect(response.body).toEqual(expected);
+          });
+
     })
 
     describe('testing GET /games', () => {
@@ -33,7 +39,15 @@ describe('testing server.js', () => {
     })
 
     describe('testing GET  /games/:id', () => {
-        
+        it('if id does not exist, return error code 404', async () => {
+            // const response = await request(server).get('/games/88').send({id: '88'});
+            // expect(response.status).toEqual(404);
+          });
+
+          it('if id exists, return status code 201', async () => {
+            // const response = await request(server).get('/games/3').send({id: '3'});
+            // expect(response.status).toEqual(200);
+          });
     })
 
     describe('testing DELETE  /games/:id', () => {
@@ -45,8 +59,22 @@ describe('testing server.js', () => {
             expect(response.status).toEqual(404);
           });
 
-          it('if id exists, return status code 201', async () => {
+          it('if id exists, return status code 200', async () => {
             const response = await request(server).delete('/games/3').send({id: '3'});
+            expect(response.status).toEqual(200);
+          });
+
+    })
+
+    describe('testing PUT /games/:id', () => {
+        
+        it('should return error code 400 if name is missing', async () => {
+            const response = await request(server).put('/games/1').send({title: "", genre: "Arcade",  releaseYear: 1984, id: 1});
+            expect(response.status).toEqual(400);
+          });
+
+          it('if id exists, return status code 200', async () => {
+            const response = await request(server).put('/games/1').send({title: "Tetris", genre: "Arcade",  releaseYear: 1984, id: 1});
             expect(response.status).toEqual(200);
           });
 

@@ -18,7 +18,11 @@ server.post('/games', (req, res) => {
 })
 
 server.get('/games/:id', (req, res) => {
-    
+    // const {title, genre, releaseYear, id} = req.body
+    // if (!id) {
+    //     res.status(404).json({ msg: `The game with id #${id} does not exist.` }) 
+    // }
+    // res.status(200).json({ title, genre, releaseYear })
 })
 
 server.delete('/games/:id', (req, res) => {
@@ -28,5 +32,13 @@ server.delete('/games/:id', (req, res) => {
         }
         res.status(200).json({ msg: `The game with id #${id} is deleted.` })
 })
+
+server.put("/games/:id", (req, res) => {
+    const { title, genre, releaseYear, id } = req.body;
+    if (!title || !genre || !releaseYear || !id) {
+      res.status(400).json({ error: "Make sure title, genre and release year are filled in." });
+    }
+    res.status(200).json({ title: title, genre: genre, releaseYear: releaseYear, id: id });
+  });
 
 module.exports = server;
