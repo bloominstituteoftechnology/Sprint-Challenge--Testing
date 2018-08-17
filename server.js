@@ -48,6 +48,14 @@ server.get('/games/:id', (req, res) => {
     const game = games.find(game => game.id == id);
     if (!game) return res.status(404).json({ error: 'Game with the ID provided does not exist!' });
     res.status(200).json(game);
+});
+
+server.delete('/games/:id', (req, res) => {
+    const { id } = req.params;
+    const foundGame = games.find(game => game.id == id);
+    if (!foundGame) return res.status(404).json({ error: 'Game with the ID provided does not exist!' });
+    games = games.filter(game => game.id !== id);
+    res.status(200).json({ removed: id });
 })
 
 module.exports = server;

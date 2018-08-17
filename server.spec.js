@@ -46,6 +46,21 @@ describe('server.js endpoints', () => {
             await request(server)
                 .get('/games/5')
                 .expect(404);
-        })
-    })
+        });
+    });
+
+    describe('DELETE /games:id', () => {
+        it('should return status code 200, JSON, and { removed: id }', async () => {
+            await request(server)
+                .delete('/games/3')
+                .expect('Content-Type', /json/)
+                .expect(200, { removed: 3 });
+        });
+
+        it('should return status code 404 if the game with the id provided does not exist', async () => {
+            await request(server)
+                .delete('/games/5')
+                .expect(404);
+        });
+    });
 });
