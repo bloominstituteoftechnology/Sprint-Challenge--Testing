@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --watch --verbose",
-    "start": "nodemon index.js"
+    "start": "nodemon server.js"
   },
   "repository": "git+https://github.com/LambdaSchool/Sprint-Challenge--Testing.git",
   "keywords": [],
