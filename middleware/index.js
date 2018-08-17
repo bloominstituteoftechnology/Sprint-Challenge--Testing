@@ -1,9 +1,17 @@
 // middleware for project constraints
 function gameConstraints(req, res, next) {
   const { game } = req.body;
+
+  if (game == undefined) {
+    return next({
+      code: 422,
+      error: `Please provide a 'game' object for the game.`,
+    });
+  }
+
   const { title, genre, releaseYear } = game;
 
-  if (!title || title.length < 1) {
+  if (!game.title || game.title.length < 1) {
     return next({
       code: 422,
       error: `Please provide a 'title' for the game.`,

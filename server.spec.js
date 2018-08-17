@@ -96,9 +96,30 @@ describe('get game by id', () => {
     const response = await request(server).get('/games/1');
     expect(response.status).toEqual(expected);
   });
+
   it("should return status code 404 when hit `/games/:id` and there's no game with that id", async () => {
     const expected = 404;
     const response = await request(server).get('/games/10');
+    expect(response.status).toEqual(expected);
+  });
+});
+
+describe('delete game by id', () => {
+  it('should return status code 200 when hit `/games/:id` and id exists', async () => {
+    const expected = 200;
+    const response = await request(server).delete('/games/1');
+    expect(response.status).toEqual(expected);
+  });
+
+  it('should return an array of the remaining games after deleting', async () => {
+    const response = await request(server).delete('/games/2');
+    const valid = Array.isArray(response.body.games);
+    expect(valid).toBe(true);
+  });
+
+  it("should return status code 404 when hit `/games/:id` and there's no game with that id", async () => {
+    const expected = 404;
+    const response = await request(server).delete('/games/10');
     expect(response.status).toEqual(expected);
   });
 });

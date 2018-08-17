@@ -1,12 +1,14 @@
 const express = require('express');
 const server = express();
-const PORT = 3003;
+const PORT = 3005;
 const { gameConstraints } = require('./middleware');
 const errors = require('./middleware/errors');
 server.use(express.json());
 
 // in memory "fake" database
 let games = [];
+// always increments when add a game
+let id = 0;
 
 // base endpoint to ensure server is working
 server.get('/', (req, res) => {
@@ -27,7 +29,7 @@ server.get('/games/:id', (req, res) => {
   if (game.length === 1) {
     res.status(200).json({ game });
   } else {
-    res.status(404).json({ error: 'Game id:${id} not in the database' });
+    res.status(404).json({ error: `Game id:${id} not in the database` });
   }
 });
 
@@ -36,7 +38,8 @@ server.get('/games/:id', (req, res) => {
 */
 server.post('/games', gameConstraints, (req, res) => {
   const { title, genre, releaseYear } = req;
-  const id = games.length + 1;
+  // increment ID count
+  id++;
   const newGame = {
     id,
     title,
@@ -56,7 +59,22 @@ server.post('/games', gameConstraints, (req, res) => {
   } else {
     res
       .status(405)
-      .json({ error: 'That game title is already in the database' });
+      .json({ error: `That game title is already in the database` });
+  }
+});
+
+/*
+ DELETE endpoints
+*/
+server.delete('/games/:id', (req, res) => {
+  const { id } = req.params;
+  const game = games.filter(g => g.id == id);
+
+  if (game.length === 1) {
+    games = games.filter(g => g.id != id);
+    res.status(200).json({ games });
+  } else {
+    res.status(404).json({ error: `Game id:${id} not in the database` });
   }
 });
 
