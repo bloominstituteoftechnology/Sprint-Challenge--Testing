@@ -45,7 +45,7 @@ describe('server.js', () => {
       const response = await request(server)
       .post('/games')
       .send({ 
-        title: 'Pacman', 
+        title: 'Megaman', 
         genre: 'Arcade',
         releaseYear: 1980
       });
@@ -56,19 +56,32 @@ describe('server.js', () => {
     it(`should return game object when title and genre are provided`, 
       async () => {
         const expected = { 
-          title: 'Pacman', 
+          title: 'Super Mario Odyssey', 
           genre: 'Arcade',
-          releaseYear: 1980
+          releaseYear: 2017
         };
         const response = await request(server)
           .post('/games')
           .send({ 
-            title: 'Pacman', 
+            title: 'Super Mario Odyssey', 
             genre: 'Arcade',
-            releaseYear: 1980
+            releaseYear: 2017
           });
 
         expect(response.body).toEqual(expected);
+    });
+
+    it(`should return 405 NOT ALLOWED when a duplicate title is sent`, async () => {
+      const expected = 405;
+      const response = await request(server)
+      .post('/games')
+      .send({ 
+        title: 'Pacman', 
+        genre: 'Arcade',
+        releaseYear: 1980
+      });
+
+      expect(response.status).toEqual(expected);
     });
   });
 
