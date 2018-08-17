@@ -12,7 +12,8 @@ describe('GET /server', () => {
         const expected = [{
             title: 'Pacman',
             genre: 'Arcade',
-            releaseYear: 1980
+            releaseYear: 1980,
+            id: 1
         }];
         const res = await request(server)
         .get('/games')
@@ -92,4 +93,30 @@ describe('POST /games', () => {
         .send(newGame)
         expect(res.status).toEqual(500);
     })*/
+})
+
+describe('GET /games/:id', () => {
+    it('should return status code 200 if successful', async () => {
+        const res = await request(server)
+        .get('/games/1')
+        expect(res.status).toEqual(200);
+    })
+
+    it('should return status code 404 if not found', async () => {
+        const res = await request(server)
+        .get('/games/5')
+        expect(res.status).toEqual(404);
+    })
+
+    it('should return game object if successful', async () => {
+        const expected = {
+            title: 'Pacman',
+            genre: 'Arcade',
+            releaseYear: 1980,
+            id: 1
+        }
+        const res = await request(server)
+        .get('/games/1')
+        expect(res.body).toEqual(expected)
+    })
 })
