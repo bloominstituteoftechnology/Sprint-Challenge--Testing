@@ -22,23 +22,74 @@ describe("server.js", () => {
     });
   });
 
-  describe('GET endpoint (/games)', () => {
-
-    it('should return status code 200 OK', async () => {
-        const expected = 200;
-        const res = await request(server).get("/games");
-        expect(res.status).toEqual(expected);
-    })
+  describe("GET endpoint (/games)", () => {
+    it("should return status code 200 OK", async () => {
+      const expected = 200;
+      const res = await request(server).get("/games");
+      expect(res.status).toEqual(expected);
+    });
 
     it("should return JSON", async () => {
-        const res = await request(server).get("/games");
-        expect(res.type).toEqual("application/json");
-      });
-  
-      it("should return object that looks like expected ", async () => {
-        const expected = db.games;
-        const res = await request(server).get("/games");
-        expect(res.body).toEqual(expected);
-      });
-  })
+      const res = await request(server).get("/games");
+      expect(res.type).toEqual("application/json");
+    });
+
+    it("should return object that looks like expected ", async () => {
+      //Will return an empty array if there are no games stored.
+      // To test this, comment out all games in server.js
+      const expected = db.games;
+      const res = await request(server).get("/games");
+      expect(res.body).toEqual(expected);
+    });
+  });
+
+  describe("POST endpoint(/games)", () => {
+    it("should return status code 201 created if successful", async () => {
+      const expected = 201;
+      const res = await request(server)
+        .post("/games")
+        .send({
+          title: "Pacman", // required
+          genre: "Arcade", // required
+          releaseYear: 1980 // not required
+        });
+      expect(res.status).toEqual(expected);
+    });
+
+    it("should return JSON", async () => {
+      const res = await request(server).get("/games");
+      expect(res.type).toEqual("application/json");
+    });
+
+    it("should return created game", async () => {
+      const expected = {
+        title: "Pacman",
+        genre: "Arcade",
+        releaseYear: 1980
+      };
+
+      const res = await request(server)
+        .post("/games")
+        .send({
+          title: "Pacman",
+          genre: "Arcade",
+          releaseYear: 1980
+        });
+      expect(res.body).toEqual(expected);
+    });
+
+    it('should return status code 422 if there is no title or genre provided', async () => {
+        const expected = 422;
+        const res = await request(server)
+            .post('/games')
+            .send({
+                title: "Pacman",
+                genre: "",
+                releaseYear: 1980
+              });
+
+            expect(res.status).toEqual(expected);
+            expect(res.body).toEqual({ message: `need title and genre bro` }) 
+    });
+  });
 });
