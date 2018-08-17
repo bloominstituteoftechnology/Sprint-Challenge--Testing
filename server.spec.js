@@ -44,11 +44,20 @@ describe('list games', () => {
 });
 
 describe('post games', () => {
+  it('should return a 200 when adding a game', async () => {
+    const expected = 200;
+    const game = { title: 'Pacman', genre: 'Arcade', releaseYear: 1980 };
+    const response = await request(server)
+      .post('/games')
+      .send({ game });
+    expect(response.status).toEqual(expected);
+  });
+
   it('should add a game', async () => {
     const game = { title: 'Pacman', genre: 'Arcade', releaseYear: 1980 };
     const response = await request(server)
       .post('/games')
-      .send({ game: game });
+      .send({ game });
     const valid = Array.isArray(response.body.games);
     expect(valid).toBe(true);
   });
@@ -58,7 +67,7 @@ describe('post games', () => {
     const game = { title: '', genre: 'Arcade', releaseYear: 1980 };
     const response = await request(server)
       .post('/games')
-      .send({ game: game });
+      .send({ game });
     expect(response.status).toEqual(expected);
   });
 
@@ -67,7 +76,7 @@ describe('post games', () => {
     const game = { title: 'Pacman', genre: '', releaseYear: 1980 };
     const response = await request(server)
       .post('/games')
-      .send({ game: game });
+      .send({ game });
     expect(response.status).toEqual(expected);
   });
 
