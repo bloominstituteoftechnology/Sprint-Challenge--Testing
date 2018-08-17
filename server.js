@@ -47,15 +47,17 @@ server.get("/games", (req, res) => {
 
 server.post("/games", (req, res) => {
   const { title, genre, releaseYear } = req.body;
+
   if (!title || !genre) {
     res.status(422).json({ message: `need title and genre bro` });
   }
+
   for (let i = 0; i < db.games.length; i++) {
     if (title === db.games[i].title) {
       res.status(405).json({ message: "That game is already in database" });
     }
   }
-  res.status(201).json({ title, genre, releaseYear  });
+  res.status(201).json({ title, genre, releaseYear });
 });
 
 module.exports = { server, db };
