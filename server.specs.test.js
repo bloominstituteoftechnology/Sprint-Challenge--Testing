@@ -42,5 +42,18 @@ describe("server.js", () => {
         .send(newGame);
       expect(response.status).toEqual(expected);
     });
+
+    it("should return a status code of 405 if the game title is not unique", async () => {
+      const expected = 405;
+      const newGame = {
+        title: "Mario",
+        genre: "Platformer",
+        releaseYear: 1994
+      };
+      const response = await request(server)
+        .post("/games")
+        .send(newGame);
+      expect(response.status).toEqual(expected);
+    });
   });
 });
