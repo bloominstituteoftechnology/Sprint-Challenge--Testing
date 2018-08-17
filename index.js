@@ -5,7 +5,7 @@ const server = express();
 server.use(express.json());
 
 class ServerError {
-    constructor(status,message){
+    constructor(status, message) {
         this.status = status;
         this.message = message
     }
@@ -24,11 +24,10 @@ server.get('/', (req, res) => {
 server.post('/', (req, res) => {
     let game = req.body;
     try {
-
         if (!game.title || !game.genre) { throw new ServerError(422, 'Please fill out title and genre') }
         else {
-            games.map(title => {
-                if (game.title === title.title) {
+            games.map(obj => {
+                if (game.title === obj.title) {
                     throw new ServerError(405, 'No Duplicates!')
                 }
             })
@@ -41,7 +40,6 @@ server.post('/', (req, res) => {
     catch (error) {
         res.status(error.status).send(error.message)
     }
-
 })
 
 module.exports = server;

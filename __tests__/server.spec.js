@@ -40,6 +40,7 @@ describe('Post game to /', () => {
 
         expect(response.text).toEqual('Please fill out title and genre');
     })
+
     it('should return error if title is duplicate', async () => {
 
         const response = await request(server)
