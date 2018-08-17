@@ -9,7 +9,9 @@ const db = [
 
 server.use(express.json());
 server.get('/', (req, res) => {res.status(200).json({api: 'API is running'})})
-
+server.get('/games', (req, res) => {
+  res.status(200).json(db);
+})
 server.post('/games', (req, res) => {
   const { title, genre, releaseYear } = req.body;
   if (!title || ! genre) {
