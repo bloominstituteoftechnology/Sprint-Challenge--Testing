@@ -30,4 +30,40 @@ describe("server.js", () => {
       expect(res.text).toEqual(expected);
     });
   });
+
+  describe("POST: (/games)", () => {
+      it("should return status code 200 ok when correct data is provided", async () => {
+          const expected = 200;
+          const res = await request(server).post('/games').send({
+              title: "Borderlands 2",
+              genre: "Looter-Shooter",
+              releaseYear: "2012"
+          })
+          expect(res.status).toEqual(expected);
+      })
+      it("should return the new games array when correct data is provided", async () => {
+        const expected = [{
+            "title": "Pacman",
+            "genre": "Arcade",
+            "releaseYear": "1980"
+          },
+          {
+            "title": "Borderlands 2",
+            "genre": "Looter-Shooter",
+            "releaseYear": "2012"
+        },
+        {
+            "title": "Warframe",
+            "genre": "Looter-Shooter",
+            "releaseYear": "2013"
+        }
+        ]
+        const res = await request(server).post("/games").send({
+            title: "Warframe",
+            genre: "Looter-Shooter",
+            releaseYear: "2013"
+        })
+        expect(res.text).toEqual(expected);
+      })
+  })
 });
