@@ -13,4 +13,11 @@ server.get('/games', (req, res) => {
   ])
 })
 
+server.post('/games', (req, res) => {
+  if(!req.body || !req.body.title || !req.body.genre || !req.body.releaseYear)
+    res.status(400).send('missing fields')
+
+  res.status(200).json({...req.body, id: 1})
+})
+
 module.exports = server
