@@ -7,7 +7,7 @@ describe('get /games', () => {
     const response = await request(server).get('/games');
 
     expect(typeof response.body).toEqual('object');
-  })
+  });
 
   it ('should match actual data', async () => {
     const response = await request(server).get('/games');
@@ -24,9 +24,19 @@ describe('get /games', () => {
         "year": "1994"
       }
     ]);
-  })
+  });
 })
 
-// describe('put /games' () => {
-//   it('should ')
-// })
+describe('post /games', () => {
+  // it('should check for an object with at least 2 keys', async () => {
+  //   const response = await request(server)
+  //     .post('/games')
+  //     .send({
+  //       "title": "Garry's Mod",
+  //       "genre": "Sandbox",
+  //       "year": "2002",
+  //     })
+  //   expect(Object.keys(response.body).length).toBeGreaterThan(1);
+  //   expect(Object.keys(response.body).length).toBeLessThan(4);
+  // });
+})
