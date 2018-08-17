@@ -13,6 +13,32 @@ it('should return status code 200 OK', async() => {
                 expect(response.status).toEqual(expected);
 
 });
+
+it('should return an Array as a respnse on making a GET request', async() => {
+                const expected = true;
+
+                const response = await request(server).get('/');
+		console.log( response.body);
+                expect(Array.isArray(response.body)).toEqual(expected);
+
 });
+});
+
+
+
+	
+
+
+	
+
+
+
+
+
+
+
+
+
+
 
 });

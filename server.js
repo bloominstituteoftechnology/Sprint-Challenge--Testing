@@ -4,6 +4,7 @@ const server = express();
 
 server.use(express.json());
 
+//const games =[];
 
 const games =[
 {
