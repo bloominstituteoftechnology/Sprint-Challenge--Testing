@@ -1,6 +1,18 @@
 const express = require("express");
 
 const server = express();
+const games = [
+  {
+    title: "Pacman", // required
+    genre: "Arcade", // required
+    releaseYear: 1980 // not required
+  },
+  {
+    title: "Pacman", // required
+    genre: "Arcade", // required
+    releaseYear: 1980 // not required
+  }
+];
 
 server.use(express.json());
 
@@ -17,6 +29,10 @@ server.post("/games", async (req, res) => {
     const game = await req.body;
     return res.status(201).json(game);
   }
+});
+
+server.get("/games", (req, res) => {
+  res.status(200).json(games);
 });
 
 module.exports = server;

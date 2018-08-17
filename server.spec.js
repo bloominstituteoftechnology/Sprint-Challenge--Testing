@@ -67,4 +67,24 @@ describe("server.js", () => {
       expect(actual).toEqual(expected);
     });
   });
+  describe("GET /games", () => {
+    it("should return HTTP status code 200 OK", async () => {
+      const response = await request(server).get("/games");
+      const actual = response.status;
+      const expected = 200;
+      expect(actual).toEqual(expected);
+    });
+    it("should return in JSON format", async () => {
+      const response = await request(server).get("/games");
+      const actual = response.type;
+      const expected = "application/json";
+      expect(actual).toEqual(expected);
+    });
+    it("should return an array", async () => {
+      const response = await request(server).get("/games");
+      const actual = Array.isArray(response.body);
+      const expected = true;
+      expect(actual).toEqual(expected);
+    });
+  });
 });
