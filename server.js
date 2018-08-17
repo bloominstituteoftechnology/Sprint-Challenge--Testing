@@ -8,7 +8,14 @@ const db = [
 ];
 
 server.use(express.json());
+server.get('/', (req, res) => {res.status(200).json({api: 'API is running'})})
 
-// Endpoints go here
+server.post('/games', (req, res) => {
+  const { title, genre, releaseYear } = req.body;
+  if (!title || ! genre) {
+    res.status(422).json({ msg: 'Title and Genre are require to create a new game'})
+  }
+  res.status(201).json({ title, genre, releaseYear })
+})
 
 module.exports = server;
