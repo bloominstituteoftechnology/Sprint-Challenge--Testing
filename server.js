@@ -30,6 +30,15 @@ server.post("/games", (req, res) => {
       res
     );
   }
+  const findGameByTitle = game => {
+    return game.title === title;
+  };
+  if (games.find(findGameByTitle)) {
+    return sendUserError(
+      `Game over man! ${name} already exists in the game DB.`,
+      res
+    );
+  }
   games.push(newGame);
   res.json(games);
 });
