@@ -29,20 +29,6 @@ describe('server.js', () => {
   });
 });
 
-describe('list games', () => {
-  it('should return status code 200 when hit `/games`', async () => {
-    const expected = 200;
-    const response = await request(server).get('/games');
-    expect(response.status).toEqual(expected);
-  });
-
-  it('should return an array of games', async () => {
-    const response = await request(server).get('/games');
-    const valid = Array.isArray(response.body.games);
-    expect(valid).toBe(true);
-  });
-});
-
 describe('post games', () => {
   it('should return a 200 when adding a game', async () => {
     const expected = 200;
@@ -86,6 +72,33 @@ describe('post games', () => {
     const response = await request(server)
       .post('/games')
       .send({ game });
+    expect(response.status).toEqual(expected);
+  });
+});
+
+describe('get games', () => {
+  it('should return status code 200 when hit `/games`', async () => {
+    const expected = 200;
+    const response = await request(server).get('/games');
+    expect(response.status).toEqual(expected);
+  });
+
+  it('should return an array of games', async () => {
+    const response = await request(server).get('/games');
+    const valid = Array.isArray(response.body.games);
+    expect(valid).toBe(true);
+  });
+});
+
+describe('get game by id', () => {
+  it('should return status code 200 when hit `/games/:id` and id exists', async () => {
+    const expected = 200;
+    const response = await request(server).get('/games/1');
+    expect(response.status).toEqual(expected);
+  });
+  it("should return status code 404 when hit `/games/:id` and there's no game with that id", async () => {
+    const expected = 404;
+    const response = await request(server).get('/games/10');
     expect(response.status).toEqual(expected);
   });
 });

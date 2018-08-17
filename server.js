@@ -20,6 +20,17 @@ server.get('/games', (req, res) => {
   res.status(200).json({ games });
 });
 
+server.get('/games/:id', (req, res) => {
+  const { id } = req.params;
+  const game = games.filter(g => g.id == id);
+
+  if (game.length === 1) {
+    res.status(200).json({ game });
+  } else {
+    res.status(404).json({ error: 'Game id:${id} not in the database' });
+  }
+});
+
 /*
  POST endpoints
 */
@@ -34,7 +45,6 @@ server.post('/games', gameConstraints, (req, res) => {
   };
   let dupGame = false;
 
-  console.log('ID', id);
   for (let i = 0; i < games.length; i++) {
     if (games[i].title === newGame.title) {
       dupGame = true;
