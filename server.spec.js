@@ -73,4 +73,27 @@ describe("server.js", () => {
       expect(response.body).toEqual(expected);
     });
   });
+  describe("endpoing delete (/games/:id)", () => {
+    it("should return status code 200 if id matches", async () => {
+      const expected = 200;
+      const response = await request(server)
+        .delete("/games/1")
+        .send({ id: "1" });
+      expect(response.status).toEqual(expected);
+    });
+    it("should return message:'game delted' if id matches", async () => {
+      const expected = { message: "game deleted" };
+      const response = await request(server)
+        .delete("/games/1")
+        .send({ id: "1" });
+      expect(response.body).toEqual(expected);
+    });
+    // it("should return 'message:game does not exist' if no id", async () => {
+    //   const expected = 422;
+    //   const response = await request(server)
+    //     .delete("/games/3")
+    //     .send({ id: "" });
+    //   expect(response.status).toEqual(expected);
+    // });
+  });
 });
