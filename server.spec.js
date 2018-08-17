@@ -33,12 +33,33 @@ describe('server.js', () => {
 
     it('should return an array, even if array is empty', async () => {
       const expected = [];
-      const res = await request(server)
+      const response = await request(server)
       .get('/games')
       expect(response.body).toEqual(expected);
     })
   })
   describe('post /games', () => {
-    it('should ')
+    it('should return status 201 if successful', async () => {
+      const expected = 201;
+      const response = await request(server)
+      .post('/games')
+      .send({
+        title: 'Secret of Mana',
+        genre: 'Action RPG',
+        releaseYear: 1993
+      })
+      expect(response.status).toEqual(expected);
+    })
+    it('should return status 422 if missing title or genre', async () => {
+      const expected = 422;
+      const response = await request(server)
+      .post('/games')
+      .send({
+        title: 'The Legend of Zelda: A Link to the Past',
+        genre: '',
+        releaseYear: 1991
+      })
+      expect(response.status).toEqual(expected);
+    })
   })
 })
