@@ -14,4 +14,14 @@ server.get('/', (req, res) => {
     });
 });
 
+server.post('/', (req, res) => {
+    db('games')
+    .insert(req.body)
+    .then(response => {
+        res.status(201).json(response);
+    })
+    .catch(err => {
+        res.status(500).json(serverErrorMsg);
+    })
+});
 module.exports = server;
