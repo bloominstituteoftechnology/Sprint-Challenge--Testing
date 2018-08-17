@@ -79,4 +79,22 @@ describe('server.js routes', () => {
               .expect('Game with that title already exists in database')
     })
   })
+
+  describe('DELETE routes', () => {
+    it('should return "Deleted" to indicate that a given user has been deleted', async() => {
+      await request(server)
+              .delete('/games/2')
+              .expect('Content-Type', /json/)
+              .expect(200)
+              .expect({statusCode: 200, message:"Deleted"})
+    })
+
+    it('should return "404: Not found" if game does not exist', async() => {
+      await request(server)
+              .delete('/games/8')
+              .expect('Content-Type', /text/)
+              .expect(404)
+              .expect('404: Not found')
+    })
+  })
 });

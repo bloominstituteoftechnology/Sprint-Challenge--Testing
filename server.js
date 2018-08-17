@@ -70,7 +70,17 @@ server.post('/games', (req, res) => {
   } else {
     res.status(422).send('Error');
   }
+});
 
+server.delete('/games/:id', (req,res) => {
+  if(req.params.id > (games.length-1)) {
+    console.log('THIS 1')
+    return res.status(404).send('404: Not found');
+  } else {
+    console.log('THIS 2')
+    games.splice(req.params.id, 1);
+    return res.status(200).json({statusCode: 200, message:'Deleted'})
+  }
 })
 
 
