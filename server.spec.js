@@ -1,6 +1,6 @@
 const request = require('supertest');
 
-const server = require('./server.js');
+const { server, games } = require('./server.js');
 
 describe('server.js', () => {
   describe('root endpoint(/)', () => {
@@ -14,7 +14,8 @@ describe('server.js', () => {
       const response = await request(server)
       .get('/');
       expect(response.type).toEqual('application/json');
-    });
+    })
+  })
 
   describe('get /games', () => {
     it('should return status code 200 ok', async () => {
@@ -24,15 +25,8 @@ describe('server.js', () => {
       expect(response.status).toEqual(expected);
     })
 
-    it('should return a list of games', async () => {
-      const expected = server.games;
-      const response = await request(server);
-      .get('/games')
-      expect(response.status).toEqual(expected);
-    })
-
-    it('should return an array, even if array is empty', async () => {
-      const expected = [];
+    it('should return a list of games, and should return empty array if list is empty', async () => {
+      const expected = games;
       const response = await request(server)
       .get('/games')
       expect(response.body).toEqual(expected);
