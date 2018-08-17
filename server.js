@@ -17,5 +17,20 @@ server.get('/games', (req, res) => {
     .json(games);
 })
 
+// establish POST endpoit
+server.post('/games', (req, res) => {
+  let game = req.body;
+  if (!(game.title || game.genre)) {
+    res
+      .status(422)
+      .end();
+  } else {
+    games.push(game);
+    res
+      .status(201)
+      .end();
+  }
+})
+
 // export server so tests can interact with it
 module.exports = server;
