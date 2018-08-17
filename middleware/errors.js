@@ -7,6 +7,12 @@ function errors(err, req, res, next) {
       });
       return;
 
+    case 405:
+      res.status(405).json({
+        error: err.error,
+      });
+      return;
+
     case 422:
       res.status(422).json({
         error: err.error,

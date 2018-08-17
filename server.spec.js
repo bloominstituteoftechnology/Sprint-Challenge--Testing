@@ -54,7 +54,7 @@ describe('post games', () => {
   });
 
   it('should add a game', async () => {
-    const game = { title: 'Pacman', genre: 'Arcade', releaseYear: 1980 };
+    const game = { title: 'Ms. Pacman', genre: 'Arcade', releaseYear: 1982 };
     const response = await request(server)
       .post('/games')
       .send({ game });
@@ -71,9 +71,18 @@ describe('post games', () => {
     expect(response.status).toEqual(expected);
   });
 
-  it('should return a 422 if missing the genrew of a game', async () => {
+  it('should return a 422 if missing the genre of a game', async () => {
     const expected = 422;
     const game = { title: 'Pacman', genre: '', releaseYear: 1980 };
+    const response = await request(server)
+      .post('/games')
+      .send({ game });
+    expect(response.status).toEqual(expected);
+  });
+
+  it('should return a 405 if adding a duplicate game title', async () => {
+    const expected = 405;
+    const game = { title: 'Pacman', genre: 'Arcade', releaseYear: 1980 };
     const response = await request(server)
       .post('/games')
       .send({ game });

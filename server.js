@@ -32,9 +32,22 @@ server.post('/games', gameConstraints, (req, res) => {
     genre,
     releaseYear,
   };
+  let dupGame = false;
+
   console.log('ID', id);
-  games.push(newGame);
-  res.status(200).json({ games });
+  for (let i = 0; i < games.length; i++) {
+    if (games[i].title === newGame.title) {
+      dupGame = true;
+    }
+  }
+  if (!dupGame) {
+    games.push(newGame);
+    res.status(200).json({ games });
+  } else {
+    res
+      .status(405)
+      .json({ error: 'That game title is already in the database' });
+  }
 });
 
 /*
