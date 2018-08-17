@@ -24,4 +24,16 @@ server.post('/', (req, res) => {
         res.status(500).json(serverErrorMsg);
     })
 });
+
+server.delete('/:id', (req, res) => {
+    db('games')
+    .where("id", req.params.id)
+    .del()
+    .then(response => {
+        res.status(200).json(response);
+    })
+    .catch(err => {
+        res.status(500).json(serverErrorMsg);
+    })
+});
 module.exports = server;
