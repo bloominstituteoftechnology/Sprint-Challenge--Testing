@@ -3,7 +3,7 @@ const request = require('supertest')
 const server = require('./server.js')
 
 describe('server.js', () => {
-    describe('root endpoint (/)', () => {
+    
         it('should return an OK status code', async () => {
             
         const expected = 200;
@@ -13,6 +13,7 @@ describe('server.js', () => {
             expect(response.status).toEqual(expected)
         
     })
+    describe('root endpoint (/games)', () => {
     it('games should return an OK status code', async () => {
             
         const expected = 200;
@@ -22,7 +23,7 @@ describe('server.js', () => {
             expect(response.status).toEqual(expected)
     })
     
-      it('is returning array', async () => {
+      it('is returning games', async () => {
         const expected = {
             "games": [{"genre": "Arcade", 
             "releaseYear": 1980, 
