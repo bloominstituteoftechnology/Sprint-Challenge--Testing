@@ -1,9 +1,10 @@
 const express = require('express');
+const db = require('knex')(require('./knexfile').development);
 
 server = express();
 server.use(express.json());
 
-let store = [];
+const store = [];
 class HttpError extends Error {
   constructor(message, code = 100) {
     super(message);
@@ -11,8 +12,14 @@ class HttpError extends Error {
   }
 }
 
-server.get('/games', (res, req) => {
-  return req.status(200).json(store);
+server.get('/games', (req, res) => {
+  db('games')
+    .select('games.title', { genre: 'genres.name' }, 'games.releaseYear')
+    .innerJoin('genres', 'games.genreId', 'genres.id')
+    .then(games => res.status(200).json(games))
+    .catch((err) => {
+      throw new HttpError(`Database error: ${err.response}`, 500);
+    });
 });
 
 server.post('/games', (req, res) => {
@@ -22,16 +29,30 @@ server.post('/games', (req, res) => {
   } else if (!genre) {
     throw new HttpError('Post must include genre', 422);
   }
-  store.push({ title, genre, releaseYear });
-  return res.status(201).end();
+  db('genres')
+    .select('id')
+    .where('name', '=', genre)
+    .then(([item]) => {
+      if (item) {
+        return item.id;
+      }
+      return db('genres').insert({ name: genre });
+    })
+    .then(([id]) => db('games').insert({ title, genreId: id, releaseYear }))
+    .then(confirm => res.status(201).end())
+    .catch((err) => {
+      throw new HttpError(
+        `Game could not be created in database. Database message: ${err.response}`,
+        500,
+      );
+    });
 });
 
 server.use((err, req, res, next) => {
+  debugger;
   if (err instanceof HttpError) {
-    res.status(err.code).json({ message: err.message });
-  } else {
-    res.status(404).json({ message: 'Path not found' });
+    return res.status(err.code).json({ message: err.message });
   }
-  next(err);
+  return res.status(404).json({ message: 'Path not found' });
 });
 module.exports = server;

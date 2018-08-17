@@ -1,5 +1,7 @@
 const request = require('supertest');
 const server = require('./server');
+const db = require('knex')(require('./knexfile').development);
+
 
 const errNum = 422;
 const missingTitle = {
@@ -15,6 +17,14 @@ const newGame = {
 };
 
 describe('Games server', () => {
+  beforeAll((done) => {
+    db
+      .truncate('games')
+      .then(res => db.truncate('genres'))
+      .then(res => {
+        done();
+      });
+  });
   it('get request returns an empty array when empty', async () => {
     const response = await request(server).get('/games');
     expect(response.status).toEqual(200);
@@ -48,13 +58,7 @@ describe('Games server', () => {
     });
   });
   it('get request returns an array containing games when they are in store', async () => {
-    const postResponse = await request(server)
-      .post('/games')
-      .send(newGame);
-    let response;
-    if (postResponse.status === 201) {
-      response = await request(server).get('/games');
-    }
+    response = await request(server).get('/games');
     const { status, body } = response;
     expect(status).toEqual(200);
     expect(body instanceof Array).toEqual(true);
