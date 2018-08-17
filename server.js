@@ -23,8 +23,15 @@ server.get('/games', (req, res) => {
 server.post('/games', (req, res) => {
   const {body} = req
 
+  //Check if both the body and title sent
   if (!body.title || !body.genre)
     res.status(422).json({msg: 'required fields missing'})
+
+  //Check for titles that already exist:
+  else if (games.map(cv => cv.title).includes(body.title)){    
+    res.status(405).json({msg: 'Game already exists'})
+  }
+
   else {
     //Get the current Max id
     let maxID = Math.max(...[...games.map(cv => cv.id)])

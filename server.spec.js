@@ -5,6 +5,7 @@ const server = require('./server.js')
 const statusCodePass = 200
 const statusCodeFail = 400
 const statusCodeInc = 422
+const statusCodeNA = 405
 
 describe('Server Testing', () => {
   it('Basic Get from root /', async () => {
@@ -35,6 +36,15 @@ describe('Server Testing', () => {
       expect(res.status).toEqual(statusCodeInc)
       expect(res.body).toEqual({msg: 'required fields missing'})
     });
+
+    it('POST /games repeat title', async() => {
+      const res = await req(server).post('/games').send({title:'Street Fighter', genre:'Arcade'})
+
+      expect(res.status).toEqual(statusCodeNA)
+      expect(res.body).toEqual({msg: 'Game already exists'})
+    });
+
+    
 
     it('POST /games complete body', async() => {
       const res = await req(server).post('/games').send({title:'Bubble Bobble', genre:'NES'})
