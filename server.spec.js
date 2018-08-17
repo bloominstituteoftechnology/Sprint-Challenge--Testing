@@ -26,7 +26,14 @@ describe('server.js', () => {
         .send({title: 'Pong', genre: 'Arcade', releaseYear: 1972})
       expect(response.status).toEqual(expected);
     })
-    test('should return status code 405 if missing info', async () => {
+    test('should return status code 422 if missing info', async () => {
+      const expected = 422;
+      const response = await request(server)
+        .post('/games')
+        .send({title: 'Pacman', genre: '', releaseYear: 1980})
+      expect(response.status).toEqual(expected);
+    })
+    test('should return status code 405 if game exists', async () => {
       const expected = 405;
       const response = await request(server)
         .post('/games')
