@@ -8,6 +8,7 @@ server.use(express.json());
 
 let games =[
 {
+  id: 1,	
   title: 'Pacman', // required
   genre: 'Arcade', // required
   releaseYear: 1980 // not required
@@ -17,6 +18,7 @@ let games =[
 ];
 
 
+let count =2;
 
 server.get('/', (req, res) => {
 	res.status(200).json(games);
@@ -25,7 +27,7 @@ server.get('/', (req, res) => {
 server.post('/games', (req, res) => {
 	
 	const {title, genre, releaseYear} = req.body;
-	const game = {title, genre, releaseYear};
+	const game = {title, genre, releaseYear, id: count};
 	
 	console.log(game);
 	
@@ -47,6 +49,8 @@ server.post('/games', (req, res) => {
 
 	else if(duplicateTitle.length ===0) {
 		games.push(game);
+		count+=1;
+
 		console.log(games);
 		res.status(200).json({message: "Successfuly added a new game"});
 	}
