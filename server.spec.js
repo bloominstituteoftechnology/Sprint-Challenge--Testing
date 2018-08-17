@@ -21,22 +21,7 @@ describe('server.js', () => {
             //checks
             expect(response.status).toEqual(expected)
     })
-    it(`should return 422 when no title given`, async () => {
-        const expected = 422;
-        const response = await request(server)
-        .post('/games')
-        .send({ title: null, genre: "fun" });
-  
-        expect(response.status).toEqual(expected);
-      });
-      it(`should return 422 when no genre given`, async () => {
-        const expected = 422;
-        const response = await request(server)
-        .post('/games')
-        .send({ title: "Doom", genre: null });
-  
-        expect(response.status).toEqual(expected);
-      });
+    
       it('is returning array', async () => {
         const expected = {
             "games": [{"genre": "Arcade", 
@@ -57,4 +42,30 @@ describe('server.js', () => {
     expect(response.body).toEqual(expect.arrayContaining(expected))
   });
 })
+})
+describe('POST', () => {
+    it(`should return 422 when no title given`, async () => {
+        const expected = 422;
+        const response = await request(server)
+        .post('/games')
+        .send({ title: null, genre: "fun" });
+  
+        expect(response.status).toEqual(expected);
+      });
+      it(`should return 422 when no genre given`, async () => {
+        const expected = 422;
+        const response = await request(server)
+        .post('/games')
+        .send({ title: "Doom", genre: null });
+  
+        expect(response.status).toEqual(expected);
+      });
+      it(`should return 201 when new post success`, async () => {
+        const expected = 201;
+        const response = await request(server)
+        .post('/games')
+        .send({ title: "Halo", genre: "fps" });
+  
+        expect(response.status).toEqual(expected);
+      });
 })
