@@ -21,20 +21,28 @@ describe('server.js', () => {
 
     it('should return a list of games', async () => {
       const expected = true;
-      const response = await request(server).get('/games')
-      const actual = Array.isArray(response.body)
 
-      expect(actual).toEqual(expected);
+      const response = await request(server).get('/games')
+
+      expect(Array.isArray(response.body)).toEqual(expected);
     });
+
+    it('should return an empty array if no games', async () => {
+      const expected = [];
+
+      const response = await request(server).get('/games')
+
+      expect(response.body).toEqual(expected);
+    })
   })
   // POST
   describe('POST /games', () => {
     it('should return a 422 code if the information is incomplete', async () => {
       const expected = 422;
-      const response = await request(server).post('/games').send({title: false, genre: false,  releaseYear: 1980});
-      const actual = response.status;
 
-      expect(actual).toEqual(expected);
+      const response = await request(server).post('/games').send({title: false, genre: false,  releaseYear: 1980});
+
+      expect(response.status).toEqual(expected);
     });
 
     it('should return a 200 code if the information is complete', async () => {

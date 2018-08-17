@@ -28,6 +28,11 @@ server.get('/', (req, res) => {
 
 server.get('/games', (req, res) => {
   res.status(200).send(games);
+  if (!games) {
+    return res.status(200).json([]);
+  } else {
+    return res.status(200).json(games);
+  }
 });
 
 server.post("/games", async (req, res) => {
