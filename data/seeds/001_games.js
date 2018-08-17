@@ -9,19 +9,19 @@ exports.seed = function(knex, Promise) {
           id: 1,
           title: "Pacman",
           genre: "Cat & Mouse",
-          releaseYear: "1978"
+          releaseYear: 1978
         },
         {
           id: 2,
           title: "Astroids",
           genre: "Space Shooter",
-          releaseYear: "1980"
+          releaseYear: 1980
         },
         {
           id: 3,
           title: "Street Fighter",
           genre: "Fighting",
-          releaseYear: "2000"
+          releaseYear: 2000
         }
       ]);
     });
