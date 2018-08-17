@@ -21,15 +21,31 @@ describe('server.js endpoints', () => {
             await request(server)
                 .post('/games')
                 .send({ title: 'Fortnite', genre: 'Fiction' })
-                .expect(405)
-        })
+                .expect(405);
+        });
     });
 
     describe('GET /games', () => {
-        it('should return status code 200', async () => {
+        it('should return status code 200 and JSON', async () => {
             await request(server)
                 .get('/games')
+                .expect('Content-Type', /json/)
                 .expect(200);
         });
     });
+
+    describe('GET /games:id', () => {
+        it('should return status code 200, JSON, and the game with the id provided', async () => {
+            await request(server)
+                .get('/games/1')
+                .expect('Content-Type', /json/)
+                .expect(200, { id: 1, title: 'Jigsaw Planet', genre: 'Puzzle' });
+        });
+
+        it('should return status code 404 if the game with the id provided does not exist', async () => {
+            await request(server)
+                .get('/games/5')
+                .expect(404);
+        })
+    })
 });

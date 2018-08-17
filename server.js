@@ -43,4 +43,11 @@ server.get('/games', (req, res) => {
     res.status(200).json(games);
 });
 
+server.get('/games/:id', (req, res) => {
+    const { id } = req.params;
+    const game = games.find(game => game.id == id);
+    if (!game) return res.status(404).json({ error: 'Game with the ID provided does not exist!' });
+    res.status(200).json(game);
+})
+
 module.exports = server;
