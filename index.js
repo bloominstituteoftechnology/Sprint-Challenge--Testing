@@ -5,7 +5,7 @@ server.use(express.json());
 
 const games = []
 
-server.get('/', (req, res) => {
+server.get('/games', async (req, res) => {
     res.status(200).send('api running');
 })
 
@@ -17,7 +17,7 @@ server.post('/games', async(req, res) => {
     try {
         const game = req.body;
         games.push(game);
-        res.status(201).json(games[-1]);
+        res.status(201).json(games);
     } catch (error) {
         res.status(500).json({message: 'Failed to add game to database.', err: error.message})
     }
