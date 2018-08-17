@@ -15,7 +15,7 @@ describe('Server Testing', () => {
   });
 
   describe('Tests for /games', () => {
-    describe('GET /games', async () => {
+    it('GET /games', async () => {
 
       const res = await req(server).get('/games')
 
@@ -28,5 +28,29 @@ describe('Server Testing', () => {
         {id:4, title:'Legend of Zelda', genre:'NES', releaseYear:'1980'},
       ])
     });
+
+    it('POST /games incomplete body', async() => {
+      const res = await req(server).post('/games').send({title:'Bubble Bobble'})
+
+      expect(res.status).toEqual(statusCodeInc)
+      expect(res.body).toEqual({msg: 'required fields missing'})
+    });
+
+    it('POST /games complete body', async() => {
+      const res = await req(server).post('/games').send({title:'Bubble Bobble', genre:'NES'})
+
+      expect(res.status).toEqual(statusCodePass)
+      expect(res.body).toMatchObject([
+        {id:0, title:'Pacman', genre:'Arcade', releaseYear:'1980'},
+        {id:1, title:'Street Fighter', genre:'Arcade', releaseYear:'1992'},
+        {id:2, title:'Mortal Kombat', genre:'Arcade', releaseYear:'1990'},
+        {id:3, title:'Super Mario', genre:'NES', releaseYear:'1986'},
+        {id:4, title:'Legend of Zelda', genre:'NES', releaseYear:'1980'},
+        {id:5, title:'Bubble Bobble', genre:'NES'}
+      ])
+    });
   });
+
+
+
 });
