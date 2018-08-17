@@ -1,7 +1,6 @@
 const request = require('supertest');
 const server = require('./server.js');
 
-// always use async/await when doing server tests
 describe('server.js', () => {
   it('should return status code 200 OK', async () => {
     const expected = 200;
