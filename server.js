@@ -48,6 +48,12 @@ server.get("/games", (req, res) => {
     if (!title || !genre) {
       res.status(422).json({ message: `need title and genre bro` });
     }
+    for (let i = 0; i < db.games.length; i++) {
+        if (title == db.games[i].title) {
+            res.status(405).json({message: "That game is already in database"});  
+        }
+    }
+    
     res.status(201).json({ title, genre, releaseYear });
   });
   

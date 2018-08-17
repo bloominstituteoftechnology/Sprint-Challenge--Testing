@@ -78,18 +78,34 @@ describe("server.js", () => {
       expect(res.body).toEqual(expected);
     });
 
-    it('should return status code 422 if there is no title or genre provided', async () => {
-        const expected = 422;
-        const res = await request(server)
-            .post('/games')
-            .send({
-                title: "Pacman",
-                genre: "",
-                releaseYear: 1980
-              });
+    it("should return status code 422 if there is no title or genre provided", async () => {
+      const expected = 422;
+      const res = await request(server)
+        .post("/games")
+        .send({
+          title: "Pacman",
+          genre: "",
+          releaseYear: 1980
+        });
 
-            expect(res.status).toEqual(expected);
-            expect(res.body).toEqual({ message: `need title and genre bro` }) 
+      expect(res.status).toEqual(expected);
+      expect(res.body).toEqual({ message: `need title and genre bro` });
+    });
+
+    //STRETCH TASK
+    it("should return status code 405 and message if duplicate game", async () => {
+      const expected = 405;
+      const res = await request(server)
+        .post("/games")
+        .send({
+          title: "Monopoly",
+          genre: "board",
+          releaseYear: 1945
+        });
+
+      expect(res.status).toEqual(expected);
+      expect(res.body).toEqual({ message: "That game is already in database" });
+
     });
   });
 });
