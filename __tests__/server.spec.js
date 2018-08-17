@@ -57,5 +57,12 @@ describe('SERVER', () => {
                 expect(res.type).toEqual('application/json');
             });
         });
+
+        describe('post', () => {
+            it('should return OK status code', async () => {
+                const res = await request(server).post('/');
+                expect(res.status).toEqual(200);
+            });
+        });
     });
 });
