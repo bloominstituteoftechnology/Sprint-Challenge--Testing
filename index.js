@@ -3,19 +3,27 @@ const server = express();
 server.use(express.json())
 const db = []
 let nextId = 0;
+const checkConstraint = (data) => {
+    let res;
+    db.map(e => {
+        if (Object.values(e).includes(data)) {
+            res = true
+        }
+    })
+    return res || false;
+}
+
 server.get('/games', (req, res) => {
     res.status(200).json(db)
 })
+
+
 server.post('/games', (req, res) => {
     if (req.body.title) {
-        db.forEach(e => {
-            if (Object.values(e).includes(req.body.title)) {
-                res.status(405).json({
-                    error: "unique constraints"
-                })
-                res.end();
-            }
+        if (checkConstraint(req.body.title)) res.status(405).json({
+            Error: "unique constraints"
         })
+
         const data = req.body
         data.id = nextId++;
         db.push(data)
