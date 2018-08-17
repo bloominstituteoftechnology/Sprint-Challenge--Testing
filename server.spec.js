@@ -63,17 +63,17 @@ describe("server.js", () => {
 
     it("should return created game", async () => {
       const expected = {
-        title: "Pacman",
+        title: "Tetris",
         genre: "Arcade",
-        releaseYear: 1980
+        releaseYear: 1988
       };
 
       const res = await request(server)
         .post("/games")
         .send({
-          title: "Pacman",
+          title: "Tetris",
           genre: "Arcade",
-          releaseYear: 1980
+          releaseYear: 1988
         });
       expect(res.body).toEqual(expected);
     });
@@ -105,7 +105,6 @@ describe("server.js", () => {
 
       expect(res.status).toEqual(expected);
       expect(res.body).toEqual({ message: "That game is already in database" });
-
     });
   });
 });
