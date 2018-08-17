@@ -13,7 +13,7 @@ describe('server.js', () => {
         });
 
         it('should always return an array', async () => {
-            const expected = [];
+            const expected = {games:[]};
 
             const response = await request(server).get('/games');
 
@@ -22,16 +22,18 @@ describe('server.js', () => {
     });
 
     describe('POST /games', () => {
-        it('should return a 422 status code if information is incomplete', () => {
+        it('should return a 422 status code if information is incomplete', async () => {
             const expected = 422;
             
-            const response = await request(server).post('/smurfs').send({title: 'Pacman', genre: 'Arcade'});
+            const response = await request(server).post('/games').send({title: 'Pacman', genre: 'Arcade'})
 
             expect(response.status).toEqual(expected);
         })
 
-        it('should return a 201 status code if information is correct', () => {
-            const response = await request(server).post('/smurfs').send({title: 'Pacman', genre: 'Arcade', releaseYear: 1980});
+        it('should return a 201 status code if information is correct', async () => {
+            const expected = 201;
+            
+            const response = await request(server).post('/games').send({title: 'Pacman', genre: 'Arcade', releaseYear: 1980});
 
             expect(response.status).toEqual(expected);
         })
