@@ -88,6 +88,26 @@ describe('SERVER', () => {
                 const res = await request(server).post('/');
                 expect(res.type).toEqual('application/json');
             });
+
+            it('should validate required fields', async () => {
+                const expected = {
+                    success: false,
+                    data: {
+                        title: '',
+                        genre: '',
+                        releaseYear: null
+                    }
+                };
+                const res = await request(server)
+                    .post('/')
+                    .send({
+                        title: '',
+                        genre: '',
+                        releaseYear: null
+                    });
+
+                expect(res.status).toEqual(422);
+            });
         });
     });
 });
