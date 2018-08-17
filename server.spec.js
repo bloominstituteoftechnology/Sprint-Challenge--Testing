@@ -35,6 +35,11 @@ describe('server.js', ()=> {
         const response = await request(server).post('/games').send({ title: 'Pacman', genre: 'Arcade', releaseYear: '1980' });
            expect(response.body).toEqual(expected);
         });
+		  it('should return status code 422 - missing info', async () => {
+            const expected = 422;
+            const response = await request(server).post('/games');
+            expect(response.status).toEqual(expected);
+        });
 		});
 
 
