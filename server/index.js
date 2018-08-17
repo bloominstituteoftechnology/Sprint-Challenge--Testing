@@ -20,6 +20,9 @@ server.use(express.json());
 server.use(helmet())
 
 server.get('/games', (req, res) => {
+  console.log(data[0].length)
+  console.log(data.length)
+  console.log(data.length)
   res.status(200).json(data);
 })
 
