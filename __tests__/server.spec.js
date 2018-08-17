@@ -51,7 +51,7 @@ describe('server', () => {
   })
 
   // group all GET/:id endpoint tests
-  describe('GET endpoint(/games/:id', () => {
+  describe('GET endpoint(/games/:id)', () => {
     // test that GET/:id returns status code 200 when game is found
     it('should return HTTP status code 200 when game is found by id', async () => {
       const response = await request(server).get('/games/1');
