@@ -92,11 +92,7 @@ describe('SERVER', () => {
             it('should validate required fields', async () => {
                 const expected = {
                     success: false,
-                    data: {
-                        title: '',
-                        genre: '',
-                        releaseYear: null
-                    }
+                    error: 'Please enter title AND genre information.'
                 };
                 const res = await request(server)
                     .post('/')

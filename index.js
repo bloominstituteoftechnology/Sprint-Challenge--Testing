@@ -45,14 +45,22 @@ server.get('/', (req, res) => {
 
 server.post('/', (req, res) => {
     const { title, genre, releaseYear } = req.body;
-    res.status(200).json({
-        success: true,
-        data: {
-            title,
-            genre,
-            releaseYear
-        }
-    });
+
+    if(title === '' || genre === '') {
+        res.status(422).json({
+            success: false,
+            error: 'Please enter title AND genre information.'
+        });
+    } else {
+        res.status(200).json({
+            success: true,
+            data: {
+                title,
+                genre,
+                releaseYear
+            }
+        });
+    }
 });
 
 module.exports = server;
