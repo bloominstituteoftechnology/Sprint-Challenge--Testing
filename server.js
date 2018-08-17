@@ -4,7 +4,7 @@ const server = express()
 
 server.use(express.json())
 
-const games = []
+let games = []
 let id = 1
 
 server.post('/games', (req, res) => {
@@ -26,4 +26,27 @@ server.post('/games', (req, res) => {
 server.get('/games', (req, res) => {
   res.status(200).json(games)
 })
+
+server.get('/games/:id', (req, res) => {
+  const { id } = req.params
+  const foundGame = games.find(game => game.id === Number(id))
+  if (!foundGame) {
+    return res.status(404).json({ error: 'game not in database' })
+  }
+  res.status(200).json(foundGame)
+})
+
+server.delete('/games/:id', (req, res) => {
+  const { id } = req.params
+  const ogGames = games
+  games = games.filter(game => game.id !== Number(id))
+  console.log('LENGTH', ogGames.length, games.length)
+  if (ogGames.length === games.length) {
+    return res.status(404).json({ msg: 'game not found' })
+  }
+  if (ogGames.length - games.length === 1) {
+    return res.status(200).json({ msg: `game with id ${id} deleted` })
+  }
+})
+
 module.exports = server

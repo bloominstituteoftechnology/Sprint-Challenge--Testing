@@ -62,8 +62,7 @@ describe('server.js', () => {
     it('should return JSON type response', async () => {
       const game = {
         title: 'Mutant League Football',
-        genre: 'Arcade',
-        releaseYear: 1993
+        genre: 'Arcade'
       }
       const expected = 'application/json'
       const res = await request(server).post('/games').send(game)
@@ -105,6 +104,34 @@ describe('server.js', () => {
     it('should return an array of games', async () => {
       const res = await request(server).get('/games')
       expect(Array.isArray(res.body)).toBeTruthy()
+    })
+  })
+
+  describe('GET /games/:id', () => {
+    it('should return the game with the given id', async () => {
+      const id = 1
+      const res = await request(server).get(`/games/${id}`)
+      expect(res.body.id).toEqual(id)
+    })
+
+    it('should return status code 404 if game not found', async () => {
+      const id = 100
+      const res = await request(server).get(`/games/${id}`)
+      const expected = 404
+      expect(res.status).toEqual(expected)
+    })
+  })
+
+  describe('DELETE /games/:id', () => {
+    it('should return status code 404 if game id not in database', async () => {
+      const id = 5000
+      const res = await request(server).delete(`/games/${id}`)
+      expect(res.status).toEqual(404)
+    })
+    it('should return status code 200 if game with id was deleted', async () => {
+      const id = 2
+      const res = await request(server).delete(`/games/${id}`)
+      expect(res.status).toEqual(200)
     })
   })
 })
