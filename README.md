@@ -43,7 +43,7 @@ For this project you will use TDD to create a simple Web API using Node.js and E
 
 ## Stretch Problem
 
-The following exercises are optional, but we suggest that you tackle them if you're finish the MVP early.
+The following exercises are optional, but we suggest that you tackle them if you finish the MVP early.
 
 - validate that the game `title` is unique. If the client tries to create a duplicate game, return a status code 404 (Not Allowed). Write a test that checks for this.
 - add an `id` property to the game schema and write code in the server to increment it automatically. After implementing this functionality, you can then work the following:
