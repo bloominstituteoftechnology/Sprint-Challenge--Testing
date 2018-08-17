@@ -24,7 +24,11 @@ server.get('/games', (req, res) => {
 })
 
 server.post('/games', (req, res) => {
-  res.status(200).json(req.body)
+  const gameObject = req.body;
+  if(!gameObject.title || !gameObject.genre){
+    res.status(422).json({"Message": "Need title/genre"})
+  }
+  res.status(200).json(gameObject.title)
 })
 
 

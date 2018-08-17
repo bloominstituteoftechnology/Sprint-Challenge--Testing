@@ -28,15 +28,17 @@ describe('get /games', () => {
 })
 
 describe('post /games', () => {
-  // it('should check for an object with at least 2 keys', async () => {
-  //   const response = await request(server)
-  //     .post('/games')
-  //     .send({
-  //       "title": "Garry's Mod",
-  //       "genre": "Sandbox",
-  //       "year": "2002",
-  //     })
-  //   expect(Object.keys(response.body).length).toBeGreaterThan(1);
-  //   expect(Object.keys(response.body).length).toBeLessThan(4);
-  // });
+  it('should respond with code 423 if req paras not included', async () => {
+    const response = await request(server)
+      .post('/games')
+      .send({
+        "title": "Garry's Mod",
+        "genre": "Sandbox",
+        "year": "2002",
+      })
+    expect(response.status).toEqual(422);
+    // expect(Object.keys(response.body).length).toBeGreaterThan(1);
+    // expect(Object.keys(response.body).length).toBeLessThan(4);
+    // expect(response.body).toEqual(4)
+  });
 })
