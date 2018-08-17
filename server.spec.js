@@ -14,6 +14,21 @@ describe('server.js endpoints', () => {
         })
     })
 
+    describe('GET /games:id', () => {
+        it('should return status code 200, JSON, and the game with the id provided', async () => {
+            await request(server)
+                .get('/games/1')
+                .expect('Content-Type', /json/)
+                .expect(200, { id: 1, title: 'Madden', genre: 'Sports' });
+        });
+
+        it('should return status code 404 if the game with the id provided does not exist', async () => {
+            await request(server)
+                .get('/games/5')
+                .expect(404);
+        })
+    })
+
 
 describe('POST /games' , () => {
     test('should return status code 201 and JSON', async () => {
@@ -34,6 +49,13 @@ describe('POST /games' , () => {
         await request(server)
             .post('/games')
             .expect(422);
+    });
+
+    it('should return status code 405 if a game with the title sent already exists', async () => {
+        await request(server)
+            .post('/games')
+            .send({ title: 'Madden', genre: 'Sports' })
+            .expect(405)
     })
 })
 
