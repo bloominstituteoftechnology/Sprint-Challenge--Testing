@@ -104,6 +104,22 @@ describe('SERVER', () => {
 
                 expect(res.status).toEqual(422);
             });
+
+            it('should validate duplicate titles', async () => {
+                const expected = {
+                    success: false,
+                    error: 'Title already exists in database.'
+                };
+                const res = await request(server)
+                    .post('/')
+                    .send({
+                        title: 'Asteroids',
+                        genre: 'multi-directional shooter',
+                        releaseYear: 1979
+                    });
+
+                expect(res.status).toEqual(405);
+            });
         });
     });
 });
