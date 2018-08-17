@@ -4,6 +4,13 @@ const server = express();
 
 server.use(express.json());
 
+class ServerError {
+    constructor(status,message){
+        this.status = status;
+        this.message = message
+    }
+}
+
 let games = [{
     title: 'Mario',
     genre: 'platformer',
@@ -17,14 +24,22 @@ server.get('/', (req, res) => {
 server.post('/', (req, res) => {
     let game = req.body;
     try {
-        if (!game.title || !game.genre) { throw new Error("Please fill out title and genre") }
+
+        if (!game.title || !game.genre) { throw new ServerError(422, 'Please fill out title and genre') }
         else {
-            games.push(game);
-            res.status(200).json(game)
+            games.map(title => {
+                if (game.title === title.title) {
+                    throw new ServerError(405, 'No Duplicates!')
+                }
+            })
         }
+
+        games.push(game);
+        res.status(200).json(game)
+
     }
     catch (error) {
-        res.status(422).send(error.message)
+        res.status(error.status).send(error.message)
     }
 
 })

@@ -40,6 +40,29 @@ describe('Post game to /', () => {
 
         expect(response.text).toEqual('Please fill out title and genre');
     })
+    it('should return error if title is duplicate', async () => {
+
+        const response = await request(server)
+            .post('/')
+            .send({
+                title: 'Mario',
+                genre: 'Platformer'
+            })
+
+        expect(response.text).toEqual('No Duplicates!');
+    })
+    it('should return status 405 if title is duplicate', async () => {
+
+        const response = await request(server)
+            .post('/')
+            .send({
+                title: 'Mario',
+                genre: 'Platformer'
+                
+            })
+
+        expect(response.status).toEqual(405);
+    })
 })
 
 
