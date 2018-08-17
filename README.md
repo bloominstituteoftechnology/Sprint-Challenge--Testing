@@ -29,7 +29,7 @@ For this project you will use TDD to create a simple Web API using Node.js and E
   {
     title: 'Pacman', // required
     genre: 'Arcade', // required
-    releaseYear: 1987 // not required
+    releaseYear: 1980 // not required
   }
   ```
 
