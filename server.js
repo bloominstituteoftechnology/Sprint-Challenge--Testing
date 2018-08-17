@@ -22,6 +22,11 @@ server.post('/games', (req, res) => {
   if(!game.title || !game.genre) {
     res.status(422).json({ error: 'Please provide title and genre'});
   }
+  for(let i = 0; i < games.length; i++) {
+    if(game.title === games[i].title) {
+      res.status(405).json({ error: 'Cannot have duplicate games'})
+    }
+  }
   games.push(game);
   res.status(201).json({ game });
 })

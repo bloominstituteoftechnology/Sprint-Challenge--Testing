@@ -55,5 +55,16 @@ describe('server.js', () => {
       })
       expect(response.status).toEqual(expected);
     })
+    it('should return status 405 if duplicate title', async () => {
+      const expected = 405;
+      const response = await request(server)
+      .post('/games')
+      .send({
+        title: 'Pacman',
+        genre: 'Arcade',
+        releaseYear: 1980
+      })
+      expect(response.status).toEqual(expected);
+    })
   })
 })
