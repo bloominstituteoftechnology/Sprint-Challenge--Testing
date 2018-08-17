@@ -64,5 +64,23 @@ server.post('/games', (req, res) => {
   }
 })
 
+// establish DELETE/:id endpoint
+server.delete('/games/:id', (req, res) => {
+  let requested = Number(req.params.id);
+  let found = games.find(item => {
+    return item.id === requested;
+  });
+  if (found) {
+    games = games.filter(game => game.id != requested);
+    res
+      .status(200)
+      .end()
+  } else {
+    res
+      .status(404)
+      .end()
+  }
+})
+
 // export server so tests can interact with it
 module.exports = server;

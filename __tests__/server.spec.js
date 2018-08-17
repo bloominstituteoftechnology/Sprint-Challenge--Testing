@@ -64,4 +64,19 @@ describe('server', () => {
       expect(response.status).toEqual(404);
     })
   })
+
+  // group all DELETE/:id endpoint tests
+  describe('DELETE endpoint (/games/:id)', () => {
+    // test that DELETE/:id returns status code 200 when game is deleted
+    it('should return HTTP status code 200 when game is deleted', async () => {
+      const response = await request(server).delete('/games/1');
+      expect(response.status).toEqual(200);
+    })
+
+    // test that DELETE/:id returns status code 404 if game not found
+    it('should return HTTP status code 404 if game not found', async () => {
+      const response = await request(server).delete('/games/2');
+      expect(response.status).toEqual(404);
+    })
+  })
 })
