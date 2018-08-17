@@ -105,13 +105,13 @@ describe('game server testing', ()=>{
 
     it('should return new game data in JSON format', async ()=>{
       const testGame = {
-        "name": "tetris",
+        "name": "pacman2",
       "genre": "console",
         "year": "1989"
       }
 
       const expected = {
-        "name": "tetris",
+        "name": "pacman2",
         "genre": "console",
         "year": "1989"
       };
