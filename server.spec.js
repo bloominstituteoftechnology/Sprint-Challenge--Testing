@@ -25,7 +25,7 @@ describe('server.js', () => {
       await request(server)
         .get('/games')
         .expect('Content-Type', /json/)
-        .expect(200, [{ title: 'Pacman', genre: 'Arcade', releaseYear: 1980 }]);
+        .expect(200, [{ id: 1, title: 'Pacman', genre: 'Arcade', releaseYear: 1980 }]);
     });
 
     it('should always return an array', async () => {
@@ -34,6 +34,22 @@ describe('server.js', () => {
         .then(response => {
           typeof response === 'array';
       });
+    });
+  });
+
+  describe('GET /games/:id', () => {
+    it('should return a specific game', async () => {
+      await request(server)
+        .get('/games/1')
+        .expect('Content-Type', /json/)
+        .expect(200, { id: 1, title: 'Pacman', genre: 'Arcade', releaseYear: 1980 });
+    });
+
+    it('should return 404 when a game is not found', async () => {
+      await request(server)
+        .get('/games/2')
+        .expect('Content-Type', /json/)
+        .expect(404);
     });
   });
 });
