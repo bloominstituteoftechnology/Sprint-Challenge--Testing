@@ -58,6 +58,23 @@ it('should return status code 422 on making a  post request without all the requ
         expect(response.status).toEqual(expected);
 
 });
+
+
+it('should return status code 405 on making a  post request with an existing title', async()=>{
+
+        const expected =405;
+        const game ={
+                 title: 'Pacman',
+                 genre: 'Arcade',
+                 releaseYear: 1991
+                };
+
+        const response = await request(server)
+                        .post('/games')
+                        .send(game);
+        expect(response.status).toEqual(expected);
+
+});	
 });
 
 	
