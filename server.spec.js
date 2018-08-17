@@ -70,7 +70,7 @@ describe("server.js", () => {
     });
 
     it("should return error code 422 when there is a game already with that title", async () => {
-      const expected = 422;
+      const expected = 405;
       const res = await request(server)
         .post("/games")
         .send({ title: "Pacman", genre: "Arcade", releaseYear: "1980" });
