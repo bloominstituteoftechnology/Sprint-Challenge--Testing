@@ -35,7 +35,7 @@ server.post("/games", (req, res) => {
   };
   if (games.find(findGameByTitle)) {
     return sendUserError(
-      `Game over man! ${name} already exists in the game DB.`,
+      `Game over man! ${title} already exists in the game DB.`,
       res
     );
   }

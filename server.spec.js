@@ -68,5 +68,22 @@ describe("server.js", () => {
         .send({ title: "Borderlands 2" });
       expect(res.text).toEqual(expected);
     });
+
+    it("should return error code 422 when there is a game already with that title", async () => {
+      const expected = 422;
+      const res = await request(server)
+        .post("/games")
+        .send({ title: "Pacman", genre: "Arcade", releaseYear: "1980" });
+      expect(res.status).toEqual(expected);
+    });
+
+    it("should return appropriate error message when there is a game with that title", async () => {
+      const expected =
+        '{"Error":"Game over man! Pacman already exists in the game DB."}';
+      const res = await request(server)
+        .post("/games")
+        .send({ title: "Pacman", genre: "Arcade", releaseYear: "1980" });
+      expect(res.text).toEqual(expected);
+    });
   });
 });
