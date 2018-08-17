@@ -11,7 +11,7 @@ const games = [{
 }]
 
 server.get('/api/games', (req, res) => {
-  res.status(200).json({ api: 'running' });
+  res.status(200).json([]);
 });
 
 module.exports = server;

@@ -12,6 +12,8 @@ describe('server.js', () => {
       expect(response.status).toEqual(expected);
     });
 
+    // GET
+
     it('should return a list of games', async () => {
       const expected = server.games;
 
@@ -27,5 +29,25 @@ describe('server.js', () => {
 
       expect(res.body).toEqual(expected);
     });
+
+    // POST
+
+    describe('POST /api/games'), () => {
+      it('should return a 422 code if the information is incomplete', async () => {
+        const expected = 422;
+
+        const response = await request(server).post('/api/games').send({title: "", genre: "Arcade",  releaseYear: 1980});
+
+        expect(response.status).toEqual(expected);
+      });
+
+      it('should return a 200 code if the information is complete', async () => {
+        const expected = 200;
+
+        const response = await request(server).post('/api/games').send({title: "Pacman", genre: "Arcade",  releaseYear: 1980});
+
+        expect(response.status).toEqual(expected);
+      })
+    }
   })
 })
