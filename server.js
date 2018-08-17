@@ -5,20 +5,26 @@ server.use(express.json());
 const data = [
   {
     name: 'pac-man',
-    type: 'arcade',
+    genre: 'arcade',
     year: '1980'
   }
 ]
+
+
 server.get('/games', (req, res)=>{
-  res.status(200).json(data)
+  res.status(200).json(data) 
 })
 
 server.post('/games', (req, res) =>{
-  const {name, type, year} = req.body;
-  const game = {name, type, year}
+  const {name, genre, year} = req.body;
+  if (!genre || !name) {
+    res.status(422).json({"error": "missing required information"})
+  }
 
-  res.status(201).json(game)
+  const game = {name, genre, year}
+  res.status(201).json(game) 
 })
+
 
 
 
