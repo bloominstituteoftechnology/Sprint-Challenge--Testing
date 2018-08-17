@@ -4,7 +4,7 @@ const server = require('./server.js');
 
 
 describe ('GET /games', () => {
-    it('should return status code 200 from /games' /*with list of games*/, async () => {
+    it('should return status code 200 from /games, with list of games', async () => {
         const response = await request(server).get('/games');
         expect(response.status).toEqual(200);
     });
@@ -22,10 +22,24 @@ describe('POST /games', () => {
     it('should return 201 if created', async () => {
         const response = await request(server).post('/games').send(
             { 
-                title: 'Pacman',
-                genre: 'Arcade'
+                title: 'Command & Conquer: Red Alert',
+                genre: 'rts',
+                releaseYear: 1996
             }
         ); 
         expect(response.status).toEqual(201);
+    });
+});
+
+describe('Stretch - POST /games', () => {
+    it('should return 405 if duplicate title found', async () => {
+        const response = await request(server).post('/games').send(
+            { 
+                title: 'SOCOM II',
+                genre: 'fps',
+                releaseYear: 2003
+            }
+        ); 
+        expect(response.status).toEqual(405);
     });
 });
