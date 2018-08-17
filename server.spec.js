@@ -39,12 +39,26 @@ it('should return status code 200 on making a correct post request', async()=>{
 	const response = await request(server)
 			.post('/games')
 			.send(game);
-	expect(response.status).toEqual(200);
+	expect(response.status).toEqual(expected);
 
 });
-});	
 	
+it('should return status code 422 on making a  post request without all the required fields', async()=>{
 
+        const expected =422;
+        const game ={
+                 title: '',
+                 genre: '',
+                 releaseYear: 1990
+                };
+
+        const response = await request(server)
+                        .post('/games')
+                        .send(game);
+        expect(response.status).toEqual(expected);
+
+});
+});
 
 	
 
