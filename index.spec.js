@@ -36,10 +36,19 @@ describe('server test(index.js)', () => {
                 .get('/games');
             expect(response.body).toEqual(expected);
         })
-        
     })
 
     describe('POST endpoint /games', () => {
+        it('it should return a status code 422 UNPROCESSABLE ENTITY if the request body is invalid.', async () => {
+            const expected = 422;
+            const response = await request(server)
+                .post('/games')
+                .send({
+                    releaseYear: 1980
+                });
+            expect(response.status).toEqual(expected);
+        });
+
         it('it should return a status code 201 CREATED if the request body is valid.', async () => {
             const expected = 201;
             const response = await request(server)
@@ -52,14 +61,17 @@ describe('server test(index.js)', () => {
             expect(response.status).toEqual(expected);
         });
 
-        it('it should return a status code 422 UNPROCESSABLE ENTITY if the request body is invalid.', async () => {
-            const expected = 422;
+        it('it should return status code 405 NOT ALLOWED if game with duplicate title is added', async () => {
+            const expected = 405;
+
             const response = await request(server)
-                .post('/games')
-                .send({
-                    releaseYear: 1980
-                });
+            .post('/games')
+            .send({
+                title: 'Pacman',
+                genre: 'Arcade',
+                releaseYear: 1980
+            });
             expect(response.status).toEqual(expected);
-        });
+        })
     })
 })
