@@ -35,4 +35,11 @@ describe('server.js', () => {
         genre: "a genre"
     }
     let id;
+    describe('root endpoint POST(/)', () => {
+        it('should POST a game', async() => {
+            const postResponse = await request(server).post('/').send(game);
+            expect(postResponse.body[0]).toBeGreaterThanOrEqual(1);
+            id = postResponse.body[0];
+        });
+    });
 });
