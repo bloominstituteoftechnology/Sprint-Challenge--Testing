@@ -112,6 +112,17 @@ describe('server', () => {
         .send(game);
       expect(res.body[res.body.length - 1]).toEqual(expected);
     });
+    it('should return a status of 405 if a duplicate game is added to the system', async () => {
+      const game = {
+        title: 'Knights of the Old Republic', // required
+        genre: 'RPG', // required
+        releaseYear: 2005 // not required
+      };
+      const res = await request(server)
+        .post('/games')
+        .send(game)
+        .expect(405);
+    });
   });
   describe('/DELETE/:id', () => {
     it('should respond with a status code of 200', async () => {

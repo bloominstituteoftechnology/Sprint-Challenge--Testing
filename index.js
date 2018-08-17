@@ -45,6 +45,12 @@ server.post('/games', (req, res) => {
       .status(422)
       .json({ error: 'All games must have a title and genre' });
   }
+  const validate = games.filter(game => game.title === req.body.title);
+  if (validate.length > 0) {
+    return res
+      .status(405)
+      .json({ error: 'That game already exists in the system' });
+  }
   game.id = ++id;
   games.push(game);
   res.status(201).json(games);
