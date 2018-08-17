@@ -14,21 +14,28 @@ let games = [];
 server.get('/games', (req, res) => {
   res
     .status(200)
-    .json(games);
+    .json(games)
 })
 
-// establish POST endpoit
+// establish POST endpoint
 server.post('/games', (req, res) => {
   let game = req.body;
+  let unique = games.find(item => {
+    return item.title === game.title;
+  })
   if (!(game.title || game.genre)) {
     res
       .status(422)
-      .end();
+      .end()
+  } else if (unique) {
+    res
+      .status(405)
+      .end()
   } else {
     games.push(game);
     res
       .status(201)
-      .end();
+      .end()
   }
 })
 
