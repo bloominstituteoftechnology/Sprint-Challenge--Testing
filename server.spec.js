@@ -20,8 +20,8 @@ describe('Games server', () => {
   beforeAll((done) => {
     db
       .truncate('games')
-      .then(res => db.truncate('genres'))
-      .then(res => {
+      .then(() => db.truncate('genres'))
+      .then(() => {
         done();
       });
   });
@@ -42,7 +42,7 @@ describe('Games server', () => {
       });
     });
 
-    it('returns a 422 error when attempting to create a post lacking genre', async () => {
+    it('returns a 422 error when attempting to create a game lacking genre', async () => {
       const response = await request(server)
         .post('/games')
         .send(missingGenre);
@@ -55,6 +55,14 @@ describe('Games server', () => {
         .post('/games')
         .send(newGame);
       expect(response.status).toEqual(201);
+    });
+
+    it('returns a 422 when attempting to create a game with an identical title to an existing game', async () => {
+      const response = await request(server)
+        .post('/games')
+        .send(newGame);
+      expect(response.status).toEqual(422);
+      expect(response.body.message).toEqual('Title already exists in database');
     });
   });
   it('get request returns an array containing games when they are in store', async () => {

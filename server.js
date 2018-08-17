@@ -3,8 +3,6 @@ const db = require('knex')(require('./knexfile').development);
 
 server = express();
 server.use(express.json());
-
-const store = [];
 class HttpError extends Error {
   constructor(message, code = 100) {
     super(message);
@@ -22,7 +20,7 @@ server.get('/games', (req, res) => {
     });
 });
 
-server.post('/games', (req, res) => {
+server.post('/games', (req, res, next) => {
   const { title, genre, releaseYear } = req.body;
   if (!title || title.length === 0) {
     throw new HttpError('Post must include title and be at least 1 character', 422);
@@ -34,13 +32,16 @@ server.post('/games', (req, res) => {
     .where('name', '=', genre)
     .then(([item]) => {
       if (item) {
-        return item.id;
+        return [item.id];
       }
       return db('genres').insert({ name: genre });
     })
     .then(([id]) => db('games').insert({ title, genreId: id, releaseYear }))
     .then(confirm => res.status(201).end())
     .catch((err) => {
+      if (err.errno === 19) {
+        return next(new HttpError('Title already exists in database', 422));
+      }
       throw new HttpError(
         `Game could not be created in database. Database message: ${err.response}`,
         500,
@@ -49,7 +50,6 @@ server.post('/games', (req, res) => {
 });
 
 server.use((err, req, res, next) => {
-  debugger;
   if (err instanceof HttpError) {
     return res.status(err.code).json({ message: err.message });
   }

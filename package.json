@@ -4,7 +4,7 @@
   "description": "Testing Sprint Challenge",
   "main": "index.js",
   "scripts": {
-    "debug": "node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand",
+    "debug": "node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand --detectOpenHandles",
     "test": "jest --watch --verbose",
     "start": "nodemon index.js"
   },
