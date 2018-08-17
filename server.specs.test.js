@@ -70,4 +70,18 @@ describe("server.js", () => {
       expect(response.status).toEqual(expected);
     });
   });
+
+  describe("DELETE routes", () => {
+    it("should return a 404 status code if the game id cannot be found", async () => {
+      const expected = 404;
+      const response = await request(server).delete("/games/15");
+      expect(response.status).toEqual(expected);
+    });
+
+    it("should return a status code of 200 if the game can be deleted", async () => {
+      const expected = 200;
+      const response = await request(server).get("/games/1");
+      expect(response.status).toEqual(expected);
+    });
+  });
 });
