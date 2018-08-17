@@ -3,18 +3,19 @@ const server = express();
 
 server.use(express.json());
 
-	const games = [{
-		title: 'Pacman',
-		genre: 'Arcade',
-		releaseYear: 1980
-	}];
 
 server.get('/', (req, res) => {
   res.status(200).send('API is running');
 });
 
 server.get('/games', (req, res) => {
-  res.status(200).json(games);
+	const games = req.body
+  res.status(200).json([]);
+});
+
+server.post('/games', (req, res) => {
+    const { title, genre, releaseYear } = req.body;
+    res.status(200).json({ title: title, genre: genre, releaseYear: releaseYear })
 });
 
 
