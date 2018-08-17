@@ -6,59 +6,50 @@
 - Answers to your written questions should be recorded in _ANSWERS.md_
 - This is to be worked on **alone**, but you can _reference_ code from lectures and past projects, or you can go online to read documentation or search for answers. Please refrain from copying and pasting any of your answers. Try and understand the question and put your responses in your own words. Be as thorough as possible when explaining something.
 
-## Start by forking and cloning this repository.
-
 ## Questions - Self Study - You can exercise your Google-Fu for this and any other _Sprint Challenge_ in the future.
 
-1.  In Jest, what are the differences between `beforeAll`, `afterAll`, `beforeEach`, and `afterEach` and what are good uses for them?
+1.  In Jest, what are the differences between `describe()` and `it()` globals, and what are good uses for them?
 1.  What is the point of `Test Driven Development`? What do you think about this approach?
-1.  What are `Jest mock`? What are a good use case for them?
+1.  What are `mocks`? What are a good use case for them?
 1.  Mention three types of tests.
-1.  What type of test performs database operations against a real server.
 
-## Initializing Project
+## Download Project and Install Dependencies
 
-- Fork/Clone this project into a directory on your machine.
-- `cd` into your forked local copy.
-- notice there is a `package.json` file included. We have included all of the dev-dependencies that you'll need to build your project.
-- run `yarn` to download and install all the dependencies you need for this project.
-- run `yarn test` to start your tests.
-- Keep an active log of your changes by committing and pushing often to your fork.
-- Write all of your tests in the `./api/server.spec.js` and `./games/Game.spec.js` files.
+1.  fork and clone this repository.
+1.  **CD into the folder** where you downloaded the repository.
+1.  run `yarn` or `npm i` to download all dependencies.
+1.  type `yarn test` or `npm test` to run the tests. The `test` script is already configured.
 
-## Project Description
+## Assignment
 
-- You're going to be writing the tests for a CRUD API.
-- The API itself is really simple. Your task is to peek at the endpoints found in the `./api/server.js` file and write tests for them.
-- notice that the definition of the server (inside `./api/server.js`) is separate from the code that executes the server (inside `./index.js`), this makes it easier to test the server code in isolation. It is a common pattern used to avoid starting an instace of the server and a connection to the production database that will result on `Address already in use errors`.
+For this project you will use `Test Driven Development` to create a RESTful API using Node.js and Express that publishes a set of endpoints to manage a _games_. **Data can be stored in memory. Use a simple JS array**. No need to keep track of incrementing `id`s for this project.
 
-## TESTS
+## Requirements
 
-- The provided API has already been manually tested.
-- Your job is to write `unit and integration tests` to ensure that the endpoints do what they're supposed to do.
-- Each endpoint should have multiple tests to ensure that different sorts of input are handled correctly/as expected. As a guideline, write **at least two tests for each endpoint**.
-- THERE IS NO NEED TO `YARN START`, BUT YOU'LL WANT TO ENSURE THAT YOU HAVE A `MONGO` INSTANCE UP AND RUNNING.
+1.  use `jest` and `supertest` to write the tests.
+1.  Write the **tests BEFORE** writing the route handlers.
+1.  Your API must be able to **create** and **get** `games`.
+1.  Write a minimum of two tests per route handler.
 
 ### Write tests for the "POST" method
 
-- The `POST` method should take in an object that looks like this
+- The `POST /games` endpoint should take in an object that looks like this
 
   ```js
   {
-    title: 'California Games',
-    genre: 'Sports',
-    releaseDate: 'June 1987'
+    title: 'California Games', // required
+    genre: 'Sports', // required
+    releaseYear: 1987 // not required
   }
   ```
 
+  - in the route handler, validate that the required fields are included inside the body. If the information is incomplete, return a `422` status code.
+  - write tests to verify that the endpoint returns the correct HTTP status code when receiving correct and incorrect game data.
+
 ### Write tests for the "GET" method
 
-- Our get method should return the list of games.
-- **REMINDER** That this data structure returned from Mongo will be an array, so to test your game with a `beforeEach` hook you'll need to make sure you test against the first item in the array
-
-  ```js
-  expect(res.data[0].foo).to.equal(bar.foo);
-  ```
+- The `GET /games` endpoint should return the list of games and HTTP status code 200.
+- Write a test to make sure this endpoint always returns an array, even if there are no games stored. If there are no games to return, the endpoint should return an empty array.
 
 ### Write tests for the "DELETE" method
 
@@ -68,6 +59,7 @@
 
 ### Write tests for the "PUT" method
 
-- Just like in class, send up the information you want changed on the server via the `req.body`.
+- validate that the game `title` is unique. If the client tries to create a duplicate game, return a status code 404 (Not Allowed). Write a test that checks for this.
+- add an `id` property to the games and write code in the server to increment this number automatically. Write a `GET /games/:id` endpoint that returns the information about a single game. Respond with a 404 status code when a game is not found for the provided `id` and the corresponding tests for it.
 
 ### Remember you can use any resources you want to solve these problems, but avoid copying/pasting solutions you've previously written. Also if you don't finish all of the challenges, that's fine! Just do what you can and submit your challenges in the end! HAVE FUN!
