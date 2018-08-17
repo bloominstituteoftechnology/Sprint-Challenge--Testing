@@ -30,10 +30,20 @@ server.get('/games', (req, res) => {
 });
 
 server.post('/games', (req, res) => {
-  if (req.body.title && req.body.genre) {
+  let notUnique = false;
+  for (let i=0; i<games.length; i++) {
+    if (games[i]['title'] === req.body.title) {
+      notUnique = true;
+      break;
+    }
+  }
+  if (req.body.title && req.body.genre && !notUnique) {
     games.push(req.body);
     res.status(201).json({success: true});
-  } else {
+  } else if(notUnique) {
+    return res.status(405).send('Game with that title already exists in database');
+  }
+   else {
     res.status(422).send('Error');
   }
 

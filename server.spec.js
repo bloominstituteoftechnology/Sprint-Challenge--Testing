@@ -43,6 +43,19 @@ describe('server.js routes', () => {
               })
               .set('Accept', 'application/json')
               .expect(422)
+    });
+
+    it('should return an error with code 405 when user sends a non-unique game title', async() => {
+      await request(server)
+              .post('/games')
+              .expect('Content-Type', /text/)
+              .send({
+                title: 'Pacman',
+                genre: 'Not Arcade'
+              })
+              .set('Accept', 'application/json')
+              .expect(405)
+              .expect('Game with that title already exists in database')
     })
   })
 });
