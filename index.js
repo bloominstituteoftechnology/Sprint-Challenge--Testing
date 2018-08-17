@@ -41,6 +41,7 @@ describe("server.js", () => {
           })
           expect(res.status).toEqual(expected);
       })
+
       it("should return the new games array when correct data is provided", async () => {
         const expected = [{
             "title": "Pacman",
@@ -64,6 +65,18 @@ describe("server.js", () => {
             releaseYear: "2013"
         })
         expect(res.text).toEqual(expected);
+      })
+
+      it("should return status code 422 when incomplete data is passed", async () => {
+          const expected = 422;
+          const res = await request(server).post("/games").send({title:"Borderlands 2"});
+          expect(res.status).toEqual(expected);
+      })
+
+      it("should return appropriate error message when incomplete data is passed", async () => {
+        const expected = '{"Error":"Game Over Man! A game needs a title and genre to enter the database"}';
+        const res = await request(server).post("/games").send({title:"Borderlands 2"});
+        expect(res.status).toEqual(expected);
       })
   })
 });
