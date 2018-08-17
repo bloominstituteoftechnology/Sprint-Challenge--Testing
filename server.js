@@ -13,6 +13,11 @@ server.post('/games', (req, res) => {
   if (!title || !genre) {
     return res.status(422).json({ error: 'title and genre field are required' })
   }
+
+  if (games.find(game => game.title === title)) {
+    return res.status(405).json({ error: 'title already in the database' })
+  }
+
   const game = { id: id++, title, genre, releaseYear }
   games.push(game)
   res.status(201).json(game)
