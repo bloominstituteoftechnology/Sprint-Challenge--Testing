@@ -54,9 +54,9 @@ describe('server test(index.js)', () => {
             const response = await request(server)
                 .post('/games')
                 .send({
-                    title: 'Pacman',
+                    title: 'Mario',
                     genre: 'Arcade',
-                    releaseYear: 1980
+                    releaseYear: 1984
                 });
             expect(response.status).toEqual(expected);
         });

@@ -14,6 +14,13 @@ server.post('/games', async(req, res) => {
         return res.status(422).json({message: 'Failed to add game to database.', error: 'Missing game title and genre.'})
     }
 
+    if (games.length>=1) {
+        const filteredTitle = games.filter(game => game.title === req.body.title);
+        if (filteredTitle.length>=1) {
+            return res.status(405).json({message: 'Failed to add game to database.', error: 'This title already exists.'})
+        } 
+    }
+
     try {
         const game = req.body;
         games.push(game);
