@@ -25,4 +25,19 @@ server.post("/games", (req, res) => {
   }
 });
 
+server.get("/games/:id", (req, res) => {
+  const { id } = req.params;
+  const gameTitle = [];
+  games.forEach(game => {
+    if (game.id == id) {
+      gameTitle.push(game);
+    }
+  });
+  if (gameTitle.length > 0) {
+    res.status(200).json(gameTitle[0]);
+  } else {
+    res.status(404).json({ error: "The game with the ID could not be found." });
+  }
+});
+
 module.exports = server;
