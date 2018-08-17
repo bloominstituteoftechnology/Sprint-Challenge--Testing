@@ -27,6 +27,15 @@ describe('server.js', () => {
             const response = await request(server).post('/games');
             expect(response.status).toEqual(422)
         })
+        it('should return status 405 for unique constraints', async () => {
+            const body = {
+                title: 'Pacman', // required
+                genre: 'Arcade', // required
+                releaseYear: 1980 // not required
+            }
+            const response = await request(server).post('/games').send(body);
+            expect(response.status).toEqual(405)
+        })
 
     })
 })
