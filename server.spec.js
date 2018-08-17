@@ -35,27 +35,40 @@ describe("server.js", () => {
         .send({ game: "" });
       expect(response.status).toEqual(expected);
     });
+    it("should return error code 405 displicate game", async () => {
+      const expected = 405;
+      const response = await request(server)
+        .post("/games")
+        .send({
+          title: "crossword",
+          genre: "casual",
+          releaseYear: "1920"
+        });
+      expect(response.status).toEqual(expected);
+    });
     it("should return status code 201 created game", async () => {
       const expected = 201;
       const response = await request(server)
         .post("/games")
         .send({
-          game: { title: "checkers", genre: "casual", releaseYear: "1920" }
+          title: "checkers",
+          genre: "casual",
+          releaseYear: "1920"
         });
       expect(response.status).toEqual(expected);
     });
     it("should return game", async () => {
       const expected = {
-        game: {
-          title: "checkers",
-          genre: "casual",
-          releaseYear: "1920"
-        }
+        title: "checkers",
+        genre: "casual",
+        releaseYear: "1920"
       };
       const response = await request(server)
         .post("/games")
         .send({
-          game: { title: "checkers", genre: "casual", releaseYear: "1920" }
+          title: "checkers",
+          genre: "casual",
+          releaseYear: "1920"
         });
       expect(response.body).toEqual(expected);
     });
