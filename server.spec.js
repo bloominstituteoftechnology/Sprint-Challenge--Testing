@@ -4,7 +4,7 @@ const server = require('./server.js');
 
 describe('server.js', () => {
 
-describe('server testing for get request', () => {
+describe('server testing for GET request', () => {
 
 it('should return status code 200 OK', async() => {
                 const expected =200;
@@ -25,20 +25,27 @@ it('should return an Array as a respnse on making a GET request', async() => {
 });
 
 
+describe('server testing for POST request', () => {
 
+it('should return status code 200 on making a correct post request', async()=>{
+
+	const expected =200;
+	const game ={
+ 		 title: 'IGI',
+  		 genre: 'Arcade',
+  		 releaseYear: 1990 
+		};
+
+	const response = await request(server)
+			.post('/games')
+			.send(game);
+	expect(response.status).toEqual(200);
+
+});
+});	
 	
 
 
 	
-
-
-
-
-
-
-
-
-
-
 
 });
