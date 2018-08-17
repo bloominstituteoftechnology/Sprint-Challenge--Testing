@@ -79,17 +79,4 @@ describe('post games', () => {
       .send({ game });
     expect(response.status).toEqual(expected);
   });
-
-  it('should delete a game', async () => {
-    const game = 'The Lord f the Flies';
-    const response = await request(server)
-      .delete('/games')
-      .send({ game: game });
-    const gameArr = response.body.games;
-    let valid = true;
-    for (let i = 0; i < gameArr.length; i++) {
-      if (gameArr[i] == game) valid = false;
-    }
-    expect(valid).toBe(true);
-  });
 });
