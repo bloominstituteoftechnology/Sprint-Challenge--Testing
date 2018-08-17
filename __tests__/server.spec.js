@@ -103,6 +103,14 @@ describe('server.js', () => {
             const response = await request(server).post('/games').send(newGame)
             expect(response.body).toEqual(expect.objectContaining(newGame))
         })
+        
+        it('should return an error if a duplicate title is sent', async () => {
+            const expected = { message: "Duplicate Title Found" }
+            const newGame = { title: "Doom",
+            genre: "first person shooter" }
 
+            const response = await request(server).post('/games').send(newGame)
+            expect(response.body).toEqual(expected)
+        })
     })
 })

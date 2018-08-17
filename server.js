@@ -41,20 +41,25 @@ server.get('/games', (req, res) => {
 server.post('/games', getId, (req,res) => {
     try{
         const { title, genre, releaseYear } = req.body
+        const titles = games.map(game => game.title)
 
         if(!title || !genre){
             res.status(422).json({ message: "Please include a valid title and genre" })
         }
-    
-        const newGame = {
-            id: req.nextId,
-            title: title,
-            genre: genre,
-            releaseYear: releaseYear ? releaseYear : "unknown"
+        else if(titles.includes(title)){
+            res.status(405).json({ message: "Duplicate Title Found" })
         }
-        games.push(newGame)
+        else{
+            const newGame = {
+                id: req.nextId,
+                title: title,
+                genre: genre,
+                releaseYear: releaseYear ? releaseYear : "unknown"
+            }
+            games.push(newGame)
+            res.status(200).json(newGame)
+        }
 
-        res.status(200).json(newGame)
     }catch(err){
         res.status(500).json({message: "Error adding game"})
     }
