@@ -51,3 +51,17 @@ describe('server.js', () => {
         });
     });
 });
+
+// describe('GET /games/:id', () => {
+//     it('should return a game info and status code  with id provided', async () => {
+//         // arrange
+//         const expected = { id: 7 };
+
+//         // act
+//         const response = await request(server)
+//             .get('/games/5');
+
+//         // assert
+//         expect(response.body).toEqual(expected);
+//     });
+// });

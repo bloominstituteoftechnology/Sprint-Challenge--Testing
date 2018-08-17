@@ -12,6 +12,12 @@ server.get('/', (req, res) => {
 server.get('/games', (req, res) => {
     res.status(200).json(games);
 });
+// server.get('/games/:id', (req, res) => {
+//     const { id } = req.params;
+//     const { title, genre, releaseYear } = req.body;
+
+//     res.status(200).json(req.body);
+// });
 
 server.post('/games', (req, res) => {
     const { title, genre, releaseYear } = req.body;
