@@ -48,6 +48,14 @@ describe('post games', () => {
     expect(valid).toBe(true);
   });
 
+  it('should return a 422 if missing the game object', async () => {
+    const expected = 422;
+    const response = await request(server)
+      .post('/games')
+      .send({});
+    expect(response.status).toEqual(expected);
+  });
+
   it('should return a 422 if missing the title of a game', async () => {
     const expected = 422;
     const game = { title: '', genre: 'Arcade', releaseYear: 1980 };
