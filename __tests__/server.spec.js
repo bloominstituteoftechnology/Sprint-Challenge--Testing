@@ -16,7 +16,29 @@ describe('Post game to /', () => {
                 genre: 'Action'
             })
 
-            expect(response.body).toEqual(expected)
+        expect(response.body).toEqual(expected)
+    })
+
+    it('should return status 422 if title or genre isnt filled out', async () => {
+
+        const response = await request(server)
+            .post('/')
+            .send({
+                title: 'Earthworm Jim',
+            })
+
+        expect(response.status).toEqual(422);
+    })
+
+    it('should return error if title or genre isnt filled out', async () => {
+
+        const response = await request(server)
+            .post('/')
+            .send({
+                title: 'Earthworm Jim',
+            })
+
+        expect(response.text).toEqual('Please fill out title and genre');
     })
 })
 
