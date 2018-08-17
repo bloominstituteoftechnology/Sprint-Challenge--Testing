@@ -1,37 +1,27 @@
-# Assessing your Testing Fu
+# Testing Sprint Challenge
 
-## Keep Calm! Test On!
+For this project you will use TDD to create a simple Web API using Node.js and Express. The basic requirements for the endpoints are listed below. Create any files and folders you need to finish the project, you have complete freedom to structure your solution to make it easier to test and extend in the future.
 
-- Now that you're familiar with the concepts of testing, your goal is to write tests for an API that is already in production. (This happens a lot :))
-- Answers to your written questions should be recorded in _ANSWERS.md_
-- This is to be worked on **alone**, but you can _reference_ code from lectures and past projects, or you can go online to read documentation or search for answers. Please refrain from copying and pasting any of your answers. Try and understand the question and put your responses in your own words. Be as thorough as possible when explaining something.
+## Assignments
 
-## Questions - Self Study - You can exercise your Google-Fu for this and any other _Sprint Challenge_ in the future.
+- Open the `Review.md` file and answer the questions inside.
+- Use `Test Driven Development` to create a RESTful API using Node.js and Express to create and list _games_. **Data can be stored in memory. Use a simple JS array**. No need to keep track of incrementing `id`s for this project's MVP, that is part of the Stretch Problem.
 
-1.  In Jest, what are the differences between `describe()` and `it()` globals, and what are good uses for them?
-1.  What is the point of `Test Driven Development`? What do you think about this approach?
-1.  What are `mocks`? What are a good use case for them?
-1.  Mention three types of tests.
-
-## Download Project and Install Dependencies
+### Download Project and Install Dependencies
 
 1.  fork and clone this repository.
 1.  **CD into the folder** where you downloaded the repository.
 1.  run `yarn` or `npm i` to download all dependencies.
 1.  type `yarn test` or `npm test` to run the tests. The `test` script is already configured.
 
-## Assignment
-
-For this project you will use `Test Driven Development` to create a RESTful API using Node.js and Express that publishes a set of endpoints to manage a _games_. **Data can be stored in memory. Use a simple JS array**. No need to keep track of incrementing `id`s for this project.
-
-## Requirements
+### Requirements
 
 1.  use `jest` and `supertest` to write the tests.
 1.  Write the **tests BEFORE** writing the route handlers.
-1.  Your API must be able to **create** and **get** `games`.
-1.  Write a minimum of two tests per route handler.
+1.  Your API must be have `POST` and `GET` endpoints for `/games`.
+1.  Write a **minimum** of two tests per endpoint.
 
-### Write tests for the "POST" method
+#### POST /games
 
 - The `POST /games` endpoint should take in an object that looks like this
 
@@ -46,20 +36,18 @@ For this project you will use `Test Driven Development` to create a RESTful API 
   - in the route handler, validate that the required fields are included inside the body. If the information is incomplete, return a `422` status code.
   - write tests to verify that the endpoint returns the correct HTTP status code when receiving correct and incorrect game data.
 
-### Write tests for the "GET" method
+#### GET /games
 
 - The `GET /games` endpoint should return the list of games and HTTP status code 200.
 - Write a test to make sure this endpoint always returns an array, even if there are no games stored. If there are no games to return, the endpoint should return an empty array.
 
-### Write tests for the "DELETE" method
-
-- `DELETE` can take an ID off of the route parameter and delete the corresponding game if it exists or return a 404 and an object with a message if the game does not exist in the database.
-
 ## Stretch Problem
 
-### Write tests for the "PUT" method
+The following exercises are optional, but we suggest that you tackle them if you're finish the MVP early.
 
 - validate that the game `title` is unique. If the client tries to create a duplicate game, return a status code 404 (Not Allowed). Write a test that checks for this.
-- add an `id` property to the games and write code in the server to increment this number automatically. Write a `GET /games/:id` endpoint that returns the information about a single game. Respond with a 404 status code when a game is not found for the provided `id` and the corresponding tests for it.
+- add an `id` property to the game schema and write code in the server to increment it automatically. After implementing this functionality, you can then work the following:
+  - Write a `GET /games/:id` endpoint that returns the information about a single game. Respond with a 404 status code when a game is not found for the provided `id`. Add the corresponding tests for it.
+  - add a `DELETE /games/:id` endpoint that can remove the corresponding game. If the game does not exists return a 404 status code. Write tests for this endpoint.
 
 ### Remember you can use any resources you want to solve these problems, but avoid copying/pasting solutions you've previously written. Also if you don't finish all of the challenges, that's fine! Just do what you can and submit your challenges in the end! HAVE FUN!
