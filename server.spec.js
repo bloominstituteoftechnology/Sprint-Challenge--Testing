@@ -3,7 +3,7 @@ const req = require('supertest')
 const server = require('./server.js')
 
 const statusCodePass = 200
-const statusCodeFail = 400
+const statusCodeFail = 404
 const statusCodeInc = 422
 const statusCodeNA = 405
 
@@ -28,6 +28,20 @@ describe('Server Testing', () => {
         {id:3, title:'Super Mario', genre:'NES', releaseYear:'1986'},
         {id:4, title:'Legend of Zelda', genre:'NES', releaseYear:'1980'},
       ])
+    });
+
+    it('GET /games/:id with invalid id', async() => {
+      const res = await req(server).get('/games/7')
+
+      expect(res.status).toEqual(statusCodeFail)
+      expect(res.body).toEqual({msg: 'ID not found'})
+    });
+
+    it.skip('GET /games/:id with valid id', async() => {
+      const res = await req(server).get('/games/3')
+
+      expect(res.status).toEqual(statusCodePass)
+      expect(res.body).toEqual({msg: 'ID not found'})
     });
 
     it('POST /games incomplete body', async() => {

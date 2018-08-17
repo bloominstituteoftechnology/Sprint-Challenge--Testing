@@ -12,12 +12,28 @@ let games = [
   {id:3, title:'Super Mario', genre:'NES', releaseYear:'1986'},
   {id:4, title:'Legend of Zelda', genre:'NES', releaseYear:'1980'},
 ]
+
 server.get('/', (req, res) => {
   res.status(200).send('up and running')
 })
 
 server.get('/games', (req, res) => {
   res.status(200).json(games)
+})
+
+server.get('/games/:id', (req, res) => {
+  const {id} = req.params
+  console.log(id)
+  console.log(games.map(cv =>cv.id))
+
+  if (!games.map(cv => cv.id).includes(id)){
+
+    console.log('invalid id')  
+    res.status(404).json({msg:'ID not found'})
+  }else{
+    console.log('valid id')  
+    res.status(200).json({msg:'valid id'})  
+  } 
 })
 
 server.post('/games', (req, res) => {
