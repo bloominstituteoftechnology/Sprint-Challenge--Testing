@@ -33,7 +33,7 @@ server.get('/games', (req, res) => {
 
 server.post('/games', (req, res) => {
     const { title, genre } = req.body
-    res,status(200).json({ title: `${title}`, genre: `${genre}`})
+    res.status(201).json({ title: `${title}`, genre: `${genre}`})
 })
 
 module.exports = server;

@@ -43,6 +43,11 @@ describe('games endpoint and functionality', () => {
         expect(response.body).toEqual(games);
     })
 
+    it('checks status for post', async() => {
+         const response = await request(server).post('/games').send({title: 'Final Fantasy VI', genre: 'RPG' } );
+         expect(response.status).toEqual(201);
+        })
+
     it('gets post in response', async() => {
         const game = {
             title: 'Final Fantasy VI',
