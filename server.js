@@ -14,6 +14,11 @@ server.get('/games', (req, res) => {
 })
 server.post('/games', (req, res) => {
   const { title, genre, releaseYear } = req.body;
+  for (let i=0; i<db.length; i++) {
+    if (db[i].title.toLowerCase() === title.toLowerCase()) {
+      res.status(405).json({ msg: 'This game already exists'})
+    }
+  }
   if (!title || ! genre) {
     res.status(422).json({ msg: 'Title and Genre are require to create a new game'})
   }

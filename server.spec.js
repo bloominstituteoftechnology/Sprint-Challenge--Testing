@@ -23,27 +23,27 @@ describe('server.js', () => {
       const expected = 201;
       const response = await request(server)
         .post('/games')
-        .send({title: 'Pacman', genre: 'Arcade', releaseYear: 1980})
+        .send({title: 'Pong', genre: 'Arcade', releaseYear: 1972})
       expect(response.status).toEqual(expected);
     })
-    test('should return status code 422 if missing info', async () => {
-      const expected = 422;
+    test('should return status code 405 if missing info', async () => {
+      const expected = 405;
       const response = await request(server)
         .post('/games')
-        .send({title: 'Pacman', genre: '', releaseYear: 1980})
+        .send({title: 'Pacman', genre: 'Arcade', releaseYear: 1980})
       expect(response.status).toEqual(expected);
     })
     test('should return json', async () => {
       const response = await request(server)
         .post('/games')
-        .send({title: 'Pacman', genre: 'Arcade', releaseYear: 1980})
+        .send({title: 'Pong', genre: 'Arcade', releaseYear: 1972})
       expect(response.type).toEqual('application/json');
     })
     test('should return the new game', async () => {
-      const expected = {title: 'Pacman', genre: 'Arcade', releaseYear: 1980}
+      const expected = {title: 'Pong', genre: 'Arcade', releaseYear: 1972}
       const response = await request(server)
         .post('/games')
-        .send({title: 'Pacman', genre: 'Arcade', releaseYear: 1980})
+        .send({title: 'Pong', genre: 'Arcade', releaseYear: 1972})
       expect(response.body).toEqual(expected);
     })
   })
