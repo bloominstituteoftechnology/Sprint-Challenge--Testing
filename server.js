@@ -3,7 +3,7 @@ const server = express();
 
 server.use(express.json());
 
-const games = [{title: "Pacman", genre: "Arcade",  releaseYear: 1980}, {title: "Minecraft", genre: "Sandbox", releaseYear: 2009}, {title: "World of Warcraft", genre: "Role-playing", releaseYear: 2004}]
+const games = [{title: "Pacman", genre: "Arcade",  releaseYear: 1980, id: 1}, {title: "Minecraft", genre: "Sandbox", releaseYear: 2009, id: 2}, {title: "World of Warcraft", genre: "Role-playing", releaseYear: 2004, id: 3}]
 
 server.get('/games', (req, res) => {
         res.status(200).json({games});
@@ -22,7 +22,11 @@ server.get('/games/:id', (req, res) => {
 })
 
 server.delete('/games/:id', (req, res) => {
-    
+        const {id} = req.params;
+        if (!id) {
+            res.status(404).json({ msg: `The game with id #${id} does not exist.` }) 
+        }
+        res.status(200).json({ msg: `The game with id #${id} is deleted.` })
 })
 
 module.exports = server;
