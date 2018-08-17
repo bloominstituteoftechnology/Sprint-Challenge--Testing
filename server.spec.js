@@ -42,4 +42,10 @@ describe('server.js', () => {
             id = postResponse.body[0];
         });
     });
+    describe('root endpoint DELETE(/)', () => {
+        it('should delete a game', async () => {
+            const deleteResponse = await request(server).delete(`/${id}`);
+            expect(deleteResponse.body).toBe(1);
+        });
+    });
 });
