@@ -13,6 +13,7 @@ let games = [
     },
 ];
 
+
 // GET /GAMES
 server.get('/games', (req, res) => {
     res.status(200).json(games);

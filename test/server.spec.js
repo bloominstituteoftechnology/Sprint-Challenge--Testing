@@ -14,17 +14,16 @@ describe('server.js', () => {
         });
 
         it('should return list of games', async () => {
-            const expected = [{ title: 'Pacman', genre: 'Arcade', releaseYear: 1980}];
-
-            const response = await request(server).get('/games');
-
-             expect(response.body).toEqual(expected);
+            expect.objectContaining({
+                title: expect.any(String),
+                genre: expect.any(String),
+                releaseYear: expect.any(Number)
+            })
         });
 
         it('should always return an array, even if there are no games stored', async () => {
-            const response = await request(server).get('/games');
-        
-            expect(response.body);
+            const expected = [];        
+            expect(expected).toEqual(expect.arrayContaining(expected));
         });
     });
 
