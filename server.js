@@ -20,9 +20,33 @@ let games =[
 
 let count =2;
 
-server.get('/', (req, res) => {
+server.get('/games', (req, res) => {
 	res.status(200).json(games);
 });
+
+
+server.get('/games/:id', (req, res) => {
+	const id = req.params.id;
+	console.log(req.params.id);
+
+	let gamesD =games;
+	let game = gamesD.filter(item => {
+		if(Number(item.id) ===Number(id)){
+			return item;
+		}
+	});	
+
+	console.log(game);
+	
+	if(game.length===1){
+        	res.status(200).json(game);
+	}	
+
+	else {
+		res.status(404).json({error: "specified id does not exist"});
+	}
+});
+
 
 server.post('/games', (req, res) => {
 	

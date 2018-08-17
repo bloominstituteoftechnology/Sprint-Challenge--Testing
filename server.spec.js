@@ -9,7 +9,7 @@ describe('server testing for GET request', () => {
 it('should return status code 200 OK', async() => {
                 const expected =200;
 
-                const response = await request(server).get('/');
+                const response = await request(server).get('/games');
                 expect(response.status).toEqual(expected);
 
 });
@@ -17,9 +17,28 @@ it('should return status code 200 OK', async() => {
 it('should return an Array as a respnse on making a GET request', async() => {
                 const expected = true;
 
-                const response = await request(server).get('/');
+                const response = await request(server).get('/games');
 		console.log( response.body);
                 expect(Array.isArray(response.body)).toEqual(expected);
+
+});
+
+
+it('should return code 200 when a game with the specified id exists on making a GET request', async() => {
+                const expected = 200;
+
+                const response = await request(server).get('/games/1');
+                console.log( response.body);
+                expect(response.status).toEqual(expected);
+
+});
+
+it('should return code 404 when a game with the specified id does not exist on making a GET request', async() => {
+                const expected = 404;
+
+                const response = await request(server).get('/games/100');
+                console.log( response.body);
+                expect(response.status).toEqual(expected);
 
 });
 });
