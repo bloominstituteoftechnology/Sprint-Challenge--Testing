@@ -3,6 +3,19 @@ const helmet = require('helmet')
 
 const server = express();
 
+const data = [
+  {
+    "title": "Pokemon",
+    "genre": "Adventure",
+    "year": "1994"
+  },
+  {
+    "title": "Yu-gi-oh",
+    "genre": "Card",
+    "year": "1994"
+  }
+]
+
 server.use(express.json());
 server.use(helmet())
 
