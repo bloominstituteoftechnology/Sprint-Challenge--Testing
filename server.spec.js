@@ -17,6 +17,27 @@ describe('server.js routes', () => {
       //Test that the response is an array
       expect(typeof response).toEqual('object');
     })
+
+    it('should return one game from GET /games/:id route if id valid', async () => {
+      await request(server)
+              .get('/games/1')
+              .expect('Content-Type', /json/)
+              .expect(200)
+              .expect({
+                id:1,
+                title: 'ET',
+                genre: 'Terrible',
+                releaseYear: 1981
+              })
+    })
+
+    it('should return a message saying 404: Not found if id invalid', async () => {
+      await request(server)
+              .get('/games/7')
+              .expect('Content-Type', /text/)
+              .expect(404)
+              .expect('404: Not found');
+    })
   })
 
   describe('POST requests', () => {
