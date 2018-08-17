@@ -27,8 +27,8 @@ For this project you will use TDD to create a simple Web API using Node.js and E
 
   ```js
   {
-    title: 'California Games', // required
-    genre: 'Sports', // required
+    title: 'Pacman', // required
+    genre: 'Arcade', // required
     releaseYear: 1987 // not required
   }
   ```
