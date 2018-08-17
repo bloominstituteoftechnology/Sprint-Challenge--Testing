@@ -20,7 +20,6 @@ describe('server.js', () => {
     const expected = 404;
     const URL = '/badPAge';
     const response = await request(server).get(URL);
-    console.log('BODY', response.body);
     expect(response.error.text).toContain(URL);
   });
 
