@@ -16,10 +16,17 @@ describe('server.js endpoints', () => {
                 .post('/games')
                 .expect(422);
         });
+
+        it('should return status code 405 if a game with the title sent already exists', async () => {
+            await request(server)
+                .post('/games')
+                .send({ title: 'Fortnite', genre: 'Fiction' })
+                .expect(405)
+        })
     });
 
     describe('GET /games', () => {
-        it('should return status code 200 and an array of games', async () => {
+        it('should return status code 200', async () => {
             await request(server)
                 .get('/games')
                 .expect(200);

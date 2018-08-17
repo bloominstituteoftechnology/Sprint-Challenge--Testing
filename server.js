@@ -29,6 +29,10 @@ server.post('/games', (req, res) => {
     const game = { id: gameId, title, genre, releaseYear };
     if (!title || !genre) return res.status(422).json({ error: 'Please fill in the required fields' });
 
+    for (let i = 0; i < games.length; i++) {
+        if (games[i].title.toLowerCase() === title.toLowerCase()) return res.status(405).json({ error: 'Game with this title already exists' });
+    }
+
     games.push(game);
     gameId++;
 
