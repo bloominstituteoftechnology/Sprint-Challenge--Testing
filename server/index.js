@@ -19,7 +19,7 @@ const data = [
 server.use(express.json());
 server.use(helmet())
 
-server.get('/', (req, res) => {
+server.get('/games', (req, res) => {
   res.status(200).json(data);
 })
 
