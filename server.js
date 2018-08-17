@@ -19,6 +19,12 @@ server.post('/games', (req, res) => {
     if(!newGame.title || !newGame.genre || !newGame.releaseYear){
         res.status(422).json({error: 'all fields are required'})
     }
+    games.forEach(el => {
+        if(el.title === newGame.title) {
+            res.status(405).json({error: 'That title is already in the database'})
+        }
+    })
+
     games.push({
         title: newGame.title,
         genre: newGame.genre,
@@ -27,4 +33,5 @@ server.post('/games', (req, res) => {
     res.status(200).json({title: newGame.title, genre: newGame.genre, releaseYear: newGame.releaseYear})
     
 })
+
 module.exports = server;

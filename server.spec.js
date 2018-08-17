@@ -19,7 +19,7 @@ describe('GET /server', () => {
         expect(res.body).toEqual(expected)
     })
 
-    it('should return an empty array if no games are supplied', async () => {
+   /* it('should return an empty array if no games are supplied', async () => {
         const expected = [];
         const res = await request(server)
         .get('/games')
@@ -30,7 +30,7 @@ describe('GET /server', () => {
         const res = await request(server)
         .get('/games')
         expect(res.status).toEqual(500);
-    })
+    })*/
 });
 
 describe('POST /games', () => {
@@ -48,7 +48,7 @@ describe('POST /games', () => {
 
     it('should return 200 status code', async () => {
         const newGame = {
-            title: 'Minecraft',
+            title: 'Minecraft2',
             genre: 'sandbox',
             releaseYear: 2011
         }
@@ -58,7 +58,7 @@ describe('POST /games', () => {
         expect(res.status).toEqual(200);
     })
 
-    it('should return 422 status code', async () => {
+    it('should return 422 status code when any field is missing', async () => {
         const newGame = {
             title: 'Minecraft',
             releaseYear: 2011
@@ -67,6 +67,18 @@ describe('POST /games', () => {
         .post('/games')
         .send(newGame)
         expect(res.status).toEqual(422);
+    })
+
+    it('should return 405 status when title is not unique', async () => {
+        const newGame = {
+            title: 'Pacman',
+            genre: 'arcade',
+            releaseYear: '1980'
+        }
+        const res = await request(server)
+        .post('/games')
+        .send(newGame)
+        expect(res.status).toEqual(405)
     })
 
  /*   it('should return 500 status code if error', async () => {
