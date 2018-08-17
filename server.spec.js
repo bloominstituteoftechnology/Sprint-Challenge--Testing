@@ -28,4 +28,11 @@ describe('server.js', () => {
             });
         });
     });
+
+
+    const game = {
+        title: "Donkey Kong",
+        genre: "a genre"
+    }
+    let id;
 });
