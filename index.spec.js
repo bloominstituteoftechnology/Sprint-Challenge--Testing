@@ -31,11 +31,12 @@ describe('server test(index.js)', () => {
                 genre: 'Arcade', 
                 releaseYear: 1980 
               }]
-              
+
             const response = await request(server)
                 .get('/games');
             expect(response.body).toEqual(expected);
         })
+        
     })
 
     describe('POST endpoint /games', () => {
