@@ -52,7 +52,19 @@ server.get('/games/:id', (req, res) => {
         if (releaseYear) foundGame.releaseYear = releaseYear;
     }
     res.status(200).json(foundGame)
-    
+})
+
+server.delete('/games/:id', (req, res) => {
+    const id = req.params.id;
+    const findById = game => {
+        return game.id === Number(id);
+    }
+    const foundGame = games.find(findById);
+    if(!foundGame) {
+        res.status(404).json({error: 'The game with the specified id does not exist'})
+    } else {
+        res.status(200). json({deleted: foundGame})
+    }
 })
 
 module.exports = server;

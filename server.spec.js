@@ -120,3 +120,18 @@ describe('GET /games/:id', () => {
         expect(res.body).toEqual(expected)
     })
 })
+
+describe('DELETE /games', () => {
+    it('should return status code 200 if successful', async () => {
+        const res = await request(server)
+        .delete('/games/2')
+        expect(res.status).toEqual(200);
+    })
+
+    it('should return status code 404 if game not found', async () => {
+        const res = await request(server)
+        .delete('/games/5')
+        expect(res.status).toEqual(404);
+    })
+
+})
