@@ -32,7 +32,11 @@ server.post("/games", async (req, res) => {
 });
 
 server.get("/games", (req, res) => {
-  res.status(200).json(games);
+  if (!games) {
+    return res.status(200).json([]);
+  } else {
+    return res.status(200).json(games);
+  }
 });
 
 module.exports = server;
