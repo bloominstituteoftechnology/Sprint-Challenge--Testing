@@ -14,9 +14,6 @@ describe('games endpoint and functionality', () => {
     })
 
     it('gets status in response', async () => {
-     
-
-
         const response = await request(server).get('/games')
         expect(response.status).toEqual(200);
     })
