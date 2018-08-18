@@ -15,23 +15,31 @@ describe(' server ', () => {
   });
 
   describe('POST /games', () => {
-    it('should respond type JSON', async () => {
+    it.skip('should respond type JSON', async () => {
       const res = await request(server).post('/games')
       expect(res.type).toEqual('application/json');
     })
 
-    it('should response with status code 201', async () => {
+    it.skip('should response with status code 201', async () => {
       const res = await request(server).post('/games')
       expect(res.status).toEqual(201);
     })
 
-    it('should return {id, title, genre} in response body', async () => {
-      const expected = {id:'4', title: 'game4', genre: 'shooter'}
+    it.skip('should return {id, title, genre} in response body', async () => {
+      const expected = {id:4, title: 'game4', genre: 'shooter'}
       const res = await request(server)
         .post('/games')
-        .send({id:'4', title: 'game4', genre: 'shooter'})
+        .send({id: 4, title: 'game4', genre: 'shooter'})
       expect(res.body).toEqual(expected);
     })
 
+    it('should return message "The game title already exists in database"', async () => {
+      const expected = {message: 'The game already exists in database'}
+      const res = await request(server)
+        .post('/games')
+        .send({id: 5, title:'game3', genre:'action'});
+      console.log(res.body);
+      expect(res.body).toEqual(expected);
+    })
   })    
 });

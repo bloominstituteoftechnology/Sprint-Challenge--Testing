@@ -27,17 +27,20 @@ server.get('/games', (req, res) => {
 server.post('/games', (req, res) => {
   const {id, title, genre} = req.body;
   games.forEach(game => {
-    if (game.id !== id) {
-      games.push({id, title, genre })
-      res.status(201).json(games.pop());
-      return;
-    } else if (game.id === id) {
+    console.log (game['title'], title)
+    if (game.title === title) {
       res.status(400).json({message: 'The game already exists in database'})
       return;
-    } else {
-      res.status(500).json({error: 'unable to add the game'})
     }
   })
+
+    // else if (game.title !== title) {
+    //   games.push({id, title, genre })
+    //   res.status(201).json(games[games.length - 1]);
+    //   return;
+    // } else {
+    //   res.status(500).json({error: 'unable to add the game'})
+    // }
 });
 
 
