@@ -43,7 +43,4 @@ describe('The Game Model', () => {
     expect(title).toEqual(game.title);
   });
 
-  // it('rejects a new game without a title', async () => {;
-  //   const response = await Game.create(gameNoTitle);
-  // });
 });

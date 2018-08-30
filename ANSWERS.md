@@ -21,6 +21,6 @@
 
 5. What type of test performs database operations against a real server.
 
-    Integration Tests or Load Tests
+    Integration Tests, Functional Tests or Load Tests
 
 
