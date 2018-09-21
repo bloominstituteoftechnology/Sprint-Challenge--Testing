@@ -1,6 +1,8 @@
 const request = require('supertest');
 
-const server = require('./server.js')
+const server = require('./server.js');
+
+const getType = require('jest-get-type');
 
 describe('server GET requests', () => {
 
@@ -9,7 +11,7 @@ describe('server GET requests', () => {
         expect(response.status).toBe(200)
     })
 
-    it('should return an array of games at "/games" endpoint or an empty array', async () => {
+    it('should return an array of games at "/games" endpoint or an empty array if array is empty', async () => {
         const response = await request(server).get('/games');
         const expectedRes = [
             {   
@@ -33,6 +35,14 @@ describe('server GET requests', () => {
         expect(response.body).toEqual(expectedRes) 
     })
    
+    // test('title should return an array', async () => {
+    //   const response = await request(server).get('/games')
+    //   const type = getType(response)
+
+    //   const body = response.body
+    //   expect(body).toBe(type)
+    // })
+
     it('should return a object that has an id, title, and genre from "/games/:id" endpoint', async () => {
         const response = await request(server).get('/games/1');
         
