@@ -85,7 +85,7 @@ describe('Server', () => {
         })
     });
 
-    describe('GET to /game/:id', () => {
+    describe('GET to /games/:id', () => {
         it('should return a status code of 200 on success', async () => {
             const response = await request(server).get('/games/1');
             expect(response.status).toEqual(200);
@@ -127,6 +127,6 @@ describe('Server', () => {
         it('should return a JSON object', async () => {
             const response = await request(server).delete('/games/6');
             expect(response.type).toBe('application/json');
-        })
-    })
+        });
+    });
 });
