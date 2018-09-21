@@ -39,16 +39,7 @@ describe('server.js', () => {
         .expect(res => {
           res.body.id = 'some Id';
         })
-        .expect(
-          201,
-          {
-            id: 'some Id',
-            title: 'Pacman',
-            genre: 'Arcade',
-            releaseYear: 1980,
-          },
-          done,
-        );
+        .expect(201, done);
     });
 
     it('responds with 422 if all fields not complete', done => {
@@ -57,6 +48,30 @@ describe('server.js', () => {
         .send({ title: 'Pacman' })
         .expect('Content-Type', /json/)
         .expect(422, '"All fields must be complete."', done);
+    });
+  });
+
+  describe('GET /games/:id', () => {
+    it('respond with 200 and json', done => {
+      request(server)
+        .get('/games/1')
+        .expect(
+          200,
+          {
+            id: 1,
+            title: 'Pacman',
+            genre: 'Arcade',
+            releaseYear: 1980,
+          },
+          done,
+        );
+    });
+
+    it('responds with 404 if id doesnt exist', done => {
+      request(server)
+        .get('/games/3')
+        .expect('Content-Type', /json/)
+        .expect(404, '"Game does not exist"', done);
     });
   });
 
