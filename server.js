@@ -16,6 +16,17 @@ server.get('/games', (req, res) => {
   res.status(200).json(games);
 });
 
+//get a game by id
+server.get('/games/:id', (req, res) => {
+  const { id } = req.params;
+  const game = games.filter(g => parseInt(g.id, 10) === parseInt(id, 10));
+  if(game.length === 1){
+    res.status(200).json(game[0]);
+  }else{
+    res.status(404).json({ message: 'No game by that id' });
+  }
+});
+
 //add a new game
 server.post('/games', (req, res) => {
   const { title, genre } = req.body;
