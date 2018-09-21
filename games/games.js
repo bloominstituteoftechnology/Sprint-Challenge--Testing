@@ -1,4 +1,4 @@
-const games = {};
+const games = [];
 
 const GET = (req, res) => {};
 

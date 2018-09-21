@@ -3,10 +3,28 @@ const server = require('./server');
 
 describe('server.js', () => {
   describe('GET /games', () => {
-    it('should return an OK http code (200)', async () => {
-      const res = await req(server).get('/games');
+    let res;
+
+    beforeAll(async () => {
+      res = await req(server).get('/games');
+    });
+
+    it('should return an OK http code (200)', () => {
       expect(res.status).toBe(200);
     });
+
+    it('should return an array', () => {
+      expect(Array.isArray(res.body)).toBe(true);
+    });
+
+    if (res.body.length > 0) {
+      it('should have game objects structured correctly', () => {
+        expect(
+          res.body[0].hasOwnProperty('title') && 
+          res.body[0].hasOwnProperty('genre')
+        ).toBe(true);
+      });
+    }
   });
 
   describe('POST /games', () => {
