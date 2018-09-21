@@ -1,72 +1,53 @@
-# Assessing your Testing Fu
+# Testing Sprint Challenge
 
-* Keep Calm! Test On!
-* Now that you're familiar with the concepts of testing, your goal is to write tests for an API that is already in production. (This happens a lot :))
-* Answers to your written questions will be recorded in _ANSWERS.md_
-* This is to be worked on alone, but you can use outside resources. You can _reference_ any old code you may have, and the React Documentation, however, please refrain from copying and pasting any of your answers. Try and understand the question and put your responses in your own words. Be as thorough as possible when explaining something.
-* **Just a friendly Reminder** Don't fret or get anxious about this, this is a no-pressure assessment that is only going to help guide you here in the near future. This is NOT a pass/fail situation.
+For this project you will use TDD to create a simple Web API using Node.js and Express. The basic requirements for the endpoints are listed below. Create any files and folders you need to finish the project, you have complete freedom to structure your solution to make it easier to test and extend in the future.
 
-## Start by forking and cloning this repository.
+## Assignments
 
-## Questions - Self Study - You can exercise your Google-Fu for this and any other _Sprint Challenge_ in the future.
+- Open the `Review.md` file and answer the questions inside.
+- Use `Test Driven Development` to build a RESTful API using Node.js and Express to create and list _games_. **Data can be stored in memory using a simple JS array**. No need to keep track of incrementing `id`s for this project's MVP, that is part of the Stretch Problem.
 
-1.  In Jest, what are the differences between `beforeAll`, `afterAll`, `beforeEach`, and `afterEach`? When do they run? What are they used for?
-1.  What is the point of Test Driven Development? What do you personally think about this approach?
-1.  What is a `mock function`? How do we use it to test a `callback` passed to a function?
-1.  Mention three types of tests.
-1.  What type of test performs database operations against a real server.
+### Download Project and Install Dependencies
 
-## Initializing Project
+1.  fork and clone this repository.
+1.  **CD into the folder** where you downloaded the repository.
+1.  run `yarn` or `npm i` to download all dependencies.
+1.  type `yarn test` or `npm test` to run the tests. The `test` script is already configured.
 
-* Fork/Clone this project into a directory on your machine.
-* `cd` into your forked local copy.
-* notice there is a `package.json` file included. We have included all of the dev-dependencies that you'll need to build your project.
-* run `yarn` to download and install all the dependencies you need for this project.
-* run `yarn test` to start your tests.
-* Keep an active log of your changes by committing with Git and pushing often to GitHub.
-* Write all of your tests in the `server.test.js` file.
+### Requirements
 
-## Project Description
+1.  use `jest` and `supertest` to write the tests.
+1.  Write the **tests BEFORE** writing the route handlers.
+1.  Your API must be have `POST` and `GET` endpoints for `/games`.
+1.  Write a **minimum** of three tests per endpoint.
 
-* You're going to be writing the tests for a CRUD API.
-* The API itself is really simple. Your task is to peek at the endpoints found in the `server.js` file and write the tests for them.
+#### POST /games
 
-## TESTS
-
-* The provided API has already been manually tested.
-* Your job is to write `unit and integration tests` to ensure that the endpoints do what they're supposed to do.
-* Each endpoint should have multiple tests to ensure that different sorts of input are handled correctly/as expected. As a guideline, write at least two tests for each endpoint.
-* THERE IS NO NEED TO `YARN START`, BUT YOU'LL WANT TO ENSURE THAT YOU HAVE A `MONGO` INSTANCE UP AND RUNNING.
-
-### Write tests for the "POST" method
-
-* The `POST` method should take in an object that looks like this
+- The `POST /games` endpoint should take in an object that looks like this
 
   ```js
   {
-    title: 'California Games',
-    genre: 'Sports',
-    releaseDate: 'June 1987'
+    title: 'Pacman', // required
+    genre: 'Arcade', // required
+    releaseYear: 1980 // not required
   }
   ```
 
-### Write tests for the "GET" method
+  - in the route handler, validate that the required fields are included inside the body. If the information is incomplete, return a `422` status code.
+  - write tests to verify that the endpoint returns the correct HTTP status code when receiving correct and incorrect game data.
 
-* Our get method should return the list of games.
-* **REMINDER** That this data structure returned from Mongo will be an array, so to test your game with a `beforeEach` hook you'll need to make sure you test against the first item in the array
+#### GET /games
 
-  ```js
-  expect(res.data[0].foo).to.equal(bar.foo);
-  ```
-
-### Write tests for the "DELETE" method
-
-* `DELETE` can take an ID off of the route parameter and delete the corresponding game if it exists or return a 404 and an object with a message if the game does not exist in the database.
+- The `GET /games` endpoint should return the list of games and HTTP status code 200.
+- Write a test to make sure this endpoint always returns an array, even if there are no games stored. If there are no games to return, the endpoint should return an empty array.
 
 ## Stretch Problem
 
-### Write tests for the "PUT" method
+The following exercises are optional, but we suggest that you tackle them if you finish the MVP early.
 
-* Just like in class, send up the information you want changed on the server via the `req.body`.
+- validate that the game `title` is unique. If the client tries to create a duplicate game, return a status code 405 (Not Allowed). Write a test that checks for this.
+- add an `id` property to the game schema and write code in the server to increment it automatically. After implementing this functionality work on the following:
+  - Write a `GET /games/:id` endpoint that returns the information about a single game. Respond with a 404 status code when a game is not found for the provided `id`. Add the corresponding tests for it.
+  - add a `DELETE /games/:id` endpoint that can remove the corresponding game. If the game does not exists return a 404 status code. Write tests for this endpoint.
 
-### Remember you can use any resources you want to solve these problems, but avoid copying/pasting solutions you've previously written. Also if you don't finish all of the challenges, that's fine! Just do what you can and submit your challenges in the end! HAVE FUN!
+**Remember you can use any resources you want to solve these problems, but avoid copying/pasting solutions you've previously written. Also if you don't finish all of the challenges, that's fine! Just do what you can and submit your challenges in the end! HAVE FUN!**
