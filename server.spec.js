@@ -101,6 +101,20 @@ describe('server.js',()=>{
                 }
             }
         })
+        it ('returns a JSON object',async()=>{
+            let response=await request(server).post('/games').send({
+                title:'Metroid',
+                genre:'Console',
+                releaseYear:1986
+            })
+            if (response){
+                async()=>{
+                    const id=1;
+                    const secondResponse=await request(server).get(`/games/${id}`);
+                    expect(secondResponse.type).toEqual('application/json');
+                }
+            }
+        })
     })
     describe('delete single game route',()=>{
         it('returns a 404 status code when game not found',async()=>{
@@ -134,6 +148,20 @@ describe('server.js',()=>{
                     const id=1;
                     const secondResponse=await request(server).delete(`/games/${id}`);
                     expect(secondResponse.body).toEqual(1);
+                }
+            }
+        })
+        it ('returns a JSON object',async()=>{
+            let response=await request(server).post('/games').send({
+                title:'Metroid',
+                genre:'Console',
+                releaseYear:1986
+            })
+            if (response){
+                async()=>{
+                    const id=1;
+                    const secondResponse=await request(server).delete(`/games/${id}`);
+                    expect(secondResponse.type).toEqual('application/json');
                 }
             }
         })
