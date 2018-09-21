@@ -22,10 +22,15 @@ server.post("/games", (req, res) => {
     const { id, title, genre } = req.body;
   
     if (!id || !title || !genre) {
-      res.status(422).end();
-    } else {
-      res.status(201).json(req.body);
+        return res.status(422).end();
+    } 
+
+    const matching = games.filter(game => game.title === title); 
+    if(matching.length > 0){
+        return res.status(405).json({error: "Game already exists"})
     }
+
+    res.status(201).json(req.body);
   });
 
 

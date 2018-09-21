@@ -31,19 +31,23 @@ describe("Server", () => {
     it("should return a status code of 201", async () => {
         const response = await request(server)
           .post("/games")
-          .send({ id: "1", title: "Pacman", genre: "Arcade", releaseYear: 1980 });
+          .send({ id: "5", title: "PUBG", genre: "Battle Royale", releaseYear: 2018 });
         expect(response.status).toEqual(201);
       });
       it('should return a status code of 422 if information isnt complete', async () => {
-          const response = await request(server).post("/games").send({id: 5, title: "Madden 2018"}); 
+          const response = await request(server).post("/games").send({id: "5", title: "Bla Bla"}); 
           expect(response.status).toEqual(422); 
       });
+      it('should return a status code of 405 if client tries to duplicate a game that already exists', async () => {
+          const response = await request(server).post('/games').send({ id: "2", title: "Fortnite", genre: "Battle Royale", releaseYear: 2017 }); 
+          expect(response.status).toEqual(405); 
+      })
       it('should return a response body type of JSON', async () => {
-          const response = await request(server).post("/games").send({id: 5, title: "Madden 2018", genre: "EA Sports", releaseYear: 2017}); 
+          const response = await request(server).post("/games").send({id: "6", title: "Far Cry 5", genre: "EA", releaseYear: 2017}); 
           expect(response.type).toEqual('application/json'); 
       });
       it('should return a response body containing the posted data', async () => {
-          const body = {id: 5, title: "Madden 2018", genre: "EA Sports", releaseYear: 2017}
+          const body = {id: "7", title: "FallOut 4", genre: "EA", releaseYear: 2017}
           const response = await request(server).post("/games").send(body); 
           expect(response.body).toEqual(body); 
       });
