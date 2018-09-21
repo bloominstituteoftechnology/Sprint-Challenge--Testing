@@ -42,4 +42,45 @@ describe("server.js", () => {
         });
     });
   });
+
+  describe("POST route", () => {
+    it("should return 201 status code on success", () => {
+      const newGame = {
+        title: "Super Mario Bros",
+        genre: "Platformer",
+        releaseYear: 1985
+      };
+
+      return request(server)
+        .post("/games")
+        .send(newGame)
+        .then(res => {
+          expect(res.status).toEqual(201);
+        });
+    });
+
+    it("should return status 422 on bad request", () => {
+      return request(server)
+        .post("/games")
+        .send({ title: "Duck Hunt" })
+        .then(res => {
+          expect(res.status).toEqual(422);
+        });
+    });
+
+    it("should return 1 on successful addition", () => {
+      const newGame = {
+        title: "Duck Hunt",
+        genre: "Shooter",
+        releaseYear: 1985
+      };
+
+      return request(server)
+        .post("/games")
+        .send(newGame)
+        .then(res => {
+          expect(res.body).toEqual(1);
+        });
+    });
+  });
 });
