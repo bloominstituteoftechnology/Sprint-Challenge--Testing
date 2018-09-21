@@ -24,7 +24,7 @@ function validateTitle(req,res,next){
 server.get('/games',(req,res)=>{
     res.status(200).json({games:games});
 })
-server.post('/games',(req,res)=>{
+server.post('/games',validateTitle,(req,res)=>{
     const newGame=req.body;
     if (!newGame.title||!newGame.genre||!newGame.releaseYear){
         res.status(422).json({error:'missing field(s)'});
