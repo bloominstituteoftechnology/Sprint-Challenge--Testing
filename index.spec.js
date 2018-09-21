@@ -35,6 +35,7 @@ describe("server.js", () => {
         .get("/games")
         .then(res => {
           expect(res.body).toContainEqual({
+            id: 1,
             title: "Pacman",
             genre: "Arcade",
             releaseYear: 1980
@@ -80,6 +81,15 @@ describe("server.js", () => {
         .send(newGame)
         .then(res => {
           expect(res.body).toEqual(1);
+        });
+    });
+
+    it("should reject request with 405 when duplicating a title", () => {
+      return request(server)
+        .post("/games")
+        .send({ title: "Super Mario Bros", genre: "Platformer" })
+        .then(res => {
+          expect(res.status).toEqual(405);
         });
     });
   });
