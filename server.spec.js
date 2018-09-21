@@ -30,7 +30,7 @@ describe("POST", () => {
         releaseYear: 1980
       });
 
-      expect(response.status).toEqual(422);
+    expect(response.status).toEqual(422);
   });
 
   it("should return 201 success", async () => {
@@ -42,7 +42,23 @@ describe("POST", () => {
         releaseYear: 1980
       });
 
-      expect(response.status).toEqual(201);
+    expect(response.status).toEqual(201);
+  });
+});
+
+describe("GET", () => {
+  it("should return 200", async () => {
+    const response = await request(server).get("/games");
+    expect(response.status).toEqual(200);
   });
 
+  it('should return array', async () => {
+      const response = await request(server).get('/games');
+      expect(Array.isArray(response.body)).toBe(true);
+  })
+
+  it('should return object', async() => {
+      const response = await request(server).get('/games');
+      expect(response.type).toEqual("application/json")
+  })
 });
