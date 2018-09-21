@@ -50,7 +50,6 @@ server.post("/games/", (req, res) => {
       } else {
         const newgame = { id, title, genre, releaseYear };
         gamesDb.games.push(newgame);
-        // console.log("GAME RESPONSE", gamesDb.games[3]);
         return res.status(200).json(gamesDb.games);
       }
     }
