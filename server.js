@@ -26,51 +26,71 @@ server.get("/games", (req, res) => {
 });
 
 server.get("/games/:id", (req, res) => {
-  const { id } = req.params
+  const { id } = req.params;
   db("games")
     .where({ id })
     .then(game => {
-      if(game[0]){
-        res.status(200).json(game)
+      if (game[0]) {
+        res.status(200).json(game);
       } else {
-        res.status(404).json({error: "not found"})
+        res.status(404).json({ error: "not found" });
       }
     })
     .catch(error => {
-      res.status(500).json({ errorMessage: error.message,pathIssue: "unable to locate games"})
-    })
-})
+      res
+        .status(500)
+        .json({
+          errorMessage: error.message,
+          pathIssue: "unable to locate games"
+        });
+    });
+});
 
-function postChecker (req, res, next) {
-  if(!req.body.genre || !req.body.title){
-    res.status(422).json({errorMessage: "genre and title required"});
+function postChecker(req, res, next) {
+  if (!req.body.genre || !req.body.title) {
+    res.status(422).json({ errorMessage: "genre and title required" });
   } else {
-      next()
+    next();
   }
 }
-function unique (req, res, next){
-  db("games")
-    .then(games => {
-       const uniqueTitle = games.filter((game) => game.title === req.body.title)
-       if(uniqueTitle.length){
-          res.status(405).json({errorMessage: "Game not unique"})
-       } else {
-          next()
-       }
-    })
+function unique(req, res, next) {
+  db("games").then(games => {
+    const uniqueTitle = games.filter(game => game.title === req.body.title);
+    if (uniqueTitle.length) {
+      res.status(405).json({ errorMessage: "Game not unique" });
+    } else {
+      next();
+    }
+  });
 }
 
 server.post("/games", postChecker, unique, (req, res) => {
   db("games")
     .insert(req.body)
     .then(gameId => {
-      const id = gameId[0]
+      const id = gameId[0];
       res.status(201).json(id);
     })
     .catch(error => {
-      res.status(500).json({error}) 
+      res.status(500).json({ error });
     });
 });
 
+server.delete("/games/:id", (req, res) => {
+  const { id } = req.params;
+  db("games")
+    .where({ id })
+    .del()
+    .then(count => {
+      if (count) {
+        res.status(204).end();
+      } else {
+        res.status(404).json({ error: "not found" });
+      }
+    })
+    .catch(error => {
+      res.status(500).json({ error });
+    });
+});
 
 module.exports = server;
