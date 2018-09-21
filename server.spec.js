@@ -16,6 +16,7 @@ describe('server.js', () => {
     });
   });
 
+
   describe('POST /games', () => {
     it('responds with status code 422 when incomplete info is sent', async () => {
         let game = {
@@ -26,12 +27,13 @@ describe('server.js', () => {
         const response = 
             await request(server)
                 .post('/games')
-                .send(game);
-            
-        expect(response.status).toEqual(422);
+                .send(game)
+                .set('Accept', 'application/json');
+
+            expect(response.status).toEqual(422);
     });
 
-    it('responds with status code 201 when game is posted', async () => {
+    it('responds with status code 201 when game is posted and the game itself', async () => {
         
         const response =
             await request(server)
@@ -43,4 +45,6 @@ describe('server.js', () => {
     });
 
   });
+
+
 });

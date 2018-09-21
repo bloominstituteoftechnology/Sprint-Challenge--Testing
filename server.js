@@ -3,6 +3,8 @@ const express = require('express');
 
 const server = express();
 
+server.use(express.json());
+
 const games = [
     {title: 'Pacman', genre: 'Arcade', releaseYear: 1980},
     {title: 'Nier Automata', genre: 'Action', releaseYear: 2017},
@@ -18,6 +20,7 @@ server.get('/games', (req, res) => {
 });
 
     
+
 server.post('/games', (req, res) => {
     if( !req.body.title || !req.body.genre) {   
         return res.status(422).json({message:'Incomplete data received'});
