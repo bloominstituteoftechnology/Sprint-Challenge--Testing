@@ -25,12 +25,22 @@ function propertiesChecker(req, res, next){
     }
 }
 
+function duplicateGameChecker(req, res, next){
+    const game = req.body; 
+    db('games')
+      .where({'title': game.title})
+      .then(games => { 
+          res.status(405).json({msg: "Cannot post duplicate games."})
+      })
+      .then(next()); 
+    }
+
 function couldNotGet(req, res, next) {
     var today = new Date();
     var todaysDate = today.getDate();
     
-    if(todaysDate % 2 === 1) {
-        res.status(403).json({msg: "Games can only be retrieved on an even date of the month."});
+    if(todaysDate % 2 === 0) {
+        res.status(403).json({msg: "Games can only be retrieved on an odd date of the month."});
     } else {
         next(); 
     }
@@ -41,7 +51,7 @@ function couldNotGet(req, res, next) {
 
 //=========Endpoints==========//
 
-server.get('/games', couldNotGet, (req, res) => {
+server.get('/games',couldNotGet, (req, res) => {
     db('games')
         .then(games => {
             res.status(200).json(games)
@@ -51,7 +61,7 @@ server.get('/games', couldNotGet, (req, res) => {
         })
 })
 
-server.post('/games', propertiesChecker, (req, res) => {
+server.post('/games', propertiesChecker, duplicateGameChecker, (req, res) => {
     game = req.body
     db.insert(game).into('games')
         .then(games => {
