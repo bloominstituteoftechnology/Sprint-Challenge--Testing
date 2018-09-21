@@ -36,34 +36,57 @@ describe('server.js', () => {
       
             expect(response.body).toEqual(expected);
         });
+
+        it('should return 405 for not unique title', async () => {
+            const gameUnique = {
+                title: 'Counter Strike',
+                genre: 'FPS',
+                releaseYear: 1999 
+            }
+      
+            const expectedError = 405;
+            const response1 = await request(server).post('/games').send(gameUnique);
+            const response2 = await request(server).post('/games').send(gameUnique);
+
+            expect(response1.status).toEqual(201);
+            expect(response2.status).toEqual(expectedError);
+          });
     });
 
     describe('POST /games posted successfully', () => {
-        let response;
-
-        beforeEach(async () => {
+        it('should return status 201', async() => {
             let game = {
                 title: 'Pacman',
                 genre: 'Arcade',
                 releaseYear: 1980 
             };
-
-            response = await request(server).post('/games').send(game);
-        });
-
-        it('should return status 201', () => {
             const expected = 201;
-
+            const response = await request(server).post('/games').send(game);
             expect(response.status).toEqual(expected);
         });
 
-        it('should return JSON', () => {
+        it('should return JSON', async() => {
+            let game = {
+                title: 'Diablo 3',
+                genre: 'RPG',
+                releaseYear: 2013 
+            };
+
             const expected = 'application/json';
+            const response = await request(server).post('/games').send(game);
 
             expect(response.type).toEqual(expected);
         });
 
-        it('should have an id field', () => {
+        it('should have an id field', async() => {
+            let game = {
+                title: 'Diablo 1',
+                genre: 'RPG',
+                releaseYear: 1997 
+            };
+
+            const response = await request(server).post('/games').send(game);
+
             expect(response.body.id).toBeDefined();
             expect(typeof response.body.id).toBe('number');
         });

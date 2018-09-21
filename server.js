@@ -18,6 +18,10 @@ server.post('/games', (req, res) => {
         return res.status(422).json({message: 'Required fields: Title & Genre!!!!!!!!'});
     };
 
+    if(games.find(game => game.title === title)){
+        return res.status(405).json({message: 'Game with this title already exists!!!'});
+    };
+
     const game = {id: id++, title, genre, releaseYear};
     games.push(game);
     res.status(201).json(game);
