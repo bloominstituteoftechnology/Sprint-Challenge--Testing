@@ -9,7 +9,7 @@ describe('server.js', () => {
     });
     it('should always return an array', async () => {
       const response = await request(server).get('/games');
-      expect(typeof response.body).toBe('array');
+      expect(Array.isArray(response.body)).toBeTruthy();
     });
     it('should return a list of games', async () => {
       const response = await request(server).get('/games');
