@@ -16,6 +16,10 @@ server.post("/games", (req, res) => {
   }
 });
 
+server.get("/games", (req, res) => {
+  res.status(200).json(gamesArr);
+});
+
 module.exports = {
   server,
   gamesArr

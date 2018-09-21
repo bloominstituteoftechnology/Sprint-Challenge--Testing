@@ -8,7 +8,7 @@ describe("server.js", () => {
   });
 });
 
-describe("/games", () => {
+describe("/games POST", () => {
   it("should add a game and return the title", async () => {
     let title = "Pacman";
     let genre = "Arcade";
@@ -47,22 +47,22 @@ describe("/games", () => {
   });
 });
 
-// describe("/", () => {
-//   it("returns a 200 status code", async () => {
-//     const response = await request(server).get("/");
+describe("/games GET", () => {
+  it("returns a 200 status code", async () => {
+    const response = await request(server).get("/games");
 
-//     expect(response.status).toEqual(200);
-//   });
-//   it(`should return {api: "running"}`, async () => {
-//     const expectedBody = { api: "running" };
+    expect(response.status).toEqual(200);
+  });
+  it("should return a list of games", async () => {
+    const expectedBody = [];
 
-//     const response = await request(server).get("/");
+    const response = await request(server).get("/games");
 
-//     expect(response.body).toEqual(expectedBody);
-//   });
-//   it(`should return json`, async () => {
-//     const response = await request(server).get("/");
+    expect(response.body).toEqual(expectedBody);
+  });
+  it(`should return json`, async () => {
+    const response = await request(server).get("/games");
 
-//     expect(response.type).toEqual("application/json");
-//   });
-// });
+    expect(response.type).toEqual("application/json");
+  });
+});
