@@ -24,7 +24,7 @@ const request = require('supertest');
             expect(Array.isArray(games)).toBeTruthy();
           });
 
-          it("should return a status code of 200", async () => {
+          it("should return status code 200", async () => {
             const response = await request(server).get("/games");
             expect(response.status).toEqual(200);
           });
@@ -32,18 +32,30 @@ const request = require('supertest');
       
       describe('POST /games', () => {
         it('should return a 422 status code if no title is provided', async () => {
-            let game = { title: '', genre:'' }
+            let game = { title: '' }
              const response = await request(server)
             .post('/games')
             .send(game)
              expect(response.status).toEqual(422);
         });
         it('should return a 422 status code if no genre is provided', async () => {
-            let game = { title: '', genre:'' }
+            let game = { genre:'' }
              const response = await request(server)
             .post('/games')
             .send(game)
              expect(response.status).toEqual(422);
+        });
+        it('should add a new game to games array', async () => {
+            const response = await request(server)
+            .post('/games')
+            .send({ title: "DigDug", genre: "Arcade" });
+            const expectedBody =  [
+                { title: 'Pacman' , genre: 'Arcade' },
+                { title: 'Galaga', genre: 'Arcade' },
+                { title: 'Pong' , genre: 'Arcade' },
+                { title: "Digdug", genre: "Arcade" }
+        ]
+            expect(response.body).toBe(expectedBody);
         });
 
     });
