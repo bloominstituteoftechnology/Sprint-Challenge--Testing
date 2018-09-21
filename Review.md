@@ -11,4 +11,4 @@ mocks
 The main goal of mocking is to separate the code we do not control with the code we do control, which helps to isolate test subjects by replacing dependecies. 
 
 4.  Mention three types of automated tests.
-UI, unit and APIs.
+Integrated, unit and end-to-end testing.
