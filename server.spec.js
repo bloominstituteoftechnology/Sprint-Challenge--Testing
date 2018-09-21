@@ -23,6 +23,11 @@ const request = require('supertest');
             const response = await request(server).get("/games");
             expect(Array.isArray(games)).toBeTruthy();
           });
+
+          it("should return a status code of 200", async () => {
+            const response = await request(server).get("/games");
+            expect(response.status).toEqual(200);
+          });
       });
       
       describe('POST /games', () => {
