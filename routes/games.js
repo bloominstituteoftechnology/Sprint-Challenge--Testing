@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const gameStore = [
+let gameStore = [
   {
     id: 1,
     title: "Pacman",
@@ -47,11 +47,9 @@ router.post("/", (req, res, next) => {
 
 router.delete("/:id", (req, res, next) => {
   const prev = gameStore.length;
-  console.log(prev);
   gameStore = gameStore
     .filter(game => game.id !== Number(req.params.id))
     .map(game => game);
-  console.log(gameStore.length)
 
   prev > gameStore.length
     ? res.status(200).json({ status: true, games: gameStore })
