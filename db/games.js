@@ -26,7 +26,10 @@ const newGame = {
   releaseYear: 1965,
 };
 
+const errMessage = { message: "game not found" };
+
 module.exports = {
   games,
   newGame,
+  errMessage,
 };

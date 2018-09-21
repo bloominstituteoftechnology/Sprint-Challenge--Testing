@@ -10,10 +10,31 @@ server.get("/", (req, res) => {
   res.status(200).json(passedBody);
 });
 
-// Game endpoints
+// === Game Endpoints === //
 // GET all
 server.get("/games", (req, res) => {
-  res.status(200).json(gamesDb.games);
+  const gamesArray = gamesDb.games;
+  res.status(200).json(gamesArray);
+  // uncomment for empty games tests
+  // const emptyGames = [];
+  // res.status(200).json(emptyGames);
+});
+
+// GET individual game
+server.get("/games/:id", (req, res) => {
+  const { id } = req.params;
+  let game = [];
+  console.log("GAMES DATA", gamesDb.games[9]);
+  for (let i = 0; i < gamesDb.games.length; i++) {
+    if (gamesDb.games[i].id === id && gamesDb.games[i].id !== "undefined") {
+      game.push(gamesDb.games[i]);
+    }
+  }
+  // check to see if game is in array
+  if (game.length === 0) {
+    return res.status(404).json({ message: "game not found" });
+  }
+  res.status(200).json(game);
 });
 
 // POST (create) new game
