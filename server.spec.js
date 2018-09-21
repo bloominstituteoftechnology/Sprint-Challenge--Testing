@@ -150,7 +150,7 @@ describe('server.js', () => {
       res = await req(server).put('/games/2')
         .send({
           'game': 'Pacman',
-          'genre': 'Arcade',
+          'genre': 'Arcade-Deluxe',
           'releaseYear': 1980
         })
         .set('Content-Type', 'application/json')

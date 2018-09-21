@@ -37,6 +37,24 @@ const POST = (req, res) => {
   return res.status(201).json(id++);
 };
 
+const PUT = (req, res) => {
+  const gameId = req.params.id;
+  if (!getById(gameId)) {
+    return res.status(404).json({ message: 'No game found with the given id.' });
+  }
+
+  const { title, genre, releaseYear } = req.body;
+  const id = getById(gameId).id;
+  const updated = { title, genre, releaseYear, id };
+  let delInd;
+  for (let i = 0; i < games.length; i++) {
+    if (id === games[i].id) {
+      delInd = i;
+    }
+  }
+  return res.status(200).json(games.splice(delInd, 1, updated).length);
+};
+
 const DELETE = (req, res) => {
   const gameId = req.params.id;
   if (!getById(gameId)) {
@@ -55,5 +73,6 @@ const DELETE = (req, res) => {
 module.exports = {
   GET, 
   POST,
+  PUT,
   DELETE
 };

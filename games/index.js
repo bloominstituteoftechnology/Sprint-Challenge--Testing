@@ -7,6 +7,7 @@ router.route('/')
 
 router.route('/:id')
   .get(g.GET)
+  .put(g.PUT)
   .delete(g.DELETE);
 
 module.exports = router;
