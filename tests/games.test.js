@@ -47,7 +47,31 @@ describe("Games Route", () => {
           releaseYear: 1972
         });
 
-      expect(body.games.length < res.body.updatedGames.length).toBe(true);
+      expect(res.status).toBe(404);
+    });
+  });
+
+  describe("GET /api/games/:id", () => {
+    it("should check for response", async () => {
+      const res = await request(server).get("/api/games/1");
+      expect(res.status).toBe(200);
+    });
+
+    it("should return 404 for not existing game", async () => {
+      const res = await request(server).get("/api/games/10000");
+      expect(res.status).toBe(404);
+    });
+  });
+
+  describe("DELETE /api/games/:id", () => {
+    it("should check for response", async () => {
+      const res = await request(server).delete("/api/games/1");
+      expect(res.status).toBe(200);
+    });
+
+    it("should return 404 for not existing game", async () => {
+      const res = await request(server).delete("/api/games/10000");
+      expect(res.status).toBe(404);
     });
   });
 });

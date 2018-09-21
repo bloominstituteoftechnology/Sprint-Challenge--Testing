@@ -26,12 +26,36 @@ router.get("/", (req, res, next) =>
   res.status(200).json({ status: true, games: gameStore })
 );
 
-router.post('/', (req, res, next) => {
-    gameStore.push(req.body)
-    res.status(200).json({
-        status: true,
-        updatedGames: gameStore
-    })
-})
+router.get("/:id", (req, res, next) => {
+  const game = gameStore.find(game => game.id === Number(req.params.id));
+  game === undefined
+    ? res.status(404).send("Not Allowed")
+    : res.status(200).json({ status: true, game });
+});
+
+router.post("/", (req, res, next) => {
+  gameStore.map(
+    game =>
+      game.title === req.body.title ? res.status(404).send("Not Allowed") : null
+  );
+  gameStore.push(req.body);
+  res.status(200).json({
+    status: true,
+    updatedGames: gameStore
+  });
+});
+
+router.delete("/:id", (req, res, next) => {
+  const prev = gameStore.length;
+  console.log(prev);
+  gameStore = gameStore
+    .filter(game => game.id !== Number(req.params.id))
+    .map(game => game);
+  console.log(gameStore.length)
+
+  prev > gameStore.length
+    ? res.status(200).json({ status: true, games: gameStore })
+    : res.status(404).send("Not Allowed");
+});
 
 module.exports = router;
