@@ -1,3 +1,5 @@
+//didn't need async and await bc no promises coming from the server just fyi.
+
 const request = require("supertest");
 
 const { server } = require("./server");
@@ -62,12 +64,14 @@ describe("/games GET", () => {
 
     expect(response.status).toEqual(200);
   });
-  it("should return a list of games", async () => {
+  it("should return a list of games as an array", async () => {
     const expectedBody = [];
 
     const response = await request(server).get("/games");
 
     expect(response.body).toEqual(expectedBody);
+
+    //find array matcher instead of toEqual
   });
   it(`should return json`, async () => {
     const response = await request(server).get("/games");
@@ -82,6 +86,6 @@ describe("/games DELETE", () => {
       const response = await request(server)
         .delete(`/games/${id}`)
         .send({ id });
-      expect(response.body).toEqual();
+      expect(response.body).toEqual(2);
     });
   });

@@ -29,7 +29,20 @@ server.get("/games", (req, res) => {
 
 server.delete("/games/:id", (req, res) => {
   const { id } = req.params;
-//   gamesArr = gamesArr.filter(game => game.id !== parseInt(id)); why doesnt this work ??
+  const found = gamesArr.find(game => game.id == id);
+  for (let i = 0; i< gamesArr.length; i++) {
+      if (gamesArr[i].id === found.id) {
+          gamesArr.splice(i, 1);
+      }
+  }
+  //   gamesArr = gamesArr.filter(game => game.id !== parseInt(id));
+  //use .find
+  res.status(200).json(gamesArr);
+});
+
+server.get("/games/:id", (req, res) => {
+  //const found = gamesArr.find(game => game.id == id)
+  //if !found, return null
   res.status(200).json(gamesArr);
 });
 
