@@ -16,14 +16,20 @@ server.get('/games', (req, res) => {
 server.post('/games', (req, res) => {
   const game = req.body;
   if (game.title && game.genre) {
-    let id = games.length + 1;
-    game.id = id;
-    games.push(game);
-    res.status(201).json(games);
+    if (games.find(existingGame => existingGame.title === game.title)) {
+      res
+        .status(405)
+        .json({ message: 'Title already exists, please try another game.' });
+    } else {
+      let id = games.length + 1;
+      game.id = id;
+      games.push(game);
+      res.status(201).json(games);
+    }
   } else {
     res
       .status(422)
-      .json({ message: 'Title and genre are required, please try again' });
+      .json({ message: 'Title and genre are required, please try again.' });
   }
 });
 

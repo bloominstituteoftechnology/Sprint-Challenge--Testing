@@ -29,6 +29,15 @@ describe('server.js', () => {
         });
       expect(response.status).toBe(422);
     });
+    it('should return a status code of 405 if title already exists', async () => {
+      const response = await request(server)
+        .post('/games')
+        .send({
+          title: 'Pokemon',
+          genre: 'Adventure'
+        });
+      expect(response.status).toBe(405);
+    });
     it('should return games if succesfully added', async () => {
       const response = await request(server)
         .post('/games')
