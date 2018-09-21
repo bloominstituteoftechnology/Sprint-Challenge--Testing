@@ -37,7 +37,7 @@ describe('server.js', () =>{
     
     it('should return status 201', async () => {
       const response = await request(server).post('/games')
-      .send({title: "MyGame3", genre: "action"});
+      .send({title: "MyGame4", genre: "action"});
 
       expect(response.status).toEqual(201); 
     });
@@ -49,7 +49,7 @@ describe('server.js', () =>{
     });
     it('should return an integer', async () => {
       const response = await request(server).post('/games')
-      .send({title: "newnew3", genre: "action"})
+      .send({title: "newnew4", genre: "action"})
 
       expect(typeof response.body).toBe('number');
     });
@@ -60,6 +60,37 @@ describe('server.js', () =>{
     
         expect(response.status).toEqual(405);
     });
+  describe("GET :id", () => {
+    it('should return a status of 200', async () => {
+      const response = await request(server)
+      .get('/games/5')
+
+      expect(response.status).toEqual(200);
+    });
+
+    it('should return a status of 404', async () => {
+      const response = await request(server)
+      .get('/games/5000')
+
+      expect(response.status).toEqual(404);
+    });
+  });
+  describe("DELETE", () => {
+    it('should successfully delete and return status 204', async () => {
+      const response = await request(server)
+      .delete('/games/4')
+
+      expect(response.status).toEqual(204);
+    });
+
+    it('should return 404', async () => {
+      const response = await request(server)
+      .delete('/games/4')
+
+      expect(response.status).toEqual(404); 
+    });
+    
+  });
 
   });
 });

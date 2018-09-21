@@ -25,6 +25,22 @@ server.get("/games", (req, res) => {
     });
 });
 
+server.get("/games/:id", (req, res) => {
+  const { id } = req.params
+  db("games")
+    .where({ id })
+    .then(game => {
+      if(game[0]){
+        res.status(200).json(game)
+      } else {
+        res.status(404).json({error: "not found"})
+      }
+    })
+    .catch(error => {
+      res.status(500).json({ errorMessage: error.message,pathIssue: "unable to locate games"})
+    })
+})
+
 function postChecker (req, res, next) {
   if(!req.body.genre || !req.body.title){
     res.status(422).json({errorMessage: "genre and title required"});
@@ -52,11 +68,6 @@ server.post("/games", postChecker, unique, (req, res) => {
       res.status(201).json(id);
     })
     .catch(error => {
-    //   if(error.message.includes('UNIQUE constraint failed')){
-    //     res.status(405).json({errorMessage: "the title being added must be unique"})
-    //   } else {
-    //     res.status(500).json({error, message: error.message});
-    //   } 
       res.status(500).json({error}) 
     });
 });
