@@ -33,4 +33,32 @@ server.post('/games', (req, res) => {
   }
 });
 
+server.get('/games/:id', (req, res) => {
+  const { id } = req.params;
+  const game = games.filter(
+    existingGame => Number(existingGame.id) === Number(id)
+  );
+  if (game.length > 0) {
+    res.status(200).json(game);
+  } else {
+    res.status(404).json({ message: 'Game does not exist.' });
+  }
+});
+
+server.delete('/games/:id', (req, res) => {
+  const { id } = req.params;
+  const initialLength = games.length;
+  games = games.filter(game => {
+    return Number(game.id) !== Number(id);
+  });
+  const afterLength = games.length;
+  const difference = initialLength - afterLength;
+
+  if (difference > 0) {
+    res.status(200).json({ message: `successfully deleted` });
+  } else {
+    res.status(404).json({ message: 'Game does not exist.' });
+  }
+});
+
 module.exports = server;
