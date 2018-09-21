@@ -44,10 +44,16 @@ server.post("/games/", (req, res) => {
   if (!title || !genre) {
     res.status(422).json({ message: "missing one or more required fields" });
   } else {
-    const newgame = { id, title, genre, releaseYear };
-    gamesDb.games.push(newgame);
-    // console.log("GAME RESPONSE", gamesDb.games[3]);
-    res.status(200).json(gamesDb.games);
+    for (let i = 0; i < gamesDb.games.length; i++) {
+      if (Object.values(gamesDb.games[i]).includes(title)) {
+        return res.status(405).json({ message: "not allowed" });
+      } else {
+        const newgame = { id, title, genre, releaseYear };
+        gamesDb.games.push(newgame);
+        // console.log("GAME RESPONSE", gamesDb.games[3]);
+        return res.status(200).json(gamesDb.games);
+      }
+    }
   }
 });
 
