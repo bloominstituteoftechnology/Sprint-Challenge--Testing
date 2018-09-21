@@ -26,5 +26,33 @@ describe("server.js is working", () => {
       expect(Array.isArray(response.body)).toBeTruthy();
     });
   });
-  describe("POST Routes", () => {});
+
+  describe("POST Routes", () => {
+    it("Returns games when new item added", async () => {
+      const response = await request(server)
+        .post("/games")
+        .send({ title: "Fifa", genre: "videoGame", releaseYear: "2000" });
+      const expectedBody = [
+        { id: 0, title: "Monopoly", genre: "boardgame", releaseYear: 1980 },
+        { id: 1, title: "Chess", genre: "boardgame", releaseYear: 1500 },
+        { id: 2, title: "Fifa", genre: "videoGame", releaseYear: "2000" }
+      ];
+      expect(response.body).toEqual(expectedBody);
+    });
+
+    it("Returns status code 200 when successfull", async () => {
+      const response = await request(server)
+        .post("/games")
+        .send({ title: "testTitle", genre: "something" });
+
+      expect(response.status).toEqual(200);
+    });
+
+    it("Return status code of 422 if information mission", async () => {
+      const response = await request(server)
+        .post("/games")
+        .send({ title: "abcd" });
+      expect(response.status).toEqual(422);
+    });
+  });
 });
