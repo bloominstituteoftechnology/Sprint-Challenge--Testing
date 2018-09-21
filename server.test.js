@@ -7,6 +7,12 @@ const dummyGame = {
   releaseYear: 1987
 };
 
+const duplGame = {
+  title: 'Pacman',
+  genre: 'Arcade',
+  releaseYear: 1980
+};
+
 const wrongDummyGame = {
   title: null,
   genre: 'Arcade',
@@ -48,6 +54,11 @@ describe('server.js', () => {
       const response = await request(server).post('/games')
       .send(wrongDummyGame);
       expect(response.status).toEqual(422);
+    })
+    it('Should return a 405 status code when user inputs duplicate game', async () => {
+      const response = await request(server).post('/games')
+      .send(duplGame);
+      expect(response.status).toEqual(405);
     })
   })
 })
