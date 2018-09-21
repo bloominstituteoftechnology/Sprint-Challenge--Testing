@@ -25,14 +25,14 @@ server.post('/games', function (req, res) {
         {res.status(422).json({message:  'please enter a name and a difficulty level'})
 
     }else{
-        
+
         const newGame = {
             id: '6', 
             name: 'boggle', 
             difficulty: 'easy'}; 
 
         games.push(newGame)
-        res.status(201).json(games)
+        res.status(201).json({games})
     }
     });
 
