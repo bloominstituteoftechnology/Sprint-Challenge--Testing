@@ -6,7 +6,7 @@ let id=1;
 const games=[];
 
 function validateTitle(req,res,next){
-
+    let newGame=req.body;
     let counter=0;
         for (let i=0; i<games.length; i++) {
             if (games[i].title===newGame.title){
