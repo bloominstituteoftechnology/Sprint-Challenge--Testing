@@ -23,6 +23,16 @@ app.post("/games", (req, res) => {
   return;
 });
 
+app.get("/games", (req, res) => {
+  res.status(200).json(store);
+  return;
+});
+
+app.get("/reset", (req, res) => {
+  store =[];
+  res.status(200).json({message:'success'});
+  return;
+});
 app.use("/", (req, res) =>
   res
     .status(404)

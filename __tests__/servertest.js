@@ -45,4 +45,30 @@ describe('server.js', () => {
       }]));
     });
   });
+
+  describe('get games route', () => {
+    it('should respond with array if nothing in storage', async () => {
+      await request(server).get('/reset');
+      const response = await request(server).get('/games');
+      expect(response.body).toHaveLength(0);
+    });
+    it('should 200', async () => {
+      const response = await request(server).get('/games');
+      expect(response.status).toEqual(200);
+    });
+    it('should respond with one object in an array', async () => {
+     await request(server).post('/games').send({ title: 'Pacman', genre: 'Arcade', releaseYear:1980 });
+     const response = await request(server).get('/games');
+      expect(response.body).toHaveLength(1);
+    });
+    it('should respond with updated game list', async () => {
+      await request(server).post('/games').send({ title: 'Pacman', genre: 'Arcade', releaseYear:1980 });
+      const response = await request(server).get('/games');
+      expect(response.body).toEqual(expect.arrayContaining([{
+        title: expect.stringMatching('Pacman'),
+        genre: expect.stringMatching('Arcade'),
+        releaseYear: expect.anything()
+      }]));
+    });
+  });
 })
