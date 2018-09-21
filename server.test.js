@@ -63,4 +63,40 @@ describe('server.js', () => {
       expect(response.status).toBe(201);
     });
   });
+  describe('GET /games/:id', () => {
+    it('should return a status code of 200 if game exists', async () => {
+      const response = await request(server).get('/games/1');
+      expect(response.status).toBe(200);
+    });
+    it('should return a list of found game', async () => {
+      const response = await request(server).get('/games/1');
+      const expected = [
+        { id: 1, title: 'Pokemon', genre: 'Adventure', releaseYear: 2000 }
+      ];
+      expect(response.body).toEqual(expected);
+    });
+    it('should return a status code of 404 if game is not found', async () => {
+      const response = await request(server).get('/games/100');
+      expect(response.status).toBe(404);
+    });
+  });
+  describe('DELETE /games/:id', () => {
+    it('should return a status code of 200 if game exists', async () => {
+      const response = await request(server).delete('/games/4');
+      expect(response.status).toBe(200);
+    });
+    it('GET /games should return list without deleted game', async () => {
+      const response = await request(server).get('/games');
+      const expected = [
+        { id: 1, title: 'Pokemon', genre: 'Adventure', releaseYear: 2000 },
+        { id: 2, title: 'League of Legends', genre: 'MOBA', releaseYear: 2007 },
+        { id: 3, title: 'FortNite', genre: 'BR', releaseYear: 2017 }
+      ];
+      expect(response.body).toEqual(expected);
+    });
+    it('should return a status code of 404 if game is not found', async () => {
+      const response = await request(server).delete('/games/100');
+      expect(response.status).toBe(404);
+    });
+  });
 });
