@@ -45,28 +45,41 @@ describe('server GET requests', () => {
 })
 
 describe('server POST requests', () => {
-    test('should return a 200 status code if includes a title and genere', async () => {
-        const completeRequest = { title: 'frogger', genere: 'arcade'}
-        const response = await request(server).post('/games').send(completeRequest)
-  
-        expect(response.status).toEqual(200)
-    })
-
-    test('should return an requested object as response', async () => {
-        const completeRequest = { title: 'frogger', genere: 'arcade'}
-        const response = await request(server).post('/games').send(completeRequest)
-  
-        expect(response.body).toHaveProperty('title', 'frogger')
-        expect(response.body).toHaveProperty('genere', 'arcade')
-        expect(response.body).toHaveProperty('id')
-    })
-
-    test('should return a 422 status code title or genere are excluded from request', async () => {
-        const missingTitle = { genere: 'arcade'}
+    test('should return a 422 status code title or genre are excluded from request', async () => {
+        const missingTitle = { genre: 'arcade'}
         const response = await request(server).post('/games').send(missingTitle)
   
         expect(response.status).toEqual(422)
     })
+
+    test('should return a 405 status code if title already exists in array', async () => {
+        const duplicate = {   
+            title: 'Pacman', // required
+            genre: 'Arcade', // required
+            releaseYear: 1980 // not required
+        }
+
+        const response = await request(server).post('/games').send(duplicate)
+
+        expect(response.status).toEqual(405);
+    })
+    
+    test('should return a 201 status code if includes a title and genre and is created', async () => {
+        const completeRequest = { title: 'mario', genre: 'arcade'}
+        const response = await request(server).post('/games').send(completeRequest)
+  
+        expect(response.status).toEqual(201)
+    })
+
+    test('should return the newly created object in response', async () => {
+        const completeRequest = { title: 'mario', genre: 'arcade'}
+        const response = await request(server).post('/games').send(completeRequest);
+  
+        expect(response.body).toHaveProperty('title', 'mario')
+        expect(response.body).toHaveProperty('genre', 'arcade')
+        expect(response.body).toHaveProperty('id')
+    })
+
     
     
 })

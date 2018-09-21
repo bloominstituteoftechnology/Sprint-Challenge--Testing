@@ -28,7 +28,7 @@ server.get('/' , (req, res) => {
 });
 
 server.get('/games', (req, res) => {
-    console.log(gamesArray)
+
     // const empty = [];
     // if(gamesArray){
         res.status(200).send(gamesArray);
@@ -38,19 +38,25 @@ server.get('/games', (req, res) => {
 })
 
 server.post('/games', (req, res) => {
-    const {title, genere, releaseYear} = req.body;
-
-    if (!title || !genere) {
+    const newTitle = req.body.title;
+    const newGenre = req.body.genre;
+    const titleArr = gamesArray.map(game => {
+        return game.title
+    })
+    if (newTitle && newGenre) {
+        if (titleArr.includes(newTitle)){
+            res.status(405).end()
+        } else {
+            id = gamesArray[gamesArray.length-1].id + 1;
+            req.body.id = id;
+            gamesArray.unshift(req.body)
+            res.status(201).json(req.body)
+        }
+    } else if (!newTitle || !newGenre) {
         res.status(422).end();
-    } else if (!releaseYear) {
-        id = gamesArray[gamesArray.length-1].id + 1;
-        req.body.id = id;
-        gamesArray.push(req.body)
-        res.status(200).json(req.body)
     } else {
-        res.status(200).json({ title: title, genere: genere, releaseYear: releaseYear })
+        res.status(500).end();
     }
-
 });
 
 module.exports = server;
