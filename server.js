@@ -39,4 +39,14 @@ server.get('/games/:id',(req,res)=>{
     }
     return res.status(404).json({err:'Could not find game'});
 })
+server.delete('/games/:id',(req,res)=>{
+    const id=req.params.id;
+    for (let i=0; i<games.length; i++) {
+        if (games[i].id===id){
+            games.splice(i,1);
+            return res.status(200).send(1);
+        }
+    }
+    return res.status(404).json({err:'Could not find game.'});
+})
 module.exports=server;
