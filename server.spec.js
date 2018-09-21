@@ -1,5 +1,5 @@
 const request = require('supertest');
-
+const getType = require('jest-get-type');
 const server = require('./server.js');
 
 const defaultGame = {
@@ -55,5 +55,34 @@ describe('server.js', () => {
         });
     });
 
+    describe('GET /games', () => {
+        it('should return a 200 status code', async () => {
+            const response = await request(server).get('/games');
+    
+            expect(response.status).toEqual(200);
+        });
+        it('should return an array in the response body', async () => {
+            const response = await request(server).get('/games');
+    
+            const type = getType(response.body);
+            expect(type).toEqual('array');
+        });
+        it('should return an array of games', async () => {
+            const response = await request(server).get('/games');
+            const expected = [
+                {
+                    title: 'Pacman',
+                    genre: 'Arcade',
+                    releaseYear: 1980
+                },
+                {
+                    title: 'Atari',
+                    genre: 'Arcade',
+                    releaseYear: 1972
+                }
+              ]
+            expect(response.body).toEqual(expected);
+        });
+    });
 
 });

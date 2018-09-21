@@ -4,6 +4,19 @@ const server = express();
 
 server.use(express.json());
 
+let gamesArr = [
+    {
+        title: 'Pacman',
+        genre: 'Arcade',
+        releaseYear: 1980
+    },
+    {
+        title: 'Atari',
+        genre: 'Arcade',
+        releaseYear: 1972
+    }
+  ]
+
 server.get('/', (req, res) => {
     res.status(200).json('API Running...');
 });
@@ -15,6 +28,10 @@ server.post('/games', (req, res) => {
     } else
         res.status(201).json(game);
     });
+
+server.get('/games', (req, res) => {
+    res.status(200).json(gamesArr);
+});
 
 
 module.exports = server;
