@@ -19,6 +19,10 @@ server.post('/games', (req, res) => {
         res.status(422).json({
             message: 'Name and genre are both required.'
         })
+    } else if ( games.find( game => game.name === newGame.name )){
+        res.status(405).json({
+            message: "Game title exists in database already."
+        })
     } else {
         games.push( newGame );
         res.status(201).json( games );

@@ -50,8 +50,14 @@ describe('server.js', () => {
         it('status code should be 201', async () => {
             const response = await request(server)
                 .post('/games')
-                .send({ name: "Horizon Zero Dawn", genre: "RPG" });
+                .send({ name: "Batman", genre: "RPG" });
             expect(response.status).toBe(201);
+        });
+        it('status code should be 405 if the game exists in current database', async () => {
+            const response = await request(server)
+                .post('/games')
+                .send({ 'name': "MHW", 'genre': 'JRPG' });
+            expect(response.status).toBe(405);
         });
     });
 })
