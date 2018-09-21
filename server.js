@@ -1,6 +1,7 @@
 const express = require('express'); 
 
 const server = express(); 
+server.use(express.json())
 
 const games = [
     { id: "1", title: "Pacman", genre: "Arcade", releaseYear: 1980 },
@@ -10,8 +11,22 @@ const games = [
   ];
 
 server.get("/games", (req, res) => {
-    res.status(200).json(games); 
+    if(games.length > 0){
+        res.status(200).json(games); 
+    }else{
+        res.status(200).json([]); 
+    }
 })
+
+server.post("/games", (req, res) => {
+    const { id, title, genre } = req.body;
+  
+    if (!id || !title || !genre) {
+      res.status(422).end();
+    } else {
+      res.status(201).json(req.body);
+    }
+  });
 
 
 module.exports = server; 
