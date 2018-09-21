@@ -33,7 +33,29 @@ describe('server.js', () =>{
 
       expect(response.body.length).toBeTruthy(); 
     });
+  describe('POST/', () => {
+    it('should return status 201', async () => {
+      const response = await request(server).post('/games')
+      .send({title: "MyGame", genre: "action"});
+
+      expect(response.status).toEqual(201); 
+    });
+    it('should should return status 422 required fields missing', async () => {
+      const response = await request(server).post('/games')
+      .send({title: "newGame"})
+
+      expect(response.status).toEqual(422); 
+    });
+    it('should return an integer', async () => {
+      const response = await request(server).post('/games')
+      .send({title: "newnew", genre: "action"})
+
+      expect(typeof response.body).toBe('number');
+    });
+    
+
 
   });
+});
 
 })

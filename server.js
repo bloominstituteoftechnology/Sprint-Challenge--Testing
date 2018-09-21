@@ -25,4 +25,32 @@ server.get("/games", (req, res) => {
     });
 });
 
+function postChecker (req, res, next) {
+  if(!req.body.genre){
+    res.status(422).json({errorMessage: "genre required"});
+  }
+  if(!req.body.title){
+    res.status(422).json({errorMessage: "title required"});
+  }
+//   if(req.body.releaseYear){
+//     if(! Number(req.body.releaseYear)){
+//       req.status(422).json({errorMessage: "release year is not required but if you do enter something it must be a integer"});
+//     }
+//   }
+  next()
+}
+
+server.post("/games", postChecker, (req, res) => {
+  db("games")
+    .insert(req.body)
+    .then(gameId => {
+      const id = gameId[0]
+      res.status(201).json(id);
+    })
+    .catch(error => {
+      res.status(500).json({error, message: error.message});
+    });
+});
+
+
 module.exports = server;
