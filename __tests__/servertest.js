@@ -28,16 +28,20 @@ describe('server.js', () => {
       const response = await request(server).post('/games').send({ title: 'Pacman', genre: 'Arcade', releaseYear:1980 });
       expect(response.body).toHaveLength(1);
     });
-    it('should 200 on successful post', async () => {
+    it('no dupes', async () => {
       const response = await request(server).post('/games').send({ title: 'Pacman', genre: 'Arcade', releaseYear:1980 });
+      expect(response.status).toEqual(405);
+    });
+    it('should 200 on successful post', async () => {
+      const response = await request(server).post('/games').send({ title: 'Pacman1', genre: 'Arcade', releaseYear:1980 });
       expect(response.status).toEqual(200);
     });
     it('release year not required', async () => {
-      const response = await request(server).post('/games').send({ title: 'Pacman', genre: 'Arcade' });
+      const response = await request(server).post('/games').send({ title: 'Pacman2', genre: 'Arcade' });
       expect(response.status).toEqual(200);
     });
     it('should respond with updated game list', async () => {
-      const response = await request(server).post('/games').send({ title: 'Pacman', genre: 'Arcade', releaseYear:1980 });
+      const response = await request(server).post('/games').send({ title: 'Pacman3', genre: 'Arcade', releaseYear:1980 });
       expect(response.body).toEqual(expect.arrayContaining([{
         title: expect.stringMatching('Pacman'),
         genre: expect.stringMatching('Arcade'),
@@ -62,7 +66,7 @@ describe('server.js', () => {
       expect(response.body).toHaveLength(1);
     });
     it('should respond with updated game list', async () => {
-      await request(server).post('/games').send({ title: 'Pacman', genre: 'Arcade', releaseYear:1980 });
+      await request(server).post('/games').send({ title: 'Pacman1', genre: 'Arcade', releaseYear:1980 });
       const response = await request(server).get('/games');
       expect(response.body).toEqual(expect.arrayContaining([{
         title: expect.stringMatching('Pacman'),

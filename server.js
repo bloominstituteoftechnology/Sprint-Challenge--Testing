@@ -9,7 +9,12 @@ app.post("/games", (req, res) => {
     res.status(422).json({ errorMessage: "Invalid body" });
     return;
   }
-
+  store.forEach(e=>{
+    if (e.title === req.body.title){
+      res.status(405).json({ errorMessage: "Duplicate title" });
+      return;
+    }
+  })
   if (!req.body.releaseYear) {
     req.body.releaseYear = 0;
   }
