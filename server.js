@@ -20,10 +20,14 @@ server.get("/games", (req, res) => {
 server.post("/games/", (req, res) => {
   const id = gamesDb.games.length.toString();
   const { title, genre, releaseYear } = req.body;
-  const newgame = { id, title, genre, releaseYear };
-  gamesDb.games.push(newgame);
-  // console.log("GAME RESPONSE", gamesDb.games[3]);
-  res.status(200).json(gamesDb.games);
+  if (!title || !genre) {
+    res.status(422).json({ message: "missing one or more required fields" });
+  } else {
+    const newgame = { id, title, genre, releaseYear };
+    gamesDb.games.push(newgame);
+    // console.log("GAME RESPONSE", gamesDb.games[3]);
+    res.status(200).json(gamesDb.games);
+  }
 });
 
 module.exports = server;

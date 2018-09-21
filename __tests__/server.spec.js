@@ -41,7 +41,7 @@ describe("server.js", () => {
   describe("POST new game", () => {
     it("should display all games (including newGame)", async () => {
       const updatedGameData = gamesDb.games;
-      let newGame = gamesDb.newGame;
+      const newGame = gamesDb.newGame;
       const response = await request(server)
         .post("/games")
         .send(newGame);
@@ -50,9 +50,16 @@ describe("server.js", () => {
       expect(response.body).toEqual(updatedGameData);
     });
     it("returns a 200 (OK) status code", async () => {
-      const response = await request(server).post("/games");
-
+      const newGame = gamesDb.newGame;
+      const response = await request(server)
+        .post("/games")
+        .send(newGame);
       expect(response.status).toEqual(200);
+    });
+    it("returns a 422 (NO-K) status code if missing required field in body", async () => {
+      const response = await request(server).post("/games");
+      // not sending body, so should get 422
+      expect(response.status).toEqual(422);
     });
   });
 });
