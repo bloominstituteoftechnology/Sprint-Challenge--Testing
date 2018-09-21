@@ -13,6 +13,11 @@ const POST = (req, res) => {
   if (!title || !genre) {
     return res.status(422).json({ message: 'Title and genre are required.' });
   }
+  for (let game of games) {
+    if (title === game.title) {
+      return res.status(405).json({ message: 'That game title is already in use.' });
+    }
+  }
   games.push({ title, genre, id });
   return res.status(201).json(id++);
 };

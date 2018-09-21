@@ -60,6 +60,17 @@ describe('server.js', () => {
       expect(goodRes.status).toBe(201);
     });
 
+    it('should return a Not Allowed http code (405) if given a taken title', async () => {
+      const badRes = await req(server).post('/games')
+        .send({
+          'title': 'Asteroids',
+          'genre': 'Arcade'
+        })
+        .set('Content-Type', 'application/json')
+        .set('Accept', 'application/json');
+      expect(badRes.status).toBe(405);
+    });
+
     it('should return an Unprocessable Entity http code (422) if not given genre.', async () => {
       const badRes = await req(server).post('/games')
         .send({
