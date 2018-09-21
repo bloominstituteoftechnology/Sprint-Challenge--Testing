@@ -114,4 +114,30 @@ describe("server.js", () => {
         });
     });
   });
+
+  describe("DELETE route", () => {
+    it("should return status 200 on success", () => {
+      return request(server)
+        .delete("/games/1")
+        .then(res => {
+          expect(res.status).toEqual(200);
+        });
+    });
+
+    it("should return 404 when index does not exist", () => {
+      return request(server)
+        .delete("/games/111")
+        .then(res => {
+          expect(res.status).toEqual(404);
+        });
+    });
+
+    it("should return 1 on success", () => {
+      return request(server)
+        .delete("/games/2")
+        .then(res => {
+          expect(res.body).toEqual(1);
+        });
+    });
+  });
 });

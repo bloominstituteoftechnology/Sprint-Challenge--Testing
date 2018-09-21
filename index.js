@@ -51,4 +51,15 @@ server.post("/games", (req, res) => {
   }
 });
 
+server.delete("/games/:id", (req, res) => {
+  const game = games.filter(game => game.id == req.params.id);
+  if (game.length > 0) {
+    const index = games.indexOf(game);
+    games.splice(index, 1);
+    res.status(200).json(1);
+  } else {
+    res.status(404).json({ error: "Game not found" });
+  }
+});
+
 module.exports = server;
