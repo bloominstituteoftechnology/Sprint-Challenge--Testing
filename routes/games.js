@@ -26,4 +26,12 @@ router.get("/", (req, res, next) =>
   res.status(200).json({ status: true, games: gameStore })
 );
 
+router.post('/', (req, res, next) => {
+    gameStore.push(req.body)
+    res.status(200).json({
+        status: true,
+        updatedGames: gameStore
+    })
+})
+
 module.exports = router;
