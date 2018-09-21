@@ -11,10 +11,14 @@ app.get('/', (req, res)=>{
 
 app.post('/games',(req,res)=>{
   let game = req.body;
-  if(game.title){
+  console.log(game);
+  if (!game.genre || !game.title) {
+    res.status(422).json({message: 'incomplete data'});
+  } else {
     games.push(game)
     res.status(201).json(games);
-  }
+  } 
+
 });
 
 app.get('/games', (req, res) => {

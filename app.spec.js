@@ -8,6 +8,18 @@ describe('A chill Node API', ()=>{
     expect(response.status).toEqual(200);
   })
 
+  it('POST returns 422 with incomplete data', async () => {
+    let data = {
+      title: 'Minecraft',
+      releaseYear: 2014
+    };
+    const response =
+      await request(app)
+        .post('/games')
+        .send(data)
+        .set('Accept', 'application/json');
+  })
+
   it('POST returns status 201', async () => {
     let data = {
       title: 'Pacman', // required
