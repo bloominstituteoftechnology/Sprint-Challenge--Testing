@@ -53,9 +53,9 @@ const request = require('supertest');
                 { title: 'Pacman' , genre: 'Arcade' },
                 { title: 'Galaga', genre: 'Arcade' },
                 { title: 'Pong' , genre: 'Arcade' },
-                { title: "Digdug", genre: "Arcade" }
+                { title: "DigDug", genre: "Arcade" }
         ]
-            expect(response.body).toBe(expectedBody);
+            expect(response.body).toEqual(expectedBody);
         });
 
     });
