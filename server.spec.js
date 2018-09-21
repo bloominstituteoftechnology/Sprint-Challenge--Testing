@@ -75,3 +75,13 @@ describe("/games GET", () => {
     expect(response.type).toEqual("application/json");
   });
 });
+
+describe("/games DELETE", () => {
+    it("should return the deleted game id", async () => {
+      let id = 2;
+      const response = await request(server)
+        .delete(`/games/${id}`)
+        .send({ id });
+      expect(response.body).toEqual(2);
+    });
+  });
