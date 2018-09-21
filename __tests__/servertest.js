@@ -43,6 +43,7 @@ describe('server.js', () => {
     it('should respond with updated game list', async () => {
       const response = await request(server).post('/games').send({ title: 'Pacman3', genre: 'Arcade', releaseYear:1980 });
       expect(response.body).toEqual(expect.arrayContaining([{
+        id: expect.anything(),
         title: expect.stringMatching('Pacman'),
         genre: expect.stringMatching('Arcade'),
         releaseYear: expect.anything()
@@ -71,7 +72,33 @@ describe('server.js', () => {
       expect(response.body).toEqual(expect.arrayContaining([{
         title: expect.stringMatching('Pacman'),
         genre: expect.stringMatching('Arcade'),
-        releaseYear: expect.anything()
+        releaseYear: expect.anything(),
+        id: expect.anything(),
+      }]));
+    });
+  });
+  describe('get games by id route', () => {
+    it('should 404 if ID not found', async () => {
+      await request(server).get('/reset');
+      const response = await request(server).get('/games/1');
+      expect(response.status).toEqual(404);
+    });
+    it('should 200', async () => {
+      await request(server).post('/games').send({ title: 'Pacman', genre: 'Arcade', releaseYear:1980 });
+      const response = await request(server).get('/games/0');
+      expect(response.status).toEqual(200);
+    });
+    it('should respond with one object in an array', async () => {
+     const response = await request(server).get('/games/0');
+      expect(response.body).toHaveLength(1);
+    });
+    it('should respond with updated game list', async () => {
+      const response = await request(server).get('/games/0');
+      expect(response.body).toEqual(expect.arrayContaining([{
+        title: expect.stringMatching('Pacman'),
+        genre: expect.stringMatching('Arcade'),
+        releaseYear: expect.anything(),
+        id: expect.anything(),
       }]));
     });
   });
