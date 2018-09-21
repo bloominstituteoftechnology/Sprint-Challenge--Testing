@@ -32,8 +32,19 @@ function postChecker (req, res, next) {
       next()
   }
 }
+function unique (req, res, next){
+  db("games")
+    .then(games => {
+       const uniqueTitle = games.filter((game) => game.title === req.body.title)
+       if(uniqueTitle.length){
+          res.status(405).json({errorMessage: "Game not unique"})
+       } else {
+          next()
+       }
+    })
+}
 
-server.post("/games", postChecker, (req, res) => {
+server.post("/games", postChecker, unique, (req, res) => {
   db("games")
     .insert(req.body)
     .then(gameId => {
@@ -41,7 +52,12 @@ server.post("/games", postChecker, (req, res) => {
       res.status(201).json(id);
     })
     .catch(error => {
-      res.status(500).json({error, message: error.message});
+    //   if(error.message.includes('UNIQUE constraint failed')){
+    //     res.status(405).json({errorMessage: "the title being added must be unique"})
+    //   } else {
+    //     res.status(500).json({error, message: error.message});
+    //   } 
+      res.status(500).json({error}) 
     });
 });
 

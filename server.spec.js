@@ -34,9 +34,10 @@ describe('server.js', () =>{
       expect(response.body.length).toBeTruthy(); 
     });
   describe('POST/', () => {
+    
     it('should return status 201', async () => {
       const response = await request(server).post('/games')
-      .send({title: "MyGame", genre: "action"});
+      .send({title: "MyGame3", genre: "action"});
 
       expect(response.status).toEqual(201); 
     });
@@ -48,18 +49,17 @@ describe('server.js', () =>{
     });
     it('should return an integer', async () => {
       const response = await request(server).post('/games')
-      .send({title: "newnew", genre: "action"})
+      .send({title: "newnew3", genre: "action"})
 
       expect(typeof response.body).toBe('number');
     });
-    it('should return a status of 405', async () => {
-      const response = await request(server).post('/games')
-      .send({title: "Pacman", "genre": "Arcade"})
-
-      expect(response.status).toEqual(405); 
-    });
+    it("should return a status of 405", async () => {
+        const response = await request(server)
+          .post("/games")
+          .send({ title: "Pacman", genre: "Arcade" });
     
-
+        expect(response.status).toEqual(405);
+    });
 
   });
 });
