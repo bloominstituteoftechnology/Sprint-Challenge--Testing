@@ -5,7 +5,7 @@ server.use(express.json());
 
 let games = [];
 
-let nextId = 0;
+let nextId = 1;
 
 const getId = () => {
   return nextId++;
@@ -18,7 +18,18 @@ server.get('/games', (req, res) => {
 
 //add a new game
 server.post('/games', (req, res) => {
+  const { title, genre } = req.body;
 
+  if(!title || !genre){
+    return res.status(422).json({ message: 'Missing data' });
+  }else{
+    const newGame = {
+      ...req.body,
+      id: getId()
+    };
+    games.push(newGame);
+    res.status(201).json(newGame);
+  }
 });
 
 module.exports = server;
