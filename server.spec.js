@@ -9,6 +9,15 @@ describe("server.js", () => {
 });
 
 describe("/games POST", () => {
+  it("returns a 200 status code if successful", async () => {
+    let title = "Pacman";
+    let genre = "Arcade";
+    let releaseYear = 1980;
+    const response = await request(server)
+      .post("/games")
+      .send({ title, genre, releaseYear });
+    expect(response.status).toEqual(200);
+  });
   it("should add a game and return the title", async () => {
     let title = "Pacman";
     let genre = "Arcade";
@@ -27,16 +36,7 @@ describe("/games POST", () => {
       .send({ title, genre, releaseYear });
     expect(response.type).toEqual("application/json");
   });
-  it("returns a 200 status code if successful", async () => {
-    let title = "Pacman";
-    let genre = "Arcade";
-    let releaseYear = 1980;
-    const response = await request(server)
-      .post("/games")
-      .send({ title, genre, releaseYear });
-    expect(response.status).toEqual(200);
-  });
-  it("returns a 404 status code if failed", async () => {
+  it("returns a 422 status code if failed", async () => {
     let title = "Pacman";
     let genre = "Arcade";
     let releaseYear = 1980;
@@ -44,6 +44,15 @@ describe("/games POST", () => {
       .post("/games")
       .send({ title, releaseYear });
     expect(response.status).toEqual(422);
+  });
+  it("returns a 405 status code if game title already exists", async () => {
+    let title = "Pacman";
+    let genre = "Arcade";
+    let releaseYear = 1980;
+    const response = await request(server)
+      .post("/games")
+      .send({ title, genre, releaseYear });
+    expect(response.status).toEqual(405);
   });
 });
 
