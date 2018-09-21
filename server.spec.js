@@ -102,4 +102,27 @@ describe('server.js', () => {
       }
     });//end by id test
   })//end get game by id tests
+
+  describe('DELETE /games/:id tests', () => {
+    it('should return the id of the delete game', async () => {
+      const game = {
+        title: 'Hack Nothing',
+        genre: 'MUDD',
+        releaseYear: 1993
+      };
+      const sent = await request(server).post('/games').send(game);
+      const response = await request(server).delete(`/games/${sent.body.id}`);
+
+      expect(response.body).toEqual(sent.body.id);
+    });//end successful delete
+
+    it('should return 404 if game does not exist', async () => {
+      try{
+        const response = await request(server).delete('/games/9999999999');
+      }catch(e){
+        expect(e.status).toEqual(404);
+        expect(e.message).toEqual('No game by that id');
+      }
+    });//end bad id fail test
+  });//end delete tests
 });//end of server tests
