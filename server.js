@@ -21,14 +21,18 @@ server.post('/games', (req, res) => {
   const { title, genre } = req.body;
 
   if(!title || !genre){
-    return res.status(422).json({ message: 'Missing data' });
+    res.status(422).json({ message: 'Missing data' });
   }else{
-    const newGame = {
-      ...req.body,
-      id: getId()
-    };
-    games.push(newGame);
-    res.status(201).json(newGame);
+    if(games.some(game => game.title === title)){
+      res.status(405).json({ message: 'That title already exists in storage' });
+    }else{
+      const newGame = {
+        ...req.body,
+        id: getId()
+      };
+      games.push(newGame);
+      res.status(201).json(newGame);
+    }
   }
 });
 

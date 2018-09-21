@@ -35,14 +35,14 @@ describe('server.js', () => {
 
     it('should return created object on success', async () => {
       const game = {
-        title: 'Near Laugh 5',
+        title: 'Near Laugh 6',
         genre: 'FPS',
-        releaseYear: 2018
+        releaseYear: 2019
       };
 
       const response = await request(server).post('/games').send(game);
 
-      expect(response.body.title).toEqual('Near Laugh 5');
+      expect(response.body.title).toEqual('Near Laugh 6');
       expect(response.body).toHaveProperty('id');
     });//end success return object test
 
@@ -55,8 +55,23 @@ describe('server.js', () => {
         const response = await request(server).post('/games').send(game);
       }catch(e) {
         expect(e.status).toEqual(422);
-        expect(e.message).toBe('Missing data');
+        expect(e.message).toEqual('Missing data');
       }
-    });//end POST failure test
+    });//end POST incomplete data failure test
+
+    it('should return 405(Not Allowed) with duplicate title', async () => {
+      const game = {
+        title: 'Call of Repeat Duty IX',
+        genre: 'Whatever'
+      };
+
+      try{
+        const responseOne = await request(server).post('/games').send(game);
+        const responseTwo = await request(server).post('/games').send(game);
+      }catch(e){
+        expect(e.status).toEqual(405);
+        expect(e.message).toEqual('That title already exists in storage');
+      }
+    });//end of duplicate title test
   });//end of POST games tests
 });//end of server tests
