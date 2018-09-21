@@ -42,6 +42,27 @@ describe("server.js", () => {
           });
         });
     });
+
+    it("should return game by id", () => {
+      return request(server)
+        .get("/games/1")
+        .then(res => {
+          expect(res.body).toContainEqual({
+            id: 1,
+            title: "Pacman",
+            genre: "Arcade",
+            releaseYear: 1980
+          });
+        });
+    });
+
+    it("should return 404 when requesting nonexistent id", () => {
+      return request(server)
+        .get("/games/3")
+        .then(res => {
+          expect(res.status).toEqual(404);
+        });
+    });
   });
 
   describe("POST route", () => {

@@ -23,6 +23,16 @@ server.get("/games", (req, res) => {
   res.status(200).send(games);
 });
 
+server.get("/games/:id", (req, res) => {
+  const game = games.filter(game => game.id == req.params.id);
+
+  if (game.length > 0) {
+    res.status(200).json(game);
+  } else {
+    res.status(404).json({ error: "Game not found" });
+  }
+});
+
 server.post("/games", (req, res) => {
   const newGame = req.body;
 
