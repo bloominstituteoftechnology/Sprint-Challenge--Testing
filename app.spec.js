@@ -59,6 +59,11 @@ describe('A chill Node API', ()=>{
 
   it('Checking GET with games', async () => {
     const response = await request(app).get('/games');
+    expect(response.body).toBeInstanceOf(Array);
+  });
+
+  it('Checking GET with games', async () => {
+    const response = await request(app).get('/games');
     expect(response.body[0].genre).toEqual('Arcade');
   });
 })
