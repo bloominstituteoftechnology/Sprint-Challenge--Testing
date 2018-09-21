@@ -18,16 +18,28 @@ describe('server', () => {
 	});
 
 	describe('POST /games', () => {
-		it('should take in an object that takes a title, genre and releaseYear', async () => {
-
+		it('should return games when added', async () => {
+			const response = await request(server).post('/games')
+			.send(
+				{ title: 'Zelda Ocarina of Time', genre: 'Adventure', releaseYear: 1999 }
+			);
+			expect(response.status).toEqual(201);
 		});
 
 		it('should validate that the required fields are included inside the body, return status code 422 if not', async () => {
-
+			const response = await request(server).post('/games')
+			.send(
+				{ title: null, genre: null, releaseYear: 1999 }
+			);
+			expect(response.status).toEqual(422);
 		});
 
 		it('should verify that the endpoint returns the correct HTTP status code when receiving correct or incorrect data', async () => {
-
+			const response = await request(server).post('/games')
+			.send(
+				{ title: 'Pacman', genre: 'Arcade', releaseYear: 1980 }
+			);
+			expect(response.body).toEqual({  message: "Game added." });
 		});
 	});
 
@@ -45,7 +57,8 @@ describe('server', () => {
 		it('should return a list of games', async () => {
 			const response = await request(server).get('/games');
 			const expected = [
-				{ title: 'Pacman', genre: 'Arcade', releaseYear: '1980' },
+				{ title: 'Zelda Ocarina of Time', genre: 'Adventure', releaseYear: 1999 },
+				{ title: 'Pacman', genre: 'Arcade', releaseYear: 1980 },
 			];
 			expect(response.body).toEqual(expected);
 		});

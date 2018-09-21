@@ -3,9 +3,7 @@ const server = express();
 
 server.use(express.json());
 
-let games = [
-		{ title: 'Pacman', genre: 'Arcade', releaseYear: '1980' },
-];
+let games = [];
 
 
 server.get('/', (req, res) => {
@@ -14,6 +12,15 @@ server.get('/', (req, res) => {
 
 server.get('/games', (req, res) => {
 	res.status(200).json(games);
+});
+
+server.post('/games', (req, res) => {
+	if(req.body.title && req.body.genre) {
+		games.push(req.body);
+		res.status(201).json({ message: "Game added."});
+	} else {
+		res.status(422).json({ message: 'Game title and game genre needed.' });
+	}
 });
 
 module.exports = server;
