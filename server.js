@@ -15,14 +15,15 @@ server.get('/', (req, res) => {
 
 server.get('/games', (req, res) => {
     return res.status(200).json(games);
-  });
+});
 
     
-  server.post('/games', (req, res) => {
-    if( !req.body.title || !req.body.genre) {
+server.post('/games', (req, res) => {
+    if( !req.body.title || !req.body.genre) {   
         return res.status(422).json({message:'Incomplete data received'});
     }
-    return res.status(201).json({});
-  });
+
+    return res.status(201).json(req.body);
+});
 
 module.exports = server;

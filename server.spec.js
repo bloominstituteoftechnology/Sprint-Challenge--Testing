@@ -27,24 +27,19 @@ describe('server.js', () => {
             await request(server)
                 .post('/games')
                 .send(game);
-
+            
         expect(response.status).toEqual(422);
     });
 
     it('responds with status code 201 when game is posted', async () => {
-        let game = {
-            title: 'Pacman',
-            genre: 'Arcade',
-            releaseYear: 1980
-        }
         
         const response =
             await request(server)
                 .post('/games')
-                .send(game);
+                .send({title: 'Pacman', genre: 'Arcade', releaseYear: 1980});
 
         expect(response.status).toEqual(201);
-        expect(response.body).toEqual(game);
+        expect(response.body).toEqual({title: 'Pacman', genre: 'Arcade', releaseYear: 1980});
     });
 
   });
