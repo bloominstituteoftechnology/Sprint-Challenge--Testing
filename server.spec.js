@@ -40,7 +40,7 @@ describe('GET request for games', () => {
         expect(response.status).toEqual(200);
     })
 
-    it('returns an empty array if no data', async () => {
+    it.skip('returns an empty array if no data', async () => {
         const response = await request(server)
         .get('/games')
         expect(response.body).toMatchObject([]);
@@ -53,16 +53,29 @@ describe('GET request for games', () => {
 //write tests to verify that the endpoint returns the correct HTTP status code when receiving correct and incorrect game data.
 
 describe('POST /games', () => {
-    it('should return a 201 and echo response', async () => {
+
+    it('should handle incomplete data', async () => {
+        let response = await request(server)
+        .post('./games')
+        .send({ name: 'candy land' })
+
+        expect(response.status).toEqual(422)
+        expect(response.body).toEqual({message: 'please enter a name and a difficulty level'})
+    })
+
+    it('respond with 201 and correct data for complete inputs', async () => {
         const newGame = {
             id: '6', 
             name: 'boggle', 
             difficulty: 'easy'}; 
-        
+
         let response = await request(server)
             .post('/games')
-            .send({message: 'test'});
+            .send(newGame)
             expect(response.status).toEqual(201);
     })
-  })
+
+});
+
+
 

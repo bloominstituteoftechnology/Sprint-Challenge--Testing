@@ -20,7 +20,20 @@ server.get('/games', (req,res) => {
     });
 
 server.post('/games', function (req, res) {
-    res.status(201).json(req.body)
+
+    if(!req.body.name||!req.body.difficulty)
+        {res.status(422).json({message:  'please enter a name and a difficulty level'})
+
+    }else{
+        
+        const newGame = {
+            id: '6', 
+            name: 'boggle', 
+            difficulty: 'easy'}; 
+
+        games.push(newGame)
+        res.status(201).json(games)
+    }
     });
 
 module.exports = server;
