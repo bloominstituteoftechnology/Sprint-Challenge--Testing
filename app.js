@@ -18,8 +18,7 @@ app.post('/games',(req,res)=>{
 });
 
 app.get('/games', (req, res) => {
-  console.log(res.body);
-  res.status(200).json('Yo, got games.');
+  res.status(200).json(games);
 });
 
 module.exports = app;

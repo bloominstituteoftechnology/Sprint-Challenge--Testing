@@ -40,8 +40,13 @@ describe('A chill Node API', ()=>{
     expect(response.body[1].title).toBe('Doom');
   })
 
-  // it('Checking GET with games', async () => {
-  //   const response = await request(app).get('/games');
-  //   expect(response.status).toEqual(200);
-  // })
+  it('Checking GET with games', async () => {
+    const response = await request(app).get('/games');
+    expect(response.status).toEqual(200);
+  });
+
+  it('Checking GET with games', async () => {
+    const response = await request(app).get('/games');
+    expect(response.body[0].genre).toEqual('Arcade');
+  });
 })
