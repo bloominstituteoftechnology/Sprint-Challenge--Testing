@@ -35,7 +35,7 @@ describe('server.js', () => {
     it('respond with 201 created', done => {
       request(server)
         .post('/games')
-        .send({ title: 'Pacman', genre: 'Arcade', releaseYear: 1980 })
+        .send({ title: 'Pacman3', genre: 'Arcade', releaseYear: 1980 })
         .expect(res => {
           res.body.id = 'some Id';
         })
@@ -45,9 +45,17 @@ describe('server.js', () => {
     it('responds with 422 if all fields not complete', done => {
       request(server)
         .post('/games')
-        .send({ title: 'Pacman' })
+        .send({ title: 'Pacman3' })
         .expect('Content-Type', /json/)
         .expect(422, '"All fields must be complete."', done);
+    });
+
+    it('responds with 405 if name already taken', done => {
+      request(server)
+        .post('/games')
+        .send({ title: 'Pacman', genre: 'Arcade', releaseYear: 1980 })
+        .expect('Content-Type', /json/)
+        .expect(405, '"Title must be unique"', done);
     });
   });
 
@@ -75,17 +83,17 @@ describe('server.js', () => {
     });
   });
 
-  // describe('DELETE /friends/:id', () => {
-  //   it('responds with 200 and 1 if delete successful', done => {
-  //     request(server)
-  //       .delete('/friends/1')
-  //       .expect(200, '1', done);
-  //   });
+  describe('DELETE /games/:id', () => {
+    it('responds with 200 and 1 if delete successful', done => {
+      request(server)
+        .delete('/games/1')
+        .expect(200, '1', done);
+    });
 
-  //   it('responds with 400 and 0 if user doesnt exist', done => {
-  //     request(server)
-  //       .delete('/friends/6')
-  //       .expect(400, '0', done);
-  //   });
-  // });
+    it('responds with 400 and 0 if user doesnt exist', done => {
+      request(server)
+        .delete('/games/6')
+        .expect(404, '0', done);
+    });
+  });
 });
