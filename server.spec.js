@@ -52,6 +52,12 @@ describe('server.js', () =>{
 
       expect(typeof response.body).toBe('number');
     });
+    it('should return a status of 405', async () => {
+      const response = await request(server).post('/games')
+      .send({title: "Pacman", "genre": "Arcade"})
+
+      expect(response.status).toEqual(405); 
+    });
     
 
 
