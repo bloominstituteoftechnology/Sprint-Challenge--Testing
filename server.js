@@ -30,7 +30,8 @@ server.get("/games", (req, res) => {
 server.delete("/games/:id", (req, res) => {
   const { id } = req.params;
   newArr = gamesArr.filter(game => game.id !== parseInt(id));
-  res.status(200).json(newArr);
+//   gamesArr = newArr; ??? how to make this work ??
+  res.status(200).json(gamesArr);
 });
 
 module.exports = {
