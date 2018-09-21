@@ -2,9 +2,9 @@ const request = require('supertest');
  const server = require('./server.js');
 
  const games = [
-    { id: "1", title: "Pacman", genre: "Arcade"},
-    { id: "2", title: "Galaga", genre: "Arcade" },
-    { id: "3", title: "Pong", genre: "Arcade" },
+    { title: "Pacman", genre: "Arcade"},
+    { title: "Galaga", genre: "Arcade" },
+    { title: "Pong", genre: "Arcade" },
   ];
 
  describe('server.js', () => {

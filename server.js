@@ -6,9 +6,9 @@ const server = express();
 server.use(express.json());
 
 const games = [
-    { id: "1", title: "Pacman", genre: "Arcade"},
-    { id: "2", title: "Galaga", genre: "Arcade" },
-    { id: "3", title: "Pong", genre: "Arcade" },
+    { title: "Pacman", genre: "Arcade"},
+    { title: "Galaga", genre: "Arcade" },
+    { title: "Pong", genre: "Arcade" },
   ];
 
 server.get('/', (req, res) => {
@@ -24,7 +24,8 @@ server.post('/games', (req, res) => {
     if (!game.title || !game.genre) {
         res.status(422).json({ error: "Please provide a title and genre for the game." })
     } else
-        res.status(201).json(game);
+    games.push( game );
+    res.status(201).json( games );
     });
 
 module.exports = server;
