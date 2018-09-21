@@ -86,10 +86,15 @@ describe("GET /games", () => {
 });
 
 describe("GET /games/:id", () => {
+  it("returns 200 for a succesful get", () => {
+    return request(app)
+      .get("/games/1")
+      .expect(200);
+  });
+
   it("returns a specific game", () => {
     return request(app)
       .get("/games/1")
-      .expect(200)
       .then(response => {
         expect(response.body).toEqual({
           id: 1,
@@ -102,6 +107,32 @@ describe("GET /games/:id", () => {
   it("returns 404 if the id is invalid", () => {
     return request(app)
       .get("/games/invalidid")
+      .expect(404);
+  });
+});
+
+describe("DELETE /games/:id", () => {
+  it("returns 200 if delete was successful", () => {
+    return request(app)
+      .delete("/games/2")
+      .expect(200);
+  });
+
+  it("returns the deleted object", () => {
+    return request(app)
+      .delete("/games/1")
+      .then(response => {
+        expect(response.body).toEqual({
+          id: 1,
+          title: "GTA",
+          genre: "RPG",
+        });
+      });
+  });
+
+  it("returns 404 if the id is invalid", () => {
+    return request(app)
+      .delete("/games/invalidid")
       .expect(404);
   });
 });

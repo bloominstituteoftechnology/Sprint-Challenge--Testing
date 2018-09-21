@@ -34,4 +34,11 @@ app.post("/games", (req, res) => {
   res.status(201).json(newGame);
 });
 
+app.delete("/games/:id", (req, res) => {
+  const index = games.findIndex(game => game.id === Number(req.params.id));
+  if (index < 0) return res.status(404).end();
+
+  return res.status(200).json(games[index]);
+});
+
 module.exports = app;
