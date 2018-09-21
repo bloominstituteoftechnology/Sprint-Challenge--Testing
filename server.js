@@ -30,4 +30,13 @@ server.post('/games',(req,res)=>{
         }
     }
 })
+server.get('/games/:id',(req,res)=>{
+    const id=req.params.id;
+    for (let i=0; i<games.length; i++) {
+        if (games[i].id===id) {
+            return res.status(200).json(games[i]);
+        }
+    }
+    return res.status(404).json({err:'Could not find game'});
+})
 module.exports=server;
