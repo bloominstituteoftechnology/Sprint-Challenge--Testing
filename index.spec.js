@@ -9,12 +9,33 @@ describe('server GET requests', () => {
         expect(response.status).toBe(200)
     })
 
-    it('should return list of games at "/games" endpoint', () => {
+    it('should return an array of games at "/games" endpoint', async () => {
+        const response = await request(server).get('/games');
+
+        const expectedRes = [{
+            title: 'Pacman', // required
+            genre: 'Arcade', // required
+            releaseYear: 1980 // not required
+        },
+        {
+            title: 'Digdug', // required
+            genre: 'Arcade', // required
+            releaseYear: 1984 // not required
+        },
+        {
+            title: 'Tetris', // required
+            genre: 'Arcade', // required
+        }]
+
+        expect(response.body).toEqual(expectedRes) 
 
     })
+   
 
-    it('should return an empty array if no game exist from "/games" endpoint', () => {
+    it('should return an empty array if no game exist from "/games" endpoint', async () => {
+        const response = await request(server).get('./games');
 
+        expect(response.body).toEqual([])
     })
 
 })
