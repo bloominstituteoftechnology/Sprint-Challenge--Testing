@@ -17,14 +17,14 @@ describe('server.js', () => {
       expect(Array.isArray(res.body)).toBe(true);
     });
 
-    if (res.body.length > 0) {
       it('should have game objects structured correctly', () => {
-        expect(
-          res.body[0].hasOwnProperty('title') && 
-          res.body[0].hasOwnProperty('genre')
-        ).toBe(true);
+        if (res.body.length > 0) {
+          expect(
+            res.body[0].hasOwnProperty('title') && 
+            res.body[0].hasOwnProperty('genre')
+          ).toBe(true);
+        }
       });
-    }
   });
 
   describe('POST /games', () => {
@@ -33,9 +33,9 @@ describe('server.js', () => {
     beforeAll(async () => {
       res = await req(server).post('/games')
         .send({
-          'title': 'Pacman',
+          'title': 'Asteroids',
           'genre': 'Arcade',
-          'releaseYear': 1980
+          'releaseYear': 1979
         })
         .set('Content-Type', 'application/json')
         .set('Accept', 'application/json');
@@ -52,7 +52,7 @@ describe('server.js', () => {
     it('should return a Created http code (201) when only given a title and genre', async () => {
       const goodRes = await req(server).post('/games')
         .send({
-          'title': 'Pacman',
+          'title': 'Galaga',
           'genre': 'Arcade'
         })
         .set('Content-Type', 'application/json')
@@ -63,8 +63,8 @@ describe('server.js', () => {
     it('should return an Unprocessable Entity http code (422) if not given genre.', async () => {
       const badRes = await req(server).post('/games')
         .send({
-          'title': 'Pacman',
-          'releaseYear': 1980
+          'title': 'Ms. Pacman',
+          'releaseYear': 1981
         })
         .set('Content-Type', 'application/json')
         .set('Accept', 'application/json');
