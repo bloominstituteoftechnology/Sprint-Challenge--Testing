@@ -26,6 +26,13 @@ describe('GET', () => {
             
         expect(response.status).toEqual(403); 
     })
+
+    it('should return a status code of 404 if id is invalid', async () => {
+        const response = await request(server)
+            .get('/games/200');
+            
+        expect(response.status).toEqual(404); 
+    })
 })
 
 describe('POST', () => {
