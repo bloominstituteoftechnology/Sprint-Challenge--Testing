@@ -1,4 +1,4 @@
-const { server } = require('./server.js');
+const { server, gamesArr } = require('./server.js');
 
 console.log(gamesArr);
 

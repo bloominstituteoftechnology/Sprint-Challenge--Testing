@@ -1,6 +1,6 @@
 const request = require("supertest");
 
-const server = require("./server");
+const { server } = require("./server");
 
 describe("server.js", () => {
   it("runs the tests", () => {
@@ -15,8 +15,26 @@ describe("/games", () => {
     let releaseYear = 1980;
     const response = await request(server)
       .post("/games")
-      .send( {title, genre, releaseYear});
-    expect(response.body).toEqual({ Added: "Pacman Arcade 1980"});
+      .send({ title, genre, releaseYear });
+    expect(response.body).toEqual({ Added: "Pacman Arcade 1980" });
+  });
+  it(`should return json`, async () => {
+    let title = "Pacman";
+    let genre = "Arcade";
+    let releaseYear = 1980;
+    const response = await request(server)
+      .post("/games")
+      .send({ title, genre, releaseYear });
+    expect(response.type).toEqual("application/json");
+  });
+  it("returns a 200 status code", async () => {
+    let title = "Pacman";
+    let genre = "Arcade";
+    let releaseYear = 1980;
+    const response = await request(server)
+      .post("/games")
+      .send({ title, genre, releaseYear });
+    expect(response.status).toEqual(200);
   });
 });
 

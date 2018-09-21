@@ -6,6 +6,7 @@ server.use(express.json());
 
 const gamesArr = [];
 
+
 // server.post("/games", (req, res) => {
 //   const game = req.body;
 
@@ -25,8 +26,7 @@ const gamesArr = [];
 server.post("/games", (req, res) => {
   const { title, genre, releaseYear } = req.body;
   if (title && genre && releaseYear) {
-      gamesArr.push(req.body);
-      console.log(gamesArr)
+    gamesArr.push(req.body);
     res.status(200).json({ Added: `${title} ${genre} ${releaseYear}` });
   } else {
     res.status(422).json({ message: "missing information" });
@@ -34,5 +34,6 @@ server.post("/games", (req, res) => {
 });
 
 module.exports = {
-    server,
-  };
+  server,
+  gamesArr
+};
