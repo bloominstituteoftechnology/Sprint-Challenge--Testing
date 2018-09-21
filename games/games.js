@@ -38,13 +38,13 @@ const POST = (req, res) => {
 };
 
 const PUT = (req, res) => {
-  const gameId = req.params.id;
-  if (!getById(gameId)) {
+  const game = getById(req.params.id);
+  if (!game) {
     return res.status(404).json({ message: 'No game found with the given id.' });
   }
 
   const { title, genre, releaseYear } = req.body;
-  const id = getById(gameId).id;
+  const { id } = game;
   const updated = { title, genre, releaseYear, id };
   let delInd;
   for (let i = 0; i < games.length; i++) {
@@ -56,14 +56,14 @@ const PUT = (req, res) => {
 };
 
 const DELETE = (req, res) => {
-  const gameId = req.params.id;
-  if (!getById(gameId)) {
+  const game = getById(req.params.id);
+  if (!game) {
     return res.status(404).json({ message: 'No game found with the given id.' });
   }
 
   let delInd;
   for (let i = 0; i < games.length; i++) {
-    if (getById(gameId).id === games[i].id) {
+    if (game.id === games[i].id) {
       delInd = i;
     }
   }
