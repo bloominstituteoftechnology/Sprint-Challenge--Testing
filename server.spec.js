@@ -27,6 +27,29 @@ describe('server.js', () => {
       });
   });
 
+  describe('GET /games/:id', () => {
+    let res;
+
+    beforeAll(async () => {
+      res = await req(server).get('/games/1');
+    });
+
+    it('should return an OK http code (200)', () => {
+      expect(res.status).toBe(200);
+    });
+
+    it('should return an object', () => {
+      expect(typeof res.body).toBe('object');
+    });
+
+      it('should have game object structured correctly', () => {
+        expect(
+          res.body.hasOwnProperty('title') && 
+          res.body.hasOwnProperty('genre')
+        ).toBe(true);
+      });
+  });
+
   describe('POST /games', () => {
     let res;
 
@@ -91,6 +114,32 @@ describe('server.js', () => {
         .set('Content-Type', 'application/json')
         .set('Accept', 'application/json');
       expect(badRes.status).toBe(422);
+    });
+  });
+
+  describe('DELETE /games/:id', () => {
+    let res;
+
+    beforeAll(async () => {
+      res = await req(server).delete('/games/1');
+    });
+
+    it('should return an Accepted http code (202)', () => {
+      expect(res.status).toBe(202);
+    });
+
+    it('should return a count of records deleted (1)', () => {
+      expect(res.body).toBe(1);
+    });
+
+    it('should delete the game with the provided ID', async () => {
+      const gameReq = await req(server).get('/games/1');
+      expect(gameReq.status).toBe(404); // not found
+    });
+
+    it('should return a Not Found http code (404) if game with given id isn\'t found', async () => {
+      const badReq = await req(server).delete('/games/-100twenty');
+      expect(badReq.status).toBe(404);
     });
   });
 });
