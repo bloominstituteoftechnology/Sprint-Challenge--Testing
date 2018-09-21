@@ -19,14 +19,13 @@ describe ('GET request for /', () => {
     });
 });
 
-//Tests for getting list of games on /games endpoint
+// //Tests for getting list of games on /games endpoint
 describe('GET request for games', () => {
 
-    it('returns a list of games', async() => {
-        const response = await request(server);
-        response
-        .get('/games')
-        .expect(response.body).toMatchObject({games:[
+    it('returns a list of games', async () => {
+        let response = await request(server)
+        .get('/games');
+        expect(response.body).toMatchObject({games:[
                 {id: '1', name: 'monopoly', difficulty: 'easy'},     
                 {id: '2', name: 'chess', difficulty: 'hard'},
                 {id: '3', name: 'uno', difficulty: 'easy'},
@@ -36,18 +35,34 @@ describe('GET request for games', () => {
     });
 
     it('returns a 200 status code', async () => {
-        const response = await request(server);
-        response
-        .get('/games')
-        .expect(response.status).toEqual(200);
+        const response = await request(server)
+        .get('/games');
+        expect(response.status).toEqual(200);
     })
 
     it('returns an empty array if no data', async () => {
         const response = await request(server)
-        response
         .get('/games')
-        .expect(response.body).toMatchObject([]);
+        expect(response.body).toMatchObject([]);
     });
-})
+});
 
+//tests for POST /games endpoint
+//in the route handler, validate that the required fields are included inside the body. If the information is incomplete, return a 422 status code.
+
+//write tests to verify that the endpoint returns the correct HTTP status code when receiving correct and incorrect game data.
+
+describe('POST /games', () => {
+    it('should return a 201 and echo response', async () => {
+        const newGame = {
+            id: '6', 
+            name: 'boggle', 
+            difficulty: 'easy'}; 
+        
+        let response = await request(server)
+            .post('/games')
+            .send({message: 'test'});
+            expect(response.status).toEqual(201);
+    })
+  })
 
