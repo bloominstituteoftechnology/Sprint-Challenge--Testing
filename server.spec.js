@@ -74,4 +74,32 @@ describe('server.js', () => {
       }
     });//end of duplicate title test
   });//end of POST games tests
+
+  describe('GET /games/:id tests', () => {
+    it('should return object with matching id', async () => {
+      const game = {
+        title: 'Another Field of Battle 12',
+        genre: 'FPS',
+      };
+
+      const sent = await request(server).post('/games').send(game);
+      const response = await request(server).get(`/games/${sent.body.id}`);
+
+      const expectedRes = {
+        ...game,
+        id: sent.body.id
+      };
+
+      expect(response.body).toEqual(expectedRes);
+    });//end success get by id test
+
+    it('should return status 404(File Not Found) if id is incorrect', async () => {
+      try{
+        const response = await request(server).get('/games/999999');
+      }catch(e){
+        expect(e.status).toEqual(404);
+        expect(e.message).toEqual('No game by that id');
+      }
+    });//end by id test
+  })//end get game by id tests
 });//end of server tests
