@@ -16,6 +16,16 @@ describe("post", () => {
 			.send({ title: "title" })
 			.expect(404, done);
 	});
+	it("returns 405", done => {
+		return request(server)
+			.post("/api/games")
+			.send({
+				title: "Grim Fandango",
+				genre: "genre",
+				yearRelease: 2000,
+			})
+			.expect(405, done);
+	});
 
 	it("returns data", done => {
 		return request(server)
@@ -57,5 +67,40 @@ describe("get", () => {
 				done(null);
 			})
 			.catch(done);
+	});
+});
+
+describe("get by id", () => {
+	it("returns a 404", done => {
+		return request(server)
+			.get("/api/game/7")
+			.expect(404, done);
+	});
+
+	it("returns the game data", done => {
+		return request(server)
+			.get("/api/games/0")
+			.then(response => {
+				expect(response.body.id).toBe(1);
+				done(null);
+			})
+			.catch(done);
+	});
+});
+
+describe("delete", () => {
+	it("deletes a game", done => {
+		return request(server)
+			.delete("/api/games/0")
+			.then(response => {
+				expect(response.body).toBe(1);
+				done(null);
+			})
+			.catch(done);
+	});
+	it("returns a 404", done => {
+		return request(server)
+			.get("/api/game/7")
+			.expect(404, done);
 	});
 });
