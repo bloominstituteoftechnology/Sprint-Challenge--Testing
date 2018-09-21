@@ -19,6 +19,27 @@ const request = require('supertest');
           expect(response.body).toEqual(games);
         });
 
+        it("should return an array of games and genres", async () => {
+            const response = await request(server).get("/games");
+            expect(Array.isArray(games)).toBeTruthy();
+          });
       });
+      
+      describe('POST /games', () => {
+        it('should return a 422 status code if no title is provided', async () => {
+            let game = { title: '', genre:'' }
+             const response = await request(server)
+            .post('/games')
+            .send(game)
+             expect(response.status).toEqual(422);
+        });
+        it('should return a 422 status code if no genre is provided', async () => {
+            let game = { title: '', genre:'' }
+             const response = await request(server)
+            .post('/games')
+            .send(game)
+             expect(response.status).toEqual(422);
+        });
 
+    });
  });
