@@ -19,7 +19,7 @@ const gamesArray = [
         title: 'Tetris', // required
         genre: 'Arcade', // required
     }
-]
+];
 
 server.use(express.json())
 
@@ -28,13 +28,21 @@ server.get('/' , (req, res) => {
 });
 
 server.get('/games', (req, res) => {
+    res.status(200).send(gamesArray);
+})
 
-    // const empty = [];
-    // if(gamesArray){
-        res.status(200).send(gamesArray);
-    // } else {
-    //     res.status(200).send(empty);
-    // }
+server.get('/games/:id', (req, res) => {
+    const { id } = req.params
+    console.log(id)
+    let single = gamesArray.find(game => {
+        if (game.id == id) {
+            console.log(game)
+            return game;
+        } 
+    })
+
+    console.log(single)
+    res.status(200).send(single);
 })
 
 server.post('/games', (req, res) => {
@@ -49,8 +57,9 @@ server.post('/games', (req, res) => {
         } else {
             id = gamesArray[gamesArray.length-1].id + 1;
             req.body.id = id;
-            gamesArray.unshift(req.body)
-            res.status(201).json(req.body)
+            const { body } = req.body
+            gamesArray.unshift(body)
+            res.status(201).json(body)
         }
     } else if (!newTitle || !newGenre) {
         res.status(422).end();
@@ -61,3 +70,24 @@ server.post('/games', (req, res) => {
 
 module.exports = server;
 //module.export__S__ - wont forget the s again
+
+
+// const expectedRes = [
+//     {   
+//         id: 1,
+//         title: 'Pacman', // required
+//         genre: 'Arcade', // required
+//         releaseYear: 1980 // not required
+//     },
+//     {
+//         id: 2,
+//         title: 'Digdug', // required
+//         genre: 'Arcade', // required
+//         releaseYear: 1984 // not required
+//     },
+//     {
+//         id: 3,
+//         title: 'Tetris', // required
+//         genre: 'Arcade', // required
+//     }
+// ]

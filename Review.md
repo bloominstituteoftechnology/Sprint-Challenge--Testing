@@ -8,5 +8,9 @@
     'mocks' are basically a sandbox enviornment for testing code that is dependent on imported files. For example you could use a 'mock' database with fake data to test instead of testing with a live database, this would make it quicker. It may use the true import that the live site is using but it doesn't have to. 
 4.  Mention three types of automated tests.
     Unit testing - insures that a piece of the code returns as expected, usually with functions
-    component testing - insures comonents behave as expected
-    snapshot testing - insures that the page has not be edited since the last snapshot 
+            -component testing - insures comonents behave as expected // because of single unit
+    integration testing - back and front end 
+            -snapshot testing - insures that the page has not be edited since the last snapshot 
+    end-to-end testing == 
+
+    //look into this I got these wrong they are nested
