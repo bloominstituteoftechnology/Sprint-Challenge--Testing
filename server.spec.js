@@ -67,6 +67,21 @@ describe('server.js', () => {
             expect(response.body.id).toBeDefined();
             expect(typeof response.body.id).toBe('number');
         });
-      });
+    });
+
+    describe('GET /games', () => {
+        it('should return status code 200', async () => {
+            const expected = 200;
+            const response = await request(server).get('/games');
+            
+            expect(response.status).toEqual(expected);
+        });
+    
+        it('should return an array', async () => {
+            const response = await request(server).get('/games');
+
+            expect(Array.isArray(response.body)).toBeTruthy();
+        });
+    });
 
 });
