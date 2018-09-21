@@ -41,10 +41,14 @@ describe('GET request for games', () => {
     })
 
     it.skip('returns an empty array if no data', async () => {
+
+//to test, uncomment line 5 in server.js and change it.skip to it.only above.
+
+        const emptyGames = {games:[]};
+
         const response = await request(server)
         .get('/games')
-        .send({emptyGames})
-        expect(response.body).toMatchObject([]);
+        expect(response.body).toMatchObject(emptyGames);
     });
 });
 

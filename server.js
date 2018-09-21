@@ -2,6 +2,8 @@ const express = require('express');
 
 const server = express();
 
+//const games = [];
+
 const games = require('./data.js')
 
 server.use(express.json());
