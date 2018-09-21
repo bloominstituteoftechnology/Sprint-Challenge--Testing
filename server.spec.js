@@ -1,6 +1,22 @@
 const request = require("supertest");
 const app = require("./server");
 
+describe("GET /games", () => {
+  it("returns a status of 200", () => {
+    return request(app)
+      .get("/games")
+      .expect(200);
+  });
+
+  it("returns an empty array when there are no games", () => {
+    return request(app)
+      .get("/games")
+      .then(data => {
+        expect(data.body.constructor).toBe(Array);
+      });
+  });
+});
+
 describe("POST /games", () => {
   it("succesful addition returns 201", async done => {
     await request(app)
@@ -46,5 +62,25 @@ describe("POST /games", () => {
       .expect(422);
 
     done();
+  });
+
+  it("validates input and returns 405 if title is not unique", () => {
+    return request(app)
+      .post("/games")
+      .send({
+        title: "Hacknet",
+        genre: "Programming",
+      })
+      .expect(405);
+  });
+});
+
+describe("GET /games", () => {
+  it("returns the list of games added", () => {
+    return request(app)
+      .get("/games")
+      .then(response => {
+        expect(response.body.length).toBe(2);
+      });
   });
 });
