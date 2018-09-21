@@ -39,4 +39,26 @@ describe('server.js', () => {
         expect(response.type).toBe('application/json');
         });
     });
+
+    describe('GET /games', () => {
+        it('returns status code 200 (OK)', async () => {
+            const response = await request(server).get('/games');
+
+            expect(response.status).toBe(200);
+        });
+
+        it('returns the list of games as an array', async () => {
+            // await request(server).post('/games').send({ title: 'Pacman', genre: 'Arcade', releaseYear: '1980' });
+            const response = await request(server).get('/games');
+
+            expect(response.body).toEqual(['Pacman']);
+        });
+
+        it('returns an empty array if list of games is empty', async () => {
+            await request(server).delete('/games');
+            const response = await request(server).get('/games');
+
+            expect(response.body).toEqual([]);
+        });
+    })
 })
