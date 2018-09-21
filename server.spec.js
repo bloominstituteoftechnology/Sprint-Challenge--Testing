@@ -27,7 +27,7 @@ describe("/games", () => {
       .send({ title, genre, releaseYear });
     expect(response.type).toEqual("application/json");
   });
-  it("returns a 200 status code", async () => {
+  it("returns a 200 status code if successful", async () => {
     let title = "Pacman";
     let genre = "Arcade";
     let releaseYear = 1980;
@@ -35,6 +35,15 @@ describe("/games", () => {
       .post("/games")
       .send({ title, genre, releaseYear });
     expect(response.status).toEqual(200);
+  });
+  it("returns a 404 status code if failed", async () => {
+    let title = "Pacman";
+    let genre = "Arcade";
+    let releaseYear = 1980;
+    const response = await request(server)
+      .post("/games")
+      .send({ title, releaseYear });
+    expect(response.status).toEqual(422);
   });
 });
 
