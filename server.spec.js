@@ -2,8 +2,6 @@ const request = require("supertest");
 
 const server = require("./server.js");
 
-const server = require("./server.js");
-
 describe("server", () => {
   it("test runs", () => {
     expect(true).toBeTruthy();
