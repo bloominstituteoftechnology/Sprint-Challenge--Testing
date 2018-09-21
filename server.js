@@ -36,14 +36,27 @@ app.get("/games", (req, res) => {
 });
 app.get("/games/:id", (req, res) => {
   store.forEach(element => {
-    if (element.id == req.params.id){
+    if (element.id == req.params.id) {
       res.status(200).json([element]);
       return;
     }
   });
-  res.status(404).json({errorMessage:'ID not found'});
+  res.status(404).json({ errorMessage: "ID not found" });
   return;
 });
+app.delete("/games/:id", (req, res) => {
+  store.forEach((element, i) => {
+    if (element.id == req.params.id) {
+      store.splice(i, 1);
+
+      res.status(200).json({ message: "Delete Successful" });
+      return;
+    }
+  });
+  res.status(404).json({ errorMessage: "ID not found" });
+  return;
+});
+
 app.get("/reset", (req, res) => {
   store = [];
   currentID = 0;

@@ -102,4 +102,16 @@ describe('server.js', () => {
       }]));
     });
   });
+  describe('delete games by id route', () => {
+    it('should 200', async () => {
+      const response = await request(server).del('/games/0');
+      expect(response.status).toEqual(200);
+    });
+    it('should 404 if ID not found', async () => {
+      const response = await request(server).del('/games/0');
+      expect(response.status).toEqual(404);
+    });
+   
+   
+  });
 })
