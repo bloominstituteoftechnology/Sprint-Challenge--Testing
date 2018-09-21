@@ -16,4 +16,14 @@ server.get("/games", (req, res) => {
   res.status(200).json(gamesDb.games);
 });
 
+// POST (create) new game
+server.post("/games/", (req, res) => {
+  const id = gamesDb.games.length.toString();
+  const { title, genre, releaseYear } = req.body;
+  const newgame = { id, title, genre, releaseYear };
+  gamesDb.games.push(newgame);
+  // console.log("GAME RESPONSE", gamesDb.games[3]);
+  res.status(200).json(gamesDb.games);
+});
+
 module.exports = server;

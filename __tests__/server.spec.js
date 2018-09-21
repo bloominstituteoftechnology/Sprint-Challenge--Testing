@@ -37,4 +37,22 @@ describe("server.js", () => {
       });
     });
   });
+
+  describe("POST new game", () => {
+    it("should display all games (including newGame)", async () => {
+      const updatedGameData = gamesDb.games;
+      let newGame = gamesDb.newGame;
+      const response = await request(server)
+        .post("/games")
+        .send(newGame);
+      // 3 is the index of our new game
+      // expect(response.body[3]).toEqual(updatedGameData[3]);
+      expect(response.body).toEqual(updatedGameData);
+    });
+    it("returns a 200 (OK) status code", async () => {
+      const response = await request(server).post("/games");
+
+      expect(response.status).toEqual(200);
+    });
+  });
 });
