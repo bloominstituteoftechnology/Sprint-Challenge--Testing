@@ -82,6 +82,6 @@ describe("/games DELETE", () => {
       const response = await request(server)
         .delete(`/games/${id}`)
         .send({ id });
-      expect(response.body).toEqual(2);
+      expect(response.body).toEqual();
     });
   });
