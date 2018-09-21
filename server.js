@@ -26,18 +26,11 @@ server.get("/games", (req, res) => {
 });
 
 function postChecker (req, res, next) {
-  if(!req.body.genre){
-    res.status(422).json({errorMessage: "genre required"});
+  if(!req.body.genre || !req.body.title){
+    res.status(422).json({errorMessage: "genre and title required"});
+  } else {
+      next()
   }
-  if(!req.body.title){
-    res.status(422).json({errorMessage: "title required"});
-  }
-//   if(req.body.releaseYear){
-//     if(! Number(req.body.releaseYear)){
-//       req.status(422).json({errorMessage: "release year is not required but if you do enter something it must be a integer"});
-//     }
-//   }
-  next()
 }
 
 server.post("/games", postChecker, (req, res) => {
