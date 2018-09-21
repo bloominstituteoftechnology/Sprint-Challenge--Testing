@@ -10,10 +10,24 @@ describe('server.js', () => {
         it('should return a list of games', async () => {
             const response = await request(server).get('/games');
             const expectedBody =  [
-                { name: 'MHW' , genre: 'JRPG' },
-                { name: 'AC Odyssey', genre: 'RPG' },
-                { name: 'Marvel\'s Spiderman' , genre: 'RPG' }
-        ]
+                { id: 0, 'name': 'MHW' , 'genre': 'JRPG' },
+                { id: 1, 'name': 'AC Odyssey', 'genre': 'RPG' },
+                { id: 2, 'name': 'Marvel\'s Spiderman' , 'genre': 'RPG' }
+            ];
+            expect(response.body).toEqual(expectedBody);
+        });
+        it('should return a game based on ID', async () => {
+            const response = await request(server).get('/games/0');
+            const expectedBody =  [
+                { id: 0, 'name': 'MHW' , 'genre': 'JRPG' }
+            ];
+            expect(response.body).toEqual(expectedBody);
+        });
+        it('should return status code 404 with game with provided ID is not found', async () => {
+            const response = await request(server).get('/games/0164');
+            const expectedBody = { 
+                message: "Cannot find game with the provided ID."
+            };
             expect(response.body).toEqual(expectedBody);
         });
         it('should check if type of response is array', async () => {
@@ -40,10 +54,10 @@ describe('server.js', () => {
                 .post('/games')
                 .send({ name: "Horizon Zero Dawn", genre: "RPG" });
             const expectedBody =  [
-                { name: 'MHW' , genre: 'JRPG' },
-                { name: 'AC Odyssey', genre: 'RPG' },
-                { name: 'Marvel\'s Spiderman' , genre: 'RPG' },
-                { name: "Horizon Zero Dawn", genre: "RPG" }
+                { id: 0, 'name': 'MHW' , 'genre': 'JRPG' },
+                { id: 1, 'name': 'AC Odyssey', 'genre': 'RPG' },
+                { id: 2, 'name': 'Marvel\'s Spiderman' , 'genre': 'RPG' },
+                { id: 3, 'name': "Horizon Zero Dawn", 'genre': "RPG" }
             ];
             expect(response.body).toEqual(expectedBody);
         });
