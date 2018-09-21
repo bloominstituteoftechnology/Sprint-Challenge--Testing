@@ -39,6 +39,32 @@ describe('server.js',()=>{
               })
               expect(response.body.id).toEqual(2);
         })
-        
+        it('returns a JSON object from games route',async()=>{
+            const response=await request(server).post('/games').send({
+                title:'Metroid',
+                genre:'Console',
+                releaseYear:1986
+            })
+            expect(response.type).toEqual('application/json');
+        })
+        it ('returns a 405 error from games route if user attempts to post a duplicate title',async()=>{
+            let response=await request(server).post('/games').send({
+                title:'Metroid',
+                genre:'Console',
+                releaseYear:1986
+            })
+            if (response) {
+                async()=>{
+                let secondResponse=await request(server).post('/games').send({
+                    title:'Metroid',
+                    genre:'Console',
+                    releaseYear:1986
+                })
+                expect(secondResponse.status).toEqual(405);
+            }
+            }
+              
+            }
+        )
     })
 })

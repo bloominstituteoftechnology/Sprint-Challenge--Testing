@@ -5,6 +5,7 @@ server.use(express.json());
 let id=1;
 const games=[];
 
+
 server.get('/games',(req,res)=>{
     res.status(200).json({games:games});
 })
@@ -14,8 +15,19 @@ server.post('/games',(req,res)=>{
         res.status(422).json({error:'missing field(s)'});
     }
     else {
-        res.status(201).json({id:id});
-        id++;
+        let counter=0;
+        for (let i=0; i<games.length; i++) {
+            if (games[i].title===newGame.title){
+                counter+=1;
+                break;
+            }
+        }
+        if (counter===0){
+            res.status(201).json({id:id});
+            id++;
+        } else {
+            res.status(405).json({err:'No duplicate titles.'});
+        }
     }
 })
 module.exports=server;
