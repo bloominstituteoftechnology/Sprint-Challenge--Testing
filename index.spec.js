@@ -12,31 +12,35 @@ describe('server GET requests', () => {
     it('should return an array of games at "/games" endpoint', async () => {
         const response = await request(server).get('/games');
 
-        const expectedRes = [{
-            title: 'Pacman', // required
-            genre: 'Arcade', // required
-            releaseYear: 1980 // not required
-        },
-        {
-            title: 'Digdug', // required
-            genre: 'Arcade', // required
-            releaseYear: 1984 // not required
-        },
-        {
-            title: 'Tetris', // required
-            genre: 'Arcade', // required
-        }]
+        const expectedRes = [
+            {   
+                id: 1,
+                title: 'Pacman', // required
+                genre: 'Arcade', // required
+                releaseYear: 1980 // not required
+            },
+            {
+                id: 2,
+                title: 'Digdug', // required
+                genre: 'Arcade', // required
+                releaseYear: 1984 // not required
+            },
+            {
+                id: 3,
+                title: 'Tetris', // required
+                genre: 'Arcade', // required
+            }
+    ]
 
         expect(response.body).toEqual(expectedRes) 
 
     })
    
-
-    // it('should return an empty array if no game exist from "/games" endpoint', async () => {
-    //     const response = await request(server).get('./games');
-
-    //     expect(response.body).toEqual([])
-    // })
+    it('should return an empty array if no games exist from "/games" endpoint',  () => {
+        const response =  request(server).get('./games');
+        const expectedResponse = []
+        expect(response.body).toEqual(expectedResponse)
+    })
 
 })
 
@@ -52,7 +56,9 @@ describe('server POST requests', () => {
         const completeRequest = { title: 'frogger', genere: 'arcade'}
         const response = await request(server).post('/games').send(completeRequest)
   
-        expect(response.body).toEqual(completeRequest)
+        expect(response.body).toHaveProperty('title', 'frogger')
+        expect(response.body).toHaveProperty('genere', 'arcade')
+        expect(response.body).toHaveProperty('id')
     })
 
     test('should return a 422 status code title or genere are excluded from request', async () => {
