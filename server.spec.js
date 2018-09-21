@@ -26,43 +26,23 @@ describe('GET request for games', () => {
         const response = await request(server);
         response
         .get('/games')
-        .expect(response.body).toMatchObject([
-                {
-                    id: '1',
-                    name: 'monopoly',
-                    difficulty: 'easy'
-                },     
-                {
-                    id: '2',
-                    name: 'chess',
-                    difficulty: 'hard'
-                },
-                {
-                    id: '3',
-                    name: 'uno',
-                    difficulty: 'easy'
-                },
-                {
-                    id: '4',
-                    name: 'scrabble',
-                    difficulty: 'medium'
-                },
-                {
-                    id: '5',
-                    name: 'checkers',
-                    difficulty: 'easy'
-                }   
-        ])
-    })
+        .expect(response.body).toMatchObject({games:[
+                {id: '1', name: 'monopoly', difficulty: 'easy'},     
+                {id: '2', name: 'chess', difficulty: 'hard'},
+                {id: '3', name: 'uno', difficulty: 'easy'},
+                {id: '4', name: 'scrabble', difficulty: 'medium'},
+                {id: '5', name: 'checkers', difficulty: 'easy'}   
+        ]});
+    });
 
-    it('returns a 200 status code', () => {
+    it('returns a 200 status code', async () => {
         const response = await request(server);
         response
         .get('/games')
         .expect(response.status).toEqual(200);
     })
 
-    it('returns an empty array if no data', () => {
+    it('returns an empty array if no data', async () => {
         const response = await request(server)
         response
         .get('/games')
