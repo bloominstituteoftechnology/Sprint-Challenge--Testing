@@ -12,6 +12,12 @@ app.get("/games", (req, res) => {
   res.status(200).json(games);
 });
 
+app.get("/games/:id", (req, res) => {
+  const game = games.find(game => game.id === Number(req.params.id));
+  if (!game) res.status(404).end();
+  res.status(200).json(game);
+});
+
 app.post("/games", (req, res) => {
   const { title, genre } = req.body;
 

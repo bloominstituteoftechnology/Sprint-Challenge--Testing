@@ -84,3 +84,24 @@ describe("GET /games", () => {
       });
   });
 });
+
+describe("GET /games/:id", () => {
+  it("returns a specific game", () => {
+    return request(app)
+      .get("/games/1")
+      .expect(200)
+      .then(response => {
+        expect(response.body).toEqual({
+          id: 1,
+          title: "GTA",
+          genre: "RPG",
+        });
+      });
+  });
+
+  it("returns 404 if the id is invalid", () => {
+    return request(app)
+      .get("/games/invalidid")
+      .expect(404);
+  });
+});
