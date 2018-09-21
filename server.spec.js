@@ -44,6 +44,7 @@ describe('server.js', () => {
                 .send(game);
 
         expect(response.status).toEqual(201);
+        expect(response.body).toEqual(game);
     });
 
   });
