@@ -12,6 +12,8 @@ Test Drive Development allows developers to define the requirements of an applic
 
 3.  What are `mocks`? What are a good use cases for them?
 
+In testing we can mock functions and data to stub out functionality. `mock` data is ideal for testing CRUD operations on web APIs.
+
 `mock` functions are a way to keep track of whether a function has been called, if so how many times has it been called or with what arguments has it been called during a test. Mock functions are great candidates for checking button presses.
 
 4.  Mention three types of automated tests.
