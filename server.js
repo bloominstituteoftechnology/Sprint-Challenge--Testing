@@ -47,4 +47,15 @@ server.post('/games', (req, res) => {
   }
 });
 
+//delete a game by id
+server.delete('/games/:id', async (req, res) => {
+  const { id } = req.params;
+  if(!games.some(g => Number(g.id) === Number(id))){
+    res.status(404).json({ message: 'No game by that id' });
+  }else{
+    games = games.filter(g => Number(g.id) !== Number(id));
+    res.status(200).json(Number(id));
+  }
+});
+
 module.exports = server;
