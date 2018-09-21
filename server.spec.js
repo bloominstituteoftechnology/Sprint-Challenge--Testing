@@ -47,4 +47,28 @@ describe('Server', () => {
             expect(response.type).toBe('application/json');
         });
     });
+
+    describe('GET to /games', () => {
+        it('should return a status code of 200 on success', async () => {
+            const response = await request(server).get('/games');
+            expect(response.status).toEqual(200);
+        });
+
+        it('should return the array of games including the first', async () => {
+            const expectedBody = {title: 'Minecraft', genre: 'Sandbox', releaseYear: 2009};
+                
+            const response = await request(server).get('/games');
+            expect(response.body).toContainEqual(expectedBody);
+        });
+
+        it('should return type Array', async () => {
+            const response = await request(server).get('/games');
+            expect(Array.isArray(response.body)).toBe(true);
+        });
+
+        it('should return a JSON object', async () => {
+            const response = await request(server).get('/games');
+            expect(response.type).toBe('application/json');
+        })
+    });
 });
