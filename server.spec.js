@@ -25,6 +25,21 @@ describe("Server", () => {
     });
   });
 
+  describe("GET request to /games:id", () => {
+      it('should return the information about a single game in the response body', async () => {
+          const response = await request(server).get("/games/1"); 
+          expect(response.body).toEqual({ id: 1, title: "Pacman", genre: "Arcade", releaseYear: 1980 })
+      }); 
+      it('should return a status code of 200 if the game with the provided ID is sent', async () => {
+          const response = await request(server).get("/games/1"); 
+          expect(response.status).toEqual(200)
+      })
+      it('should return a status code of 404 if a game with the provided ID does not exist', async () => {
+          const response = await request(server).get("/games/8"); 
+          expect(response.status).toEqual(404); 
+      })
+  })
+
   describe("POST request to /games", () => {
     it("should return a status code of 201", async () => {
       const response = await request(server)
@@ -35,7 +50,7 @@ describe("Server", () => {
     it("should return a status code of 422 if information isnt complete", async () => {
       const response = await request(server)
         .post("/games")
-        .send({ title: "Bla Bla" });
+        .send({ title: "PUBG" });
       expect(response.status).toEqual(422);
     });
     it("should return a status code of 405 if client tries to duplicate a game that already exists", async () => {
@@ -65,4 +80,15 @@ describe("Server", () => {
       expect(response.body).toEqual(body);
     });
   });
+
+  describe("DELETE request to /games/:id", () => {
+      it('should return a status code of 200 when successfully deleted', async () => {
+        const response = await request(server).delete("/games/1");
+        expect(response.status).toEqual(200); 
+      }); 
+      it('should return a status code of 404 if the ID of the game is not found', async () => {
+        const response = await request(server).delete("/games/8"); 
+        expect(response.status).toEqual(404); 
+      }); 
+  })
 });

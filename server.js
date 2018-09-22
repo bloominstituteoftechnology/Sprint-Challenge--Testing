@@ -4,6 +4,7 @@ const server = express();
 server.use(express.json())
 
 let id = 4; 
+
 const games = [
     { id: 1, title: "Pacman", genre: "Arcade", releaseYear: 1980 },
     { id: 2, title: "Fortnite", genre: "Battle Royale", releaseYear: 2017 },
@@ -17,6 +18,27 @@ server.get("/games", (req, res) => {
         res.status(200).json(games); 
     }else{
         res.status(200).json([]); 
+    }
+})
+
+server.get('/games/:id', (req, res) => {
+    const {id} = req.params; 
+    const game = games.filter(game => String(game.id) === id)
+    if(game.length > 0){
+        res.status(200).json(game[0]); 
+    }else {
+        res.status(404).json({error: "Game with provided ID does not exist"})
+    }
+})
+
+server.delete('/games/:id', (req, res) => {
+    const {id} = req.params; 
+    const game = games.filter(game => String(game.id) === id)
+    if(game.length > 0){
+        games.splice(game[game.id-1], 1);
+        res.status(200).send({message: "Successfully deleted the game"})
+    }else {
+        res.status(404).json({error: "Game with provided ID does not exist"})
     }
 })
 
