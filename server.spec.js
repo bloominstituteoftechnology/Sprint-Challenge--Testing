@@ -24,16 +24,17 @@ describe('Games', () => {
     genre: 'shooter',
     releaseDate: '1995'
   }
-  beforeEach(() => {
-      const newGame = new Game(expectedBody).save((err, saveGame) => {
+  beforeEach(done => {
+      const newGame = new Game(expectedBody);
+      newGame.save((err, saveGame) => {
         if (err) {
-          console.log('Error saving');
-          return;
+          console.log(err);
         }
         else {
-          gameId = saveGame.id;
-          console.log('Game was Saved');
+          gameId = saveGame._id;
+          console.log('gameId');
         }
+        done();
       });
       // write a beforeEach hook that will populate your test DB with data
       // each time this hook runs, you should save a document to your db
@@ -67,25 +68,6 @@ describe('Games', () => {
     });
   });
 // test the GET here
-// Test the DELETE here
-
-
-  // ```js
-  // {
-  //   title: 'California Games',
-  //   genre: 'Sports',
-  //   releaseDate: 'June 1987'
-  // }
-  // ```
-
-  // test the GET here
-
-//   * Our get method should return the list of games.
-// * **REMINDER** That this data structure returned from Mongo will be an array, so to test your game with a `beforeEach` hook you'll need to make sure you test against the first item in the array
-
-//   ```js
-//   expect(res.data[0].foo).to.equal(bar.foo);
-//   ```
 
 describe('get routes', () => {
 
@@ -109,13 +91,14 @@ describe('get routes', () => {
 });
       // Test the DELETE here
 
-//       ### Write tests for the "DELETE" method
-
-// * `DELETE` can take an ID off of the route parameter and delete the corresponding game if it exists or return a 404 and an object with a message if the game does not exist in the database.
-
-  // it('deletes game from database', async() => {
-  //     const response = await request(server)
-  //     .delete(`/api/games/${gameId}`);
-  //     expect(response.status).toEqual(404);
-  //   })
+  describe('delete routes', () => {
+    it('should delete game', async() => {
+      const response = await request(server).delete(`/api/games/${gameId}`);
+      expect(response.status).toBe(204);
+    });
+    it('throws error when deleting wrong id', async() => {
+      const response = await request(server).delete(`/api/games/`);
+      expect(response.status).toBe(404);
+    });
+  });
 });
