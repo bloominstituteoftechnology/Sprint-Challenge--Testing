@@ -19,13 +19,13 @@ describe('Games', () => {
 
   let gameId;
   // // hint - these wont be constants because you'll need to override them.
-
+  const expectedBody = {
+    title: 'Doom',
+    genre: 'shooter',
+    releaseDate: '1995'
+  }
   beforeEach(() => {
-      const newGame = new Game({
-        title: 'Doom',
-        genre: 'shooter',
-        releaseDate: '1995'
-      }).save((err, saveGame) => {
+      const newGame = new Game(expectedBody).save((err, saveGame) => {
         if (err) {
           console.log('Error saving');
           return;
@@ -49,23 +49,25 @@ describe('Games', () => {
   it('runs the tests', () => {});
 
   // test the POST here
+
+  describe('post routes', () => {
   it('should create a new game', async() => {
     const game = {title: 'TestGame', genre: 'simulator', releaseDate: '2015'};
-    const respone = await request(server)
+    const response = await request(server)
     .post('/api/games')
     .send(game);
-    expect(respone.status).toBe(201);
-    expect(respone.body).toHaveProperty("_id");
-    expect(respone.body).toHaveProperty("title");
-    expect(respone.body).toHaveProperty("genre");
-    expect(respone.body).toHaveProperty("releaseDate");
-    expect(respone.body.title).toEqual('TestGame');
-    expect(respone.body.genre).toEqual('simulator');
-    expect(respone.body.releaseDate).toEqual('2015');
-});
+    expect(response.status).toBe(201);
+    expect(response.body).toHaveProperty("_id");
+    expect(response.body).toHaveProperty("title");
+    expect(response.body).toHaveProperty("genre");
+    expect(response.body).toHaveProperty("releaseDate");
+    expect(response.body.title).toEqual('TestGame');
+    expect(response.body.genre).toEqual('simulator');
+    expect(response.body.releaseDate).toEqual('2015');
+    });
+  });
 // test the GET here
 // Test the DELETE here
-  })
 
 
   // ```js
@@ -85,16 +87,26 @@ describe('Games', () => {
 //   expect(res.data[0].foo).to.equal(bar.foo);
 //   ```
 
-  // it('gets game from database', async () => {
-  //     const response = await request(server)
-  //     .get('/api/games')
-  //     expect(response.status).toEqual(200)
-  //     expect(response.body[0].title).toEqual('SuperGame');
-  //     expect(response.body[0].genre).toEqual('Super');
-  //     expect(response.body[0].releaseDate).toEqual('Today');
-  //     expect(response.type).toEqual('application/json');
-  // })
-  
+describe('get routes', () => {
+
+  it('returns 200', async () => {
+      const response = await request(server)
+      .get('/api/games')
+      expect(response.status).toBe(200)
+      // expect(response.body[1].title).toEqual('Doom');
+      // expect(response.body.genre).toEqual('shooter');
+      // expect(response.body.releaseDate).toEqual('1995');
+      // expect(response.type).toEqual('application/json');
+  });
+  it('returns first game title', async () => {
+    const response = await request(server).get('/api/games');
+    expect(response.body[0].title).toEqual(expectedBody.title);
+  });
+  it('returns array', async() => {
+    const response = await request(server).get('/api/games');
+    expect(Array.isArray(response.body)).toBeTruthy();
+  });
+});
       // Test the DELETE here
 
 //       ### Write tests for the "DELETE" method
@@ -106,3 +118,4 @@ describe('Games', () => {
   //     .delete(`/api/games/${gameId}`);
   //     expect(response.status).toEqual(404);
   //   })
+});
