@@ -179,10 +179,10 @@ describe('Games', () => {
         });
     });
 
-    it('should error for an id that doesnt match a game', (done) => {
-      chai.request(server)
-        .
-    });
+    // it('should error for an id that doesnt match a game', (done) => {
+    //   chai.request(server)
+    //     .
+    // });
   });
 
 });
