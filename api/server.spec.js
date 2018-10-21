@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const Game = require('./games/Game');
+const Game = require('../games/Game');
 const request = require('supertest')
 const server = require('./server')
 
@@ -68,7 +68,7 @@ describe('The API Server', () => {
     })
     it ('should return array of games', async () => {
       const response = await request(server).get('/api/games')
-      expect(Array.isArray(response.body).toBe(true))
+      expect(Array.isArray(response.body)).toBe(true)
     })
   })
 
