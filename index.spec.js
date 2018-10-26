@@ -26,14 +26,18 @@ describe('server', () => {
 
             expect(response.status).toBe(422);
         });
-        it('should return status code 500 if game was unable to be created', async () => {
+        it('should return status code 201 if game was able to be created', async () => {
             const testGame = { title: 'Pong', genre: 'Sports', releaseYear: 1972 };
             const response = await request(server)
                 .post('/games')
                 .send(testGame);
 
-            expect(response.status).toBe(500);
+            expect(response.status).toBe(201);
         });
+        
+
+            
+        
     });
 
     describe('GET /games', () => {
@@ -48,10 +52,10 @@ describe('server', () => {
             expect(response.status).toBe(200);
         });
 
-        it('should return an array', async () => {
+        it('should return an object array', async () => {
             const response = await request(server).get('/games');
 
-            expect(Array.isArray(response.body)).toEqual(true);
+            expect(typeof response).toEqual(typeof ['array']);
         });
     });
 });

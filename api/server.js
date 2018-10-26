@@ -12,7 +12,7 @@ server.get('/', (req, res) => {
 
 server.get('/games', (req, res) => {
     try {
-    res.status(200).send(gameArray);
+    res.status(200).json(gameArray);
     } catch (error) {
         res.status(500).json(error);
     }
@@ -21,20 +21,17 @@ server.get('/games', (req, res) => {
 server.post('/games', (req, res) => {
     const game = req.body;
 
-    const { title, genre } = game;
+    const { title, genre, releaseYear } = game;
     
     if ((!title) || (!genre)) {
         res.status(422).json({ message: "Incomplete data" });
     } else {
-        console.log(game);
-    gameArray = gameArray.push(game)
-    .then(array => {
-        res.status(201).json(array[0]);
-    })
-    .catch(err => {
-        res.status(500).json(err);
-    });
-}
-});
+        
+    try {
+        gameArray = gameArray.push(game);
+        res.status(201).json({ game })
+    } catch (error) {
+        res.status(500).json(error);
+    }}});
 
 module.exports = server;
