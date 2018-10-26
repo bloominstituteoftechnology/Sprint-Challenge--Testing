@@ -53,11 +53,12 @@ describe('~~ server.js ~~', () => {
 			expect(response.body).toEqual({ title: 'Bomberman' });
 		});
 
-		it('should (incorrectly) return a status 422 (Unprocessable Entity (WebDAV)) if an incomplete game is submitted', async () => {
+		it('should (incorrectly) return status 422 (Unprocessable Entity (WebDAV)) custom JSON if one or more properties are missing from the POST', async () => {
+			const expected = statusObj('h422', 'Missing title or genre property.');
 			const response = await request(server)
 				.post('/games')
 				.send({ title: 'California Games' });
-			expect(response.status).toBe(422);
+			expect(response.body).toEqual(expected);
 		});
 	});
 
