@@ -44,6 +44,14 @@ server.route('/games')
     return res.status(201).json({ success: 'successfully created' });
   })
 
+server.route('/games/:id')
+  .get((req, res) => {
+    const { id } = req.params;
+    const targetGame = db.filter(game => game.id === Number(id))
+    if (targetGame.length > 0) return res.status(200).json(targetGame);
+    return res.status(404).json({ message: 'no game with that id.' });
+  })
+
 const incrementId = () => {
   return db.length + 1;
 }

@@ -80,4 +80,17 @@ describe('server', () => {
       expect(response.body).toEqual(expected);
     })
   })
+
+  describe('GET /games/:id route', () => {
+    it('returns 200 with targeted game with provided id', async () => {
+      const response = await request(server).get('/games/1');
+      const expected = [{ id: 1, name: 'Game 1', breed: 'Action', releaseYear: '1991' }];
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual(expected);
+    });
+    it('returns 404 with targeted game with provided id', async () => {
+      const response = await request(server).get('/games/0');
+      expect(response.status).toBe(404);
+    });
+  });
 })
