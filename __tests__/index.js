@@ -39,7 +39,6 @@ describe('server.js', () => {
     const incorrectGame = {
       title: 12345,
       genre: true,
-      releaseYear: 'nineteen eighty-four'
     }
 
     it('should return status 200 when successful', async () => {
@@ -66,11 +65,27 @@ describe('server.js', () => {
       expect(response.status).toBe(expected)
     })
 
-    it.only('should return status 415 if info is not proper data type', async () => {
+    it('should return status 415 if info is not proper data type', async () => {
       const expected = 415
       const response = await request(server).post('/games').send(incorrectGame)
       expect(response.status).toBe(expected)
     })
 
   })
+
+  describe('GET /games endpoint', () => {
+
+    it('should return status 200', async () => {
+      const expected = 200
+      const response = await request(server).get('/games')
+      expect(response.status).toEqual(expected)
+    })
+
+  })
+
+
 })
+
+// should return status code 200
+// should return the response in json format
+// should return {api: "running"} in the body

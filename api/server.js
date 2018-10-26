@@ -25,8 +25,6 @@ server.post('/games', (req, res) => {
   } else {
     res.status(422).json(game)
   }
-
-
   // db.insert(game)
   //   .then( response => {
   //     res.status(200).json(game)
@@ -34,8 +32,11 @@ server.post('/games', (req, res) => {
   //   .catch(err => {
   //     res.status(500).json(err.message)
   //   })
-
-
 })
+
+server.get('/games', (req, res) => {
+  res.status(200).json({message: 'some message'})
+})
+
 
 module.exports = server;
