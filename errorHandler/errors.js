@@ -28,6 +28,13 @@ const errors = {
 		recoveryInstructions: 'Please ensure you specify an existing object and try again.',
 		errorOutput: null
 	},
+	h405: {
+		httpStatus: 405,
+		title: 'Method Not Allowed',
+		description: 'A request method is not supported for the requested resource',
+		recoveryInstructions: 'Please ensure your HTTP request is of the proper type and try again.',
+		errorOutput: null
+	},
 	h422: {
 		httpStatus: 422,
 		title: 'Unprocessable Entity (WebDAV)',

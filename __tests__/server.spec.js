@@ -22,7 +22,7 @@ describe('~~ server.js ~~', () => {
 		});
 	});
 
-	describe('~~ GET /games pt1', () => {
+	describe('~~ GET /games pt1 ~~', () => {
 		it('should return a 200 (ok) with an empty array when there are no games in memory', async () => {
 			const response = await request(server).get('/games');
 			expect(response.status).toBe(200);
@@ -58,6 +58,14 @@ describe('~~ server.js ~~', () => {
 			const response = await request(server)
 				.post('/games')
 				.send({ title: 'California Games' });
+			expect(response.body).toEqual(expected);
+		});
+
+		it('should return a status 405 (Method Not Allowed) custom JSON if the game already exists', async () => {
+			const expected = statusObj('h405', `Game 'Bomberman' already exists.`);
+			const response = await request(server)
+				.post('/games')
+				.send({ title: 'Bomberman', genre: 'Puzzle' });
 			expect(response.body).toEqual(expected);
 		});
 	});

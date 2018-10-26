@@ -14,6 +14,9 @@ let state = [
 
 const gameFilter = (filter) => {
 	// magic filter stuff to be implemented here for stretch
+	return state.filter((game) => {
+		return game.id === filter || game.title == filter || game.genre === filter || game.releaseYear === filter;
+	});
 };
 
 router.post('/', (req, res, next) => {
@@ -21,10 +24,15 @@ router.post('/', (req, res, next) => {
 		const { title, genre } = req.body;
 		const releaseYear = req.body.releaseYear || null;
 		const newGame = { id: count, title, genre, releaseYear };
-		state.push(newGame);
-		count++;
-		const postedGame = state.filter((game) => game.title === title)[0].title;
-		res.status(201).json({ title: postedGame });
+		const doesExist = gameFilter(title);
+		if (doesExist.length === 0 || doesExist[0].title !== title) {
+			state.push(newGame);
+			count++;
+			const postedGame = gameFilter(title);
+			res.status(201).json({ title: postedGame[0].title });
+		} else {
+			next(['h405', `Game '${title}' already exists.`]);
+		}
 	} else {
 		next(['h422', 'Missing title or genre property.']);
 	}
