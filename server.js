@@ -43,6 +43,18 @@ let games = [
 ]
 
 let newID = games.length; // new ID should be the next number
+
+// function to check for unique titles
+
+function uniqueCheck(title) {
+  for(i = 0; i < games.length; i++) {
+    if(title === games[i].title) {
+      return false;
+    }
+  }
+  return true;
+}
+
 // simple GET request to test server
 
 server.get('/', (req, res) => {
@@ -70,3 +82,20 @@ server.post('/games', (req, res) => {
 });
 
 module.exports = server;
+
+// // server.post('/games', (req, res) => {
+//   const { title, genre, releaseYear } = req.body;
+//   if(!title || !genre || !releaseYear) {
+//     res.status(422).json({ error: 'Please provide data in the correct format. '});
+//     // testing to make sure data is formatted, an admittedly terrible and vague error message
+//   } else {
+//     const newGame = { title, genre, releaseYear, "id": newID };
+//
+//     if(!uniqueCheck(newGame.title)) {
+//       res.status(409).json({ error: 'Provided title already exists.' });
+//     } else {
+//       games = [...games, newGame];
+//       res.status(201).json({newGame});
+//     }
+//   };
+// });

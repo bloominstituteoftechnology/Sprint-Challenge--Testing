@@ -42,6 +42,12 @@ describe('test suites for basic API operations', () => {
       expect(response.body.newGame.id).toEqual(expect.any(Number)); // not checking a specific value range yet
     });
 
-  });
+    // test('if posted game exists, return a status code 409', async () => {
+    //   const game = {"title": "Blade and Soul", "genre": "MMORPG", "releaseYear": 2012};
+    //   const response = await request(server).post('/games').send(game);
+    //   expect(response.status).toBe(409); // this seemed like the most appropriate status code
+    // });
+
+  }); // POST
 
 });
