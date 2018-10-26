@@ -22,8 +22,8 @@ const server = express();
 
 server.use(express.json());
 
-server.get('/', (req, res) => {
-  res.status(200).json({message: 'server up'});
+server.get('/games', (req, res) => {
+  res.status(200).json(data); 
 });
 
 module.exports = server; 
