@@ -17,7 +17,11 @@ server.post('/games', (req, res) => {
   console.log(game);
 
   if (title && genre) {
-    res.status(200).json(game)
+    if(typeof title != 'string' && typeof genre != 'string') {
+      res.status(415).json({ message: 'unsupported data type' })
+    } else {
+      res.status(200).json(game)
+    }
   } else {
     res.status(422).json(game)
   }
