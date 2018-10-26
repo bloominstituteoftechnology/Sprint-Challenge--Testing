@@ -19,6 +19,15 @@ describe('API testing', () => {
         });
     });
 
+    describe('GET with ID', () => {
+        it('should return a 404 if no game with that id is found', async () => {
+            const id = 5; 
+            const response = await request(server).get(`/games/${id}`);
+            console.log(response.status);
+            expect(response.status).toBe(404);
+        })
+    });
+
     describe('POST', () => {
         it('should return an error of 422 if the right data is not sent to API', async () => {
             const game = {"game": "Battleship"}
