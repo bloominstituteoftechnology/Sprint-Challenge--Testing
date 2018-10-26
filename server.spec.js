@@ -74,16 +74,18 @@ describe('server', () => {
 		});
 
 		it('should return an array containing a game that exists in the database', async () => {
-			const expected = {
-				id: 1,
-				title: 'Pacman',
-				genre: 'Arcade',
-				releaseYear: 1980
-			};
+			const expected = [
+				{
+					id: 1,
+					title: 'Pacman',
+					genre: 'Arcade',
+					releaseYear: 1980
+				}
+			];
 
 			const response = await request(server).get(`/games`);
 
-			expect(Array.isArray(response.body)).expect.arrayContaining([expected]);
+			expect(response.body).toEqual(expect.arrayContaining(expected));
 		});
 
 		it('should return 200 status code', async () => {
