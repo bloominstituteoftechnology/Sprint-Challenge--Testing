@@ -38,8 +38,8 @@ describe("POST/Adds a game", () => {
       .send(newGame);
     expect(response.status).toEqual(200);
   });
-  it("400 status code if missing required field", async () => {
+  it("422 status code if missing required field", async () => {
     const response = await request(server).post("/games");
-    expect(response.status).toEqual(400);
+    expect(response.status).toEqual(422);
   });
 });
