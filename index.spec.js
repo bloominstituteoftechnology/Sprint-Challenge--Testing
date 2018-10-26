@@ -38,21 +38,25 @@ describe('Server', () => {
         it('returns an array of objects of games', async () => {
             const expected = [
                 {
+                    id: 0,
                     title: 'Pacman',
                     genre: 'Arcade',
                     releaseYear: 1980
                 },
                 {
+                    id: 1,
                     title: 'Rocket Knight Adventures',
                     genre: 'Platformer',
                     releaseYear: 1993
                 },
                 {
+                    id: 2,
                     title: 'Metal Slug',
                     genre: 'Platformer',
                     releaseYear: 1996
                 },
                 {
+                    id: 3,
                     title: 'Sonic R',
                     genre: 'Racing',
                     releaseYear: 1997
@@ -91,36 +95,43 @@ describe('Server', () => {
         it('returns an array of objects of games', async () => {
             const expected = [
                 {
+                    id: 0,
                     title: 'Pacman',
                     genre: 'Arcade',
                     releaseYear: 1980
                 },
                 {
+                    id: 1,
                     title: 'Rocket Knight Adventures',
                     genre: 'Platformer',
                     releaseYear: 1993
                 },
                 {
+                    id: 2,
                     title: 'Metal Slug',
                     genre: 'Platformer',
                     releaseYear: 1996
                 },
                 {
+                    id: 3,
                     title: 'Sonic R',
                     genre: 'Racing',
                     releaseYear: 1997
                 },
                 {
+                    id: 4,
                     title: 'Ikasuze! Ai No Doki Doki Penguin Land MD',
                     genre: 'Puzzle',
                     releaseYear: 1992
                 },
                 {
+                    id: 5,
                     title: 'Puyo Puyo',
                     genre: 'Puzzle',
                     releaseYear: 1991
                 },
                 {
+                    id: 6,
                     title: 'Kirby’s Dream Land',
                     genre: 'Platformer',
                     releaseYear: 1992
