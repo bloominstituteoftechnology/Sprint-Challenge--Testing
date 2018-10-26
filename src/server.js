@@ -28,3 +28,8 @@ server.post("/games", (req, res) => {
   req.body.id = games[games.length - 1].id + 1;
   return res.status(201).json(req.body);
 });
+
+// Get Games
+server.get("/games", (req, res) => {
+  return res.status(200).json(games);
+});
