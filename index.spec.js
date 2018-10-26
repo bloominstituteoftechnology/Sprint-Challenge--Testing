@@ -35,7 +35,7 @@ describe('API testing', () => {
         it('should return an id as a number once successfully posted', async () => {
             const game = {"title": "hid-n-seek", "genre": "Group", "releaseYear": 605};
             const response = await request(server).post('/games').send(game);
-            expect(response.body.id).toEqual(expect.any(Number));
+            expect(response.body.newUser.id).toEqual(expect.any(Number));
         })
     });
 });
