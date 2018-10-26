@@ -46,7 +46,7 @@ server.get('/games', (req, res) => {
 });
 
 server.post('/games', (req, res) => {
-  const { title, genre, releaseYear } = req.body;
+  const { title, genre } = req.body;
 
   if (!title || !genre) {
     res.status(422).json({ message: 'Name and genre required' });

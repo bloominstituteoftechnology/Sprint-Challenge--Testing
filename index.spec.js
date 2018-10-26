@@ -16,6 +16,12 @@ describe('server', () => {
       expect(response.body).toEqual(expect.arrayContaining([]));
     });
 
+    it('the get is recieving the list of games', async () => {
+      const response = await request(server).get('/games');
+
+      expect(response.body.games.length).toBeGreaterThan(-1);
+    });
+
     it('should return json', async () => {
       const response = await request(server).get('/games');
 
@@ -24,7 +30,7 @@ describe('server', () => {
   });
 
   describe('POST /games', () => {
-    it('post sends a status of 201(Created)', async () => {
+    it('post sends a status of 201(Created) when it is correct', async () => {
       const newGame = {
         title: 'Pacman',
         genre: 'Arcade',
@@ -51,28 +57,30 @@ describe('server', () => {
       expect(response.body).toEqual(expect.arrayContaining([newGame]));
     });
 
-    it('genre is required', async () => {
-      const newGame = {
-        title: 'Prince of Persia',
-      };
+    describe('status 422(Unprocessable Entity) returned if properties are missing', () => {
+      it('genre is required', async () => {
+        const newGame = {
+          title: 'Prince of Persia',
+        };
 
-      const response = await request(server)
-        .post('/games')
-        .send(newGame);
+        const response = await request(server)
+          .post('/games')
+          .send(newGame);
 
-      expect(response.status).toBe(422);
-    });
+        expect(response.status).toBe(422);
+      });
 
-    it('title is required', async () => {
-      const newGame = {
-        genre: 'Action',
-      };
+      it('title is required', async () => {
+        const newGame = {
+          genre: 'Action',
+        };
 
-      const response = await request(server)
-        .post('/games')
-        .send(newGame);
+        const response = await request(server)
+          .post('/games')
+          .send(newGame);
 
-      expect(response.status).toBe(422);
+        expect(response.status).toBe(422);
+      });
     });
   });
 
