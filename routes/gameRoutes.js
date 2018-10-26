@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
 			if (!games.length) return res.status(404).json({ error: 'No games in the database.' });
 			return res.status(200).json(games);
 		})
-		.catch(err => res.status(500).json(`Server could not retrieve game information: ${ err }`));
+		.catch(err => res.status(500).json({ error: `Server could not retrieve game information: ${ err }`}));
 });
 
 // return game with given id
@@ -25,7 +25,7 @@ router.get('/:id', (req, res) => {
 			}
 			return res.status(200).json(game);
 		})
-		.catch(err => res.status(500).json(`Server could not retrieve game information: ${ err }`));
+		.catch(err => res.status(500).json({ error: `Server could not retrieve game information: ${ err }`}));
 });
 
 // insert new game and return that newly inserted game
@@ -45,9 +45,23 @@ router.post('/', (req, res) => {
 			return gameDb
 				.insert(game)
 				.then(game => res.status(201).json(game))
-				.catch(err => res.status(500).json(`Server could not insert new game: ${ err }`));
+				.catch(err => res.status(500).json({ error: `Server could not insert new game: ${ err }`}));
 		})
-		.catch(err => res.status(500).json(`Server could not retrieve game information: ${ err }`));
+		.catch(err => res.status(500).json({ error: `Server could not retrieve game information: ${ err }`}));
+});
+
+// delete game with given id
+router.delete('/:id', (req, res) => {
+	const { id } = req.params;
+	return gameDb
+		.remove(id)
+		.then(del => {
+			if (del) {
+				return res.status(200).json({ message: `Game with id ${ id } successfully deleted.` });
+			}
+			return res.status(404).json({ error: `Game with id ${ id } does not exist.` });
+		})
+		.catch(err => res.status(500).json({ error: `Server could not delete game: ${ err }`}));
 });
 
 module.exports = router;
