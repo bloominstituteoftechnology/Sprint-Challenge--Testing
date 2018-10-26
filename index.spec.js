@@ -19,6 +19,9 @@ describe('POST /games', () =>{
         expect(response.status).toBe(422);
     });
 
+    it('can run more tets', () => {
+        expect(false).toBeFalsy();   
+    });
 })
 
 describe('server', ()=>{
