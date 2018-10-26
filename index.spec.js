@@ -50,9 +50,9 @@ describe('server', () => {
 
     it('adds a new game into the array', async () => {
       const newGame = {
-        title: 'Pacman',
+        title: 'Galatica',
         genre: 'Arcade',
-        releaseYear: 1980,
+        releaseYear: 1981,
       };
 
       const response = await request(server)
@@ -89,19 +89,19 @@ describe('server', () => {
       });
     });
 
-    // it('is the game unique based on title if not 405(Not Allowed)', async () => {
-    //   const newGame = {
-    //     title: 'Spider-Man',
-    //     genre: 'action-adventure',
-    //     releaseYear: 2018,
-    //   };
+    it('is the game unique based on title if not 405(Not Allowed)', async () => {
+      const newGame = {
+        title: 'Spider-Man',
+        genre: 'action-adventure',
+        releaseYear: 2018,
+      };
 
-    //   const response = await request(server)
-    //     .post('/games')
-    //     .send(newGame);
+      const response = await request(server)
+        .post('/games')
+        .send(newGame);
 
-    //   expect(response.status).toBe(404);
-    // });
+      expect(response.status).toBe(404);
+    });
   });
 
   it('server running', () => {
