@@ -28,6 +28,13 @@ const errors = {
 		recoveryInstructions: 'Please ensure you specify an existing object and try again.',
 		errorOutput: null
 	},
+	h422: {
+		httpStatus: 422,
+		title: 'Unprocessable Entity (WebDAV)',
+		description: 'The request was well-formed but was unable to be followed due to semantic errors.',
+		recoveryInstructions: 'Make sure your request includes all expected properties and try again.',
+		errorOutput: null
+	},
 	h500: {
 		httpStatus: 500,
 		title: 'Database error',
