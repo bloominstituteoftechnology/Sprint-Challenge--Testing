@@ -64,6 +64,44 @@ describe('GET /games Endpoint', () => {
     
 });
 
+// Get Individual Game Endpoint
+describe('GET /games/id', () => {
+    beforeAll( async () => {
+        return responses = {
+            successResponse : await request(server).get('/games/0'),
+            failureResponse : await request(server).get('/games/notValidId')
+        };
+    });
+
+    it('Should respond with JSON', () => {
+        expect(successResponse.type).toBe('application/json');
+        expect(failureResponse.type).toBe('application/json');
+    });
+
+    describe('Endpoint Failure Tests', () => {
+        it('Should respond with a status code of 404 (Not Found) if no game is found with the provided id', () => {
+            expect(failureResponse.status).toBe(404);
+        });
+
+        it('Should respond with an error message if no game is found with the provided id', () => {
+            const errorMessage = {errorMessage: "No game was found with an id matching the provided id."}
+
+            expect(failureResponse.body).toEqual(errorMessage);
+        });
+    });
+
+        describe('Endpoint Failure Tests', () => {
+        it('Should respond with a status code of 200 (OK) if successful', () => {
+            expect(successResponse.status).toBe(200);
+        });
+
+        it('Should respond with an object with id, title, genre, and releaseYear properties if successful', () => {
+            expect(Object.keys(response.body)).toEqual(['id','title','genre','releaseYear']);
+        });
+    });
+
+});
+
 // Post Game Endpoint
 describe('POST /games Endpoint', () => {
     beforeAll( async () => {
