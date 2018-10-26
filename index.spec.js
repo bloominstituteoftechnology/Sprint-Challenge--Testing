@@ -183,9 +183,45 @@ describe('Server', () => {
             expect(res.body.data).toEqual(expected);
         });
 
+        it('returns JSON', async () => {
+            const expected = [{
+                id: 0,
+                title: 'Pacman',
+                genre: 'Arcade',
+                releaseYear: 1980
+            }]
+
+            const res = await request(server).get('/games/0');
+            expect(res.type).toEqual('application/json');
+        });
+
         it('returns a 404(NOT FOUND) status if no game', async () => {
             const res = await request(server).get('/games/18');
             expect(res.status).toBe(404);
+        });
+    });
+
+    describe('DELETE /games/:id', () => {
+        it('returns a 404(NOT FOUND) status if no game', async () => {
+            const res = await request(server).del('/games/18');
+            expect(res.status).toBe(404);
+        });
+
+        it('returns a 200(OK) status if game deleted', async () => {
+            const res = await request(server).del('/games/2');
+            expect(res.status).toBe(200);
+        });
+
+        it('returns JSON', async () => {
+
+            const res = await request(server).del('/games/0');
+            expect(res.type).toEqual('application/json');
+        });
+
+        it('returns the id of the game deleted', async () => {
+            const res = await request(server).del('/games/3');
+            console.log(res.text.data);
+            expect(res.text).toBe('3');
         });
     });
 
