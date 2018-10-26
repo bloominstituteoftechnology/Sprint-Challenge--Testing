@@ -199,5 +199,70 @@ describe('POST /games Endpoint', () => {
             expect(finalGetResponse.body.length).toBe(initialGetResponse.body.length + 1);
         });
         
+    });
+});
+
+
+// Delete Game Endpoint
+describe('DELETE: /games/:id', () => {
+    // Create Three games for Use in the DELETE games Tests, and create failing delete test
+    beforeAll( async () => {
+        await request(server).post('/games').send({
+            title: 'Donkey Kong', 
+            genre: 'Arcade',
+            releaseYear: 1981
+        });
+        await request(server).post('/games').send({
+            title: 'Dig Dug', 
+            genre: 'Arcade',
+            releaseYear: 1982
+        });
+        await request(server).post('/games').send({
+            title: 'Tetris', 
+            genre: 'Arcade',
+            releaseYear: 1984
+        });
+
+        // Failing Delete Request
+        return failResponse = await request(server).delete('/games/notValidId');
+    });
+
+    it('Should respond with JSON', async () => {
+        const response = await request(server).delete('/games/0');
+        expect(response.type).toBe('application/json');
     })
+
+    describe('Endpoint Failure Tests', () => {
+        it('Should respond with a status code of 404 if the deletion fails', () => {
+            expect(failResponse.status).toBe(404);
+        })
+
+        it('Should respond with an errorMessage if the deletion fails', async () => {
+            const errorMessage = {errorMessage: "We were unable to delete the game with the provided id."}
+            expect(failResponse.body).toEqual(errorMessage);
+        })
+    });
+
+    describe('Endpoint Success Tests', () => {
+        it('Should respond with a status code of 200 if the deletion is successful', async () => {
+            const gameId = 1;
+            const response = await request(server).delete(`'/games/${gameId}`);
+            expect(response.status).toBe(200);
+        })
+
+        it('Should respond with the id of the deleted game if the deletion is successful', async () => {
+            const gameId = 2;
+            const response = await request(server).delete(`'/games/${gameId}`);
+            expect(response.body).toEqual({gameId:`${gameId}`});
+        })
+
+        it('Should have decreased the number of games by one after a successful deletion', async () => {
+            const gameId = 3;
+            const initialGetResponse = await request(server).get('/games');
+            await request(server).delete(`/games/${gameId}`);
+            const finalGetResponse = await request(server).get('/games');
+            expect(finalGetResponse.body.length).toBe(initialGetResponse.body.length - 1);
+        })
+    });
+
 })
