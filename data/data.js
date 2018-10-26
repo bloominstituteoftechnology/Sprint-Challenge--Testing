@@ -11,4 +11,8 @@ function get() {
   return db("games");
 }
 
-module.exports = { insert, get };
+function getGame(id) {
+  return db("games").where({ id: id });
+}
+
+module.exports = { insert, get, getGame };

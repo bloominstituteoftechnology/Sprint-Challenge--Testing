@@ -68,3 +68,15 @@ describe("Tests for GET API endpoint for /games", () => {
     expect(response.type).toEqual("application/json");
   });
 });
+
+describe("Test GET API for single game for /games/:id", () => {
+  it("should return single game if exists", async () => {
+    const response = await request(server).get("/games/2");
+    expect(response.status).toBe(200);
+  });
+
+  it("should return 404 status if game does NOT exist", async () => {
+    const response = await request(server).get("/games/9999");
+    expect(response.status).toBe(404);
+  });
+});

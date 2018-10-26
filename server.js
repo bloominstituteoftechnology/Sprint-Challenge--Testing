@@ -41,4 +41,20 @@ server.get("/games", (req, res) => {
     );
 });
 
+server.get("/games/:id", (req, res) => {
+  const id = req.params.id;
+
+  if (!id) {
+    res.status(400).json({ error: "Bad request" });
+  }
+
+  db.getGame(id)
+    .then(game => {
+      if (game.length === 0) {
+        res.status(404).json({ error: "Game not found" });
+      } else res.status(200).json(game);
+    })
+    .catch(err => res.status(404).json(err));
+});
+
 module.exports = server;
