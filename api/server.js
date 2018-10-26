@@ -15,20 +15,27 @@ let games = [
         title: 'Pacman', // required
         genre: 'Arcade', // required
         releaseYear: 1980 // not required
+      },
+      {
+        id : 1,
+        title: 'Joust', // required
+        genre: 'Arcade', // required
+        releaseYear: 1982 // not required
       }
 ]
 
-let id = 0;
+let id = 1;
 
 /// ----- CRUD Endpoints -----
-
-
-
 // --- Test GET Endpoint ---
 server.get('/testmebaby/149', (request, response) => {
     response.status(200).json('One More Time');
 })
 
+// --- GET All Games Endpoint ---
+server.get('/games', (request, response) => {
+    response.status(200).json(games);
+})
 
 // --- Export Server ---
 module.exports = server;
