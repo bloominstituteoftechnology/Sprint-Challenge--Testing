@@ -141,7 +141,7 @@ describe('server', () => {
                 .send({ "title": "Fallout 2", "genre": "RPG", "releaseYear": 1998 })
                 .set('Accept', 'application/json')
                 .expect('Content-Type', /json/)
-                .expect(500)
+                .expect(405)
                 .end((err) => {
                     if (err) return done(err);
                     done();
@@ -153,7 +153,7 @@ describe('server', () => {
                 .send({ "title": "The Elder Scrolls V: Skyrim" })
                 .set('Accept', 'application/json')
                 .expect('Content-Type', /json/)
-                .expect(500)
+                .expect(400)
                 .end((err) => {
                     if (err) return done(err);
                     done();

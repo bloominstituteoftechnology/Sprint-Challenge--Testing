@@ -40,16 +40,18 @@ server.get('/api/games/:id', (req, res) => {
 
 server.post('/api/games', (req, res) => {
     const game = req.body;
-
+    if (!game.title || !game.genre) {
+        return res.status(400).json({ error: "Please provide more information" });
+    }
     db
         .add(game)
         .then(ids => {
-            if (!game.title || !game.genre) {
-                res.status(400).json({ error: "Please provide more information" });
-            }
             res.status(201).json(ids[0]);
         })
         .catch(err => {
+            if (err.errno === 19) {
+                return res.status(405).json({ error: "Please provide a unique field" });
+            }
             res.status(500).json(err);
         });
 });
