@@ -7,8 +7,16 @@ server.use(express.json());
 const serverPort = process.env.PORT || 7100; // server port
 const serverName = `Sprint-Challenge--Testing`; // Name of server to display at "/" endpoint 
 const projectPullRequest = `https://github.com/michaelagard/Sprint-Challenge--Testing`;
-
+let gameArray = [];
 // ENDPOINTS
 server.get('/', (req, res) => { // sanity check root endpoint
   res.send(`${serverName} running on port ${serverPort}<br>More information: <a href="${projectPullRequest}">{serverName}</a>`);
 });
+server.get('/api/games', (req, res) => { // sanity check root endpoint
+  res.status(201).json(gameArray);
+});
+server.post('/api/games/:game', (req, res) => {
+  gameArray.push(res.body);
+  res.status(201).json(1);
+});
+module.exports = server; 
