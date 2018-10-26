@@ -16,3 +16,15 @@ let gameData = [
     releaseYear: 1979
   }
 ];
+
+// Post Game
+server.post("/games", (req, res) => {
+  // make sure that the title genre and releaseYear are present in the body otherwise return status of 442
+  if (!req.body.title || !req.body.genre || !req.body.releaseYear) {
+    return res.status(422).json();
+  }
+
+  // synthesize id for data member using the previous data member id + 1
+  req.body.id = games[games.length - 1].id + 1;
+  return res.status(201).json(req.body);
+});
