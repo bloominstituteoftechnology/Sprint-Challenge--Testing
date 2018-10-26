@@ -7,7 +7,7 @@
   Test Driven Development involves writing tests for functions first (which initially fail), then writing the minimal amount of code to pass the test, and then refactoring based on additional tests
 
 3.  What are `mocks`? What are a good use cases for them?
-  
+  Mocks are dummy functions that imitate the real functions we are testing without actually affecting anything the real functions have access to.
 
 4.  Mention three types of automated tests.
   - Unit tests

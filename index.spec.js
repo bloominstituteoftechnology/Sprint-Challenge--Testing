@@ -62,5 +62,13 @@ describe('server', () => {
 
         expect(response.status).toBe(201);
     })
+
+    it('returns message that game was added', async () => {
+      const response = await request(server)
+        .post('/games')
+        .send({ title: 'Civilization V', genre: 'Strategy', releaseYear: 2010 })
+
+        expect(response.body).toEqual({ message: `Civilization V added` })
+    })
   })
 });

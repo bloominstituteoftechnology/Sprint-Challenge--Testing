@@ -23,7 +23,7 @@ server.post('/games', (req, res) => {
     return res.status(422).json({ error: "Title and genre are required fields." })
   }
 
-  return res.status(201).json({ title, genre, releaseYear })
+  return res.status(201).json({ message: `${title} added` })
 })
 
 
