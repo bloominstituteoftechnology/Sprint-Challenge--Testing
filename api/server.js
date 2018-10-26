@@ -19,7 +19,17 @@ server.get("/games", (req, res) => {
 });
 
 server.post("/games", (req, res) => {
-	const { game } = req.body;
+	const { title, genre, releaseYear } = req.body;
+	const game = { title, genre, releaseYear };
+	const newGames = [...games, game];
+
+	if (!title || !genre) {
+		res
+			.status(422)
+			.json({ error: "Missing a title or genre, they are required" });
+	} else {
+		res.status(201).send(newGames);
+	}
 });
 
 module.exports = server;
