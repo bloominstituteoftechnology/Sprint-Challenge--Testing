@@ -91,6 +91,7 @@ describe('testing for GET and POST server endpoints', () => {
               expect(response.body).toEqual({message: `Metal Gear Solid added to games database.`})
         })
 
+        // STRETCH
         it('should return error 419 if a duplicate game is added', async () => {
             const duplicateGame = {
                     title: 'Pacman',

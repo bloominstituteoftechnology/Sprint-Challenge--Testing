@@ -14,10 +14,10 @@ are implemented. I definitely see the utility of unit testing, and however tedio
 
 
 3.  What are `mocks`? What are a good use cases for them?
-A mock is a kind of pseudo-API or lightweight data model that can allow us to run tests on functions or data without having to deal with the cumbersome nature of actually calling to external APIs or functions for every new test. Mocks allow us to instantiate data on the fly, which makes testing much faster. A good use case would be to create a mock database entry that can be tested without having to bother with excessive calls to a database.
+A mock is a kind of pseudo-API or lightweight data model that can allow us to run tests on functions or data without having to deal with the cumbersome nature of actually calling to external APIs or function dependencies for every new test. Mocks allow us to instantiate data on the fly, which makes testing much faster. A good use case would be to create a mock database entry that can be tested without having to bother with excessive calls to a database.
 
 
 4.  Mention three types of automated tests.
 Unit testing
-Component tests
-Snapshots
+GUI-based testing
+API driven testing
