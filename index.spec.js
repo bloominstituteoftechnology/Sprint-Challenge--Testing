@@ -55,3 +55,39 @@ describe("GET /games", () => {
     expect(response.body).toEqual(games);
   });
 });
+
+describe("POST /games", () => {
+  it("should return a 200 status", async () => {
+    const newGame = {
+      title: "Cool Game",
+      genre: "Shooter",
+      releaseDate: 10 / 26 / 2018
+    };
+    const response = await request(server)
+      .post("/games")
+      .send(newGame);
+    expect(response.status).toBe(200);
+  });
+  it("should gimme a game", async () => {
+    const newGame = {
+      id: 6,
+      title: "Cool Game",
+      genre: "Shooter"
+      //   releaseDate: 10 / 26 / 2018
+    };
+    const response = await request(server)
+      .post("/games")
+      .send(newGame);
+    expect(response.body).toEqual(newGame);
+  });
+  it("should return 422 status if missing info", async () => {
+    const newGame = {
+      genre: "Shooter",
+      releaseDate: 10 / 26 / 2018
+    };
+    const response = await request(server)
+      .post("/games")
+      .send(newGame);
+    expect(response.status).toBe(422);
+  });
+});
