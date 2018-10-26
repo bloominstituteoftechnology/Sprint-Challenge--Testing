@@ -26,7 +26,8 @@ server.post('/games', (req, res) => {
     if ((!title) || (!genre)) {
         res.status(422).json({ message: "Incomplete data" });
     } else {
-    gameArray.push(game)
+        console.log(game);
+    gameArray = gameArray.push(game)
     .then(array => {
         res.status(201).json(array[0]);
     })

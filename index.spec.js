@@ -26,13 +26,13 @@ describe('server', () => {
 
             expect(response.status).toBe(422);
         });
-        it('should return status code 201 if game is created successfully', async () => {
+        it('should return status code 500 if game was unable to be created', async () => {
             const testGame = { title: 'Pong', genre: 'Sports', releaseYear: 1972 };
             const response = await request(server)
                 .post('/games')
                 .send(testGame);
 
-            expect(response.status).toBe(201);
+            expect(response.status).toBe(500);
         });
     });
 
