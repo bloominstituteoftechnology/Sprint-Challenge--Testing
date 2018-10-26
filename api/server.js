@@ -22,9 +22,12 @@ server.get('/games', (req,res)=>{
 
 server.post('/games', (req,res)=>{
     const gameObject = req.body;
-    // if (gameObject.)
-    games.push(gameObject);
-    res.status(201).json(games);
+    if ("title" in gameObject && "genre" in gameObject){
+        games.push(gameObject);
+        res.status(201).json(games);
+    } else{
+        res.status(500).json([{message: "New data must include title and genre"}]);
+    }
 })
 
 server.delete('/games', (req,res)=>{

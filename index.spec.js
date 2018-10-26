@@ -49,11 +49,19 @@ describe('server', ()=>{
             ])
         })
         it('should return status code 201(OK)', async ()=>{
-            const response = await request(server).post(`/games`);
+            let response = await request(server).post(`/games`).send({});
+            expect(response.status).toBe(500);
+            response = await request(server).post(`/games`).send({title: "Contra"});
+            expect(response.status).toBe(500);
+            response = await request(server).post(`/games`).send({genre: "Arcade"});
+            expect(response.status).toBe(500);
+            response = await request(server).post(`/games`).send({title: "Contra", genre:"Arcade"});
             expect(response.status).toBe(201);
         })
         it('should return an array type', async ()=>{
-            const response = await request(server).post(`/games`);
+            let response = await request(server).post(`/games`).send({});
+            expect(Array.isArray(response.body)).toBe(true);
+            response = await request(server).post(`/games`).send({title: "Uno", genre:"Board Game"});
             expect(Array.isArray(response.body)).toBe(true);
         })
 
