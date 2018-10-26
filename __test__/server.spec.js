@@ -20,7 +20,7 @@ describe("server", () => {
     return dbConfig.seed.run();
   });
   afterEach(() => {
-    return dbConfig.seed.run();
+    return dbConfig.seed.run(); 
   });
 
   describe("POST /", () => {
@@ -58,10 +58,10 @@ describe("server", () => {
       const res = await req(server).get("/games");
       expect(Array.isArray(res.body)).toBe(true);
     });
-    it("should return an array of games if no data is in db", async () => {
+    it("should return an empty array if no data is in db", async () => {
       await dbConfig("games").truncate();
       const res = await req(server).get("/games");
-      expect(Array.isArray(res.body)).toBe(true);
+      expect(Array.isArray(res.body) && !res.body.length).toBe(true);
     });
   });
   describe("GET /:id", () => {
