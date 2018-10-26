@@ -51,7 +51,7 @@ describe('server', () => {
         it('should return an array', async () => {
             const response = await request(server).get('/games');
 
-            expect(Array.isArray(response)).toEqual(true);
+            expect(Array.isArray(response.body)).toEqual(true);
         });
     });
 });
