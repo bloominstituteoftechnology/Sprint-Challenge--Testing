@@ -21,6 +21,11 @@ server.get('/games', (req, res) => {
 server.post('/games', (req, res) => {
     const game = req.body;
 
+    const { title, genre } = game;
+    
+    if ((!title) || (!genre)) {
+        res.status(422).json({ message: "Incomplete data" });
+    } else {
     gameArray.push(game)
     .then(array => {
         res.status(201).json(array[0]);
@@ -28,6 +33,7 @@ server.post('/games', (req, res) => {
     .catch(err => {
         res.status(500).json(err);
     });
+}
 });
 
 module.exports = server;
