@@ -31,5 +31,11 @@ describe('API testing', () => {
             const response = await request(server).post('/games').send(game);
             expect(response.status).toBe(201);
         });
+
+        it('should return an id as a number once successfully posted', async () => {
+            const game = {"title": "hid-n-seek", "genre": "Group", "releaseYear": 605};
+            const response = await request(server).post('/games').send(game);
+            expect(response.body.id).toEqual(expect.any(Number));
+        })
     });
 });
