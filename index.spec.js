@@ -58,6 +58,13 @@ describe('server', () => {
 
       expect(response.status).toBe(400);
     });
+
+    // check for format of response
+    it('should return JSON', async () => {
+      const response = await request(server).post('/games');
+
+      expect(response.type).toBe('application/json');
+    });
   });
 
   // test for GET ENDPOINT
@@ -80,6 +87,13 @@ describe('server', () => {
 
       expect(response.body).toEqual(noGamesStored);
       expect(response.status).toBe(200);
+    });
+
+    // check for format of response
+    it('should return JSON', async () => {
+      const response = await request(server).get('/games');
+
+      expect(response.type).toBe('application/json');
     });
   });
 
