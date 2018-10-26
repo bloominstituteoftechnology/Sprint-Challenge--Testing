@@ -1,5 +1,5 @@
 const request = require('supertest');
-const server = require('../server.js');
+const server = require('../server');
 
 describe('server', () => {
   ///////////////////////
@@ -21,7 +21,7 @@ describe('server', () => {
     it('should return array in response.body', async () => {
       const response = await request(server).get('/games');
 
-      expect(typeof response.body).toBe('array');
+      expect(Array.isArray(response.body)).toBe(true);
     });
   }); // describe GET /games
 
@@ -78,7 +78,7 @@ describe('server', () => {
           .post('/games')
           .send(game);
 
-        expect(response.status).toBe(422);
+        expect(response.status).toBe(201);
       });
     }); // describe Check for required fields
   }); // describe POST /games
