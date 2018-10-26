@@ -32,6 +32,12 @@ describe('server', () => {
         .send({ title: 123, genre: 234, releaseYear: 1980 });
       expect(response.status).toBe(500);
     })
+    it('returns 405 if title already exists', async () => {
+      const response = await request(server)
+        .post('/games')
+        .send({ title: 'Game 1', genre: 'Action' });
+      expect(response.status).toBe(405);
+    });
   })
 
   describe('GET /games ROUTE', () => {

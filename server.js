@@ -36,6 +36,7 @@ server.route('/games')
     const { title, genre, releaseYear } = req.body;
     if (!title || !genre) return res.status(422).json({ error: 'title and genre required.' })
     if (typeof title !== 'string' || typeof genre !== 'string') return res.status(500).json({ error: 'title and genre needs to be strings.' })
+    if (db.find(game => game.name === title)) return res.status(405).json({ error: 'duplicate game found' })
     return res.status(201).json({ success: 'successfully created' });
   })
 
