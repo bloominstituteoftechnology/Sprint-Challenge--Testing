@@ -19,6 +19,20 @@ server.get('/games', (req, res) => {
 });
 
 // get game by id
+server.get('/games/:id', (req, res) => {
+	const { id } = req.params;
+
+	db('games')
+		.where({ id })
+		.then(([game]) => {
+			if (game) {
+				res.status(200).json(game);
+			} else {
+				res.status(404).json({ error: 'no game by that id' });
+			}
+		})
+		.catch(err => res.status(500).json(err));
+});
 
 // add game
 server.post('/games', (req, res) => {
