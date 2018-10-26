@@ -12,5 +12,10 @@ describe('API testing', () => {
             const response = await request(server).get('/games');
             expect(response.status).toBe(200);
         })
+
+        it('should return a list of games with the length of 3', async () => {
+            const response = await request(server).get('/games');
+            expect(response.body.length).toBe(3);
+        })
     })
 })
