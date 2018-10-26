@@ -22,7 +22,9 @@ let id = 0;
 
 /// ----- CRUD Endpoints -----
 
-// --- Test Endpoint ---
+
+
+// --- Test GET Endpoint ---
 server.get('/testmebaby/149', (request, response) => {
     response.status(200).json('One More Time');
 })
