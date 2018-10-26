@@ -7,6 +7,8 @@ exports.up = function(knex, Promise) {
 		gamesTable.string('genre', 64).notNullable();
 
 		gamesTable.integer('releaseYear', 64);
+
+		gamesTable.unique('title');
 	});
 };
 

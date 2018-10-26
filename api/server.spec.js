@@ -3,6 +3,11 @@ const request = require('supertest');
 const db = require('../data/dbConfig.js');
 
 describe('server.js', () => {
+	beforeAll(() => db.migrate.rollback()
+		.then(() => db.migrate.latest())
+		.then(() => db.seed.run())
+	);
+
 	describe('GET /games/', () => {
 		it('should return status 200(OK)', async () => {
 			const response = await request(server).get('/games/');
@@ -14,26 +19,8 @@ describe('server.js', () => {
 			expect(response.type).toBe('application/json');
 		});
 
-		it('should return the message "Server is running."', async () => {
-			const response = await request(server).get('/games/');
-			expect(typeof(response.body)).toBe('object');
-			expect(response.body).toEqual({ message: 'Server is running.' });
-		});
-	});
-
-	describe('GET /games/all', () => {
-		it('should return status 200(OK)', async () => {
-			const response = await request(server).get('/games/all');
-			expect(response.status).toBe(200);
-		});
-
-		it('should return JSON', async () => {
-			const response = await request(server).get('/games/all');
-			expect(response.type).toBe('application/json');
-		});
-
 		it('should return list of all the games', async () => {
-			const response = await request(server).get('/games/all');
+			const response = await request(server).get('/games/');
 			const expected = [
 				{ 'id': 1, 'title': 'Pacman', 'genre': 'Arcade', 'releaseYear': 1980, },
 				{ 'id': 2, 'title': 'Tetris', 'genre': 'Arcade', 'releaseYear': null, },
@@ -43,7 +30,7 @@ describe('server.js', () => {
 			expect(response.body.length).toEqual(3);
 			expect(response.body).toEqual(expected);
 		});
-	});
+	}); // describe 'GET /games/'
 
 	describe('POST /games/', () => {
 		describe('calling with all necessary info', () => {
@@ -84,7 +71,7 @@ describe('server.js', () => {
 				expect(response.body.length).toEqual(1);
 				expect(response.body).toEqual(expected);
 			});
-		});
+		}); // describe 'calling with all necessary info'
 
 		describe('calling without all necessary info', () => {
 			afterEach(() => db.migrate.rollback()
@@ -117,6 +104,33 @@ describe('server.js', () => {
 				expect(typeof(response.body)).toBe('object');
 				expect(response.body).toEqual(expected);
 			});
-		});
-	});
-});
+		}); // describe 'calling without all necessary info'
+
+		describe('calling with a duplicate game title', () => {
+			afterEach(() => db.migrate.rollback()
+				.then(() => db.migrate.latest())
+				.then(() => db.seed.run())
+			);
+
+			it('should return status 405(Not Allowed)', async () => {
+				const newGame = { 'title': 'Pacman', 'genre': 'newGameGenre' };
+				const response = await request(server).post('/games/').send(newGame);
+				expect(response.status).toBe(405);
+			});
+
+			it('should return JSON', async () => {
+				const newGame = { 'title': 'Pacman', 'genre': 'newGameGenre' };
+				const response = await request(server).post('/games/').send(newGame);
+				expect(response.type).toBe('application/json');
+			});
+
+			it('should return an error message', async () => {
+				const newGame = { 'title': 'Pacman', 'genre': 'newGameGenre' };
+				const response = await request(server).post('/games/').send(newGame);
+				const expected = { error: 'Pacman already exists.' };
+				expect(typeof(response.body)).toBe('object');
+				expect(response.body).toEqual(expected);
+			});
+		}); // describe 'calling with a duplicate game title'
+	}); // describe 'POST /games/'
+}); // describe 'server.js'

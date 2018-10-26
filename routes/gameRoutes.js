@@ -3,14 +3,14 @@ const gameDb	= require('../data/models/gameDb.js');
 
 const router	= express.Router();
 
-// sanity check
-router.get('/', (req, res) => res.status(200).json({ message: 'Server is running.' }));
-
 // return list of all the games
-router.get('/all', (req, res) => {
+router.get('/', (req, res) => {
 	return gameDb
 		.get()
-		.then(games => res.status(200).json(games))
+		.then(games => {
+			if (!games.length) return res.status(404).json({ error: 'No games in the database.' });
+			return res.status(200).json(games);
+		})
 		.catch(err => res.status(500).json(`Server could not retrieve game information: ${ err }`));
 });
 
@@ -21,9 +21,19 @@ router.post('/', (req, res) => {
 		return res.status(422).json({ error: 'Game must have title and genre.' });
 	}
 	return gameDb
-		.insert(game)
-		.then(game => res.status(201).json(game))
-		.catch(err => res.status(500).json(`Server could not insert new game: ${ err }`));
+		.get()
+		.then(games => {
+			games.forEach(elem => {
+				if (elem.title === game.title) {
+					return res.status(405).json({ error: `${ game.title } already exists.` });
+				};
+			});
+			return gameDb
+				.insert(game)
+				.then(game => res.status(201).json(game))
+				.catch(err => res.status(500).json(`Server could not insert new game: ${ err }`));
+		})
+		.catch(err => res.status(500).json(`Server could not retrieve game information: ${ err }`));
 });
 
 module.exports = router;
