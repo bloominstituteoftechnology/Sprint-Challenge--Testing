@@ -35,6 +35,7 @@ describe('server', () => {
     it('returns the list of games', async () => {
       const response = await request(server).get('/games');
 
+      expect(response.body).toEqual(games);
       //expect response to equal games
     });
 
@@ -47,6 +48,7 @@ describe('server', () => {
     it('always returns an array', () => {
       const response = await request(server).get('/games');
       
+      expect(Array.isArray(response.body)).toBe(true);
       //expect response to be an array
     });
   })
