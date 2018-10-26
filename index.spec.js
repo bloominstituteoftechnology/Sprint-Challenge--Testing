@@ -60,5 +60,18 @@ describe('server', () => {
     });
   });
 
+  // test for GET ENDPOINT
+  describe('GET /pets', () => {
+    // check for get list of all games and correct http status code
+    it('should get a list of all games and return status code 200(OK)', async () => {
+      const response = await request(server)
+        .get('/games');
+
+      expect(response.body).toEqual(expected);
+      expect(response.status).toBe(200);
+
+    });
+  });
+
   
 });
