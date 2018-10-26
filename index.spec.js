@@ -20,6 +20,11 @@ describe('Server', () => {
     });
 
     describe('GET /games', () => {
+        it('returns an empty array if no games', async () => {
+            const res = await request(server).get('/games');
+            expect(res.body.data).toEqual([]);
+        });
+
         it('returns status code 200(OK)', async () => {
             const res = await request(server).get('/games');
             expect(res.status).toBe(200);
@@ -29,7 +34,7 @@ describe('Server', () => {
             const res = await request(server).get('/games');
             expect(res.type).toBe('application/json');
         });
-
+        
         it('returns an array of objects of games', async () => {
             const expected = [
                 {
@@ -57,6 +62,7 @@ describe('Server', () => {
             const res = await request(server).get('/games');
             expect(res.body.data).toEqual(expected);
         });
+
     });
 
     describe('POST /games', () => {
@@ -129,6 +135,16 @@ describe('Server', () => {
             
             const res = await request(server).post('/games').send({game});
             expect(res.body.data).toEqual(expected);
+        });
+
+        it('returns status 422 if required fields are not met', async () => {
+            const game = {
+                title: 'Puyo Puyo',
+                releaseYear: 1991
+            }
+
+            const res = await request(server).post('/games').send({game});
+            expect(res.status).toBe(422);
         });
     });
 });
