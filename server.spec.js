@@ -9,7 +9,12 @@ describe("POST /games", () => {
     const genre = "Arcade";
     const releaseYear = 1980;
 
-    const expected = { title: "Pacman", genre: "Arcade", releaseYear: 1980 };
+    const expected = {
+      id: 1,
+      title: "Pacman",
+      genre: "Arcade",
+      releaseYear: 1980
+    };
 
     const response = await request(server)
       .post("/games")
