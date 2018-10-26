@@ -90,6 +90,13 @@ describe("DELETE /games", () => {
     expect(response.status).toBe(200);
   });
 
+  it("should return status code 404 if game does not exist", async () => {
+    const id = 10;
+    const response = await request(server).delete(`/games/${id}`);
+
+    expect(response.status).toBe(200);
+  });
+
   it("should return JSON", async () => {
     const id = 1;
     const response = await request(server).delete(`/games/${id}`);

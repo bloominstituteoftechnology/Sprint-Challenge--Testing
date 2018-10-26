@@ -9,7 +9,6 @@ const games = [];
 //POST Endpoint
 server.post("/games", (req, res) => {
   const { title, genre, releaseYear } = req.body;
-
   if (!title || !genre || !releaseYear) {
     return res
       .status(422)
@@ -24,6 +23,17 @@ server.post("/games", (req, res) => {
 //GET Endpoint
 server.get("/games", (req, res) => {
   res.status(200).json(games);
+});
+
+//DELETE Endpoint
+
+server.delete("/games/:id", (req, res) => {
+  const { id } = req.params;
+  if (id) {
+    res.status(200).json({ deleted: `${id}` });
+  } else {
+    res.status(404).json({ error: "The specified ID does not exist" });
+  }
 });
 
 module.exports = server;
