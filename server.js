@@ -10,11 +10,13 @@ const games = [
 server.get("/", (req, res) => {
 	res.status(200).json({ message: "server is operational" });
 });
+////
 
 //GET Endpoint
 server.get("/api/games", (req, res) => {
   res.status(200).json(games);
 });
+////
 
 //POST Endpoint
 server.post("/api/games", (req, res) => {
@@ -31,8 +33,8 @@ server.post("/api/games", (req, res) => {
     .status(200)
     .json({ title: title, genre: genre, releaseYear: releaseYear });
   }
-  
 });
+/////
 
 //Delete Endpoint
 server.delete("/api/games/:id", (req, res) => {
@@ -43,5 +45,5 @@ server.delete("/api/games/:id", (req, res) => {
     res.status(404).json({ error: "Couldn't locate game to delete" });
   }
 });
-
+////
 module.exports = server;

@@ -16,7 +16,8 @@ describe("test API endpoints", () => {
     const response = await request(server).get('/api/games');
       expect(response.type).toBe('application/json');
   });
-
+  ////
+  
   // POST tests
   it("**POST**: should add game with correct body formatting", async () => {
     const title = "Grand Theft Auto V";
