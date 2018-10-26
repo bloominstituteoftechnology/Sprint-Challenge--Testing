@@ -71,6 +71,16 @@ describe('server', () => {
       expect(response.status).toBe(200);
 
     });
+
+    it('should return an empty array if no games stored and a status code of 200', async () => {
+      const response = await request(server)
+        .get('/games');
+
+      const noGamesStored = [];
+
+      expect(response.body).toEqual(noGamesStored);
+      expect(response.status).toBe(200);
+    });
   });
 
   

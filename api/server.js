@@ -62,8 +62,14 @@ server.get('/games', (req, res) => {
       "releaseYear": 1985
     }
   ]
-      res.status(200).json(games);
-   
+
+  if (games === []) {
+    return res.status(200).json(games);
+  } else {
+    
+    return res.status(200).json(games);
+  }
+  
 });
 
 server.post('/games', (req, res) => {
