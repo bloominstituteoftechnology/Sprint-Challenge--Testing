@@ -146,5 +146,16 @@ describe('Server', () => {
             const res = await request(server).post('/games').send({game});
             expect(res.status).toBe(422);
         });
+
+        it('returns status 405(NOT ALLOWED) if the title is the same', async () => {
+            const game = {
+                title: 'Puyo Puyo',
+                genre: 'Puzzle',
+                releaseYear: 1991
+            }
+
+            const res = await request(server).post('/games').send({game});
+            expect(res.status).toBe(405);
+        });
     });
 });
