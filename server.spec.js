@@ -5,7 +5,7 @@ const server = require('./server');
 
 describe('server', () => {
 	describe('POST /games', () => {
-		it('should return JSON message', async () => {
+		it('should return JSON', async () => {
 			const game = {
 				title: 'Pacman',
 				genre: 'Arcade',
@@ -64,5 +64,21 @@ describe('server', () => {
 		});
 	});
 
-	describe('GET /games', () => {});
+	describe('GET /games', () => {
+		it('should return an array', async () => {
+			const expected = true;
+
+			const response = await request(server).get(`/games`);
+
+			expect(Array.isArray(response.body)).toBe(expected);
+		});
+
+		it('should return 200 status code', async () => {
+			const expected = 200;
+
+			const response = await request(server).get(`/games`);
+
+			expect(response.status).toEqual(expected);
+		});
+	});
 });
