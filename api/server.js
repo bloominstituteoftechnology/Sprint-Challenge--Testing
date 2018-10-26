@@ -31,6 +31,22 @@ server.get('/games', (request, response) => {
     response.status(200).json(games);
 });
 
+// --- GET Individual Game Endpoint ---
+server.get('/games/:id', (request, response) => {
+    // Extract URL Parameters
+    const { id } = request.params;
+
+    for ( i = 0; i < games.length; i++ ) {
+
+        console.log("game:", games[i])
+        if (Number(games[i].id) === Number(id)) {
+            return response.status(200).json(games[i]);
+        }
+    }
+
+    response.status(404).json({ errorMessage: "No game was found with an id matching the provided id." });
+});
+
 // ---- POST Game Endpoint ---
 server.post('/games', (request, response) => {
     // Deconstruct Request Body
@@ -43,7 +59,7 @@ server.post('/games', (request, response) => {
 
     for ( i = 0; i < games.length; i++ ) {
         if (games[i].title === title) {
-            return response.status(405).json({ errorMessage: "A game with that title has already added. Titles must be unique." })
+            return response.status(405).json({ errorMessage: "A game with that title was already added. Titles must be unique." })
         }
     }
 
