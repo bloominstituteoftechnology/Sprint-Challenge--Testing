@@ -95,7 +95,7 @@ describe('~~ server.js ~~', () => {
 				}
 			];
 			const response = await request(server).get('/games');
-			expect(response).toEqual(expected);
+			expect(response.body).toEqual(expected);
 		});
 	});
 });

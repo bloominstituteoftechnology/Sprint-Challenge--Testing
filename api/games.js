@@ -12,6 +12,10 @@ let state = [
 	// }
 ];
 
+const gameFilter = (filter) => {
+	// magic filter stuff to be implemented here for stretch
+};
+
 router.post('/', (req, res, next) => {
 	if (req.body.title && req.body.genre) {
 		const { title, genre } = req.body;
@@ -26,6 +30,8 @@ router.post('/', (req, res, next) => {
 	}
 });
 
-router.get('/', (req, res, next) => {});
+router.get('/', (req, res, next) => {
+	res.status(200).json(state);
+});
 
 module.exports = router;
