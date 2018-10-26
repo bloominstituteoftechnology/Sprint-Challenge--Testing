@@ -15,26 +15,27 @@ function logger(req, res, next){
 
 server.use(logger);
 
+// initialize the games array
+const games = [
+    {
+        title: 'Pacman',
+        genre: 'Arcade',
+        releaseYear: 1980
+    },
+    {
+        title: 'Final Fantasy VII',
+        genre: 'RPG',
+        releaseYear: 1997
+    },
+    {
+        title: 'Parasite Eve',
+        genre: 'Horror',
+        releaseYear: 1995
+    }
+];
+
 // endpoints go here
 server.get('/games', (req, res) => {
-    const games = [
-        {
-            title: 'Pacman',
-            genre: 'Arcade',
-            releaseYear: 1980
-        },
-        {
-            title: 'Final Fantasy VII',
-            genre: 'RPG',
-            releaseYear: 1997
-        },
-        {
-            title: 'Parasite Eve',
-            genre: 'Horror',
-            releaseYear: 1995
-        }
-    ];
-
     res.status(200).json(games);
 })
 
@@ -44,6 +45,18 @@ server.post('/games', (req, res) => {
     if(!title || !genre){
         return res.status(422).json({error: 'You must include a title and genre.'})
     }
+
+    // STRETCH
+    //send error 419 if game title is not unique
+     // collect all game titles
+     let allTitles = [];
+     for(i = 0; i < games.length; i++){
+         allTitles.push(games[i].title);
+     }
+     // compare given title to current titles
+     if(allTitles.includes(req.body.title)){
+        return res.status(419).json({error: 'That game is already added.'})
+     }
 
     return res.status(201).json({message: `${title} added to games database.`})
 })
