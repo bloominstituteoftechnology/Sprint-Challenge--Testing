@@ -37,7 +37,7 @@ server.get("/games/:id", (req, res) => {
 
 server.delete("/games/:id", (req, res) => {
   const { id } = req.params;
-  if (id === req.params.id) {
+  if (id === req.params.id[0]) {
     res.status(200).json({ deleted: `${id}` });
   } else {
     res.status(404).json({ error: "The specified ID does not exist" });
