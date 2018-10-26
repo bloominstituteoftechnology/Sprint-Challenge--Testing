@@ -20,7 +20,8 @@
 	"homepage": "https://github.com/LambdaSchool/Sprint-Challenge--Testing#readme",
 	"dependencies": {
 		"express": "^4.16.4",
-		"helmet": "^3.14.0"
+		"helmet": "^3.14.0",
+		"nodemon": "^1.18.5"
 	},
 	"devDependencies": {
 		"jest": "^23.6.0",
