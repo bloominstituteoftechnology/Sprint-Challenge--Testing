@@ -96,7 +96,7 @@ server.delete('/games/:id', (request, response) => {
 
     games = games.slice(0, idExists).concat(games.slice(idExists + 1, games.length));
     response.status(200).json({ gameId });
-})
+});
 
 // --- Export Server ---
 module.exports = server;
