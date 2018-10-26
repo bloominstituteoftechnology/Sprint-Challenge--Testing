@@ -169,4 +169,24 @@ describe('Server', () => {
             expect(res.status).toBe(405);
         });
     });
+
+    describe('GET /games/:id', () => {
+        it('returns a game', async () => {
+            const expected = [{
+                id: 0,
+                title: 'Pacman',
+                genre: 'Arcade',
+                releaseYear: 1980
+            }]
+
+            const res = await request(server).get('/games/0');
+            expect(res.body.data).toEqual(expected);
+        });
+
+        it('returns a 404(NOT FOUND) status if no game', async () => {
+            const res = await request(server).get('/games/18');
+            expect(res.status).toBe(404);
+        });
+    });
+
 });

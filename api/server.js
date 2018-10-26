@@ -47,6 +47,14 @@ server.get('/games', (req, res) => {
     res.status(200).json({ data: gamesDb });
 });
 
+server.get('/games/:id', (req, res) => {
+    const { id } = req.params;
+
+    let game = gamesDb.filter(el => el.id === Number(id));
+    if(!game || game.length <= 0) res.status(404).json({message: 'Game not found'});
+    res.status(200).json({ data: game });
+});
+
 server.post('/games', (req, res) => {
     const { game } = req.body;
 
