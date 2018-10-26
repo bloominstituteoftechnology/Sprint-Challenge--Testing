@@ -60,7 +60,7 @@ server.post('/games', (req, res) => {
   } else {
     let addGame = gamesList.filter(game => game.title === title);
     if (addGame.length) {
-      res.status(404).send('Not unique');
+      res.status(405).send('Not unique');
     } else {
       gamesList = [...gamesList, { ...req.body, id: index }];
       index++;

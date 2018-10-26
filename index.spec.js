@@ -100,7 +100,7 @@ describe('server', () => {
         .post('/games')
         .send(newGame);
 
-      expect(response.status).toBe(404);
+      expect(response.status).toBe(405);
     });
   });
 
