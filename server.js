@@ -5,14 +5,17 @@ server.use(express.json());
 
 let gamesArr = [];
 
+// ========== SERVER RUNNING ========== //
 server.get('/', (req, res) => {
     res.status(200).json('API Running');
 });
 
+// ========== GET GAMES ========== //
 server.get('/games', (req, res) => {
     res.status(200).json(gamesArr);
 });
 
+// ========== POST GAME ========== //
 server.post('/games', (req, res) => {
     const game = req.body;
     if (!game.title || !game.genre) {

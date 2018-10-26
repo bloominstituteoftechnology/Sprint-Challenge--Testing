@@ -9,7 +9,7 @@ const defaultGame = {
 
 // ========== SERVER TEST ========== //
   describe('server.js', () => {
-    it('returns status code 200 (OK)', async () => {
+    it('should return status code 200 (OK)', async () => {
         const response = await request(server).get('/');
         expect(response.status).toEqual(200);
     });
@@ -53,10 +53,9 @@ const defaultGame = {
         });
     });
 
-
 // ========== GET TESTS ========== //
     describe('GET /games', () => {
-        it('should return a 200 status code', async () => {
+        it('should return status code 200 (OK)', async () => {
             const response = await request(server).get('/games');
             expect(response.status).toEqual(200);
         });
@@ -86,4 +85,5 @@ const defaultGame = {
             expect(response.body).toEqual(expected);
         });
     });
+
 });
