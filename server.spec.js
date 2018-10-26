@@ -52,15 +52,12 @@ describe("test API endpoints", () => {
   });
   /////
 
-  // // DELETE tests 
-  // it("DELETE should return 202 status code", async () => {
-  //   const response = await request(server).delete("/api/todos/1");
-  //   expect(response.status).toBe(202);
-  // });
-  // it("DELETE should return JSON", async () => {
-  //   const response = await request(server).delete("/api/todos/1");
-  //   expect(response.type).toEqual("application/json");
-  // });
-  // // Third test
+  // DELETE tests 
+  it("should delete respective game matching correct id", async () => {
+    const id = 0;
+    const expected = { gameDeleted: `${id}` };
+     const response = await request(server).delete(`/api/games/${id}`);
+     expect(response.body).toEqual(expected);
+  });
 
 });
