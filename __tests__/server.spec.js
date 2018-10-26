@@ -62,10 +62,39 @@ describe('~~ server.js ~~', () => {
 	});
 
 	describe('~~ GET /games pt2 ~~', () => {
-		it('should return a status 200 (ok) for a successful GET to /games', async () => {});
+		it('should return a status 200 (ok) for a successful GET to /games', async () => {
+			const response = await request(server).get('/games');
+			expect(response.status).toBe(200);
+		});
 
-		it('should return JSON when a GET is submitted', async () => {});
+		it('should return JSON when a GET is submitted', async () => {
+			const response = await request(server).get('/games');
+			expect(response.type).toBe('application/json');
+		});
 
-		it('should return an array of game objects on a successful GET', async () => {});
+		it('should return an array of game objects on a successful GET', async () => {
+			const expected = [
+				{
+					id: 0,
+					title: 'Pacman',
+					genre: 'Arcade',
+					releaseYear: 1980
+				},
+				{
+					id: 1,
+					title: 'Street Fighter II',
+					genre: 'Fighting',
+					releaseYear: null
+				},
+				{
+					id: 2,
+					title: 'Bomberman',
+					genre: 'Puzzle',
+					releaseYear: null
+				}
+			];
+			const response = await request(server).get('/games');
+			expect(response).toEqual(expected);
+		});
 	});
 });
