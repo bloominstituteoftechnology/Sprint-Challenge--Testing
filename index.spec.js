@@ -24,6 +24,12 @@ describe('API testing', () => {
             const game = {"game": "Battleship"}
             const response = await request(server).post('/games').send(game);
             expect(response.status).toBe(422);
-        })
+        });
+
+        it('should return a status of 201 if game is added correctly', async () => {
+            const game = {"title": "Battleship", "genre": "Board", "releaseYear": 1967};
+            const response = await request(server).post('/games').send(game);
+            expect(response.status).toBe(201);
+        });
     });
 });
