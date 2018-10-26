@@ -1,8 +1,8 @@
 const request = require("supertest");
 const server = require("./server.js");
 
-describe("server", () => {
-  describe("Post", () => {
+describe("SERVER", () => {
+  describe("POST", () => {
     it("Should allow you to run tests", async () => {
       const response = await request(server).post("/games");
 
@@ -37,7 +37,7 @@ describe("server", () => {
     });
   });
 
-  describe("Get", () => {
+  describe("GET", () => {
     it("Should allow you to run tests", async () => {
       const response = await request(server).get("/games");
 
@@ -56,4 +56,37 @@ describe("server", () => {
       expect(response.status).toBe(200);
     });
   });
+
+  describe("DELETE", () => {
+    it("Should be able to run tests", async () => {
+      const response = await request(server).delete("/games/:id");
+
+      expect(response).toBeTruthy();
+    });
+
+    it("Should return 200 if game with that id exists", async () => {
+      const response = await request(server)
+        .delete("/games/:id")
+        .send({ id: 2 });
+
+      expect(response.status).toBe(200);
+    });
+
+    it("Should return 404 if no game exists with that id", async () => {
+      const response = await request(server)
+        .delete("/games/:id")
+        .send({ id: 100 });
+
+      expect(response.status).toBe(404);
+    });
+  });
+
+     
+  // it.only("Return game with matching ID", async () => {
+  //   const response = await request(server)
+  //     .get("/games/:id")
+  //     .send({ id: 1 }); 
+
+  //   expect(response.status).toBe(200);
+  // });
 });

@@ -1,4 +1,4 @@
-# Testing Sprint Challenge
+<!-- # Testing Sprint Challenge
 
 For this project you will use TDD to create a simple Web API using Node.js and Express. The basic requirements for the endpoints are listed below. Create any files and folders you need to finish the project, you have complete freedom to structure your solution to make it easier to test and extend in the future.
 
@@ -45,9 +45,9 @@ For this project you will use TDD to create a simple Web API using Node.js and E
 
 The following exercises are optional, but we suggest that you tackle them if you finish the MVP early.
 
-- validate that the game `title` is unique. If the client tries to create a duplicate game, return a status code 405 (Not Allowed). Write a test that checks for this.
+- validate that the game `title` is unique. If the client tries to create a duplicate game, return a status code 405 (Not Allowed). Write a test that checks for this. -->
 - add an `id` property to the game schema and write code in the server to increment it automatically. After implementing this functionality work on the following:
   - Write a `GET /games/:id` endpoint that returns the information about a single game. Respond with a 404 status code when a game is not found for the provided `id`. Add the corresponding tests for it.
-  - add a `DELETE /games/:id` endpoint that can remove the corresponding game. If the game does not exists return a 404 status code. Write tests for this endpoint.
+  <!-- - add a `DELETE /games/:id` endpoint that can remove the corresponding game. If the game does not exists return a 404 status code. Write tests for this endpoint.
 
-**Remember you can use any resources you want to solve these problems, but avoid copying/pasting solutions you've previously written. Also if you don't finish all of the challenges, that's fine! Just do what you can and submit your challenges in the end! HAVE FUN!**
+**Remember you can use any resources you want to solve these problems, but avoid copying/pasting solutions you've previously written. Also if you don't finish all of the challenges, that's fine! Just do what you can and submit your challenges in the end! HAVE FUN!** -->
