@@ -23,17 +23,42 @@ describe('~~ server.js ~~', () => {
 	});
 
 	describe('~~ GET /games pt1', () => {
-		it('should return a 200 (ok) with an empty array when there are no games in memory', async () => {});
+		it('should return a 200 (ok) with an empty array when there are no games in memory', async () => {
+			const response = await request(server).get('/games');
+			expect(response.status).toBe(200);
+			expect(Array.isArray(response.body)).toBe(true);
+			expect(response.body.length).toEqual(0);
+		});
 	});
 
 	describe('~~ POST ~~', () => {
-		it('should return a status 201 (created) when successfully submitting a new game', async () => {});
+		it('should return a status 201 (created) when successfully submitting a new game', async () => {
+			const response = await request(server)
+				.post('/games')
+				.send({ title: 'Pacman', genre: 'Arcade', releaseYear: 1980 });
+			expect(response.status).toBe(201);
+		});
 
-		it('should return JSON when a POST is submitted', async () => {});
+		it('should return JSON when a POST is submitted', async () => {
+			const response = await request(server)
+				.post('/games')
+				.send({ title: 'Street Fighter II', genre: 'Fighting' });
+			expect(response.type).toBe('application/json');
+		});
 
-		it('should return the game name when successfully submitted', async () => {});
+		it('should return the game name when successfully submitted', async () => {
+			const response = await request(server)
+				.post('/games')
+				.send({ title: 'Bomberman', genre: 'Puzzle' });
+			expect(response.body).toEqual({ title: 'Bomberman' });
+		});
 
-		it('should (incorrectly) return a status 422 (Unprocessable Entity (WebDAV)) if an incomplete game is submitted', async () => {});
+		it('should (incorrectly) return a status 422 (Unprocessable Entity (WebDAV)) if an incomplete game is submitted', async () => {
+			const response = await request(server)
+				.post('/games')
+				.send({ title: 'California Games' });
+			expect(response.status).toBe(422);
+		});
 	});
 
 	describe('~~ GET /games pt2 ~~', () => {
