@@ -26,17 +26,17 @@ describe('server', () => {
     });
 
     describe('POST /games/add route', () =>{
-        it('should return 200 status code if all info is entered', async () => {
-            const title = 'Video Game Man';
-            const genre = 'action-adventure';
-            const releaseYear = '1986';
-            const expected = { 
-                title: title,
-                genre: genre,
-                releaseYear: releaseYear
-             };
+        const title = 'Video Game Man';
+        const genre = 'action-adventure';
+        const releaseYear = '1986';
+        const expected = { 
+            title: title,
+            genre: genre,
+            releaseYear: releaseYear
+        };
 
-             const response = await request(server).post(`/games/add`).send(expected);
+        it('should return 200 status code if all info is entered', async () => {
+            const response = await request(server).post(`/games/add`).send(expected);
 
             expect(response.status).toBe(200);
         });
@@ -48,7 +48,7 @@ describe('server', () => {
                 title: title,
                 genre: genre,
                 releaseYear: releaseYear
-             };
+            };
 
             const response = await request(server).post(`/games/add`).send(expected);
 
@@ -62,11 +62,16 @@ describe('server', () => {
                 title: title,
                 genre: genre,
                 releaseYear: releaseYear
-             };
+            };
 
-             const response = await request(server).post(`/games/add`).send(expected);
+            const response = await request(server).post(`/games/add`).send(expected);
 
             expect(response.status).toBe(422);
         });
+        // it('should return 405 status code if attempting to create duplicate title', async () => {
+        //     const response = await request(server).post(`/games/add`).send(expected);
+
+        //     expect(response.status).toBe(405);
+        // });
     });
 });

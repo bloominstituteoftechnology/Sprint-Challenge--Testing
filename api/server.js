@@ -5,22 +5,7 @@ server.use(express.json());
 
 let gameTitles = [
     {
-        title: 'Pacman', // required
-        genre: 'Arcade', // required
-        releaseYear: 1980 // not required
-    }, 
-    {
-        title: 'Pacman', // required
-        genre: 'Arcade', // required
-        releaseYear: 1980 // not required
-    }, 
-    {
-        title: 'Pacman', // required
-        genre: 'Arcade', // required
-        releaseYear: 1980 // not required
-    }, 
-    {   
-        title: 'Pacman', // required
+        title: 'Video Game Man', // required
         genre: 'Arcade', // required
         releaseYear: 1980 // not required
     }, 
@@ -44,8 +29,20 @@ server.get('/games', (req, res) => {
 
 server.post('/games/add', (req, res) => {
     const { title, genre, releaseYear } = req.body;
-    console.log(req.body);
+
+    // let dupeCheck = gameTitles.forEach(game => {
+    //     console.log(game.title);
+    //     console.log(title);
+    //     if(title === game.title) {
+    //         return true;
+    //     } else return false;
+    // });
     
+    // if(dupeCheck === true) {
+    //     res
+    //         .status(405)
+    //         .json({ message: 'cannot add duplicate titles' });
+    // } else 
     if(!title || !genre) {
         res
             .status(422)
