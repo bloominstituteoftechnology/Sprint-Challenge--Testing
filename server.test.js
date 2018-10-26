@@ -93,4 +93,30 @@ describe('server', () => {
       expect(response.status).toBe(404);
     });
   });
+
+  describe('DELETE /games/:id route', () => {
+    it('returns 200 with targeted game with provided id', async () => {
+      const response = await request(server).delete('/games/1');
+      const expected = [
+        {
+          id: 2,
+          name: 'Game 2',
+          breed: 'Sci-Fi',
+          releaseYear: '1992'
+        },
+        {
+          id: 3,
+          name: 'Game 3',
+          breed: 'Adventure',
+          releaseYear: '1993'
+        }
+      ]
+      expect(response.status).toBe(202);
+      expect(response.body).toEqual(expected);
+    });
+    it('returns 404 with targeted game with provided id', async () => {
+      const response = await request(server).get('/games/0');
+      expect(response.status).toBe(404);
+    });
+  });
 })

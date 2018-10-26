@@ -51,8 +51,15 @@ server.route('/games/:id')
     if (targetGame.length > 0) return res.status(200).json(targetGame);
     return res.status(404).json({ message: 'no game with that id.' });
   })
+  .delete((req, res) => {
+    const { id } = req.params;
+    const filtered = db.filter(game => game.id !== Number(id))
+    if (filtered.length > 0) return res.status(202).json(filtered);
+    return res.status(404).json({ message: 'could not delete game with that id.' });
+  })
 
 const incrementId = () => {
   return db.length + 1;
 }
+
 module.exports = server;
