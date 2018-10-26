@@ -79,6 +79,10 @@ describe('server', () => {
 
     });
 
+    // check that an empty array is returned in no games are stored
+    // you will need to comment out all objects inside 
+    // expected in index.spec.js and 
+    // games in server.js for this test to pass
     it('should return an empty array if no games stored and a status code of 200', async () => {
       const response = await request(server)
         .get('/games');
