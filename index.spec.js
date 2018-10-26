@@ -12,36 +12,50 @@ describe('server', () => {
         });
     
     })
-    it('can run tests', () => {
-        expect(true).toBeTruthy();
-    });
-
-    it('can run tests', () => {
-        expect(false).toBeFalsy();
-    });
-
-    it('can even more run run run tests', () => {
-        expect(false).toBeFalsy();
-    });
-
+  
     it('should return {message: "the line is hot"}', async () => {
         const response = await request(server).get('/');
 
         expect (response.body).toEqual('the line is hot');
     });
+});
 
-    describe('POST /api/game', () => {
-        
-        it('should return game', async () => {
-            const name = 'Pacman';
-            const expected = { name };
 
-            const response = await request(server)
-            .post(`${name}`)
-            .send(`${name} is in` );
+describe('GET /api/games', () => {
 
-            expect(response.body).toEqual(expected);
+	it('return status 204 when no games are present', async () => {
+        const response = await request(server)
+            .get('/api/games');
+            
+        expect(response.status).toBe(204);
         });
+
+    it('expected to return JSON', async () => {
+        const response = await request(server)
+            .get('/api/games');
+        expect(response.state).toEqual([]);
+    })
+    
     });
     
-});
+describe('POST /api/games', () => {
+    
+    ///correct data received
+	it('return status 201 (created) when POST is made', async () => {
+		const response = await request(server)
+			.post('/api/games')
+			.send({ title: 'Galaga', genre: 'Space Adventure', releaseYear: '1980' });
+		expect(response.status).toBe(201);
+        });
+    
+    
+        ///incorrect data received
+
+    it('should contain an entry in every field', async () => {  
+        const response = await request(server)
+            .post('/api/games')
+            .send();     
+        expect(response.status).toBe(422)
+    })
+    });
+    
