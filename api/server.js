@@ -34,6 +34,7 @@ server.get('/', (req, res) => {
   res.status(200).json({ message: 'Lets go!' });
 });
 
+// Add GET ROUTE HANDLER to get the list of games
 server.get('/games', (req, res) => {
   const games = [
     {
@@ -72,6 +73,7 @@ server.get('/games', (req, res) => {
   
 });
 
+// Add POST ROUTE HANDLER to create a game
 server.post('/games', (req, res) => {
   const { game } = req.body;
 
