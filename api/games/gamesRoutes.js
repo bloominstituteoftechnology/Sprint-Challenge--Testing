@@ -23,10 +23,15 @@ router.post('', (req, res) => {
   const game = { title, genre, releaseYear };
   if (!game.title || !game.genre) {
     res.status(422).json({ message: 'Title and genre are required fields' });
-  } else {
-    games.push(game);
-    res.status(201).json({ message: 'Game added' });
   }
+  const findGameByTitle = (game) => {
+    return game.title === title;
+  };
+  if (games.find(findGameByTitle)) {
+    res.status(405).json({ message: 'Duplicate titles not allowed' });
+  }
+  games.push(game);
+  res.status(201).json(games);
 });
 
 module.exports = router;

@@ -31,7 +31,7 @@ describe('server', () => {
   describe('POST /games', () => {
     it('should return status code 201(Created)', async () => {
       const game = {
-        title: 'Pacman', // required
+        title: 'Space Invaders', // required
         genre: 'Arcade', // required
         releaseYear: 1980, // not required
       };
@@ -58,7 +58,7 @@ describe('server', () => {
 
       it('should return 422 if genre is missing from body', async () => {
         const game = {
-          title: 'Pacman', // required
+          title: 'Zelda', // required
           genre: '', // required
           releaseYear: 1980, // not required
         };
@@ -71,7 +71,7 @@ describe('server', () => {
 
       it('should return 201 if release year is missing from body', async () => {
         const game = {
-          title: 'Pacman', // required
+          title: 'Donkey kong', // required
           genre: 'Arcade', // required
         };
         const response = await request(server)
@@ -81,5 +81,17 @@ describe('server', () => {
         expect(response.status).toBe(201);
       });
     }); // describe Check for required fields
+
+    it('should return status code 405 if duplicate titles', async () => {
+      const game = {
+        title: 'Pacman',
+        genre: 'Arcade',
+      };
+      const response = await request(server)
+        .post('/games')
+        .send(game);
+
+      expect(response.status).toBe(405);
+    });
   }); // describe POST /games
 }); // describe server
