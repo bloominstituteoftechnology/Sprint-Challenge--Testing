@@ -47,7 +47,7 @@ server.get('/games/:id', (request, response) => {
     response.status(404).json({ errorMessage: "No game was found with an id matching the provided id." });
 });
 
-// ---- POST Game Endpoint ---
+// --- POST Game Endpoint ---
 server.post('/games', (request, response) => {
     // Deconstruct Request Body
     let { title, genre, releaseYear } = request.body;
@@ -76,6 +76,27 @@ server.post('/games', (request, response) => {
 
     response.status(201).json(gameObject);
 });
+
+
+// --- DELETE Game Endpoint ---
+server.delete('/games/:id', (request, response) => {
+    // Get URL Params
+    const gameId = request.params.id;
+    let idExists = false;
+
+    for (i = 0; i < games.length; i++) {
+        if (Number(games[i].id) === Number(gameId)) {
+            idExists = i;
+        }
+    }
+
+    if ( !idExists && idExists !== 0 ) {
+        return response.status(404).json({errorMessage: "We were unable to delete the game with the provided id."})
+    }
+
+    games = games.slice(0, idExists).concat(games.slice(idExists + 1, games.length));
+    response.status(200).json({ gameId });
+})
 
 // --- Export Server ---
 module.exports = server;

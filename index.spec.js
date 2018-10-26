@@ -246,13 +246,13 @@ describe('DELETE: /games/:id', () => {
     describe('Endpoint Success Tests', () => {
         it('Should respond with a status code of 200 if the deletion is successful', async () => {
             const gameId = 1;
-            const response = await request(server).delete(`'/games/${gameId}`);
+            const response = await request(server).delete(`/games/${gameId}`);
             expect(response.status).toBe(200);
         })
 
         it('Should respond with the id of the deleted game if the deletion is successful', async () => {
             const gameId = 2;
-            const response = await request(server).delete(`'/games/${gameId}`);
+            const response = await request(server).delete(`/games/${gameId}`);
             expect(response.body).toEqual({gameId:`${gameId}`});
         })
 
@@ -264,5 +264,4 @@ describe('DELETE: /games/:id', () => {
             expect(finalGetResponse.body.length).toBe(initialGetResponse.body.length - 1);
         })
     });
-
-})
+});
