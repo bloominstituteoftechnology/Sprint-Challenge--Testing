@@ -31,3 +31,21 @@ describe("server.js", () => {
     });
   });
 });
+
+describe("GET /games", () => {
+  it("should return an array of gameData and a status of 200 and a content type of JSON", async () => {
+    await request(server)
+      .get("/games")
+      .expect("Content-Type'" /json/)
+      .expect(200, [{ id: 1, title: "Pacman", genre: "Arcade", releaseYear: 1980 },   { id: 2,title: "Galaxian",genre: "Arcade", releaseYear: 1979 }]);
+  });
+
+  it("should always return an array of data", async () => {
+    await request(server)
+      .get("/games")
+      .then(response => {
+        typeof response === "array";
+    });
+  });
+});
+
