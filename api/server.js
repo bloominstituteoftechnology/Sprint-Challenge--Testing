@@ -11,11 +11,9 @@ const games = [
 ];
 
 server.use(express.json());
-server.get("/", (req, res) => {
-	res.status(200).json({ message: "server is up and running" });
-});
+
 server.get("/games", (req, res) => {
-	res.status(200).send(games);
+	res.status(200).json(games);
 });
 
 server.post("/games", (req, res) => {
@@ -28,7 +26,7 @@ server.post("/games", (req, res) => {
 			.status(422)
 			.json({ error: "Missing a title or genre, they are required" });
 	} else {
-		res.status(201).send(newGames);
+		res.status(201).json(newGames);
 	}
 });
 
