@@ -33,7 +33,10 @@ server.post('/games', (req, res) => {
 
       if(!req.body.title || !req.body.genre || req.body.title.length < 1 || req.body.genre.length < 1 ) {
         throw new Error(res.status(422).json({ fillError: 'Please enter a title and genre' }));        
-      } else {
+      } else if (typeof req.body.title !== 'string' || typeof req.body.genre !== 'string') {
+        return res.status(422).json({ fillError: 'Please enter the title and genre of the game as a string' });
+      }
+       else {
         res.status(201).json({ gameId: game });
       }
 
