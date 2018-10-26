@@ -16,13 +16,10 @@ server.get('/', (req, res) => {
 server.get('/api/games', (req, res, next) => {
     if (state.length === 0) {
         res
+////What is going on here? Ask someone.
         .status(204)
-        .json([]);
+        .json({})
     } else {
-        // let arr = [];
-        // for (let id in state) {
-        //     arr.push({ id: Number(id, ...state[id]) });
-        // }
         res.status(200).json(state);
     }
 })

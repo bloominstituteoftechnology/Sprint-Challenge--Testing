@@ -30,11 +30,24 @@ describe('GET /api/games', () => {
         expect(response.status).toBe(204);
         });
 
-    it('expected to return JSON', async () => {
+    it('expected to return an array', async () => {
         const response = await request(server)
             .get('/api/games');
-        expect(response.json).toBe([]);
+        expect(response.body).toEqual({});
     })
+
+    it('expected to return JSON', async () => {
+        const expectedBody = { };
+        const response = await request(server)
+            .get('/api/games');
+            expect(response.body).toEqual(expectedBody);
+    } )
+
+    it('should return a JSON object fron the index route', async () => {
+        const response = await request(server).get('/');
+  
+        expect(response.type).toEqual('application/json');
+      });
     
     });
     
@@ -57,5 +70,13 @@ describe('POST /api/games', () => {
             .send();     
         expect(response.status).toBe(422)
     })
+
+  
+    it('should return a JSON object fron the index route', async () => {
+        const response = await request(server).get('/');
+  
+        expect(response.type).toEqual('application/json');
+      });
+    
     });
     
