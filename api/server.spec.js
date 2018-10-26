@@ -53,19 +53,21 @@ describe('server.js', () => {
 			);
 
 			it('should return status 201(Created)', async () => {
-				const response = await request(server).post('/games/');
+				const newGame = { 'title': 'newGameTitle', 'genre': 'newGameGenre', 'releaseYear': 1990, };
+				const response = await request(server).post('/games/').send(newGame);
 				expect(response.status).toBe(201);
 			});
 
 			it('should return JSON', async () => {
-				const response = await request(server).post('/games/');
+				const newGame = { 'title': 'newGameTitle', 'genre': 'newGameGenre', 'releaseYear': 1990, };
+				const response = await request(server).post('/games/').send(newGame);
 				expect(response.type).toBe('application/json');
 			});
 
 			it('should return the newly inserted game', async () => {
 				const newGame = { 'title': 'newGameTitle', 'genre': 'newGameGenre', 'releaseYear': 1990, };
 				const response = await request(server).post('/games/').send(newGame);
-				newGame[id] = 4;
+				newGame['id'] = 4;
 				const expected = [ newGame ];
 				expect(Array.isArray(response.body)).toBe(true);
 				expect(response.body.length).toEqual(1);
@@ -75,7 +77,8 @@ describe('server.js', () => {
 			it('should return the newly inserted game with release year set to null', async () => {
 				const newGame = { 'title': 'newGameTitle', 'genre': 'newGameGenre' };
 				const response = await request(server).post('/games/').send(newGame);
-				newGame[id] = 4;
+				newGame['id'] = 4;
+				newGame['releaseYear'] = null;
 				const expected = [ newGame ];
 				expect(Array.isArray(response.body)).toBe(true);
 				expect(response.body.length).toEqual(1);

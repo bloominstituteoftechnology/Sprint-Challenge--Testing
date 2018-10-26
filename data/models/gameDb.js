@@ -3,7 +3,7 @@ const db = require('../dbConfig.js');
 module.exports = {
 	get: function(id) {
 		let query = db('games');
-		if (id) query.where({ id }).first();
+		if (id) query.where({ id });
 		return query;
 	},
 	insert: function(user) {
