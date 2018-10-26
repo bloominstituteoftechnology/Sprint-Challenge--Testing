@@ -36,6 +36,13 @@ describe('API testing', () => {
             const game = {"title": "hid-n-seek", "genre": "Group", "releaseYear": 605};
             const response = await request(server).post('/games').send(game);
             expect(response.body.newUser.id).toEqual(expect.any(Number));
+        });
+
+        it('should return a 405 since the game title is not unique', async () => {
+            const game = {"title": "NFL Blitz", "genre": "N64", "releaseYear": 2000};
+            const response = await request(server).post('/games').send(game);
+            expect(response.status).toBe(405);
         })
+        
     });
 });
