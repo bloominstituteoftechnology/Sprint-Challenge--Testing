@@ -35,5 +35,13 @@ describe('test suites for basic API operations', () => {
       const response = await request(server).post('/games').send(game);
       expect(response.status).toBe(201);
     });
-  })
+
+    test('posted games should receive a numerical ID', async () => {
+      const game = {"title": "Unreal Tournament", "genre": "First-Person Shooter", "releaseYear": 1999};
+      const response = await request(server).post('/games').send(game);
+      expect(response.body.id).toEqual(expect.any(Number)); // not checking a specific value range yet
+    });
+
+  });
+  
 });
