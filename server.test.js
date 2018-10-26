@@ -45,16 +45,19 @@ describe('server', () => {
       const response = await request(server).get('/games');
       const expected = [
         {
+          id: 1,
           name: 'Game 1',
           breed: 'Action',
           releaseYear: '1991'
         },
         {
+          id: 2,
           name: 'Game 2',
           breed: 'Sci-Fi',
           releaseYear: '1992'
         },
         {
+          id: 3,
           name: 'Game 3',
           breed: 'Adventure',
           releaseYear: '1993'

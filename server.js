@@ -4,16 +4,19 @@ server.use(express.json());
 
 let db = [
   {
+    id: 1,
     name: 'Game 1',
     breed: 'Action',
     releaseYear: '1991'
   },
   {
+    id: 2,
     name: 'Game 2',
     breed: 'Sci-Fi',
     releaseYear: '1992'
   },
   {
+    id: 3,
     name: 'Game 3',
     breed: 'Adventure',
     releaseYear: '1993'
@@ -34,10 +37,14 @@ server.route('/games')
 server.route('/games')
   .post((req, res) => {
     const { title, genre, releaseYear } = req.body;
+    const id = incrementId();
     if (!title || !genre) return res.status(422).json({ error: 'title and genre required.' })
     if (typeof title !== 'string' || typeof genre !== 'string') return res.status(500).json({ error: 'title and genre needs to be strings.' })
     if (db.find(game => game.name === title)) return res.status(405).json({ error: 'duplicate game found' })
     return res.status(201).json({ success: 'successfully created' });
   })
 
+const incrementId = () => {
+  return db.length + 1;
+}
 module.exports = server;
