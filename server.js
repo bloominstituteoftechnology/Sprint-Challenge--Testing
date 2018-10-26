@@ -13,19 +13,23 @@ server.get('/', (req, res)=> {
 });
 
 server.post('/games', (req, res)=> {
-    const title = req.params;
+    const title = req.body || 'Untitled Game';
     if(!title) {
-        res.sendStatus(400).json({message: "Please give this game a title"});
+        res.sendStatus(201).json({message: "This game is untitled for now"});
     }
     res.sendStatus(201).json({ game: `The new game is titled ${title}` });
 });
 
 server.get('/ourgames', (req, res)=> {
-    const games = ['Racing Game'];
+    const games = [];
     if(games === 0) {
         res.sendStatus(404).json({message: "There are no games available"});
     }
     res.sendStatus(200).json({games: "Racing Game"});
+});
+
+server.post('/game', (req, res)=> {
+
 });
 
 module.exports = server;
