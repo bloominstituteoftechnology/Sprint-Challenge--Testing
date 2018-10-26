@@ -17,7 +17,13 @@ server.get('/games', (req, res) => {
 })
 
 server.post('/games', (req, res) => {
+  let { title, genre, releaseYear } = req.body;
 
+  if (!title || !genre) {
+    return res.status(422).json({ error: "Title and genre are required fields." })
+  }
+
+  return res.status(201).json({ title, genre, releaseYear })
 })
 
 

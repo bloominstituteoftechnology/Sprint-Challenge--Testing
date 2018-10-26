@@ -24,7 +24,7 @@ describe('server', () => {
     })
   });
   
-  describe('GET /games', () => {
+  describe.skip('GET /games', () => {
     it('returns the list of games', async () => {
       const response = await request(server).get('/games');
 
@@ -45,7 +45,7 @@ describe('server', () => {
     });
   })
 
-  describe.skip('POST /games', async () => {
+  describe('POST /games', async () => {
     it('returns status code 422 if missing required fields', async () => {
       const response = await request(server)
         .post('/games')
