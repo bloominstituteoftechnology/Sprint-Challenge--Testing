@@ -55,7 +55,11 @@ describe('server', ()=>{
             expect(response.status).toBe(500);
             response = await request(server).post(`/games`).send({genre: "Arcade"});
             expect(response.status).toBe(500);
-            response = await request(server).post(`/games`).send({title: "Contra", genre:"Arcade"});
+            response = await request(server).post(`/games`).send({title: "Contra", genre: ""});
+            expect(response.status).toBe(500);
+            response = await request(server).post(`/games`).send({title: "", genre: "Arcade"});
+            expect(response.status).toBe(500);
+            response = await request(server).post(`/games`).send({title: 'Contra', genre: 'Arcade'});
             expect(response.status).toBe(201);
         })
         it('should return an array type', async ()=>{
