@@ -29,6 +29,11 @@ describe('test suites for basic API operations', () => {
       const response = await request(server).post('/games').send(game);
       expect(response.status).toBe(422);
     });
-    
+
+    test('status code returned should be 201 if successful', async () => {
+      const game = {"title": "Dota 2", "genre": "MOBA", "releaseYear": 2011};
+      const response = await request(server).post('/games').send(game);
+      expect(response.status).toBe(201);
+    });
   })
 });
