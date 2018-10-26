@@ -13,11 +13,12 @@ server.post('/games', (req, res) => {
   const { title, genre } = req.body;
 //   const { genre } = req.body;
   let game = {title, genre}
+// let addgame = req.body
   
     if (!game.genre || !game.title) {
         res.status(422).json({err, Error:'Name and Genre are required, please fill them out scrub.'})
     } else {
-        // test.push(game);
+        // test.push(addgame);
         res.status(200).json({test});
     }
 });
@@ -31,3 +32,6 @@ module.exports = server;
 // put the games into an array 
 // there should be a push test.push(game).
 // add a few games. 
+// cannot be game={title, genre} because what you call !game its calling it twice. 
+// addingAGame = req.body
+// game.genre is already in the req.
