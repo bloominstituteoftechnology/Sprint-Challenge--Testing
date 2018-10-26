@@ -9,7 +9,7 @@ describe("Tests for POST API endpoint for /games", () => {
 
   it("POST /games API endpoint should return 422 status if incomplete game data  (no genre) is sent", async () => {
     const newGame = {
-      title: "Street Fighter"
+      name: "Street Fighter"
     };
     const response = await request(server)
       .post("/games")
@@ -29,7 +29,7 @@ describe("Tests for POST API endpoint for /games", () => {
 
   it("POST /games API endpoint should return 201 status if correct game data is sent", async () => {
     const game = {
-      title: "Pacman",
+      name: "Pacman",
       genre: "Arcade",
       releaseYear: 1980
     };
@@ -41,7 +41,7 @@ describe("Tests for POST API endpoint for /games", () => {
 
   it("POST /games API endpoint should return JSON", async () => {
     const game = {
-      title: "Pacman",
+      name: "Pacman",
       genre: "Arcade",
       releaseYear: 1980
     };
