@@ -4,38 +4,45 @@ server.use(express.json());
 
 // games dummy data
 
-const games = [
+let games = [
   {
     "title": "Dota 2",
     "genre": "MOBA",
-    "releaseYear": 2011
+    "releaseYear": 2011,
+    "id": 0
   },
 
   {
     "title": "Unreal Tournament",
     "genre": "First-Person Shooter",
-    "releaseYear": 1999
+    "releaseYear": 1999,
+    "id": 1
   },
 
   {
     "title": "Deus Ex",
     "genre": "Action role-playing",
-    "releaseYear": 2000
+    "releaseYear": 2000,
+    "id": 2
   },
 
   {
     "title": "World of Warcraft",
     "genre": "MMORPG",
-    "releaseYear": 2000
+    "releaseYear": 2000,
+    "id": 3
   },
 
   {
     "title": "Blade and Soul",
     "genre": "MMORPG",
-    "releaseYear": 2012
+    "releaseYear": 2012,
+    "id": 4
   }
 
 ]
+
+let newID = games.length; // new ID should be the next number
 // simple GET request to test server
 
 server.get('/', (req, res) => {
@@ -47,4 +54,19 @@ server.get('/', (req, res) => {
 server.get('/games', (req, res) => {
   res.status(200).json(games);
 })
+
+// post a new game
+
+server.post('/games', (req, res) => {
+  const { title, genre, releaseYear } = req.body;
+  if(!title || !genre || !releaseYear) {
+    res.status(422).json({ error: 'Please provide data in the correct format. '});
+    // testing to make sure data is formatted, an admittedly terrible and vague error message
+  } else {
+    const newGame = { title, genre, releaseYear, "id": newID };
+    games = [...games, newGame];
+    res.status(201).json({newGame});
+  }
+});
+
 module.exports = server;

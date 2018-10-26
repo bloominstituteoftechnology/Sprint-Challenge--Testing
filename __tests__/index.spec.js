@@ -25,13 +25,13 @@ describe('test suites for basic API operations', () => {
   describe('POST tests', () => {
 
     test('status code returned should be 422 if data format is not correct', async () => {
-      const game = {"game": "Dota 2"};
+      const game = {"game": "Dota 3"};
       const response = await request(server).post('/games').send(game);
       expect(response.status).toBe(422);
     });
 
     test('status code returned should be 201 if successful', async () => {
-      const game = {"title": "Dota 2", "genre": "MOBA", "releaseYear": 2011};
+      const game = {"title": "Heroes of Newerth", "genre": "MOBA", "releaseYear": 2010};
       const response = await request(server).post('/games').send(game);
       expect(response.status).toBe(201);
     });
@@ -43,5 +43,5 @@ describe('test suites for basic API operations', () => {
     });
 
   });
-  
+
 });
