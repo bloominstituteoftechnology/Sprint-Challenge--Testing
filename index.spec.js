@@ -33,7 +33,7 @@ describe('GET /api/games', () => {
     it('expected to return JSON', async () => {
         const response = await request(server)
             .get('/api/games');
-        expect(response.state).toEqual([]);
+        expect(response.json).toBe([]);
     })
     
     });
