@@ -30,6 +30,10 @@ describe('server', () => {
   });
 
   describe('POST /games', () => {
+    // beforeEach(() => {
+    //   console.log('hi');
+    // });
+
     it('post sends a status of 201(Created) when it is correct', async () => {
       const newGame = {
         title: 'Pacman',
@@ -54,7 +58,9 @@ describe('server', () => {
       const response = await request(server)
         .post('/games')
         .send(newGame);
-      expect(response.body).toEqual(expect.arrayContaining([newGame]));
+      expect(response.body).toEqual(
+        expect.arrayContaining([{ ...newGame, id: 11 }])
+      );
     });
 
     describe('status 422(Unprocessable Entity) returned if properties are missing', () => {
@@ -82,6 +88,20 @@ describe('server', () => {
         expect(response.status).toBe(422);
       });
     });
+
+    // it('is the game unique based on title if not 405(Not Allowed)', async () => {
+    //   const newGame = {
+    //     title: 'Spider-Man',
+    //     genre: 'action-adventure',
+    //     releaseYear: 2018,
+    //   };
+
+    //   const response = await request(server)
+    //     .post('/games')
+    //     .send(newGame);
+
+    //   expect(response.status).toBe(404);
+    // });
   });
 
   it('server running', () => {

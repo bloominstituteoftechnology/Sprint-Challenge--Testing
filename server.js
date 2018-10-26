@@ -3,34 +3,41 @@ const express = require('express');
 const server = express();
 
 server.use(express.json());
+let index = 10;
 
 let gamesList = [
   {
+    id: 0,
     title: 'Spider-Man',
     genre: 'action-adventure',
     releaseYear: 2018,
   },
   {
+    id: 1,
     title: 'Fallout 4',
     genre: 'action, role-playing',
     releaseYear: 2017,
   },
   {
+    id: 2,
     title: "PLAYERUNKOWN'S Battlegrounds",
     genre: 'Action',
     releaseYear: 2017,
   },
   {
+    id: 3,
     title: 'Minecraft',
     genre: 'sandBox, survival Game',
     releaseYear: 2009,
   },
   {
+    id: 4,
     title: 'Grand Theft Auto V',
     genre: 'action-adventure',
     releaseYear: 2013,
   },
   {
+    id: 5,
     title: 'Portal',
     genre: 'platform, puzzle',
     releaseYear: 2007,
@@ -51,8 +58,16 @@ server.post('/games', (req, res) => {
   if (!title || !genre) {
     res.status(422).json({ message: 'Name and genre required' });
   } else {
-    gamesList = [...gamesList, req.body];
+    // let addGame = gamesList.filter(game => game.title === title);
+    // console.log(addGame);
+    // if (addGame) {
+    //   console.log('hi');
+    //   res.status(422).send('Not unique');
+    // } else {
+    // }
 
+    gamesList = [...gamesList, { ...req.body, id: index }];
+    index++;
     res.status(201).send(gamesList);
   }
 });
