@@ -2,8 +2,16 @@ const request = require('supertest');
 
 const server = require('./api/server.js');
 
+let games = [
+  {
+    title: "Pacman",
+    genre: "Arcade",
+    releaseYear: 1980
+  }
+];
+
 describe('server', () => {
-  describe('GET /', () => {
+  describe.skip('GET /', () => {
     
     it('should return status code 200(OK) when successful', async () => {
       const response = await request(server).get('/');
@@ -25,19 +33,25 @@ describe('server', () => {
   
   describe('GET /games', () => {
     it('returns the list of games', async () => {
-      //response is list of games
+      const response = await request(server).get('/games');
+
+      //expect response to equal games
     });
 
     it('returns status code 200 if successful', async () => {
-      //status code is 200
+      const response = await request(server).get('/games');
+  
+      expect(response.status).toBe(200);
     });
 
     it('always returns an array', () => {
-      //response is always an array
+      const response = await request(server).get('/games');
+      
+      //expect response to be an array
     });
   })
 
-  describe('POST /games', async () => {
+  describe.skip('POST /games', async () => {
     it('returns status code 422 if missing required fields', async () => {
       const response = await request(server)
         .post('/games')
