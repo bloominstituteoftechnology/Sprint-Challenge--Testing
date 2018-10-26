@@ -142,7 +142,7 @@ describe('POST /games Endpoint', () => {
             await request(server).post('/games').send({ title: 'Centipede', genre: 'Arcade', releaseYear: 1980 });
             const finalGetResponse = await request(server).get('/games');
 
-            expect(finalGetResponse.length).toBe(initialGetResponse.length + 1);
+            expect(finalGetResponse.body.length).toBe(initialGetResponse.body.length + 1);
         });
         
     })
