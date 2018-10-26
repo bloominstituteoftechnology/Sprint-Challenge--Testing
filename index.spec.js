@@ -32,7 +32,7 @@ describe('SERVER', () => {
     });
   });
 
-  describe('POST /games', () => {
+  describe.skip('POST /games', () => {
     it('should return JSON', async () => {
       const response = await request(server).post('/games');
 
@@ -69,7 +69,7 @@ describe('SERVER', () => {
         expect(response.status).toEqual(422);
     });
 
-    it.only('should return a statusCode = 422 when the genre and title are empty', async () => {
+    it('should return a statusCode = 422 when the genre and title are empty', async () => {
       const title = '';
       const genre = '';
 
@@ -80,5 +80,21 @@ describe('SERVER', () => {
       expect(response.status).toEqual(422);
     });
 
+  });
+
+  describe('DELETE /games/:id', () => {
+    it.only('should respond with statusCode = 404 when game cannot be found to delete', async () => {
+      const id = 15;
+      const response = await request(server).delete(`/games/${id}`);
+
+      expect(response.status).toEqual(404);
+    });
+
+    it('should return statusCode = 200 when game is deleted sucessfully', async () => {
+      const id = 14;
+      const response = await request(server).delete(`/delete/${id}`);
+
+      expect(response.status).toEqual(200);
+    });
   });
 });
