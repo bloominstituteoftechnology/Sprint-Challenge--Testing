@@ -39,13 +39,13 @@ describe('server.js', () => {
 				const response = await request(server).get(`/games/${ id }`);
 				expect(response.status).toBe(200);
 			});
-	
+
 			it('should return JSON', async () => {
 				const id = 1;
 				const response = await request(server).get(`/games/${ id }`);
 				expect(response.type).toBe('application/json');
 			});
-	
+
 			it('should return the game with the given id', async () => {
 				const id = 1;
 				const response = await request(server).get(`/games/${ id }`);
@@ -64,13 +64,13 @@ describe('server.js', () => {
 				const response = await request(server).get(`/games/${ id }`);
 				expect(response.status).toBe(404);
 			});
-	
+
 			it('should return JSON', async () => {
 				const id = 4;
 				const response = await request(server).get(`/games/${ id }`);
 				expect(response.type).toBe('application/json');
 			});
-	
+
 			it('should return an error message', async () => {
 				const id = 4;
 				const response = await request(server).get(`/games/${ id }`);
@@ -182,4 +182,60 @@ describe('server.js', () => {
 			});
 		}); // describe 'calling with a duplicate game title'
 	}); // describe 'POST /games/'
+
+	describe('DELETE /games/:id', () => {
+		describe('calling with a game id that exists', () => {
+			afterEach(() => db.migrate.rollback()
+				.then(() => db.migrate.latest())
+				.then(() => db.seed.run())
+			);
+
+			it('should return status 200(OK)', async () => {
+				const id = 1;
+				const response = await request(server).delete(`/games/${ id }`);
+				expect(response.status).toBe(200);
+			});
+
+			it('should return JSON', async () => {
+				const id = 1;
+				const response = await request(server).delete(`/games/${ id }`);
+				expect(response.type).toBe('application/json');
+			});
+
+			it('should return a message stating a successfull deletion', async () => {
+				const id = 1;
+				const response = await request(server).delete(`/games/${ id }`);
+				const expected = { message: `Game with id ${ id } successfully deleted.` };
+				expect(typeof(response.body)).toBe('object');
+				expect(response.body).toEqual(expected);
+			});
+		}); // describe 'calling with a game id that exists'
+
+		describe('calling with a game id that does not exist', () => {
+			afterEach(() => db.migrate.rollback()
+				.then(() => db.migrate.latest())
+				.then(() => db.seed.run())
+			);
+
+			it('should return status 404(Not Found)', async () => {
+				const id = 4;
+				const response = await request(server).delete(`/games/${ id }`);
+				expect(response.status).toBe(404);
+			});
+
+			it('should return JSON', async () => {
+				const id = 4;
+				const response = await request(server).delete(`/games/${ id }`);
+				expect(response.type).toBe('application/json');
+			});
+
+			it('should return an error message', async () => {
+				const id = 4;
+				const response = await request(server).delete(`/games/${ id }`);
+				const expected = { error: `Game with id ${ id } does not exist.` };
+				expect(typeof(response.body)).toBe('object');
+				expect(response.body).toEqual(expected);
+			});
+		}); // describe 'calling with a game id that does not exist'
+	}); // describe 'DELETE /games/:id'
 }); // describe 'server.js'
