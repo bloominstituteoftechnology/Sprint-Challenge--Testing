@@ -82,8 +82,8 @@ describe('SERVER', () => {
 
   });
 
-  describe('DELETE /games/:id', () => {
-    it.only('should respond with statusCode = 404 when game cannot be found to delete', async () => {
+  describe.skip('DELETE /games/:id', () => {
+    it('should respond with statusCode = 404 when game cannot be found to delete', async () => {
       const id = 15;
       const response = await request(server).delete(`/games/${id}`);
 
@@ -95,6 +95,22 @@ describe('SERVER', () => {
       const response = await request(server).delete(`/delete/${id}`);
 
       expect(response.status).toEqual(200);
+    });
+  });
+
+  describe('GET /games/:id', () => {
+    it('should return statusCode = 200 when valid game is passed in', async () => {
+      const id = 1;
+      const response = await request(server).get(`/games/${id}`);
+
+      expect(response.status).toEqual(200);
+    });
+
+    it('should return statusCode = 404 when invalid game is passed in', async () => {
+      const id = 9999;
+      const response = await request(server).get(`/games/${id}`);
+
+      expect(response.status).toEqual(404);
     });
   });
 });

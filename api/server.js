@@ -24,6 +24,22 @@ server.get('/games', (req, res) => {
     .catch(err => res.status(500).json({ error: 'Could not retrieve games list' }, err));
 });
 
+server.get('/games/:id', (req, res) => {
+  const { id } = req.params;
+
+  db('games').where({ id }).first()
+    .then(game => {
+
+      if (game) {
+        res.status(200).json(game);
+      } else {
+        res.status(404).json({ missingError: 'Could not find a game by that id' });
+      }
+
+    })
+    .catch(err => res.status(500).json({ error: 'An error occurred with the server when making the request, please try again' }));
+})
+
 server.post('/games', (req, res) => {
   let { title, genre, releaseYear } = req.body;
 
