@@ -12,13 +12,13 @@ server.get('/games', (req, res) => {
 server.post('/games', (req, res) => {
   const { title, genre } = req.body;
 //   const { genre } = req.body;
-  let game = {title, genre}
-// let addgame = req.body
+//   let game = {title, genre}
+let addgame = req.body
   
-    if (!game.genre || !game.title) {
+    if (!title || !genre) {
         res.status(422).json({err, Error:'Name and Genre are required, please fill them out scrub.'})
     } else {
-        // test.push(addgame);
+        test.push(addgame);
         res.status(200).json({test});
     }
 });
@@ -35,3 +35,4 @@ module.exports = server;
 // cannot be game={title, genre} because what you call !game its calling it twice. 
 // addingAGame = req.body
 // game.genre is already in the req.
+// call title and genre
