@@ -7,3 +7,4 @@
 3.  What are `mocks`? What are a good use cases for them?
     Mocks are a way to simulate certain things to allow tests to work. Some objects rely on other objects to complete what they are doing, so we use 'mocking' to simulate the objects they rely upon to fully test that our object works.
 4.  Mention three types of automated tests.
+    Unit testing, UI testing, and API testing.
