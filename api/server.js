@@ -6,6 +6,23 @@ server.use(express.json())
 
 // const db = require('../data/helpers/models.js')
 
+const dbGames = [
+  {
+    title: 'Pacman',
+    genre: 'Arcade',
+    releaseYear: 1980
+  },
+  {
+    title: 'Super Mario',
+    genre: 'Nintendo',
+  },
+  {
+    title: 'Fifa',
+    genre: 'Xbox/Play Station',
+    releaseYear: 2018
+  }
+]
+
 server.get('/', (req, res) => {
   res.status(200).json({ api: 'running' });
 });
@@ -35,7 +52,7 @@ server.post('/games', (req, res) => {
 })
 
 server.get('/games', (req, res) => {
-  res.status(200).json([])
+  res.status(200).json(dbGames)
 })
 
 

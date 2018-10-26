@@ -75,18 +75,40 @@ describe('server.js', () => {
 
   describe('GET /games endpoint', () => {
 
+    const dbGames = [
+      {
+        title: 'Pacman',
+        genre: 'Arcade',
+        releaseYear: 1980
+      },
+      {
+        title: 'Super Mario',
+        genre: 'Nintendo',
+      },
+      {
+        title: 'Fifa',
+        genre: 'Xbox/Play Station',
+        releaseYear: 2018
+      }
+    ]
+
     it('should return status 200', async () => {
       const expected = 200
       const response = await request(server).get('/games')
       expect(response.status).toEqual(expected)
     })
 
-    it('should return an array', async () => {
+    it('should return an array type', async () => {
       const expected = true
       const response = await request(server).get('/games')
       expect(response.body.constructor === Array).toBe(expected)
     })
 
+    it('should return an array of games', async () => {
+      const expected = dbGames
+      const response = await request(server).get('/games')
+      expect(response.body).toEqual(expected)
+    })
 
 
   })
