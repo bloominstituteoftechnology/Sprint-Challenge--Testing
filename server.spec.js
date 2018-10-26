@@ -4,15 +4,15 @@ const request = require("supertest");
 describe("test API endpoints", () => {
   
   // GET tests
-  it('**GET**: successful get sends back status code 200', async () => {
+  it('**GET**: successful GET sends back status code 200', async () => {
     const response = await request(server).get('/api/games');
       expect(response.status).toBe(200);
   });
-  it('**GET**: get request should receive an array', async () => {
+  it('**GET**: GET request should return an array', async () => {
     const response = await request(server).get('/api/games');
       expect(response.body).toEqual(expect.arrayContaining([]));
   });
-  it('**GET**: get should return in the form of json', async () => {
+  it('**GET**: GET response should be in json format', async () => {
     const response = await request(server).get('/api/games');
       expect(response.type).toBe('application/json');
   });
@@ -56,19 +56,19 @@ describe("test API endpoints", () => {
   it("**DELETE**: should delete respective game matching correct id", async () => {
     const id = 0;
     const expected = { gameDeleted: `${id}` };
-     const response = await request(server).delete(`/api/games/${id}`);
-     expect(response.body).toEqual(expected);
+    const response = await request(server).delete(`/api/games/${id}`);
+    expect(response.body).toEqual(expected);
   });
   it("**DELETE**: delete endpoint should return status code 200 if successful", async () => {
     const id = 0;
     const response = await request(server).delete(`/api/games/${id}`);
      expect(response.status).toBe(200);
   });
-  it("**DELETE**: delete endpoint should return JSON object", async () => {
+  it("**DELETE**: delete endpoint should return JSON format", async () => {
     const id = 0;
     const response = await request(server).delete(`/api/games/${id}`);
      expect(response.type).toBe("application/json");
   });
   //////
-  
+
 });

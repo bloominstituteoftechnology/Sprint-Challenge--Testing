@@ -6,6 +6,7 @@ const games = [
 
 ];
 
+// Sanity check
 server.get("/", (req, res) => {
 	res.status(200).json({ message: "server is operational" });
 });
@@ -19,16 +20,18 @@ server.get("/api/games", (req, res) => {
 server.post("/api/games", (req, res) => {
   const { title, genre, releaseYear } = req.body;
   //if request body is missing any of those components
-   if (!title || !genre || !releaseYear) {
+  if (!title || !genre || !releaseYear) {
     return res
       .status(422)
       .json({ error: "Must include title, genre, and release year" });
-    }
-    else 
+  }
+  else {
     games.push({ title: title, genre: genre, releaseYear: releaseYear });
     res
-      .status(200)
-      .json({ title: title, genre: genre, releaseYear: releaseYear });
+    .status(200)
+    .json({ title: title, genre: genre, releaseYear: releaseYear });
+  }
+  
 });
 
 //Delete Endpoint
