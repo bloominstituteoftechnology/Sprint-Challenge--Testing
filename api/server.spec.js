@@ -33,28 +33,52 @@ describe('server.js', () => {
 	}); // describe 'GET /games/'
 
 	describe('GET /games/:id', () => {
-		it('should return status 200(OK)', async () => {
-			const id = 1;
-			const response = await request(server).get(`/games/${ id }`);
-			expect(response.status).toBe(200);
-		});
+		describe('calling with a game id that exists', () => {
+			it('should return status 200(OK)', async () => {
+				const id = 1;
+				const response = await request(server).get(`/games/${ id }`);
+				expect(response.status).toBe(200);
+			});
+	
+			it('should return JSON', async () => {
+				const id = 1;
+				const response = await request(server).get(`/games/${ id }`);
+				expect(response.type).toBe('application/json');
+			});
+	
+			it('should return the game with the given id', async () => {
+				const id = 1;
+				const response = await request(server).get(`/games/${ id }`);
+				const expected = [
+					{ 'id': 1, 'title': 'Pacman', 'genre': 'Arcade', 'releaseYear': 1980, },
+				];
+				expect(Array.isArray(response.body)).toBe(true);
+				expect(response.body.length).toEqual(1);
+				expect(response.body).toEqual(expected);
+			});
+		}); // describe 'calling with a game id that exists'
 
-		it('should return JSON', async () => {
-			const id = 1;
-			const response = await request(server).get(`/games/${ id }`);
-			expect(response.type).toBe('application/json');
-		});
-
-		it('should return the game with the given id', async () => {
-			const id = 1;
-			const response = await request(server).get(`/games/${ id }`);
-			const expected = [
-				{ 'id': 1, 'title': 'Pacman', 'genre': 'Arcade', 'releaseYear': 1980, },
-			];
-			expect(Array.isArray(response.body)).toBe(true);
-			expect(response.body.length).toEqual(1);
-			expect(response.body).toEqual(expected);
-		});
+		describe('calling with a game id that does not exist', () => {
+			it('should return status 404(Not Found)', async () => {
+				const id = 4;
+				const response = await request(server).get(`/games/${ id }`);
+				expect(response.status).toBe(404);
+			});
+	
+			it('should return JSON', async () => {
+				const id = 4;
+				const response = await request(server).get(`/games/${ id }`);
+				expect(response.type).toBe('application/json');
+			});
+	
+			it('should return an error message', async () => {
+				const id = 4;
+				const response = await request(server).get(`/games/${ id }`);
+				const expected = { error: `Game with id ${ id } does not exist.` };
+				expect(typeof(response.body)).toBe('object');
+				expect(response.body).toEqual(expected);
+			});
+		}); // describe 'calling with a game id that does not exist'
 	}); // describe 'GET /games/:id'
 
 	describe('POST /games/', () => {

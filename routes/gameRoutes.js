@@ -14,6 +14,20 @@ router.get('/', (req, res) => {
 		.catch(err => res.status(500).json(`Server could not retrieve game information: ${ err }`));
 });
 
+// return game with given id
+router.get('/:id', (req, res) => {
+	const { id } = req.params;
+	return gameDb
+		.get(id)
+		.then(game => {
+			if (!game.length) {
+				return res.status(404).json({ error: `Game with id ${ id } does not exist.` });
+			}
+			return res.status(200).json(game);
+		})
+		.catch(err => res.status(500).json(`Server could not retrieve game information: ${ err }`));
+});
+
 // insert new game and return that newly inserted game
 router.post('/', (req, res) => {
 	const game = req.body;
