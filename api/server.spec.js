@@ -36,8 +36,8 @@ describe('server.js', () => {
 			const response = await request(server).get('/games/all');
 			const expected = [
 				{ 'id': 1, 'title': 'Pacman', 'genre': 'Arcade', 'releaseYear': 1980, },
-				{ 'id': 2, 'title': 'Tetris', 'genre': 'Arcade', },
-				{ 'id': 3, 'title': 'Dragon Quest', 'genre': 'RPG', },
+				{ 'id': 2, 'title': 'Tetris', 'genre': 'Arcade', 'releaseYear': null, },
+				{ 'id': 3, 'title': 'Dragon Quest', 'genre': 'RPG', 'releaseYear': null, },
 			];
 			expect(Array.isArray(response.body)).toBe(true);
 			expect(response.body.length).toEqual(3);
