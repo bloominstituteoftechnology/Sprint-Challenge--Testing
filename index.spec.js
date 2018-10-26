@@ -39,11 +39,20 @@ describe('server', () => {
 
   describe('POST /games', async () => {
     it('returns status code 422 if missing required fields', async () => {
-      //return 422 if missing title or genre
+      const response = await request(server)
+        .post('/games')
+        .send({ title: 'Skyrim', releaseYear: 2011 });
+
+        expect(response.status).toBe(422);
     });
 
     it('returns status code 201 when required fields are complete', async () => {
-      //returns 201 if includes title and genre
+      
+      const response = await request(server)
+        .post('/games')
+        .send({ title: 'Pokemon Yellow', genre: 'RPG' })
+
+        expect(response.status).toBe(201);
     })
   })
 });
