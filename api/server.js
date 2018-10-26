@@ -48,11 +48,15 @@ server.get("/games", (req, res) => {
 
 server.post("/games", (req, res) => {
   const game = req.body;
+  console.log(game, "THIS IS THE LOG!!");
+  console.log(game.genre, "this is genre");
+  console.log(game.title, "this is the title");
+
   if (!game.title || !game.genre) {
     res.status(422).json({ error: "missing title or genre" });
   } else {
     games.push(game);
-    res.status(200).json(games);
+    res.status(200).json(game);
   }
 });
 

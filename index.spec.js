@@ -59,7 +59,7 @@ describe("GET /games", () => {
 describe("POST /games", () => {
   it("should return a 200 status", async () => {
     const newGame = {
-      title: "Cool Game",
+      title: "Cool Game1",
       genre: "Shooter",
       releaseDate: 10 / 26 / 2018
     };
@@ -70,10 +70,9 @@ describe("POST /games", () => {
   });
   it("should gimme a game", async () => {
     const newGame = {
-      id: 6,
-      title: "Cool Game",
-      genre: "Shooter"
-      //   releaseDate: 10 / 26 / 2018
+      title: "Cool Game2",
+      genre: "Shooter",
+      releaseDate: 10 / 26 / 2018
     };
     const response = await request(server)
       .post("/games")
@@ -82,7 +81,7 @@ describe("POST /games", () => {
   });
   it("should return 422 status if missing info", async () => {
     const newGame = {
-      genre: "Shooter",
+      genre: "Shooter1",
       releaseDate: 10 / 26 / 2018
     };
     const response = await request(server)
