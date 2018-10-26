@@ -23,6 +23,59 @@ describe('server', () => {
     });
   });
 
+  describe('POST /games', () => {
+    it('post sends a status of 201(Created)', async () => {
+      const newGame = {
+        title: 'Pacman',
+        genre: 'Arcade',
+        releaseYear: 1980,
+      };
+
+      const response = await request(server)
+        .post('/games')
+        .send(newGame);
+
+      expect(response.status).toBe(201);
+    });
+
+    it('adds a new game into the array', async () => {
+      const newGame = {
+        title: 'Pacman',
+        genre: 'Arcade',
+        releaseYear: 1980,
+      };
+
+      const response = await request(server)
+        .post('/games')
+        .send(newGame);
+      expect(response.body).toEqual(expect.arrayContaining([newGame]));
+    });
+
+    it('genre is required', async () => {
+      const newGame = {
+        title: 'Prince of Persia',
+      };
+
+      const response = await request(server)
+        .post('/games')
+        .send(newGame);
+
+      expect(response.status).toBe(422);
+    });
+
+    it('title is required', async () => {
+      const newGame = {
+        genre: 'Action',
+      };
+
+      const response = await request(server)
+        .post('/games')
+        .send(newGame);
+
+      expect(response.status).toBe(422);
+    });
+  });
+
   it('server running', () => {
     expect(true).toBeTruthy();
     expect(false).toBeFalsy();

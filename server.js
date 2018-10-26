@@ -5,36 +5,36 @@ const server = express();
 server.use(express.json());
 
 let gamesList = [
-  // {
-  //   name: 'Spider-Man',
-  //   yearRelease: 2018,
-  //   genre: 'action-adventure',
-  // },
-  // {
-  //   name: 'Fallout 4',
-  //   yearRelease: 2017,
-  //   genre: 'action, role-playing',
-  // },
-  // {
-  //   name: "PLAYERUNKOWN'S Battlegrounds",
-  //   yearRelease: 2017,
-  //   genre: 'Action',
-  // },
-  // {
-  //   name: 'Minecraft',
-  //   yearRelease: 2009,
-  //   genre: 'sandBox, survival Game',
-  // },
-  // {
-  //   name: 'Grand Theft Auto V',
-  //   yearRelease: 2013,
-  //   genre: 'action-adventure',
-  // },
-  // {
-  //   name: 'Portal',
-  //   yearRelease: 2007,
-  //   genre: 'platform, puzzle',
-  // },
+  {
+    title: 'Spider-Man',
+    genre: 'action-adventure',
+    releaseYear: 2018,
+  },
+  {
+    title: 'Fallout 4',
+    genre: 'action, role-playing',
+    releaseYear: 2017,
+  },
+  {
+    title: "PLAYERUNKOWN'S Battlegrounds",
+    genre: 'Action',
+    releaseYear: 2017,
+  },
+  {
+    title: 'Minecraft',
+    genre: 'sandBox, survival Game',
+    releaseYear: 2009,
+  },
+  {
+    title: 'Grand Theft Auto V',
+    genre: 'action-adventure',
+    releaseYear: 2013,
+  },
+  {
+    title: 'Portal',
+    genre: 'platform, puzzle',
+    releaseYear: 2007,
+  },
 ];
 
 server.get('/games', (req, res) => {
@@ -42,6 +42,18 @@ server.get('/games', (req, res) => {
     res.status(200).json({ games: [] });
   } else {
     res.status(200).json({ games: gamesList });
+  }
+});
+
+server.post('/games', (req, res) => {
+  const { title, genre, releaseYear } = req.body;
+
+  if (!title || !genre) {
+    res.status(422).json({ message: 'Name and genre required' });
+  } else {
+    gamesList = [...gamesList, req.body];
+
+    res.status(201).send(gamesList);
   }
 });
 
