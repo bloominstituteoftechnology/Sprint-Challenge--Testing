@@ -17,7 +17,6 @@ describe("server", () => {
 
     it("should return empty array", async () => {
       const response = await request(server).get("/games");
-      expect(response.type).toBe("application/json");
       expect(response.body).toBeInstanceOf(Array);
     });
   });
@@ -36,6 +35,7 @@ describe("server", () => {
 
       expect(response.body).toEqual([testGame]);
     });
+
     it("should return status code 200(ok)", async () => {
       const testGame = {
         title: "Pacman",
