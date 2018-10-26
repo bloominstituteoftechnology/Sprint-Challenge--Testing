@@ -1,4 +1,4 @@
-# Testing Sprint Challenge
+# Testing Sprint Challenge 
 
 For this project you will use TDD to create a simple Web API using Node.js and Express. The basic requirements for the endpoints are listed below. Create any files and folders you need to finish the project, you have complete freedom to structure your solution to make it easier to test and extend in the future.
 
