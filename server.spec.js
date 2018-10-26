@@ -3,18 +3,18 @@ const server = require('./server');
 
 describe('server.js', () => {
     describe('GET games', () => {
-        it('should return a 200 status code', () => {
-            const response = request(server).get('/games');
+        it('should return a 200 status code', async() => {
+            const response = await request(server).get('/games');
             expect(response.status).toBe(200);
         });
 
-        it('should return an array', () => {
-            const response = request(server).get('/games');
-            expect(typeof response.body).toBe('array');
+        it('should return an array', async() => {
+            const response = await request(server).get('/games');
+            expect(Array.isArray(response.body)).toBeTruthy();
           });
 
-        it('should return a list of games', () => {
-            const response = request(server).get('/games');
+        it('should return a list of games', async() => {
+            const response = await request(server).get('/games');
             const expected = [
                 { 
                     id: 1,
@@ -27,15 +27,22 @@ describe('server.js', () => {
         });
     });
     describe('POST games', () => {
-        it('should return a status code of 422 if missing information', () => {
-            const response = request(server)
+        it('should return a status code of 422 if missing information', async() => {
+            const response = await request(server)
             .post('/games')
             .send({ title: 'Pacman' });
             expect(response.status).toBe(422);
         });
 
-        it('should return games if succesfully added', () => {
-            const response = request(server)
+        it('should return a status code of 405 if title already exists', async () => {
+            const response = await request(server)
+              .post('/games')
+              .send({ title: 'Pacman', genre: 'Arcade' });
+            expect(response.status).toBe(405);
+          });
+
+        it('should return games if succesfully added', async() => {
+            const response = await request(server)
             .post('/games')
             .send({
                 title: 'Pacman', 
@@ -52,8 +59,8 @@ describe('server.js', () => {
             expect(response.body).toEqual(expected);
         });
         
-        it('should return a status code of 201 if successful', () => {
-            const response = request(server)
+        it('should return a status code of 201 if successful', async() => {
+            const response = await request(server)
             .post('/games')
             .send({
                 title: 'Super Mario', 
