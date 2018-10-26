@@ -11,4 +11,23 @@ describe("server.js", () => {
         .expect(201);
     });
   });
+
+  describe("GET /games", () => {
+    it("should return a list of the games, with a status code of 200", async () => {
+      await request(server)
+        .get("/games")
+        .expect("Content-Type", /json/)
+        .expect(200, [
+          { id: 1, title: "Pacman", genre: "Arcade", releaseYear: 1980 }
+        ]);
+    });
+
+    it("should always return an array of data", async () => {
+      await request(server)
+        .get("/games")
+        .then(response => {
+          typeof response === "array";
+        });
+    });
+  });
 });
