@@ -20,12 +20,21 @@ let data = [
 ];
 
 function unique(title) {
-for(i=0; i<data.length; i++) {
-    if(title === data[i].title) {
-    return false;
+    for(i=0; i<data.length; i++) {
+        if(title === data[i].title) {
+        return false;
+        }
     }
-}
-return true;
+    return true;
+};
+
+function findGame(id) {
+    const game = data.find(game => game.id === id);
+    if(!game) {
+        return false;
+    } else {
+        return game; 
+    }
 }
 
 let newId = 3;
@@ -39,6 +48,17 @@ server.use(express.json());
 server.get('/games', (req, res) => {
   res.status(200).json(data); 
 });
+
+server.get('/games/:id', (req, res) => {
+    const id = req.params.id;
+    console.log('id', id);
+    const game = findGame(Number(id));
+    if(!game) {
+        res.status(404).json({ error: 'No game found by that id' });
+    } else {
+        res.status(200).json(game);
+    }
+})
 
 server.post('/games', (req, res) => {
     const { title, genre, releaseYear } = req.body;
