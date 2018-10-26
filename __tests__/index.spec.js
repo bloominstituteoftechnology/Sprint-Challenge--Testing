@@ -20,5 +20,15 @@ describe('test suites for basic API operations', () => {
       expect(response.body.length).toBe(5);
     });
 
-  });
+  }); // GET
+
+  describe('POST tests', () => {
+
+    test('status code returned should be 422 if data format is not correct', async () => {
+      const game = {"game": "Dota 2"};
+      const response = await request(server).post('/games').send(game);
+      expect(response.status).toBe(422);
+    });
+    
+  })
 });
