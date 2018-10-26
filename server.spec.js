@@ -2,6 +2,7 @@ const request = require("supertest");
 
 const server = require("./api/server.js");
 
+//POST Tests
 describe("POST /games", () => {
   it("should add game", async () => {
     const title = "Pacman";
@@ -29,17 +30,17 @@ describe("POST /games", () => {
     expect(response.status).toEqual(200);
   });
 
-  it("should return status code 422 if missing info"),
-    async () => {
-      const response = await request(server).post("/games");
+  it("should return status code 422 if missing info", async () => {
+    const response = await request(server).post("/games");
 
-      expect(response.status).toEqual(422);
-    };
+    expect(response.status).toEqual(422);
+  });
 
-  it("should return JSON"),
-    async () => {
-      const response = await request(server).post("/games");
+  it("should return JSON", async () => {
+    const response = await request(server).post("/games");
 
-      expect(response.type).toBe("application/json");
-    };
+    expect(response.type).toBe("application/json");
+  });
 });
+
+//GET Tests
