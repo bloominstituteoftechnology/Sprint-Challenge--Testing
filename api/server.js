@@ -36,8 +36,14 @@ server.get('/', (req, res) => {
 
 server.post('/games', (req, res) => {
   const { game } = req.body;
-  gamesDb.push(game);
-  res.status(201).json(gamesDb)
+
+  if (!game) {
+      return res.status(400).send({ error: "Please provide valid game data." });
+  } else {
+    gamesDb.push(game);
+    return res.status(201).json(gamesDb)
+  }
+
 })
 
 module.exports = server;

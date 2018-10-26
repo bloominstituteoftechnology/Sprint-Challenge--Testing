@@ -4,9 +4,37 @@ const server = require('./api/server.js');
 
 describe('server', () => {
   // test for POST ENDPOINT
+
+  const expected = [
+    {
+      "title": "Pacman",
+      "genre": "Arcade",
+      "releaseYear": 1980
+    },
+    {
+      "title": "Centipede",
+      "genre": "Arcade",
+      "releaseYear": 1980
+    },
+    {
+      "title": "Galaga",
+      "genre": "Arcade",
+      "releaseYear": 1981
+    },
+    {
+      "title": "Ateriods",
+      "genre": "Arcade",
+      "releaseYear": 1979
+    },
+    {
+      "title": "Tekken World Cup",
+      "genre": "Arcade",
+      "releaseYear": 1985
+    }
+  ]
   describe('POST /games', () => {
-    // check for adding content inside the db
-    it('should add a game', async () => {
+    // check for adding content inside the db and return status code 201
+    it('should add a game and return status code 201', async () => {
       const game = {
         "title": "Tekken World Cup",
         "genre": "Arcade",
@@ -17,43 +45,18 @@ describe('server', () => {
         .post(`/games`)
         .send({game});
 
-      const expected = [
-        {
-          "title": "Pacman",
-          "genre": "Arcade",
-          "releaseYear": 1980
-        },
-        {
-          "title": "Centipede",
-          "genre": "Arcade",
-          "releaseYear": 1980
-        },
-        {
-          "title": "Galaga",
-          "genre": "Arcade",
-          "releaseYear": 1981
-        },
-        {
-          "title": "Ateriods",
-          "genre": "Arcade",
-          "releaseYear": 1979
-        },
-        {
-          "title": "Tekken World Cup",
-          "genre": "Arcade",
-          "releaseYear": 1985
-        }
-      ]
-      
-      
       expect(response.body).toEqual(expected);
+      expect(response.status).toBe(201);
     });
 
     // check for correct http status code
-    it('should return status code 201', async () => {
-      const response = await request(server).post('/games');
+    it('should return status code 400 when recieiving incorrect game data', async () => {
+      
+      const response = await request(server)
+        .post(`/games`)
+        .send({});
 
-      expect(response.status).toBe(201);
+      expect(response.status).toBe(400);
     });
   });
 
