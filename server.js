@@ -49,7 +49,7 @@ server.post('/games', (req, res) => {
 			})
 			.catch(err => {
 				if (err.code === 'SQLITE_CONSTRAINT') {
-					res.status(409).json({ error: `${game.title} already exists` });
+					res.status(405).json({ error: `${game.title} already exists` });
 				} else {
 					res.status(500).json(err);
 				}
@@ -58,5 +58,20 @@ server.post('/games', (req, res) => {
 });
 
 // delete game by id
+server.delete('/games/:id', (req, res) => {
+	const { id } = req.params;
+
+	db('games')
+		.where({ id })
+		.del()
+		.then(count => {
+			if (count) {
+				res.status(204).json();
+			} else {
+				res.status(404).json({ error: 'no game by that id' });
+			}
+		})
+		.catch(err => res.status(500).json(err));
+});
 
 module.exports = server;
