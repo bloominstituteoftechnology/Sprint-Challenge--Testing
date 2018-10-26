@@ -77,6 +77,14 @@ describe("GET /games", () => {
   });
 });
 
+//GET by ID tests
+it("should return status code 200(OK)", async () => {
+  const id = 1;
+  const response = await request(server).get(`/games/${id}`);
+
+  expect(response.status).toBe(200);
+});
+
 //DELETE Tests
 describe("DELETE /games", () => {
   it("should delete the game with the specified id", async () => {
@@ -99,7 +107,7 @@ describe("DELETE /games", () => {
     const id = 10;
     const response = await request(server).delete(`/games/${id}`);
 
-    expect(response.status).toBe(200);
+    expect(response.status).toBe(404);
   });
 
   it("should return JSON", async () => {
