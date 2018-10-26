@@ -71,3 +71,29 @@ describe("GET /games", () => {
     expect(response.type).toBe("application/json");
   });
 });
+
+//DELETE Tests
+describe("DELETE /games", () => {
+  it("should delete the game with the specified id", async () => {
+    const id = 1;
+    const expected = { deleted: `${id}` };
+
+    const response = await request(server).delete(`/games/${id}`);
+
+    expect(response.body).toEqual(expected);
+  });
+
+  it("should return status code 200(OK)", async () => {
+    const id = 1;
+    const response = await request(server).delete(`/games/${id}`);
+
+    expect(response.status).toBe(200);
+  });
+
+  it("should return JSON", async () => {
+    const id = 1;
+    const response = await request(server).delete(`/games/${id}`);
+
+    expect(response.type).toBe("application/json");
+  });
+});
