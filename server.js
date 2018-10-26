@@ -9,4 +9,9 @@ server.get('/', (req, res) => {
   res.status(200).json({ API: 'We running young padawans!!' });
 });
 
+
+server.get("/games", (req, res) => {
+  res.status(200).json(db.games);
+});
+
 module.exports = server;

@@ -7,6 +7,14 @@ const games = [
   },
 ];
 
+const newGame = {
+  id: "500",
+  title: "Something I Made Up",
+  genre: "Card Game",
+  releaseYear: 1800,
+};
+
 module.exports = {
-  games
+  games,
+  newGame,
 };
