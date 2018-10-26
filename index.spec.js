@@ -29,7 +29,7 @@ describe('POST -- games', () => {
         expect(response.type).toEqual('application/json');
     });
 
-    it('returns a 422 status code if failed', async () => {
+    it('returns a 422 status code, if failed', async () => {
         const response = await request(server).post('/games').send({ title, releaseYear });
         expect(response.status).toEqual(422);
     });
