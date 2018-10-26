@@ -46,6 +46,14 @@ describe("POST /games", () => {
 //GET Tests
 describe("GET /games", () => {
   it("should return an array", async () => {
+    const title = "Pacman";
+    const genre = "Arcade";
+    const releaseYear = 1980;
+
+    const response = await request(server)
+      .post("/games")
+      .send({ title, genre, releaseYear });
+
     const getGames = await request(server).get("/games");
 
     expect(Array.isArray(getGames.body)).toBe(true);

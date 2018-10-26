@@ -6,7 +6,7 @@ server.use(express.json());
 
 const games = [];
 
-//Post Endpoint
+//POST Endpoint
 server.post("/games", (req, res) => {
   const { title, genre, releaseYear } = req.body;
 
@@ -19,6 +19,11 @@ server.post("/games", (req, res) => {
   res
     .status(200)
     .json({ title: title, genre: genre, releaseYear: releaseYear });
+});
+
+//GET Endpoint
+server.get("/games", (req, res) => {
+  res.status(200).json(games);
 });
 
 module.exports = server;
