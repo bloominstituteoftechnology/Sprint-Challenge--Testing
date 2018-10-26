@@ -55,7 +55,7 @@ describe('Server', () => {
                 
             ]
             const res = await request(server).get('/games');
-            expect(res.body).toBe(expected);
+            expect(res.body.data).toEqual(expected);
         });
     });
 });
