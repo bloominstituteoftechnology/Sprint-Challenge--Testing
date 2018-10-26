@@ -1,0 +1,13 @@
+{
+  "parserOptions": {
+    "ecmaVersion": "2016 || 2017 || 2018"
+  },
+  "exends": ["slint:recommended"],
+  "rules": {
+    "valid-typeof": "warn",
+    "no-console": "off"
+  },
+  "env": {
+    "browser": true
+  }
+}

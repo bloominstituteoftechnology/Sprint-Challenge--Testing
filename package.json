@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "jest --watch --verbose",
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "lint": "eslint server.test.js"
   },
   "repository": {
     "type": "git",
