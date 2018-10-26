@@ -94,4 +94,32 @@ describe('server', () => {
       expect(response.status).toBe(405);
     });
   }); // describe POST /games
+
+  describe('GET /games/:id', () => {
+    it('should return status 200', async () => {
+      const id = 1;
+      const response = await request(server).get(`/games/${id}`);
+
+      expect(response.status).toBe(200);
+    });
+
+    it('should return game object with id 1', async () => {
+      const id = 1;
+      const response = await request(server).get(`/games/${id}`);
+      const expected = {
+        id: 1,
+        title: 'Pacman', // required
+        genre: 'Arcade', // required
+        releaseYear: 1980, // not required
+      };
+      expect(response.body).toEqual(expected);
+    });
+
+    it('should return status 404 when game with id does not exist', async () => {
+      const id = 1123;
+      const response = await request(server).get(`/games/${id}`);
+
+      expect(response.status).toEqual(404);
+    });
+  }); // describe GET /games/:id
 }); // describe server
