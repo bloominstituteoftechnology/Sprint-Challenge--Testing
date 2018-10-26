@@ -21,4 +21,21 @@ describe('server.js', ()=> {
         });
 
     });
+
+    describe('GET /ourgames', ()=> {
+        it('should return a 200 OK status', ()=> {
+            let response;
+            const expected = 200;
+            return request(server).get('/ourgames').then(res=> {
+                response = res;
+                expect(response.status).toEqual(expected);
+            })
+        });
+
+        it('should return a JSON object', async ()=> {
+            const expected = { games: "Racing Game" };
+            const response = await request(server).get('/ourgames');
+            expect(response.body).toEqual(expected);
+        })
+    });
 });
