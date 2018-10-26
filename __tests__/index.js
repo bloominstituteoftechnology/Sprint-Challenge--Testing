@@ -81,6 +81,14 @@ describe('server.js', () => {
       expect(response.status).toEqual(expected)
     })
 
+    it('should return an array', async () => {
+      const expected = true
+      const response = await request(server).get('/games')
+      expect(response.body.constructor === Array).toBe(expected)
+    })
+
+
+
   })
 
 

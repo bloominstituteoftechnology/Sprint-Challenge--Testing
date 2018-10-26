@@ -35,7 +35,7 @@ server.post('/games', (req, res) => {
 })
 
 server.get('/games', (req, res) => {
-  res.status(200).json({message: 'some message'})
+  res.status(200).json([])
 })
 
 
