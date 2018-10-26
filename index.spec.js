@@ -2,13 +2,6 @@ const request = require('supertest');
 
 const server = require('./api/server.js');
 
-let games = [
-  {
-    title: "Pacman",
-    genre: "Arcade",
-    releaseYear: 1980
-  }
-];
 
 describe('server', () => {
   describe.skip('GET /', () => {
@@ -35,8 +28,7 @@ describe('server', () => {
     it('returns the list of games', async () => {
       const response = await request(server).get('/games');
 
-      expect(response.body).toEqual(games);
-      //expect response to equal games
+      expect(response.type).toBe('application/json');
     });
 
     it('returns status code 200 if successful', async () => {
@@ -45,11 +37,11 @@ describe('server', () => {
       expect(response.status).toBe(200);
     });
 
-    it('always returns an array', () => {
+    it('always returns an array', async () => {
       const response = await request(server).get('/games');
       
       expect(Array.isArray(response.body)).toBe(true);
-      //expect response to be an array
+  
     });
   })
 
