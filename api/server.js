@@ -6,11 +6,7 @@ const server = express();
 server.use(express.json());
 server.use(helmet());
 
-let games = {
-  title: 'Pacman',
-  genre: 'Arcade',
-  releaseYear: 1980
-};
+let games = [];
 
 // router.route('/games')
 //   .get((req, res) => {
@@ -19,6 +15,17 @@ let games = {
 
 server.get('/games', (req, res) => {
   res.status(200).json(games);
+})
+
+server.post('/games', (req, res) => {
+  const { title, genre, releaseYear }  = req.body;
+  const newGame = { title, genre, releaseYear };
+  if(!title || !genre) {
+    return res.status(422).json({ Error: 'Please provide required info.'})
+  } else {
+    games.push(newGame);
+    return res.status(200).json(games);
+  };
 })
 
 
