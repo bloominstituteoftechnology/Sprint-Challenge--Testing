@@ -19,6 +19,15 @@ let data = [
     }
 ];
 
+function unique(title) {
+for(i=0; i<data.length; i++) {
+    if(title === data[i].title) {
+    return false;
+    }
+}
+return true;
+}
+
 let newId = data.length;
 
 const express = require('express');
@@ -37,9 +46,14 @@ server.post('/games', (req, res) => {
         res.status(422).json({ error: 'Send request with proper object structure and key value pairs' });
     } else {
         const newUser = { title, genre, releaseYear, "id": newId };
-        data = [...data, newUser];
-        res.status(201).json({newUser});
-    }
+        
+        if(!unique(newUser.title)) {
+            res.status(405).json({ error: 'Title of game is not unique to database' });
+        } else {
+            data = [...data, newUser];
+            res.status(201).json({newUser});
+        }
+    };
 })
 
 module.exports = server; 
