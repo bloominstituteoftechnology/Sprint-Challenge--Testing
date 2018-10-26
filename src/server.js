@@ -33,3 +33,6 @@ server.post("/games", (req, res) => {
 server.get("/games", (req, res) => {
   return res.status(200).json(games);
 });
+
+// export server
+module.exports = server;

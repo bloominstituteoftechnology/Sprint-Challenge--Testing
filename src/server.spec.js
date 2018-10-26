@@ -49,3 +49,20 @@ describe("GET /games", () => {
   });
 });
 
+
+describe("GET /games/:id", () => {
+  it("should return a game bassed on id provided", async () => {
+    await request(server)
+      .get("/games/1")
+      .expect("Content-Type", /json/)
+      .expect(200, { id: 1, title: "Pacman", genre: "Arcade", releaseYear: 1980 });
+  });
+
+  it("should return a 404 error when a game is not found in the returned data", async () => {
+    await request(server)
+      .get("/games/22")
+      .expect("Content-Type", /json/)
+      .expect(404);
+  });
+});
+
