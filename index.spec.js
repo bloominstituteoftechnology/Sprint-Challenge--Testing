@@ -84,10 +84,14 @@ describe('POST /games Endpoint', () => {
     describe('Endpoint Failure Tests', () => {
         // Failure Responses
         beforeAll( async () => {
+            // Valid Request for Duplicate Testing
+            await request(server).post('/games').send({ title: 'Centipede', genre: 'Arcade', releaseYear: 1980 });
+
+            // Object with Failure Responses
             return failureResponses = {
                 missingTitle: await request(server).post('/games').send({ title: 'Centipede', releaseYear: 1980 }),
                 missingGenre: await request(server).post('/games').send({ genre: 'Arcade', releaseYear: 1980 }),
-                missingBoth: await request(server).post('/games').send({ releaseYear: 1980 }),
+                missingBoth: await request(server).post('/games').send({ releaseYear: 1980 })
             }
         });
 
@@ -100,11 +104,23 @@ describe('POST /games Endpoint', () => {
         })
 
         it ('Should respond with an errorMessage if not sent a title or genre', () => {
-            const errorMessage = {errorMessage: "You must provide a title and genre when adding a game."};
+            const errorMessage = { errorMessage: "You must provide a title and genre when adding a game." };
 
             expect(failureResponses.missingTitle.body).toEqual(errorMessage);
             expect(failureResponses.missingGenre.body).toEqual(errorMessage);
             expect(failureResponses.missingBoth.body).toEqual(errorMessage);
+        })
+
+        it('Should respond with a status code of 405 (Not Allowed) if sent a duplicate game title', async () => {
+            const errorCode = 405;
+            const duplicateTitle = await request(server).post('/games').send({ title: 'Centipede', genre: 'Mobile', releaseYear: 2015 });
+            expect(duplicateTitle.status).toBe(errorCode);
+        })
+
+        it('Should respond with an errorMessage if sent a duplicate game title', async () => {
+            const errorMessage = { errorMessage: "A game with that title has already added. Titles must be unique." };
+            const duplicateTitle = await request(server).post('/games').send({ title: 'Centipede', genre: 'Mobile', releaseYear: 2015 });
+            expect(duplicateTitle.body).toEqual(errorMessage);
         })
 
     })
@@ -139,7 +155,7 @@ describe('POST /games Endpoint', () => {
 
         it('Should have increased the size of the unit resource by 1', async () => {
             const initialGetResponse = await request(server).get('/games');
-            await request(server).post('/games').send({ title: 'Centipede', genre: 'Arcade', releaseYear: 1980 });
+            await request(server).post('/games').send({ title: 'Frogger', genre: 'Arcade', releaseYear: 1981 });
             const finalGetResponse = await request(server).get('/games');
 
             expect(finalGetResponse.body.length).toBe(initialGetResponse.body.length + 1);

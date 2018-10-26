@@ -36,8 +36,15 @@ server.post('/games', (request, response) => {
     // Deconstruct Request Body
     let { title, genre, releaseYear } = request.body;
 
+    // Validation
     if ( !title || !genre ) {
-        return response.status(422).json({errorMessage: 'You must provide a title and genre when adding a game.'})
+        return response.status(422).json({ errorMessage: 'You must provide a title and genre when adding a game.' })
+    }
+
+    for ( i = 0; i < games.length; i++ ) {
+        if (games[i].title === title) {
+            return response.status(405).json({ errorMessage: "A game with that title has already added. Titles must be unique." })
+        }
     }
 
     if ( !releaseYear ) {
