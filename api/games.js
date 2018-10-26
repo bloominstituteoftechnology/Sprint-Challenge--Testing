@@ -25,7 +25,8 @@ router.post('/', (req, res, next) => {
 		const releaseYear = req.body.releaseYear || null;
 		const newGame = { id: count, title, genre, releaseYear };
 		const doesExist = gameFilter(title);
-		if (doesExist.length === 0 || doesExist[0].title !== title) {
+
+		if (doesExist.length === 0 || (doesExist[0].title !== title && doesExist.length === 1)) {
 			state.push(newGame);
 			count++;
 			const postedGame = gameFilter(title);
