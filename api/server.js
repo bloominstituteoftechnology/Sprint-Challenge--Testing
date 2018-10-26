@@ -28,7 +28,7 @@ for(i=0; i<data.length; i++) {
 return true;
 }
 
-let newId = data.length;
+let newId = 3;
 
 const express = require('express');
 
@@ -52,6 +52,7 @@ server.post('/games', (req, res) => {
         } else {
             data = [...data, newUser];
             res.status(201).json({newUser});
+            newId++; 
         }
     };
 })
