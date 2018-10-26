@@ -7,7 +7,10 @@ server.use(helmet());
 server.use(express.json());
 
 //in-memory db:
-let games = [];
+let games = [
+  { name: "Pac Man", genre: "Arcade", releaseYear: 1980 },
+  { name: "Street Fighter", genre: "Arcade", releaseYear: 1987 }
+];
 
 //routes
 server.get("/", (req, res) => {
@@ -23,6 +26,10 @@ server.post("/games", (req, res) => {
     games.push(newGame);
     res.status(201).json({ message: "New game was added" });
   }
+});
+
+server.get("/games", (req, res) => {
+  res.status(200).json(games);
 });
 
 module.exports = server;
