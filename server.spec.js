@@ -48,7 +48,7 @@ describe ("GET endpoint for /games API", () => {
 
   it("should return an array (of objects)", async () => {
     const response = await request(server).get('/games');
-    expect(typeof response.body).toBe('array');
+    expect(response.body.isArray(['value'])).toBe(true);
   });
 
   // it('should return a game title', async () => {
