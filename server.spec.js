@@ -19,7 +19,7 @@ describe("POST endpoint for /games API", () => {
 
       const response = await request(server)
         .post("/games").send({ title, genre });
-        expect(response.status).toEqual(200);
+        expect(response.status).toEqual(200); //should this be 201?
       });
 
       it("should return status 422 if bad POST request", async () => {
@@ -46,9 +46,14 @@ describe ("GET endpoint for /games API", () => {
     expect(response.type).toBe('application/json');
   });
 
-  it('should return a game title', async () => {
-    const expected = 'Pacman';
+  it("should return an array (of objects)", async () => {
     const response = await request(server).get('/games');
-    expect(response.body.title).toEqual(expected);
+    expect(typeof response.body).toBe('array');
   });
+
+  // it('should return a game title', async () => {
+  //   const expected = 'Pacman';
+  //   const response = await request(server).get('/games');
+  //   expect(response.body.title).toEqual(expected);
+  // });
 })
