@@ -3,7 +3,12 @@ const express = require('express');
 const server = express();
 server.use(express.json());
 
-const games = [];
+const games = [
+    {
+        "title": "Pacman",
+        "genre": "Console"
+    }
+];
 
 server.post("/games", (req, res) => {
   const { title, genre } = req.body;
