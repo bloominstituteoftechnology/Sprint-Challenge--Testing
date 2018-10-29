@@ -1,15 +1,18 @@
+const request = require('supertest');
+const server = require('./server.js');
+
 describe('server.js', () => {
   describe('GET /games', () => {
-    it('should return a status code of 200', () => {
-      const response = request(server).get('/games');
+    it('should return a status code of 200', async () => {
+      const response = await request(server).get('/games');
       expect(response.status).toBe(200);
     });
     it('should always return an array', async () => {
-      const response = request(server).get('/games');
-      expect(Array.isArray (response.body)).toBe('array');
+      const response = await request(server).get('/games');
+      expect(Array.isArray (response.body)).toBeTruthy();
     });
     it('should return a list of games', async () => {
-      const response = request(server).get('/games');
+      const response = await request(server).get('/games');
       const expected = [
         { id: 1, title: 'Fortnite', genre: 'Battle Royale', releaseYear: 2017 },
         { id: 2, title: 'Fifa 19', genre: 'Sports', releaseYear: 2018 }
