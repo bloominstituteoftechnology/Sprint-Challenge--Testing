@@ -10,11 +10,17 @@ server.get('/', (req, res) => {
   res.status(200).json({ message: 'server is running' });
 });
 
-// server.post('/api/notes', (req, res) => {
-//   const note = req.body; //{ noteTitle: 'some title', noteBody: 'someBody' }
-//   const title = req.body.noteTitle;
+let games = [];
 
-//   res.status(200).json({ newNote: title });
-// });
+server.post('/games', (req, res) => {
+  const newGame = req.body; 
+  if (!newGame.title) {
+    res.status(400).json('Error: No game title provided');
+  } else if (typeof newGame.releaseYear !== 'number') {
+    res.status(400).json('Error: Release Year must be a number');
+  }
+  games.push(newGame);
+  res.status(200).json(newGame);    
+});
 
 module.exports = server;
