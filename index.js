@@ -5,19 +5,19 @@ server.use(express.json())
 
 let games = [
   {
-    id: '1',
+    id: 1,
     title: 'Pacman', // required
     genre: 'Arcade', // required
     releaseYear: 1980 // not requred
   },
   {
-    id: '2',
+    id: 2,
     title: 'MarioBros', // required
     genre: 'NoIdea', // required
     releaseYear: 1992 // not required
   },
   {
-    id: '3',
+    id: 3,
     title: 'MadeUpGame', //required
     genre: 'Fake', //required
     releaseYear: 2018 // not required
