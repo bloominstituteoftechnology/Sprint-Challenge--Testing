@@ -17,5 +17,16 @@ describe('server.js', () => {
         .send({title, genre, releaseYear});
         expect(response.body).toEqual(expected);
       }); // should post a game
+    it('should return a 422 code if information missing', async () => {
+        const newGame = {
+            title: 'Tekken',
+            releaseYear: '1994'
+        };
+        
+        const response = await request(server)
+        .post('/games')
+        .send(newGame);
+        expect(response.status).toBe(422);
+    }); // should return a 422 code if information missing
     }) // post /games
 }) // server.js
