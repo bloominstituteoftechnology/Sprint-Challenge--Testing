@@ -78,6 +78,7 @@ describe('server.js', () => {
         ];
         expect(response.body).toEqual(expected);
     }); // should return a list of found game
+    
     it('should return 404 code if the game was not found', async () => {
         const response = await request(server)
         .get('/games/88');
