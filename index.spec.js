@@ -33,7 +33,6 @@ describe('server.js', () => {
 
     it('should return a 200 code if a new game is posted successfully', async () => {
         const newGame = {
-          id: 1,
           title: 'Donkey Kong',
           genre: 'Arcade',
           releaseYear: '1981'
@@ -70,14 +69,19 @@ describe('server.js', () => {
         it('should return a list of found game', async () => {
         const response = await request(server).get('/games/1');
         const expected = [
-            { 
-            id: 1, 
-            title: 'Tumbang Preso',
-            genre: 'Traditional',
-            releaseYear: 1600
-        },
-    ];
-    expect(response.body).toEqual(expected);
-}); // should return a list of found game
-}); // GET /games/:id
+            {
+                id: 1, 
+                title: 'Tumbang Preso',
+                genre: 'Traditional',
+                releaseYear: 1600
+            },
+        ];
+        expect(response.body).toEqual(expected);
+    }); // should return a list of found game
+    it('should return 404 code if the game was not found', async () => {
+        const response = await request(server)
+        .get('/games/88');
+        expect(response.status).toBe(404);
+      }); //404 if the game was not found
+    }); // GET /games/:id
 }) // server.js
