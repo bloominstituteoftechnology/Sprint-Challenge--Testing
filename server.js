@@ -20,5 +20,8 @@ server.post('/games', (req, res) => {
       res.status(200).json({ message: `${title} ${genre} from ${releaseYear} has been added!` });
     };
   })
-
+  
+server.get('/games', (req, res) => {
+  res.status(200).json(games);
+})
 module.exports = server;

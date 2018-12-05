@@ -5,7 +5,7 @@ describe('server.js', () => {
     it('runs tests', () => {
         expect(true).toBeTruthy();
     }) // runs tests
-    describe('post /games', () => {
+    describe('**POST /games***', () => {
     it('should post a game', async () => {
         const title = "Pacman";
         const genre = "Arcade";
@@ -40,5 +40,12 @@ describe('server.js', () => {
         .send(newGame);
         expect(response.status).toBe(200);
       }); // should return a 200 code if a new game is posted successfully
-    }) // post /games
+    }); // post /games
+    describe('**GET /games**', () => {
+        it('should return games', async () => {
+            const response = await request(server)
+            .get('/games');
+            expect(response.type).toBe('application/json');
+        }); // list of fames
+    }) // get /games
 }) // server.js
