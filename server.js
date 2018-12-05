@@ -8,7 +8,14 @@ server.get('/', (req, res) => {
     res.send('Hi Besssie!');
 })
 
-const games = []; // created games array
+const games = [
+    {
+        id: 1,
+        title: 'Tumbang Preso',
+        genre: 'Traditional',
+        releaseYear: 1600
+    },
+]; // created games array
 
 server.post('/games', (req, res) => {
     const { title, genre, releaseYear }  = req.body;
@@ -25,4 +32,16 @@ server.get('/games', (req, res) => {
   res.status(200).json(games);
 })
 
+server.get('/games/:id', (req, res) => {
+    const { id } = req.params;
+    const game = games.filter(
+      theGame => Number(theGame.id) === Number(id)
+    );
+    if (game.length > 0) {
+      res.status(200).json(game);
+    } else {
+      res.status(404).json({ message: 'Sorry! But the game does not exist.' });
+    }
+  });
+  
 module.exports = server;

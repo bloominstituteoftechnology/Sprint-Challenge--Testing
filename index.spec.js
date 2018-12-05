@@ -33,6 +33,7 @@ describe('server.js', () => {
 
     it('should return a 200 code if a new game is posted successfully', async () => {
         const newGame = {
+          id: 1,
           title: 'Donkey Kong',
           genre: 'Arcade',
           releaseYear: '1981'
@@ -57,6 +58,26 @@ describe('server.js', () => {
             .get('/games');
             expect(response.status).toBe(200);
         }); // should return a 200 code if a game is retrieved successfully
-
+        
+        it('should return an array', async () => {
+            const response = await request(server)
+            .get('/games');
+            expect(Array.isArray(response.body)).toBe(true);
+        }); // should return an array
     }) // get /games
+    // stretch
+    describe('***GET /games/:id', () => {
+        it('should return a list of found game', async () => {
+        const response = await request(server).get('/games/1');
+        const expected = [
+            { 
+            id: 1, 
+            title: 'Tumbang Preso',
+            genre: 'Traditional',
+            releaseYear: 1600
+        },
+    ];
+    expect(response.body).toEqual(expected);
+}); // should return a list of found game
+}); // GET /games/:id
 }) // server.js
