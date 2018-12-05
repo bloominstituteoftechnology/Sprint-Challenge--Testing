@@ -22,11 +22,23 @@ describe('server.js', () => {
             title: 'Tekken',
             releaseYear: '1994'
         };
-        
+
         const response = await request(server)
         .post('/games')
         .send(newGame);
         expect(response.status).toBe(422);
     }); // should return a 422 code if information missing
+    it('should return a 200 code if a new game is posted successfully', async () => {
+        const newGame = {
+          title: 'Donkey Kong',
+          genre: 'Arcade',
+          releaseYear: '1981'
+        };
+        
+        const response = await request(server)
+        .post('/games')
+        .send(newGame);
+        expect(response.status).toBe(200);
+      }); // should return a 200 code if a new game is posted successfully
     }) // post /games
 }) // server.js
