@@ -50,7 +50,13 @@ describe('server.js', () => {
             const response = await request(server)
             .get('/games');
             expect(response.type).toBe('application/json');
-        }); // list of fames
-        
+        }); // list of games
+
+        it('should return a 200 code if a game is retrieved successfully', async () => {
+            const response = await request(server)
+            .get('/games');
+            expect(response.status).toBe(200);
+        }); // should return a 200 code if a game is retrieved successfully
+
     }) // get /games
 }) // server.js
