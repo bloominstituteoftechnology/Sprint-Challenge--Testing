@@ -47,7 +47,7 @@ server.delete('/games/:id', (req, res) => {
 //add new game to list endpoint
 server.post('/games', (req, res) => {
   const { title, genre, releaseYear } = req.body;
-  const newGame = { title, genre, releaseYear, id:gameId };
+  const newGame = { title, genre, releaseYear, id: gameId };
   if (!title || !genre) {
     return res.status(422).json({ error: 'title and genre are required' });
   }
