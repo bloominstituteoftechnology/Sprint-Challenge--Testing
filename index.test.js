@@ -60,7 +60,7 @@ describe('Test Game API Server', () => {
     });
 
 //-- Test Post (create) Game Endpoint ------------
-    describe.skip('Test Create Game', () => {
+    describe('Test Create Game', () => {
         // Constants
         const endPoint = config.URL_API_GAMES;
         const testGame = {

@@ -11,5 +11,8 @@ module.exports = {
     FIELD_GENRE  : 'genre'      ,
     FIELD_RELEASE: 'releaseYear',
     // Errors
-    ERROR_DATAINCOMPLETE: ''
+    ERROR_DATAINCOMPLETE: 'Data Incomplete; Provide Title and Genre',
+    ERROR_INTERNAL: 'Internal Error',
+    // Mime Types
+    MIME_APPLICATION_JSON: 'application/json',
 }

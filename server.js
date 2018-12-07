@@ -26,5 +26,25 @@ async function handleGet(request, response, next) {
 
 //-- Create a Game -------------------------------
 async function handleCreate(request, response, next) {
-
+    try {
+        const gameData = request.body;
+        const gameId = await dataAccess.create(gameData);
+        response.status(201).json({
+            [config.FIELD_ID]: gameId,
+        });
+    }
+    catch(error) {
+        if(error.message === config.ERROR_DATAINCOMPLETE) {
+            response.status(422).json({
+                "message": config.ERROR_DATAINCOMPLETE,
+            });
+        } else {
+            response.status(500).json({
+                "message": config.ERROR_INTERNAL,
+            });
+        }
+    }
+    finally {
+        next();
+    }
 }
