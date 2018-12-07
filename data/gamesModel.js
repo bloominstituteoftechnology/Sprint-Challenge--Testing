@@ -7,6 +7,6 @@ async function insert(game) {
     return db('games').where({ id }).first()
 }
 
-async function get() {
-    return db('games')
+async function get(id) {
+    return id ? db('games').where({ id }).first() : db('games')
 }

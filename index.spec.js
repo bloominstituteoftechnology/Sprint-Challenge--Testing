@@ -50,4 +50,20 @@ describe('games database', () => {
             expect(res.body).toEqual([{ "genre": "Action-Adventure", "id": 1, "releaseYear": 2018, "title": "Red Dead Redemption 2" }])
         })
     })
+    describe('get req to /games/:id', () => {
+        it('should return status code 200', async () => {
+            await request(server)
+            .post('/games')
+            .send({ title: 'Red Dead Redemption 2', genre: 'Action-Adventure', releaseYear: 2018 })
+            let res = await request(server).get('/games/1')
+            expect(res.status).toBe(200)
+        })
+        it('should return a game', async () => {
+            await request(server)
+                .post('/games')
+                .send({ title: 'Red Dead Redemption 2', genre: 'Action-Adventure', releaseYear: 2018 })
+            let res = await request(server).get('/games/1')
+            expect(res.body).toEqual({ "genre": "Action-Adventure", "id": 1, "releaseYear": 2018, "title": "Red Dead Redemption 2" })
+        })
+    })
 })

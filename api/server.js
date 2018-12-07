@@ -24,4 +24,10 @@ server.get('/games', (req, res) => {
     .catch(err => res.status(500).json(err))
 })
 
+server.get('/games/:id', (req, res) => {
+    const { id } = req.params
+    games.get(id)
+    .then(game => res.status(200).json(game))
+    .catch(err => res.status(500).json(err))
+})
 module.exports = server;
