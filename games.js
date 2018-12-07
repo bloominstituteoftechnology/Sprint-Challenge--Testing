@@ -16,9 +16,7 @@ router.get('/', (req, s) => {
 // const keys = ['title', 'genre', 'releaseYear' ]
 router.post('/', (req, s) => {
   console.log(req.body)
-  if (req.body.title !== undefined 
-    && req.body.genre !== undefined 
-    && req.body.releaseYear !== undefined) {
+  if (req.body.title && req.body.genre) {
       const { title, genre, releaseYear } = req.body;
       s.status(200).json(
         [games.push({title, genre, releaseYear})]

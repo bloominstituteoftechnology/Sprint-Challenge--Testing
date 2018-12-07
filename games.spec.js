@@ -39,7 +39,9 @@ describe('/ route', () => {
       });
 
       it('should return 200 when adding a game obj', async () => {
-        const response = await request(server).post('/games').send(games[0])
+        const response = await request(server)
+          .post('/games')
+          .send(games[0])
         
        expect(response.status).toBe(200); 
       });
