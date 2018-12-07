@@ -15,7 +15,7 @@ server.post('/games', (req,res) => {
     const game = req.body;
     db.add(game)
     .then(id => {
-        res.status(201).json({message: 'Successful Post'})
+        res.status(201).json({message: 'Successful Post', id})
     })
     .catch(err => {
         res.status(422).json({message: 'Post Failure'})
