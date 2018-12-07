@@ -2,6 +2,16 @@ const request = require('supertest');
 
 const server = require('./server.js')
 
+const completeGame = {
+    title: 'Fortnite',
+    genre: 'Survival',
+    releaseYear: '2017'
+}
+
+const incompleteGame = {
+    title: 'Fortnite'
+}
+
 describe('server.js', () => {
     describe('get / route', () => {
         test('returns status code 200', async () => {
@@ -22,20 +32,20 @@ describe('server.js', () => {
         test('returns json', async () => {
             let response = await request(server)
                 .post('/games')
-                .send({ title: 'fortnite', genre: 'action' });
+                .send(completeGame);
             expect(response.type).toBe('application/json');
         });
         test('returns status code 201 if successful', async () => {
             let response = await request(server)
                 .post('/games')
-                .send({ title: 'fortnite', genre: 'action' });
+                .send(completeGame);
             expect(response.status).toBe(201);
         });
         test('returns status code 422 if incomplete', async () => {
             let response = await request(server)
                 .post('/games')
-                .send({ title: 'Pacman' });
-            expect(response.status).toEqual({ title: 'Pacman', genre: 'Arcade' });
+                .send(incompleteGame);
+            expect(response.status).toBe(422);
         });
     });
 
@@ -53,35 +63,4 @@ describe('server.js', () => {
             expect(response.status).toBe(200);
         });
     });
-
-    // describe('post endpoint', () => {
-    //     test('returns JSON', async () => {
-    //         let response = await request(server)
-    //             .post('/')
-    //             .send(({ userName: 'Yusuf' }));
-    //         expect(response.type).toBe('application/json');
-    //     });
-    //     // test('returns status code 201 if successful', async () => {
-    //     //     let response = await request(server)
-    //     //         .post('/')
-    //     //         .send({ userName: 'Yusuf Nafey' })
-    //     //     expect(response.status).toBe(201);
-    //     // });
-    //     test('returns status code 500 if failed', async () => {
-    //         let response = await request(server)
-    //             .post('/')
-    //             .send();
-    //         expect(response.status).toBe(500);
-    //     });
-    // });
-
-    // describe('/:id delete endpoint', () => {
-    //     test('returns status code 200', async () => {
-    //         let response = await request(server).delete('/1');
-    //         expect(response.status).toBe(200)
-    //     });
-    //     test('', async () => {
-
-    //     });
-    // })
 });
