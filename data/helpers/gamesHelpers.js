@@ -4,6 +4,7 @@ module.exports = {
     getGame,
     getGames,
     addGame,
+    updateGame,
     removeGame
 };
 
@@ -18,11 +19,18 @@ function getGame(id) {
         .where( {id: id} );
 };
 
-// adds book to table and returns object with new id
+// adds game to table and returns new id
 function addGame(game) {
     return db('games')
         .insert(game)
         .then(id => { return {id: id[0] }});
+};
+
+// updates game at given id
+function updateGame(id, game) {
+    return db('games')
+        .where('id', Number(id))
+        .update(game);
 };
 
 // remove book from table, return number of records deleted

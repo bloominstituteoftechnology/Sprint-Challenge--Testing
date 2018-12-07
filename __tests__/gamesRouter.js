@@ -91,6 +91,11 @@ describe('gamesRouter.js', () => {
             expect(response.status).toBe(404);
         });
 
+        it('[PUT] - should return 200 for successful game update', async () => {
+            let response = await request(server).put('/games/1').send(validPost);
+            expect(response.status).toBe(200);
+        });
+
         it('[DELETE] - should return 200 for successful delete', async () => {
             let response = await request(server).delete('/games/1');
             expect(response.status).toBe(200);

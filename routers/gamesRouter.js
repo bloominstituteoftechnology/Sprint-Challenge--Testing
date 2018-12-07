@@ -49,6 +49,17 @@ router.post('', (req, res) => {
     }
 });
 
+// [PUT] /games/:id
+router.put('/:id', (req, res) => {
+    gamesDb.updateGame(req.params.id, req.body)
+        .then(recordsUpdated => {
+            res.status(200).json(recordsUpdated);
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        });
+});
+
 // [DELETE] /games/:id
 router.delete('/:id', (req, res) => {
     gamesDb.removeGame(req.params.id)
