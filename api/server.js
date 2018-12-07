@@ -28,15 +28,15 @@ server.post('/addGame', (req, res) => {
     const game = { title, genre, releaseYear };
 
     if(!game){
-        return res.status(400).sendDate({ Message: 'Please provide a Title, Genre, and a ReleaseYear.' });
+        return res.status(422).sendDate({ Message: 'Please provide a Title, Genre, and a ReleaseYear.' });
     }
     games
         .addGame(game)
         .then(ids => {
-            res.status(201).json({ Game: `${game.title} ${game.genre} ${game.releaseYear}` });
+            res.status(201).json({ title: `${game.title}`, genre: `${game.genre}`, releaseYear: `${game.releaseYear}` });
         })
         .catch(error => {
-            res.status(422).json({ error: 'Cannot add a new game.' });
+            res.status(405).json({ error: 'Cannot add a new game.' });
         });
 })
 
