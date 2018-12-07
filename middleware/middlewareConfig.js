@@ -1,4 +1,3 @@
-const server = require('../server.js');
 const helmet = require('helmet');
 const express = require('express');
 
