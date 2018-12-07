@@ -98,4 +98,46 @@ describe('Test Game API Server', () => {
             });
         });
     });
+
+    //-- Test Get Game By ID Endpoint ----------------
+    describe('Test Retrieve Game by ID', () => {
+        // Constants
+        const endPoint = `${config.URL_API_GAMES}/2`;
+        // Configuration
+        beforeEach(async function () {
+            await dataAccess.clear();
+            await dataAccess.create({
+                [config.FIELD_TITLE]: 'Test Game 1',
+                [config.FIELD_GENRE]: 'Test Genre' ,
+            });
+            await dataAccess.create({
+                [config.FIELD_TITLE]: 'Test Game 2',
+                [config.FIELD_GENRE]: 'Test Genre' ,
+            });
+        });
+        // Behavior Tests
+        it('responds with status code 200', async function () {
+            const response = await request(API).get(endPoint);
+            expect(response.status).toBe(200);
+        });
+        it('checks for unknown game (404)', async function () {
+            const unknown = `${config.URL_API_GAMES}/3`;
+            const response = await request(API).get(unknown);
+            expect(response.status).toBe(404);
+            expect(response.body.message).toBe(config.ERROR_NOTFOUND);
+        });
+        it('responds with JSON object', async function () {
+            const response = await request(API).get(endPoint);
+            expect(response.type).toBe('application/json');
+        });
+        it('responds with correct data', async function () {
+            const response = await request(API).get(endPoint);
+            const testGame = response.body;
+            expect(testGame).toEqual({
+                [config.FIELD_ID   ]: 2            ,
+                [config.FIELD_TITLE]: 'Test Game 2',
+                [config.FIELD_GENRE]: 'Test Genre' ,
+            });
+        });
+    });
 });

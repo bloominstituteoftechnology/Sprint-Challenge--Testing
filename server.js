@@ -10,18 +10,32 @@ const dataAccess = require('./data_access.js');
 //-- Server Configuration ------------------------
 const server = module.exports = express();
 server.use(express.json());
-server.get (config.URL_API_GAMES, handleGet   );
-server.post(config.URL_API_GAMES, handleCreate);
+server.get (   config.URL_API_GAMES      , handleGetAll );
+server.get (`${config.URL_API_GAMES}/:id`, handleGetById);
+server.post(   config.URL_API_GAMES      , handleCreate );
 
 //== Route Handlers ============================================================
 
 //-- Get All Games (as array) --------------------
-async function handleGet(request, response, next) {
-    const gamesList = await dataAccess.get();
+async function handleGetAll(request, response, next) {
+    const gamesList = await dataAccess.getAll();
     response.status(200).json({
         "games": gamesList,
     });
-    next();
+}
+
+//-- Get All Games (as array) --------------------
+async function handleGetById(request, response, next) {
+    try {
+        const gameId = request.params.id;
+        const game = await dataAccess.getById(gameId);
+        response.status(200).json(game);
+    }
+    catch(error) {
+        response.status(404).json({
+            "message": config.ERROR_NOTFOUND,
+        });
+    }
 }
 
 //-- Create a Game -------------------------------
@@ -53,8 +67,5 @@ async function handleCreate(request, response, next) {
                 });
             }
         }
-    }
-    finally {
-        next();
     }
 }

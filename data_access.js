@@ -16,22 +16,32 @@ module.exports = {
         this.games = [];
     },
 
-//-- Get all Games (as array) --------------------
-    async get(id) {
-        if(id) {
-            // Stretch
+//-- Package Game --------------------------------
+    packageGame(gameData, id) {
+        const gameWithId = {
+            [config.FIELD_ID   ]: id,
+            [config.FIELD_TITLE]: gameData.title,
+            [config.FIELD_GENRE]: gameData.genre,
+        };
+        if(gameData[config.FIELD_RELEASE]) {
+            gameWithId[config.FIELD_RELEASE] = gameData[config.FIELD_RELEASE];
         }
-        return this.games.map((game, index) => {
-            const gameWithId = {
-                [config.FIELD_ID   ]: index + 1,
-                [config.FIELD_TITLE]: game.title,
-                [config.FIELD_GENRE]: game.genre,
-            };
-            if(game[config.FIELD_RELEASE]) {
-                gameWithId[config.FIELD_RELEASE] = game[config.FIELD_RELEASE];
-            }
-            return gameWithId;
-        });
+        return gameWithId;
+    },
+
+//-- Get By Id -----------------------------------
+    async getById(id) {
+        const gameIndex = id-1;
+        const game = this.games[gameIndex];
+        if(!game) {
+            throw new Error(config.ERROR_NOTFOUND+` ${id} ${this.games.length}`);
+        }
+        return this.packageGame(game, gameIndex+1);
+    },
+
+//-- Get all Games (as array) --------------------
+    async getAll() {
+        return this.games.map((game, index) => this.packageGame(game, index+1));
     },
 
 //-- Create and Store a new Game -----------------
