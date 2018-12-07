@@ -10,7 +10,17 @@ describe('GET endpoint /games', () => {
     const response = await request(server).get('/games');
     expect(response.body).toEqual(expect.arrayContaining([]));
   });
-  it('', async () => {});
+  it('returns the array of games', async () => {
+    const array = [
+      {
+        title: 'Pac-man',
+        genre: 'arcade',
+        releaseYear: 1980
+      }
+    ];
+    const response = await request(server).get('/games');
+    expect(response.body).toEqual(array);
+  });
 });
 
 describe('POST endpoint /games', () => {
