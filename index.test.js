@@ -5,15 +5,23 @@ const server = require('./api/server.js');
 describe('server.js', () => {
     describe('/', () => {
         it('should return a status 200', async () => {
-            let response = await request(server).get('/');
+            let response = await request(server).get('/games');
 
             expect(response.status).toBe(200);
         })
 
         it('should return JSON', async () => {
-            let response = await request(server).get('/');
+            let response = await request(server).get('/games');
 
             expect(response.type).toBe('application/json');
+        });
+
+        it('should return a empty array', async () => {
+            const expectedBody = [];
+            let response = await request(server).get('/games');
+            
+            expect(response.body).toEqual(expectedBody);
+            expect(response.status).toBe(200);
         });
     })
 
