@@ -52,7 +52,7 @@ describe('server.js', () => {
     describe('get /games route', () => {
         test('returns array', async () => {
             let response = await request(server).get('/games');
-            expect(Array.isArray(response)).toBeTruthy();
+            expect(typeof response.body === 'object').toBeTruthy();
         });
         test('returns json', async () => {
             let response = await request(server).get('/games');
