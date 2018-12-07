@@ -48,6 +48,63 @@ describe('gamesRouter.js', () => {
             response = await request(server).post('/games').send(validPostNoYear);
             expect(response.status).toBe(201);
         });
+
+        it('[POST] - should return 422 if invalid post', async () => {
+            let response = await request(server).post('/games').send(invalidPostNoTitle);
+            expect(response.status).toBe(422);
+
+            response = await request(server).post('/games').send(invalidPostNoTitleNoYear);
+            expect(response.status).toBe(422);
+
+            response = await request(server).post('/games').send(invalidPostNoGenreNoYear);
+            expect(response.status).toBe(422);
+
+            response = await request(server).post('/games').send(invalidPostNoGenre);
+            expect(response.status).toBe(422);
+
+            response = await request(server).post('/games').send(invalidPostNoGenreNoTitle);
+            expect(response.status).toBe(422);
+        });
+
+        it('[POST] - should return 405 if game is already in table', async () => {
+            let response = await request(server).post('/games').send(validPost);
+            expect(response.status).toBe(201);
+
+            response = await request(server).post('/games').send(validPost);
+            expect(response.status).toBe(405);
+        });
+    });
+
+    describe('/games/:id endpoint', () => {
+        it('[GET] - should return 200 for valid id', async () => {
+            let response = await request(server).get('/games/1');
+            expect(response.status).toBe(200);
+        });
+
+        it('[GET] - should return the corresponding row if the id is valid', async () => {
+            let response = await request(server).get('/games/1');
+            expect(response.body).toEqual([seedElement]);
+        });
+
+        it('[GET] - should return 404 if id does not exist', async () => {
+            let response = await request(server).get('/games/33');
+            expect(response.status).toBe(404);
+        });
+
+        it('[DELETE] - should return 200 for successful delete', async () => {
+            let response = await request(server).delete('/games/1');
+            expect(response.status).toBe(200);
+        });
+
+        it('[DELETE] - should return 404 if id does not exist', async () => {
+            let response = await request(server).delete('/games/33');
+            expect(response.status).toBe(404);
+        });
+
+        it('[DELETE] - should return 1 for successful delete', async () => {
+            let response = await request(server).delete('/games/1');
+            expect(response.body).toEqual(1);
+        });
     });
 });
 
