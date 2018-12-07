@@ -33,7 +33,11 @@ server.post("/games", (req, res) => {
 });
 
 server.get("/games", (req, res) => {
-  // todo
+  db("games")
+    .then(games => {
+      res.status(200).json(games);
+    })
+    .catch(err => res.status(500).json(err));
 });
 
 const port = process.env.PORT || 6000;
