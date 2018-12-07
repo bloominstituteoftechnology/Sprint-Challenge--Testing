@@ -34,6 +34,12 @@ describe("server.js", () => {
         .send({ title: "Ocarina of Time", genre: "adventure" });
       rows = await db("games").where({ title: "Ocarina of Time" });
       expect(rows.length).toBe(1);
+
+      await request(server)
+        .post("/games")
+        .send({ title: "Majora's Mask", genre: "adventure" });
+      rows = await db("games");
+      expect(rows).toHaveLength(2);
     });
 
     it("returns status 201 upon successful POST", async () => {
@@ -112,7 +118,6 @@ describe("server.js", () => {
         .where({ title: "Ocarina of Time" })
         .select("games.id")
         .first();
-      console.log(gameId.id);
       let response = await request(server).get(`/games/${gameId.id}`);
       expect(response.status).toBe(200);
     });
@@ -122,8 +127,11 @@ describe("server.js", () => {
         title: "Ocarina of Time",
         genre: "adventure"
       });
-      let id = 1;
-      let response = await request(server).get(`/games/${id}`);
+      let gameId = await db("games")
+        .where({ title: "Ocarina of Time" })
+        .select("games.id")
+        .first();
+      let response = await request(server).get(`/games/${gameId.id}`);
       expect(response.body).toEqual([
         {
           id: 1,
@@ -132,6 +140,40 @@ describe("server.js", () => {
           releaseYear: null
         }
       ]);
+    });
+
+    describe("/games/:id DELETE", () => {
+      it("returns 404 if that game id does not exist in the db", async () => {
+        let response = await request(server).delete(`/games/1`);
+        expect(response.status).toBe(404);
+      });
+
+      it("returns 200 if deletion was successful", async () => {
+        await db("games").insert({
+          title: "Ocarina of Time",
+          genre: "adventure"
+        });
+        let gameId = await db("games")
+          .where({ title: "Ocarina of Time" })
+          .select("games.id")
+          .first();
+        let response = await request(server).delete(`/games/${gameId.id}`);
+        expect(response.status).toBe(200);
+      });
+
+      it("deletes game from the db if successful", async () => {
+        await db("games").insert({
+          title: "Ocarina of Time",
+          genre: "adventure"
+        });
+        let gameId = await db("games")
+          .where({ title: "Ocarina of Time" })
+          .select("games.id")
+          .first();
+        await request(server).delete(`/games/${gameId.id}`);
+        let rows = await db("games");
+        expect(rows.length).toBe(0);
+      });
     });
   });
 });

@@ -67,6 +67,19 @@ server.get("/games/:id", (req, res) => {
     .catch(err => res.status(500).json(err));
 });
 
+server.delete("/games/:id", (req, res) => {
+  const { id } = req.params;
+  db("games")
+    .where({ id })
+    .del()
+    .then(count => {
+      count
+        ? res.status(200).json(count)
+        : res.status(404).json({ message: "No game with that id exists" });
+    })
+    .catch(err => res.status(500).json(err));
+});
+
 const port = process.env.PORT || 6000;
 
 module.exports = server;
