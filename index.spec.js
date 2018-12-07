@@ -27,7 +27,7 @@ describe('server.js', () => {
         });
         it('should return the new list of games', async () => {
             let first = await request(server).post('/games').send({ title: 'Halo', genre: 'FPS', releaseYear: 2001 });
-            let response = await request(server).post('/games').send({ title: 'Warcraft III', genre: 'RTS', releaseYear: 2002 });
+            let response = await request(server).post('/games').send({ title: 'Warcraft III', genre: 'RTS' });
             expect(response.body).toHaveLength(2);
         });
         it('should return a 422 code if missing information', async () => {
