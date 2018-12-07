@@ -32,6 +32,13 @@ describe('server', () => {
                 .post('/games')
                 .send({ title: 'Street Fighter', genre: 'Arcade' });
             expect(response.status).toBe(200);
+        }); 
+
+        it('Should not allow dup adds', async () => {
+            const response = await request(server)
+                .post('/games')
+                .send({ title: 'Street Fighter', genre: 'Arcade' });
+            expect(response.status).toBe(405);
         });
     });
 
