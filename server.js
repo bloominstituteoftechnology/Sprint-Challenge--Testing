@@ -5,4 +5,11 @@ const server = express();
 
 server.use(express.json());
 
-const testDB = [];
+const games = [];
+
+server.get('/', (req, res) => {
+    res.status(200).json({ message: "server up" });
+})
+
+
+module.exports = server

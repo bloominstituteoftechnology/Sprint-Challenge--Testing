@@ -8,9 +8,12 @@ describe("Sanity Check - server up", () => {
   test("should server Up ", async () => {
     let response = await request(server).get("/");
 
-    expect(response).toBe({ message: "server up" });
+    expect(response.body).toEqual({ message: "server up" });
   });
 });
+
+
+
 
 describe("/games route POST", () => {
   const input = {
