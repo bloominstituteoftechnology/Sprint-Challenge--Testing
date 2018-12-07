@@ -23,13 +23,12 @@ describe('GET endpoint /games', () => {
 describe('POST endpoint /games', () => {
   it('returns a 201 status', async () => {
     const newGame = {
-      title: 'Final Fantasy 3',
-      genre: 'JRPG',
-      releaseYear: 1994
+      title: 'Viva Pinata!',
+      genre: 'Life Simulation',
+      releaseYear: 2006
     };
     const response = await request(server)
       .post('/games')
-      .type('JSON')
       .send(newGame);
     expect(response.status).toBe(201);
   });
@@ -38,7 +37,6 @@ describe('POST endpoint /games', () => {
       const newGame = { title: 'Aladdin' };
       const response = await request(server)
         .post('/games')
-        .type('JSON')
         .send(newGame);
       expect(response.status).toBe(422);
     });
@@ -46,29 +44,9 @@ describe('POST endpoint /games', () => {
       const newGame = { genre: 'FPS' };
       const response = await request(server)
         .post('/games')
-        .type('JSON')
         .send(newGame);
       expect(response.status).toBe(422);
     });
   });
-  it('returns a new array', async () => {
-    const array = [
-      {
-        title: 'Pac-man',
-        genre: 'Arcade',
-        releaseYear: 1980
-      },
-      { title: 'Sonic the Hedgehog', genre: 'Platform', releaseYear: 1991 }
-    ];
-    const newGame = {
-      title: 'Sonic the Hedgehog',
-      genre: 'Platform',
-      releaseYear: 1991
-    };
-    const response = await request(server)
-      .post('/games')
-      .type('JSON')
-      .send(newGame);
-    expect(response.body).toEqual(array);
-  });
+  it('returns a new array', async () => {});
 });

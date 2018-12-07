@@ -75,13 +75,12 @@ server.get('/games', (req, res) => {
 
 // POST game endpoint
 server.post('/games', (req, res) => {
-  const game = { title, genre, releaseYear };
-  const { title, genre, releaseYear } = req.body;
-  const newGamesArray = [...games, game];
+  const { title, genre } = req.body;
 
   if (!title || !genre) {
     res.status(422).json({ message: 'Title and genre are required' });
   } else {
+    let createGame = games.filter(game);
     res.status(201).json(newGamesArray);
   }
 });
