@@ -89,6 +89,15 @@ describe('server.js', () => {
                         }
                         ]
         })
+        it('returns status of 405 when duplicate game is being added', async () => {
+            let response = await request(server)
+            .post('/games')
+            .send({
+                title:"Pacman",
+                genre:"Arcade"
+            });
+            expect(response.status).toBe(405)
+        })
         it('Returns Status of 200', async () => {
             let response = await request(server)
             .post('/games')
