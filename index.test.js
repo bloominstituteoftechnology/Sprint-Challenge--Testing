@@ -28,7 +28,7 @@ describe('server.js', () => {
 
       it('should return the new list of games', async () => {
         let first = await request(server).post('/games').send({ title: 'Galaga', genre: 'Arcade', releaseYear: 1981 });
-        let response = await request(server).post('/games').send({ title: 'Frogger', genre: 'Arcade', releaseYear: 1981 });
+        let response = await request(server).post('/games').send({ title: 'Frogger', genre: 'Arcade' });
         expect(response.body).toHaveLength(3);
       });
 
