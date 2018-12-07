@@ -22,11 +22,11 @@ describe("games/get", () => {
         expect(Array.isArray(response.body)).toBeTruthy();
     });
 
-    // it("should return ", async () => {
-    //     const response = await request(server).get("/api/games");
-    //  // expect(response).toBe(200);
-    //     expect(response.body.type).toBe("application/json");
-    // });
+    it("should return ", async () => {
+        const response = await request(server).get("/api/games");
+     // expect(response).toBe(200);
+        expect(response.body.type).toBe("application/json");
+    });
 
     it("should return status code 200", async () => {
         const response = await request(server).get("/api/games");
