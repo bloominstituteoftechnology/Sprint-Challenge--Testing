@@ -35,4 +35,25 @@ describe("server.js", () => {
       expect(response.body).toBe(1)
     })
   });
+
+  describe('GET /games route', () => {
+    it('should return a status code of 200', async () => {
+      const response = await request(server).get('/games')
+      
+      expect(response.status).toBe(200)
+    })
+    
+    it('should return JSON', async () => {
+      const response = await request(server).get('/games')
+
+      expect(response.type).toBe('application/json')
+    })
+
+    it('should return an array of objects', async () => {
+      const response = await request(server).get('/games')
+
+      expect(typeof response.body).toBe('array')
+    })
+  })
+  
 });
