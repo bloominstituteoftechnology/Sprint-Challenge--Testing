@@ -29,24 +29,22 @@ describe('server', () => {
 
         it('should respond with status code 422 if title is not passed', async () => {
             const {title, ...titleOmmited} = gameMock;
-            const {genre, ...genreOmmited} = gameMock;
-            const {releaseYear, ...releaseOmmited} = gameMock;
 
-            let response = await request(server).post('/games').send({titleOmmited});
+            let response = await request(server).post('/games').send(titleOmmited);
             expect(response.status).toBe(422);
         });
 
         it('should respond with status code 422 if genre is not passed', async () => {
             const {genre, ...genreOmmited} = gameMock;
 
-            let response = await request(server).post('/games').send({genreOmmited});
+            let response = await request(server).post('/games').send(genreOmmited);
             expect(response.status).toBe(422);
         });
 
         it('should respond with status code 201 if releaseYear is not passed', async () => {
             const {releaseYear, ...releaseOmmited} = gameMock;
 
-            let response = await request(server).post('/games').send({releaseOmmited});
+            let response = await request(server).post('/games').send(releaseOmmited);
             expect(response.status).toBe(201);
         });
 
@@ -68,7 +66,7 @@ describe('server', () => {
             expect(games[index]).toEqual(gameMock);
         });
 
-        it('should return status code 405 if title is not unique', () => {
+        it('should return status code 405 if title is not unique', async () => {
             let response = await request(server).post('/games').send(gameMock);
             expect(response.status).toBe(405);
         });
@@ -83,8 +81,8 @@ describe('server', () => {
         
         it('should return array', async () => {
             let response = await request(server).get('/games');
-
-            expect(typeof response.body).toEqual('array');
+            const games = response.body;
+            expect(Array.isArray(games)).toEqual(true);
         });
 
         it('should return array of objects', async () => {
