@@ -23,7 +23,7 @@ let games = [
 
 // post games endpoint
 server.post('/games', (req, res) => {
-  const { game } = req.body;
+  const game = req.body;
   if(!game.title || !game.genre) {
     res.status(422).json({ message: "information is incomplete" });
   } else {
