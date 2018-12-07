@@ -9,10 +9,10 @@ For this project you will use TDD to create a simple Web API using Node.js and E
 
 ### Download Project and Install Dependencies
 
-1.  fork and clone this repository.
-1.  **CD into the folder** where you downloaded the repository.
-1.  run `yarn` or `npm i` to download all dependencies.
-1.  type `yarn test` or `npm test` to run the tests. The `test` script is already configured.
+1.  [x] fork and clone this repository.
+1.  [x] **CD into the folder** where you downloaded the repository.
+1.  [x] run `yarn` or `npm i` to download all dependencies.
+1.  [x] type `yarn test` or `npm test` to run the tests. The `test` script is already configured.
 
 ### Requirements
 
