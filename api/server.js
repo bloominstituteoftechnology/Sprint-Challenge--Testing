@@ -13,6 +13,10 @@ server.post('/games', checkTitleGenre, (req, res) => {
   res.status(200).json({ added: `${genre}: ${title} (${releaseYear})` })
 })
 
+server.get('/games', (req, res) => {
+  res.status(200).json({ message: 'list of games' })
+})
+
 const port = process.env.PORT || 7200;
 
 module.exports = server;

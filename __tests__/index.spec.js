@@ -41,28 +41,23 @@ describe('server.js', () => {
       response = await request(server)
       .post('/games')
       .send({ title: 'Pharaoh', genre: 'Strategy/Simulation', releaseYear: 1999 })
-      // RED TEST: .send({ title: 'Pharaoh', releaseYear: 1999 })
+      // RED TEST: .send({ title: 'Pharaoh', releaseYear: 1999 }) // received 422 error from middleware
 
       expect(response.body).toEqual({ added: 'Strategy/Simulation: Pharaoh (1999)'})
-
-      // Pharaoh
-
-
-     
     })
   })
 
+  describe('GET /allGames endpoint', () => {
+    it('should return status code 200', async () => {
+      let response = await request(server)
+        .get('/games')
 
+        expect(response.status).toBe(200);
+        // RED TEST: received 404
 
+    })
+  })
 
-  // ```js
-  // {
-  //   title: 'Pacman', // required
-  //   genre: 'Arcade', // required
-  //   releaseYear: 1980 // not required
-  // }
-  // ```
-
-  // - in the route handler, validate that the required fields are included inside the body. If the information is incomplete, return a `422` status code.
+// all title, genre, and releaseYear for all games
   // - write tests to verify that the endpoint returns the correct HTTP status code when receiving correct and incorrect game data.
 })
