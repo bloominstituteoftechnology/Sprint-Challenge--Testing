@@ -7,6 +7,9 @@
 		"test": "jest --watch --verbose",
 		"start": "nodemon index.js"
 	},
+	"jest": {
+		"testEnvirnoment": "node"
+	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/LambdaSchool/Sprint-Challenge--Testing.git"
@@ -23,6 +26,7 @@
 	},
 	"devDependencies": {
 		"jest": "^23.6.0",
+		"nodemon": "^1.18.7",
 		"supertest": "^3.3.0"
 	}
 }

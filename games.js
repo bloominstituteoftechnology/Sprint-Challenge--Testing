@@ -4,7 +4,7 @@ const router = express();
 
 let games = []
 
-router.get('/', (q, s) => {
+router.get('/', (req, s) => {
   if (games.length !== 0) {
     s.status(200).json(games)
   } else {
@@ -13,14 +13,16 @@ router.get('/', (q, s) => {
   }
 })
 
-router.post('/', (q, s) => {
-  const { title, genre, releaseYear } = req.body;
-  if (title !== undefined 
-   && genre !== undefined 
-   && releaseYear !== undefined) {
-     s.status(200).json(
-       [games.push({title, genre, releaseYear})]
-     )
+// const keys = ['title', 'genre', 'releaseYear' ]
+router.post('/', (req, s) => {
+  console.log(req.body)
+  if (req.body.title !== undefined 
+    && req.body.genre !== undefined 
+    && req.body.releaseYear !== undefined) {
+      const { title, genre, releaseYear } = req.body;
+      s.status(200).json(
+        [games.push({title, genre, releaseYear})]
+      )
    } else {
      s.status(422).json({
        message: 'incomplete obj'
