@@ -9,5 +9,28 @@ describe('server.js', () => {
 
             expect(response.status).toBe(200);
         })
+
+        it('should return JSON', async () => {
+            let response = await request(server).get('/');
+
+            expect(response.type).toBe('application/json');
+        });
     })
+
+    describe('POST /addGame', () => {
+        it('should return a status code 404', async () => {
+            let response = await request(server).get('/addGame');
+
+            expect(response.status).toBe(404);
+        });
+
+        it('should add a game', async () => {
+            let response = await request(server)
+                .post('/addGame')
+                .send({ title: 'Final Fantasy 7', genre: 'RPG', releaseYear: 1997 });
+
+            expect(response.body).toEqual({ Game: 'Final Fantasy 7 RPG 1997' });
+        });
+    })
+    
 })
