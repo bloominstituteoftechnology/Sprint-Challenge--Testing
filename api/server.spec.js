@@ -31,26 +31,26 @@ describe('server routes', () => {
         });
     });
 
-    describe.skip('post game route', () => {
+    describe('post game route', () => {
         it('should check post route is active', async () => {
             const response = await request(server)
                 .post('/api/addgame')
                 .send({ title: "Pacman", genre: "Arcade", releaseYear: 1980 });
-            expect(response.status).toBe(441);
+            expect(response.status).toBe(200);
         });
 
         it('should check servers response body', async () => {
             const response = await request(server)
                 .post('/api/addgame')
                 .send({ title: "Pacman", genre: "Arcade", releaseYear: 1980 });
-            expect(response.body).toBe({ message: 'Pacman has been added!' })
+            expect(response.body).toEqual({ message: 'Pacman has been added!' })
         });
         
         it('should check response type', async () => {
             const response = await request(server)
                 .post('/api/addgame')
                 .send({ title: "Pacman", genre: "Arcade", releaseYear: 1980 });
-            expect(response.body).toBe({ message: 'Pacman has been added!' })
+            expect(response.type).toBe('application/json')
         });
     });
 

@@ -12,6 +12,12 @@ server.get('/', (req, res) => {
 server.get('/api/games', async (req, res) => {
     const games = await db('games')
     res.status(200).json(games);
-})
+});
+
+server.post('/api/addgame', async (req, res) => {
+    const game = req.body;
+    res.status(200).json({ message: `${game.title} has been added!`})
+
+});
 
 module.exports = server;
