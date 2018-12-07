@@ -80,4 +80,12 @@ describe('POST', () => {
 			expect(game.title).toEqual('a')
 		})
 	})
+
+	describe('DELETE', () => {
+		it('should delete a post', async () => {
+			const id = 1
+			const response = await request(server).delete(`/api/games/:${id}`)
+			expect().toEqual(1)
+		})
+	})
 })

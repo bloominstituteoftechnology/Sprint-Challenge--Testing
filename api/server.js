@@ -34,21 +34,30 @@ server.post('/api/games', async (req, res) => {
 	if (!title || !genre) {
 		res.status(422).json({ message: 'Please provide the require information of title, genre, and release year.' })
 	}
-	const getTitle = await db('games').select('title')
-	const look = getTitle.includes(title)
 	try {
+		const getTitle = await db('games').select('title')
+		const look = getTitle.includes(title)
 		if (look) {
 			res.status(405).json({
 				message : 'Not Allowed - This title already exists in the database, please try again with a new title.',
 			})
 		}
-		else {
-			const response = await db('games').insert({ title, genre, release_year })
-			res.status(201).json(response)
-		}
-	} catch (e) {
-		console.log(e)
+		const response = await db('games').insert({ title, genre, release_year })
+		res.status(201).json(response)
+	} catch(e) {
 		res.status(500).json({ error: 'An error occuried while attempting to post to the database.' })
+	}
+})
+
+server.delete('/api/games/:id', async (req, res) => {
+	try {
+		if (!req.body.params) {
+			res.status(404).json({ message: 'Not found. ID does not exist' })
+		}
+		const response = await db('games').del().where(req.body.params, '=', 'games.id')
+		res.status(200).json(response)
+	} catch (e) {
+		res.status(500).json({ error: 'An error occuried while attempting to delete the game from the database' })
 	}
 })
 /* ------------------ Database Driven Endpoints -------------------- */
