@@ -30,12 +30,12 @@ describe('server.js', () => {
           genre: 'Arcade',
           releaseYear: 1981,
         });
-      expect(response.status).toEqual({
+      expect(response.body).toEqual({
         wow: 'Galaga is a great Arcade game from 1981!',
       });
     });
   });
-  
+
   describe('GET /games endpoint', () => {
     it('should return status code 200', async () => {
       let response = await request(server).get('/games');
