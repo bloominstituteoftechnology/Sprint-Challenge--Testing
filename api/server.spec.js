@@ -46,11 +46,13 @@ describe('server', () => {
             releaseYear: 1980 // not required
         }
 
+        beforeEach(async () => {
+            await request(server).delete(`/games/${3}`)
+        })
+
         it('should return status code 201 if post is succesful', async () => {
             let response = await request(server).post('/games').send(gameMock);
             expect(response.status).toBe(201);
-            const index = response.body.index;
-            await request(server).delete(`/games/${index}`)
         });
 
         it('should return the index of new post added', async () => {
@@ -58,7 +60,6 @@ describe('server', () => {
             
             const index = response.body.index;
             expect(typeof index).toEqual('number');
-            await request(server).delete(`/games/${index}`)
         });
 
         it('index returned matches index in db', async () => {
@@ -70,15 +71,12 @@ describe('server', () => {
             const games = response.body;
 
             expect(games[index]).toEqual(gameMock);
-            await request(server).delete(`/games/${index}`)
         });
 
         it('should return status code 405 if title is not unique', async () => {
             let response = await request(server).post('/games').send(gameMock);
-            const index = response.body.index;
             response = await request(server).post('/games').send(gameMock);
             expect(response.status).toBe(405);
-            await request(server).delete(`/games/${index}`)
         });
 
         it('should respond with status code 422 if title is not passed', async () => {
@@ -100,8 +98,6 @@ describe('server', () => {
 
             let response = await request(server).post('/games').send(releaseOmmited);
             expect(response.status).toBe(201);
-            const index = response.body.index;
-            await request(server).delete(`/games/${index}`)
         });
     });
 
@@ -129,6 +125,7 @@ describe('server', () => {
         // return 200 on succesful delete
         // return 404 if index is not found
     });
+
     describe('/games/:id get route', () => {
         it('returns status 200 when get is succesful', async () => {
             let response = await request(server).get('/games');
@@ -157,6 +154,5 @@ describe('server', () => {
         // return 200 on succesful delete
         // return 404 if index is not found
     });
-
 
 });
