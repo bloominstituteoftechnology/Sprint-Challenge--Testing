@@ -18,6 +18,10 @@ describe('server.js', () => {
         let response = await request(server).get('/games');
         expect(response.type).toBe('application/json');
       });
+      it('should always return an array', async () => {
+        let response = await request(server).get('/games');
+        expect(Array.isArray(response.body)).toBe(true);
+      });
     });
     describe('POST', () => {
       it('should return a status code of 422 if no title or genre', async () => {
@@ -31,6 +35,18 @@ describe('server.js', () => {
           .post('/games')
           .send(game);
         expect(response.status).toBe(422);
+      });
+
+      it('should return a status code of 405 if no title is not unique', async () => {
+        const game = {
+          title: 'Pacman',
+          genre: 'RPG',
+          releaseYear: 1997
+        };
+        let response = await request(server)
+          .post('/games')
+          .send(game);
+        expect(response.status).toBe(405);
       });
 
       it('should add new game to db and return list of games', async () => {

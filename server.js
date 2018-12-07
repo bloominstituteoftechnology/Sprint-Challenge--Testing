@@ -20,6 +20,11 @@ server.post('/games', (req, res) => {
       .status(422)
       .json({ message: 'Please make sure game has a title and genre.' });
   }
+  games.forEach(game => {
+    if (game.title === newGame.title) {
+      return res.status(405).json({ message: 'That title already exists.' });
+    }
+  });
   const updatedGames = [...games, newGame];
   res.status(200).json(updatedGames);
 });
