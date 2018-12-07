@@ -2,7 +2,7 @@
 	"name": "testing-challenge",
 	"version": "1.0.0",
 	"description": "Testing Sprint Challenge",
-	"main": "index.js",
+	"main": "server.js",
 	"scripts": {
 		"test": "jest --watch --verbose",
 		"server": "nodemon"
