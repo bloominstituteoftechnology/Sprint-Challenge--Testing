@@ -77,11 +77,11 @@ describe('server.js', () => {
             },
         ];
         expect(response.body).toEqual(expected);
-    }); // should return a list of found game
+    }); // should return a list of the game
     
     it('should return 404 code if the game was not found', async () => {
         const response = await request(server)
-        .get('/games/88');
+        .get('/games/22');
         expect(response.status).toBe(404);
       }); 
     }); // GET /games/:id
