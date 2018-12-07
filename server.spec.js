@@ -2,12 +2,6 @@ const request = require('supertest');
 const server = require('./server.js');
 const games = require('./db');
 
-// beforeEach(async () => {
-//   await request(server)
-//     .post('/games')
-//     .send(games);
-// });
-
 describe('server.js', () => {
   describe('/ route', () => {
     it('should return a status code of 200', async () => {
@@ -31,6 +25,59 @@ describe('server.js', () => {
       });
     });
     describe('POST', () => {
+      it('should add new game to db and return list of games', async () => {
+        let game = {
+          title: 'Final Fantasy VII', // required
+          genre: 'RPG', // required
+          releaseYear: 1997 // not required
+        };
+        let response = await request(server)
+          .post('/games')
+          .send(game);
+        expect(response.body).toEqual([
+          {
+            id: 0,
+            title: 'Pacman',
+            genre: 'Arcade',
+            releaseYear: 1980
+          },
+          {
+            id: 1,
+            title: 'Final Fantasy VII',
+            genre: 'RPG',
+            releaseYear: 1997
+          }
+        ]);
+        game = {
+          title: 'Crash Bandicoot: Warped',
+          genre: 'Platform game',
+          releaseYear: 1998
+        };
+        response = await request(server)
+          .post('/games')
+          .send(game);
+        expect(response.body).toEqual([
+          {
+            id: 0,
+            title: 'Pacman',
+            genre: 'Arcade',
+            releaseYear: 1980
+          },
+          {
+            id: 1,
+            title: 'Final Fantasy VII',
+            genre: 'RPG',
+            releaseYear: 1997
+          },
+          {
+            id: 2,
+            title: 'Crash Bandicoot: Warped',
+            genre: 'Platform game',
+            releaseYear: 1998
+          }
+        ]);
+      });
+
       it('should return a status code of 422 if no title or genre', async () => {
         const game = {
           title: 'Final Fantasy VII',
@@ -56,41 +103,39 @@ describe('server.js', () => {
         expect(response.status).toBe(405);
       });
 
-      it('should add new game to db and return list of games', async () => {
-        const game = {
-          title: 'Final Fantasy VII', // required
-          genre: 'RPG', // required
-          releaseYear: 1997 // not required
-        };
-        let response = await request(server)
-          .post('/games')
-          .send(game);
-        expect(response.body).toEqual([
-          {
-            id: 0,
-            title: 'Pacman',
-            genre: 'Arcade',
-            releaseYear: 1980
-          },
-          {
-            id: 1,
-            title: 'Final Fantasy VII',
-            genre: 'RPG',
-            releaseYear: 1997
-          }
-        ]);
-      });
-
       it('should return a status code of 200', async () => {
         const game = {
-          title: 'Final Fantasy VII', // required
-          genre: 'RPG', // required
-          releaseYear: 1997 // not required
+          title: 'Age of Empires II', // required
+          genre: 'Real-time strategy', // required
+          releaseYear: 1999 // not required
         };
         let response = await request(server)
           .post('/games')
           .send(game);
         expect(response.status).toBe(200);
+      });
+    });
+    describe('GET /:id', () => {
+      it('should return a status code of 200', async () => {
+        let response = await request(server).get('/games/0');
+        expect(response.status).toBe(200);
+      });
+      it('should return a status code of 404 if no id', async () => {
+        let response = await request(server).get('/games/44');
+        expect(response.status).toBe(404);
+      });
+      it('should return JSON', async () => {
+        let response = await request(server).get('/games/0');
+        expect(response.type).toBe('application/json');
+      });
+      it('should return a single game object', async () => {
+        let response = await request(server).get('/games/0');
+        expect(response.body).toEqual({
+          id: 0,
+          title: 'Pacman',
+          genre: 'Arcade',
+          releaseYear: 1980
+        });
       });
     });
   });
