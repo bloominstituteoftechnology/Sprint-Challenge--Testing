@@ -49,13 +49,25 @@ server.post('/games', (req, res) => {
         res.status(500).send()
       }
     } catch (error) {
-      res.send(422).send()
+      res.send(405).send()
     }
   }
 })
 
 server.get('/games', (req, res) => {
   res.status(200).json(games)
+})
+
+server.get('/games/:id', (req, res) => {
+  const { id } = req.params
+  // loosy equals below because we're comparing ie 0 and '0'
+  const game = games.find(game => game.id == id)
+
+  if (game) {
+    res.send(200).json(game)
+  } else {
+    res.send(404).send()
+  }
 })
 
 // server.delete('/games', (req, res) => {

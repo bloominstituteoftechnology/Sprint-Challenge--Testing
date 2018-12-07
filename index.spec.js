@@ -43,7 +43,7 @@ describe('server.js', () => {
         .post('/games')
         .send({ ...game })
 
-      expect(response.status).toBe(422)
+      expect(response.status).toBe(405)
     })
 
     it('should return 422 if bad request is sent', async () => {
@@ -74,6 +74,20 @@ describe('server.js', () => {
       const { title, genre } = response.body[0]
       const valid = !!title && !!genre
       expect(valid).toBe(true)
+    })
+  })
+
+  describe('GET /games/:id', () => {
+    it('should return the game if present', async () => {
+      // search for index 0 because i'm initializing it with that
+      let response = await request(server).get('/games/0')
+      expect(response.status).toBe(200)
+    })
+
+    it('should return 404 if not found', async () => {
+      // search for 'a' which should never be there
+      let response = await request(server).get('/games/a')
+      expect(response.status).toBe(404)
     })
   })
 
