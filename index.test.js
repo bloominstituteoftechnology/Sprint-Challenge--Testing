@@ -11,5 +11,15 @@ describe('server.js', () => {
              let response = await request(server).get('/');
              expect(response.status).toBe(200);
         })
+
+        it('should return JSON', async () => {
+             let response = await request(server).get('/');
+             expect(response.type).toBe('application/json');
+        });
+      
+        it('should return with a body like: {message : "SERVER UP"}', async () => {
+             let response = await request(server).get('/');
+             expect(response.body).toEqual({message : "SERVER UP"});
+        });
     });
 });
