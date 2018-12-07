@@ -51,6 +51,22 @@ server.get("/games", (req, res) => {
     .catch(err => res.status(500).json(err));
 });
 
+// stretch endpoint for GET/:id
+server.get("/games/:id", (req, res) => {
+  const { id } = req.params;
+  db("games")
+    .where({ id })
+
+    .then(game => {
+      if (game && game.length) {
+        res.status(200).json(game);
+      } else {
+        res.status(404).json({ message: "That game already exists" });
+      }
+    })
+    .catch(err => res.status(500).json(err));
+});
+
 const port = process.env.PORT || 6000;
 
 module.exports = server;

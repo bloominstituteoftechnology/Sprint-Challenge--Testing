@@ -94,4 +94,44 @@ describe("server.js", () => {
       expect(response.body).toEqual([]);
     });
   });
+
+  // stretch test batches for DELETE and GET/:id
+  describe("/games/:id GET", () => {
+    it("returns 404 if that game id does not exist in the db", async () => {
+      let response = await request(server).get(`/games/1`);
+      expect(response.status).toBe(404);
+    });
+
+    it("returns 200 if game exists", async () => {
+      await db("games").insert({
+        title: "Ocarina of Time",
+        genre: "adventure"
+      });
+      // dynamically stores the created game's id, otherwise just skip the gameId definition and hardcode .get('/games/1) in the response line
+      let gameId = await db("games")
+        .where({ title: "Ocarina of Time" })
+        .select("games.id")
+        .first();
+      console.log(gameId.id);
+      let response = await request(server).get(`/games/${gameId.id}`);
+      expect(response.status).toBe(200);
+    });
+
+    it("returns the game if it exists in the db and the request is successful", async () => {
+      await db("games").insert({
+        title: "Ocarina of Time",
+        genre: "adventure"
+      });
+      let id = 1;
+      let response = await request(server).get(`/games/${id}`);
+      expect(response.body).toEqual([
+        {
+          id: 1,
+          title: "Ocarina of Time",
+          genre: "adventure",
+          releaseYear: null
+        }
+      ]);
+    });
+  });
 });
