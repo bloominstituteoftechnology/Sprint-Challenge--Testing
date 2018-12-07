@@ -71,10 +71,15 @@ describe('server.js', () => {
         let response = await request(server).delete('/games/5').send();
         expect(response.status).toBe(404)
       });
+      it('should delete the game', async () => {
+        let response = await request(server).get('/games/2').send();
+
+        expect(response.status).toBe(404);
+      })
       it('should only delete specified game', async () => {
         let response = await request(server).get('/games').send();
         //we added three games and deleted one.
-        expect(response.body).toHaveLength(2); 
+        expect(response.body).toHaveLength(2);
       })
     }) //end delete id describe
 }) //end server.js describe
