@@ -19,7 +19,7 @@ describe('server.js', () => {
         it('should return a empty array', async () => {
             const expectedBody = [];
             let response = await request(server).get('/games');
-            
+
             expect(response.body).toEqual(expectedBody);
             expect(response.status).toBe(200);
         });
@@ -30,6 +30,16 @@ describe('server.js', () => {
             let response = await request(server).get('/addGame');
 
             expect(response.status).toBe(404);
+        });
+
+        it('should return a game', async () => {
+            const game = [
+                'Pac-man',
+                'arcade',
+                 1980,
+              ];
+
+              expect(game).toContain('Pac-man');
         });
 
         it('should add a game', async () => {
