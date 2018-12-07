@@ -21,6 +21,14 @@ server.get('/api/games', async (req, res) => {
 		res.status(500).json({ error: 'An error has occuried.' })
 	}
 })
+server.get('/api/games/:id', async (req, res) => {
+	try {
+		const game = await db('games').where(req.body.params, '=', 'games.id')
+		game ? res.status(200).json(game) : res.status(404).json({ message: 'Not found.' })
+	} catch (e) {
+		res.status(500).json({ error: 'An error has occuried.' })
+	}
+})
 server.post('/api/games', async (req, res) => {
 	const { title, genre, release_year } = req.body
 	if (!title || !genre) {

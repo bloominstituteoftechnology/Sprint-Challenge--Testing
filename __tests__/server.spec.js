@@ -26,6 +26,17 @@ describe('GET', () => {
 			expect(response.body).not.toBeDefined()
 		})
 	})
+	describe('/api/games/:id', () => {
+		it('should return the proper game based on id', async () => {
+			let game = {
+				id : 1,
+			}
+			const id = 1
+			const response = await request(server).get(`/api/games/${id}`)
+			expect(id).toEqual(1)
+			expect(game.id).toEqual(1)
+		})
+	})
 })
 
 describe('POST', () => {
@@ -65,9 +76,8 @@ describe('POST', () => {
 				title : 'a',
 				genre : 'b',
 			}
-			const response = await request(server).get('/api/games')
+
 			expect(game.title).toEqual('a')
-			expect(response).toBeUndefined()
 		})
 	})
 })
