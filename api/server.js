@@ -66,7 +66,11 @@ server.get('/', (req, res) => {
 
 // GET games endpoint
 server.get('/games', (req, res) => {
-  res.status(200).json(games);
+  if (!games.length) {
+    res.status(200).json({ games: [] });
+  } else {
+    res.status(200).json({ games: games });
+  }
 });
 
 // POST game endpoint
