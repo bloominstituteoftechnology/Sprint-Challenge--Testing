@@ -26,6 +26,15 @@ describe('games database', () => {
                 .send({ title: 'Witcher 3' })
             expect(res.status).toBe(422)
         })
+        it('should return status code 405 for duplicate game data', async () => {
+            await request(server)
+                .post('/games')
+                .send({ title: 'Witcher 3', genre: 'High Fantasy' })
+            let res = await request(server)
+                .post('/games')
+                .send({ title: 'Witcher 3', genre: 'High Fantasy' })
+            expect(res.status).toBe(405)
+        })
         it('should return json', async () => {
             let res = await request(server)
                 .post('/games')

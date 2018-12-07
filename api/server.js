@@ -10,9 +10,16 @@ server.get('/', (req, res) => {
 server.post('/games', (req, res) => {
     const { title, genre } = req.body
     if (title && genre) {
-        games.insert(req.body)
-        .then(game => res.status(201).json(game))
-        .catch(err => res.status(500).json(err))
+        games.unique(title)
+        .then(dups => {
+            if (dups === 0) {
+                games.insert(req.body)
+                .then(game => res.status(201).json(game))
+                .catch(err => res.status(500).json(err))
+            } else {
+                res.status(405).json({ message: 'Game already exists in library' })
+            }
+        })
     } else {
         res.status(422).json({ message: 'Please enter game title and genre.' })
     }
