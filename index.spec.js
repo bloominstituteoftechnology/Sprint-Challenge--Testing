@@ -15,7 +15,7 @@ describe('server.js', () => {
         });
         it('should return an array even if there are no games to send', async () => {
             let response = await request(server).get('/games');
-            expect(response.body).toBe([]);
+            expect(response.body).toEqual([]);
         });
     }) //end '/ route' describe
 
@@ -28,11 +28,12 @@ describe('server.js', () => {
         it('should return the new list of games', async () => {
             let first = await request(server).post('/games').send({ title: 'Halo', genre: 'FPS', releaseYear: 2001 });
             let response = await request(server).post('/games').send({ title: 'Warcraft III', genre: 'RTS', releaseYear: 2002 });
-            expect(response.body).toHaveLength(2);
+            expect(response.body).toHaveLength(3);
         });
-        it('should return a 422 code if a game already exists', async () => {
+        it('should return a 422 code if missing information', async () => {
             let first = await request(server).post('/games').send({ title: 'Halo', genre: 'FPS', releaseYear: 2001 });
-            let response = await request(server).post('/games').send({ title: 'Halo', genre: 'FPS' });
+            expect(first.status).toBe(201);
+            let response = await request(server).post('/games').send({ title: 'Halo' })
             expect(response.status).toBe(422)
         })
     }) //end post describe
