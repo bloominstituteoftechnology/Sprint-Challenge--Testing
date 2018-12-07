@@ -27,13 +27,12 @@ describe("Games", () => {
         .post("/games")
         .send(allGameData);
       expect(response.body).toEqual({ message: "Pacman successfully added" });
-
-      it("should return status 422 if information is incomplete", async () => {
-        let response = await request(server)
-          .post("/games")
-          .send(partialGameData);
-        expect(response.status).toBe(422);
-      });
+    });
+    it("should return status 422 if information is incomplete", async () => {
+      let response = await request(server)
+        .post("/games")
+        .send(partialGameData);
+      expect(response.status).toBe(422);
     });
   });
 
@@ -48,7 +47,7 @@ describe("Games", () => {
     });
     it("should return an array of games", async () => {
       let response = await request(server).get("/games");
-      expect(Array.isArray(response.body).toBe(true));
+      expect(Array.isArray(response.body)).toBe(true);
     });
   });
 });
