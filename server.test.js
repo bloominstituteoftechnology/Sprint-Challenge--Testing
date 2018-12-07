@@ -2,7 +2,10 @@ const request = require("supertest");
 
 const server = require("./server.js");
 
-
+beforeEach(async () => {
+    await request(server).delete("/games");
+   });
+   
 
 describe("Sanity Check - server up", () => {
   test("should server Up ", async () => {
@@ -20,11 +23,6 @@ describe("/games route POST", () => {
     title: "Pacman",
     genre: "Arcade",
     releaseYear: 1980
-  };
-  const input2 = {
-    title: "Wing",
-    genre: "PC",
-    releaseYear: 2050
   };
 
   test("should return 422 for given incomplete input ", async () => {
@@ -60,12 +58,25 @@ expect(response.status).toBe(422);
   });
 });
 
+
+
 describe("/game route GET", () => {
-  test("should return empty array ", async () => {
+    const input = {
+        title: "Pacman",
+        genre: "Arcade",
+        releaseYear: 1980
+      };
+      const input2 = {
+        title: "Wing",
+        genre: "PC",
+        releaseYear: 2050
+      };
+
+    test("should return empty array ", async () => {
     let response = await request(server).get("/games");
 
-    expect(typeof response.body).toBe(array);
-    expect(response.body).toBe([]);
+    // expect(typeof response.body).toBe('array');
+    expect(response.body).toEqual([]);
   });
 
   test("should return array of games ", async () => {
@@ -80,8 +91,8 @@ describe("/game route GET", () => {
 
     let response = await request(server).get("/games");
 
-    expect(typeof response.body).toBe(array);
-    expect(response.body).toBe([
+    // expect(typeof response.body).toBe('array');
+    expect(response.body).toEqual([
         {
         title: "Pacman",
         genre: "Arcade",
