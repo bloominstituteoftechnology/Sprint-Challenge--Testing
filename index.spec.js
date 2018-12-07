@@ -12,18 +12,11 @@ describe('GET endpoint /games', () => {
   });
   it('checks for an array (empty or otherwise)', async () => {
     const response = await request(server).get('/games');
-    expect(Array.isArray(response.body)).toBe(true);
+    expect(response.body).toEqual(expect.arrayContaining([]));
   });
   it('returns the array of games', async () => {
-    const array = [
-      {
-        title: 'Pac-man',
-        genre: 'Arcade',
-        releaseYear: 1980
-      }
-    ];
     const response = await request(server).get('/games');
-    expect(response.body).toEqual(array);
+    expect(response.body.games.length).toBeGreaterThan(0);
   });
 });
 
