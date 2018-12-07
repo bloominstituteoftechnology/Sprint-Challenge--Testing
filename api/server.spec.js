@@ -15,7 +15,6 @@ describe('server', () => {
         });
     });
 
-
     describe('/games get route', () => {
         it('returns status 200', async () => {
             let response = await request(server).get('/games');
@@ -106,7 +105,7 @@ describe('server', () => {
         });
     });
 
-    describe('/games delete route', () => {
+    describe('/games/:id delete route', () => {
         it('returns status 200 when delete is succesful', async () => {
             
             let response = await request(server).get('/games');
@@ -130,4 +129,34 @@ describe('server', () => {
         // return 200 on succesful delete
         // return 404 if index is not found
     });
+    describe('/games/:id get route', () => {
+        it('returns status 200 when get is succesful', async () => {
+            let response = await request(server).get('/games');
+            const index = response.body.length - 1;
+            response = await request(server).get(`/games/${index}`);
+            expect(response.status).toEqual(200)
+        });
+        
+        it('should return 404 if index cant be found', async () => {
+            let response = await request(server).get('/games');
+            const length = response.body.length;
+            response = await request(server).get(`/games/${length+1}`);
+            expect(response.status).toEqual(404);
+        });
+
+        it('should retrun an object with a title and genre property', async () => {
+            let response = await request(server).get('/games');
+            const index = response.body.length - 1;
+            response = await request(server).get(`/games/${index}`);
+            expect(response.status).toEqual(200)
+            expect(typeof response.body).toEqual('object');
+            expect(response.body.title).toBeTruthy();
+            expect(response.body.genre).toBeTruthy();
+        });
+
+        // return 200 on succesful delete
+        // return 404 if index is not found
+    });
+
+
 });

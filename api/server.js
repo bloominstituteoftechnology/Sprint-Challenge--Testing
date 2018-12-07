@@ -52,7 +52,7 @@ server.post('/games', (req, res) => {
 server.delete('/games/:id', (req, res) => {
     const id = req.params.id
     if (games.length <= id) {
-        res.status(404).json({error: 'name does not exist'})
+        res.status(404).json({error: 'game does not exist'})
         return;
     }
 
@@ -62,6 +62,18 @@ server.delete('/games/:id', (req, res) => {
     
     res.status(200).json({deleted: 'game'});
 })
+
+server.get('/games/:id', (req, res) => {
+    const id = req.params.id
+    if (games.length <= id) {
+        res.status(404).json({error: 'game does not exist'})
+        return;
+    }
+    
+    res.status(200).json(games[id]);
+})
+
+
 
 
 module.exports = server;
