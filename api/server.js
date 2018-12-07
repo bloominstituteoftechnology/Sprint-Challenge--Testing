@@ -21,4 +21,6 @@ server.get('/games', (req, res) => {
   res.status(200).json(games);
 });
 
+// POST game endpoint
+
 module.exports = server;

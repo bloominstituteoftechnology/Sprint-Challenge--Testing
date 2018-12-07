@@ -24,7 +24,25 @@ describe('GET endpoint /games', () => {
 });
 
 describe('POST endpoint /games', () => {
-  it('', async () => {});
-  it('', async () => {});
+  it('returns a 201 status', async () => {
+    const newGame = {
+      title: 'Final Fantasy 3',
+      genre: 'JRPG',
+      releaseYear: 1994
+    };
+    const response = await request(server)
+      .post('/games')
+      .type('JSON')
+      .send(newGame);
+    expect(response.status).toBe(201);
+  });
+  it('returns a 422 status if missing required information', async () => {
+    const newGame = { title: null, genre: null, releaseYear: 2001 };
+    const response = await request(server)
+      .post('/games')
+      .type('JSON')
+      .send(newGame);
+    expect(response.status).toBe(422);
+  });
   it('', async () => {});
 });
