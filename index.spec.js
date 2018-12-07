@@ -10,6 +10,7 @@ describe('server', () => {
         expect(response.status).toBe(200);
     });
 
+    // POST TESTS //
     describe('POST /games', async () => {
         it('responds with a 200 status(ok)', async () => {
             const response = await request(server)
@@ -34,6 +35,7 @@ describe('server', () => {
         });
     });
 
+    // GET TESTS //
     describe('GET /games', async () => {
         it('responds with a 200 status(ok) and array of all games', async () => {
             const response = await request(server)
@@ -41,30 +43,48 @@ describe('server', () => {
             expect(response.status).toBe(200)
             expect(response.body).toEqual([
                 {
-                title: 'Pacman', // required
-                genre: 'Arcade', // required
-                releaseYear: 1980 // not required
-            },
-            {
-                title: 'Contra', // required
-                genre: 'Arcade', // required
-                releaseYear: 1981 // not required
-            },
-            {
-                title: 'Commando', // required
-                genre: 'Arcade', // required
-                releaseYear: 1982 // not required
-            },
-            {
-                title: 'Mario', // required
-                genre: 'Arcade', // required
-                releaseYear: 1982 // not required
-            },
-            {
-                title: 'Street Fighter', // required
-                genre: 'Arcade', // required
-            },
+                    title: 'Pacman', // required
+                    genre: 'Arcade', // required
+                    releaseYear: 1980 // not required
+                },
+                {
+                    title: 'Contra', // required
+                    genre: 'Arcade', // required
+                    releaseYear: 1981 // not required
+                },
+                {
+                    title: 'Commando', // required
+                    genre: 'Arcade', // required
+                    releaseYear: 1982 // not required
+                },
+                {
+                    title: 'Mario', // required
+                    genre: 'Arcade', // required
+                    releaseYear: 1982 // not required
+                },
+                {
+                    title: 'Street Fighter', // required
+                    genre: 'Arcade', // required
+                },
             ]);
+        });
+
+        it('responds with a Json', async () => {
+            const response = await request(server)
+                .get('/games')
+            expect(response.type).toBe('application/json')
+        });
+
+        it('responds with the length of games array', async () => {
+            const response = await request(server)
+                .get('/games')
+            expect(response.body.length).toEqual(5)
+        });
+
+        it('responds with the length of games array', async () => {
+            const response = await request(server)
+                .get('/game')
+            expect(response.body).toEqual([])
         });
     });
 });
