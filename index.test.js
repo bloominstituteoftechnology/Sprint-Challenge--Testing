@@ -59,46 +59,6 @@ describe('Test Game API Server', () => {
         });
     });
 
-//-- Test Post (create) Game Endpoint ------------
-    describe('Test Create Game', () => {
-        // Constants
-        const endPoint = config.URL_API_GAMES;
-        const testGame = {
-            [config.FIELD_TITLE]: 'Test Game' ,
-            [config.FIELD_GENRE]: 'Test Genre',
-        };
-        // Configuration
-        beforeEach(async function () {
-            await dataAccess.clear();
-        });
-        // Behavior Tests
-        it('responds with status code 201', async function () {
-            let response = await request(API).post(endPoint).send(testGame);
-            expect(response.status).toBe(201);
-        });
-        it('checks for incorrect data (422)', async function () {
-            let response = await request(API).post(endPoint).send({});
-            expect(response.status).toBe(422);
-            expect(response.body.message).toBe(config.ERROR_DATAINCOMPLETE);
-        });
-        it('checks for title coflict (405)', async function () {
-            await request(API).post(endPoint).send(testGame);
-            let response = await request(API).post(endPoint).send(testGame);
-            expect(response.status).toBe(405);
-            expect(response.body.message).toBe(config.ERROR_TITLECONFLICT);
-        });
-        it('responds with JSON object', async function () {
-            let response = await request(API).post(endPoint).send(testGame);
-            expect(response.type).toBe(config.MIME_APPLICATION_JSON);
-        });
-        it('responds with id of created game', async function () {
-            let response = await request(API).post(endPoint).send(testGame);
-            expect(response.body).toEqual({
-                [config.FIELD_ID]: 1,
-            });
-        });
-    });
-
     //-- Test Get Game By ID Endpoint ----------------
     describe('Test Retrieve Game by ID', () => {
         // Constants
@@ -137,6 +97,88 @@ describe('Test Game API Server', () => {
                 [config.FIELD_ID   ]: 2            ,
                 [config.FIELD_TITLE]: 'Test Game 2',
                 [config.FIELD_GENRE]: 'Test Genre' ,
+            });
+        });
+    });
+    
+    //-- Test Post (create) Game Endpoint ------------
+    describe('Test Create Game', () => {
+        // Constants
+        const endPoint = config.URL_API_GAMES;
+        const testGame = {
+            [config.FIELD_TITLE]: 'Test Game' ,
+            [config.FIELD_GENRE]: 'Test Genre',
+        };
+        // Configuration
+        beforeEach(async function () {
+            await dataAccess.clear();
+        });
+        // Behavior Tests
+        it('responds with status code 201', async function () {
+            let response = await request(API).post(endPoint).send(testGame);
+            expect(response.status).toBe(201);
+        });
+        it('checks for incorrect data (422)', async function () {
+            let response = await request(API).post(endPoint).send({});
+            expect(response.status).toBe(422);
+            expect(response.body.message).toBe(config.ERROR_DATAINCOMPLETE);
+        });
+        it('checks for title coflict (405)', async function () {
+            await request(API).post(endPoint).send(testGame);
+            let response = await request(API).post(endPoint).send(testGame);
+            expect(response.status).toBe(405);
+            expect(response.body.message).toBe(config.ERROR_TITLECONFLICT);
+        });
+        it('responds with JSON object', async function () {
+            let response = await request(API).post(endPoint).send(testGame);
+            expect(response.type).toBe(config.MIME_APPLICATION_JSON);
+        });
+        it('responds with id of created game', async function () {
+            let response = await request(API).post(endPoint).send(testGame);
+            expect(response.body).toEqual({
+                [config.FIELD_ID]: 1,
+            });
+        });
+    });
+    
+    //-- Test Delete Game Endpoint -------------------
+    describe('Test Delete Game', () => {
+        // Constants
+        const endPoint = `${config.URL_API_GAMES}/1`;
+        // Configuration
+        beforeEach(async function () {
+            await dataAccess.clear();
+            await dataAccess.create({
+                [config.FIELD_TITLE]: 'Test Game' ,
+                [config.FIELD_GENRE]: 'Test Genre',
+            });
+        });
+        // Behavior Tests
+        it('responds with status code 200', async function () {
+            let response = await request(API).delete(endPoint);
+            expect(response.status).toBe(200);
+        });
+        it('checks for incorrect id (404)', async function () {
+            const wrongEndPoint = `${config.URL_API_GAMES}/5`;
+            let response = await request(API).delete(wrongEndPoint);
+            expect(response.status).toBe(404);
+            expect(response.body.message).toBe(config.ERROR_NOTFOUND);
+            await request(API).delete(endPoint);
+            response = await request(API).delete(endPoint);
+            expect(response.status).toBe(404);
+            expect(response.body.message).toBe(config.ERROR_NOTFOUND);
+        });
+        it('responds with JSON object', async function () {
+            await request(API).delete(endPoint);
+            let response = await request(API).delete(endPoint);
+            expect(response.type).toBe(config.MIME_APPLICATION_JSON);
+        });
+        it('responds with deleted game', async function () {
+            let response = await request(API).delete(endPoint);
+            expect(response.body).toEqual({
+                [config.FIELD_ID]   : 1           ,
+                [config.FIELD_TITLE]: 'Test Game' ,
+                [config.FIELD_GENRE]: 'Test Genre',
             });
         });
     });
