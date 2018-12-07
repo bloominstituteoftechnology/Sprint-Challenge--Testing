@@ -59,6 +59,7 @@ describe('server.js', () => {
                 title:"PUBG",
                 genre:"Battle Royale"
             });
+            expect(response.status).toBe(200)
         });
 
         it('Return Status of 422 if body does not contain required fields', async () => {
@@ -69,5 +70,15 @@ describe('server.js', () => {
             });
             expect(response.status).toBe(422);
         });
+
+        it('Returns Games Object', async () => {
+            let response = await request(server)
+            .post('/games')
+            .send({
+                title:"PUBG",
+                genre:"Battle Royale"
+            });
+            expect(typeof response.body).toBe('object');
+        })
     })
 });
