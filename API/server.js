@@ -9,18 +9,21 @@ server.post("/games", (req, res) => {
   db("games")
     .insert({ title, genre, releaseYear })
     .then(ids => {
-      if (!title || !genre) {
-        res.status(422).json({ message: "both title and genre are required" });
-      } else {
+      if (title && genre) {
         res.status(201).json({ message: `${title} successfully added` });
       }
+    })
+    .catch(err => {
+      res.status(422).json({ message: "both title and genre are required" });
     });
 });
 
-// server.get("/games", (req, res) => {
-//   db('games')
-//   if(  )
-//   res.status(200).json(game);
-// });
+server.get("/games", (req, res) => {
+  db("games")
+    .get()
+    .then(() => {
+      res.status(200).json([]);
+    });
+});
 
 module.exports = server;

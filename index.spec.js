@@ -9,7 +9,7 @@ const allGameData = {
 
 const partialGameData = {
   title: "Pacman", // required
-  // genre: "Arcade", // required but left out for the test
+  // genre: null, // required but left out for the test
   releaseYear: 1980 // not required
 };
 
