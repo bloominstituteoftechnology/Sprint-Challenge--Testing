@@ -27,7 +27,7 @@ describe('server.js', () => {
     it('should return a 422 if required fields are blank', async () => {
       let response = await request(server)
         .post('/games')
-        .send({ title: '', genre: '', releaseYear: 1986 });
+        .send({ title: null, genre: null, releaseYear: 1986 });
       expect(response.status).toBe(422);
     });
 
@@ -42,10 +42,11 @@ describe('server.js', () => {
     it('should return a 422 upon unsuccessful submission', async () => {
       let response = await request(server)
         .post('/games')
-        .send({ title: 22, genre: 44 });
+        .send({ title: null, genre: null });
       expect(response.status).toBe(422);
     });
   });
+
   /////////////////////////////////////////////////
   // G E T   R O U T E
   /////////////////////////////////////////////////
@@ -53,13 +54,13 @@ describe('server.js', () => {
     // The GET /games endpoint should return a list of games and HTTP status code 200.
     it('returns status 200 upon retrieval of game list', async () => {
       let response = await request(server).get('/games');
-      expect(resonse.status).toBe(200);
+      expect(response.status).toBe(200);
     });
 
     // ensure endpoint returns an array, regardless of list
     it('returns an array, even if game list is empty', async () => {
       let response = await request(server).get('/games');
-      expect(respsonse.body).toEqual(expect.arrayContaining([]));
+      expect(response.body).toEqual(expect.arrayContaining([]));
     });
 
     // ensure data is returned in JSON format
