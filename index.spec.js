@@ -1,5 +1,26 @@
 const request = require('supertest');
 const server = require('./api/server.js');
+const gamesArray = require('./gamesArr')
+
+// function resetArr (){
+//     gamesArray = [
+//         {
+//             title: 'Pacman',
+//             genre: 'Arcade',  
+//         },
+//         {
+//             title: 'Call of Duty',
+//             genre: 'FPS',  
+//         },
+//         {
+//             title: 'Fortnite',
+//             genre: 'Battle Royale',  
+//         }
+//     ]
+// }
+// afterAll(() => {
+//     resetArr;
+// })
 
 describe('server.js', () => {
     describe('/ route', () => {
@@ -52,6 +73,22 @@ describe('server.js', () => {
     })
 
     describe('POST /games', () => {
+        afterAll(() => {
+            gamesArray = [
+                        {
+                            title: 'Pacman',
+                            genre: 'Arcade',  
+                        },
+                        {
+                            title: 'Call of Duty',
+                            genre: 'FPS',  
+                        },
+                        {
+                            title: 'Fortnite',
+                            genre: 'Battle Royale',  
+                        }
+                        ]
+        })
         it('Returns Status of 200', async () => {
             let response = await request(server)
             .post('/games')

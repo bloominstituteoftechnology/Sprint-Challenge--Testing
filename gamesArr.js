@@ -1,4 +1,4 @@
-const games = [
+let games = [
     {
         title: 'Pacman',
         genre: 'Arcade',  
