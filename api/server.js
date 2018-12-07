@@ -80,8 +80,8 @@ server.post('/games', (req, res) => {
   if (!title || !genre) {
     res.status(422).json({ message: 'Title and genre are required' });
   } else {
-    let createGame = games.filter(game);
-    res.status(201).json(newGamesArray);
+    games.push({ title, genre });
+    res.status(201);
   }
 });
 
