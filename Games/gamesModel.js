@@ -10,7 +10,7 @@ module.exports = {
 
 async function insert(game) {
   // [ 1 ]
-  const [title] = await db('allGames').insert(game);
+  const [ title ] = await db('allGames').insert(game);
 
   return db('allGames')
     .where({ title })
