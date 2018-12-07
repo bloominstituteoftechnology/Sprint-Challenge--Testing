@@ -34,14 +34,24 @@ async function handleCreate(request, response, next) {
         });
     }
     catch(error) {
-        if(error.message === config.ERROR_DATAINCOMPLETE) {
-            response.status(422).json({
-                "message": config.ERROR_DATAINCOMPLETE,
-            });
-        } else {
-            response.status(500).json({
-                "message": config.ERROR_INTERNAL,
-            });
+        switch(error.message) {
+            case config.ERROR_DATAINCOMPLETE: {
+                response.status(422).json({
+                    "message": error.message,
+                });
+                break;
+            }
+            case config.ERROR_TITLECONFLICT: {
+                response.status(405).json({
+                    "message": error.message,
+                });
+                break;
+            }
+            default: {
+                response.status(500).json({
+                    "message": config.ERROR_INTERNAL,
+                });
+            }
         }
     }
     finally {

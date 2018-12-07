@@ -79,6 +79,13 @@ describe('Test Game API Server', () => {
         it('checks for incorrect data (422)', async function () {
             let response = await request(API).post(endPoint).send({});
             expect(response.status).toBe(422);
+            expect(response.body.message).toBe(config.ERROR_DATAINCOMPLETE);
+        });
+        it('checks for title coflict (405)', async function () {
+            await request(API).post(endPoint).send(testGame);
+            let response = await request(API).post(endPoint).send(testGame);
+            expect(response.status).toBe(405);
+            expect(response.body.message).toBe(config.ERROR_TITLECONFLICT);
         });
         it('responds with JSON object', async function () {
             let response = await request(API).post(endPoint).send(testGame);

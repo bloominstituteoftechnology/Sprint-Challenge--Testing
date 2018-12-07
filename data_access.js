@@ -43,6 +43,13 @@ module.exports = {
         if(!gameTitle || !gameGenre) {
             throw new Error(config.ERROR_DATAINCOMPLETE);
         }
+        // Test if Title already exists (would be easier with a real database)
+        const titleConflict = this.games.find(testGame => {
+            return testGame[config.FIELD_TITLE] === gameTitle;
+        });
+        if(titleConflict) {
+            throw new Error(config.ERROR_TITLECONFLICT);
+        }
         // Insert Data
         const newGame = {
             [config.FIELD_TITLE]: gameData.title,
