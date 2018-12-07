@@ -53,6 +53,23 @@ describe('server.js', () => {
             .post('/api/games')
             .send({title, genre, releaseYear});
             expect(response.type).toBe('application/json');
+        });
+    });
+
+    describe('get request to /api/games/:id', () => {
+        it('should return a 200 status code', async () => {
+            const response = await request(server).get('/api/games/1');
+            expect(response.status).toBe(200);
         })
+
+        it('should return json', async () => {
+            const response = await request(server).get('/api/games/1');
+            expect(response.type).toBe('application/json');
+        })
+
+        it('should return an array', async () => {
+            const response = await request(server).get('/api/games/1');
+            expect(response.body).toEqual(expect.any(Array));
+        });
     })
 })

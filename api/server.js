@@ -12,13 +12,21 @@ server.get('/', (req, res) => {
 
 server.get('/api/games', (req, res) => {
     db('games')
-    .select('title', 'genre', 'releaseYear')
+    .select('title', 'genre', 'releaseYear', 'id')
     .then(games => {
         res.status(200).json(games);
     })
     .catch(err => {
         res.status(400).json({message: 'error retrieving games'});
     })
+})
+
+server.get('/api/games/:id', (req, res) => {
+    const { id } = req.params;
+    db('games')
+    .where({ id: id })
+    .then(games => res.status(200).json(games))
+    .catch(error => res.status(500).json({message: "no game by that ID found"}))
 })
 
 server.post('/api/games', (req, res) => {
