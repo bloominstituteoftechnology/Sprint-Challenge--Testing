@@ -21,4 +21,20 @@ describe("server.js", () => {
 
     expect(response.body).toEqual({ message: "Up and Running" });
   });
+
+  //  "/games" GET Testing
+  describe("GET /games", () => {
+    it("Should return status code 200", async () => {
+      const response = await request(server).get("/games");
+      expect(response.status).toBe(200);
+    });
+  });
+  it("should return JSON", async () => {
+    let response = await request(server).get("/games");
+    expect(response.type).toBe("application/json");
+  });
+  it("should return an array even if array is empty", async () => {
+    const response = await request(server).get("/games");
+    expect(Array.isArray(response.body)).toEqual(true);
+  });
 });
