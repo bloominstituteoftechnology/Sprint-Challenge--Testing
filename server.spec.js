@@ -20,7 +20,7 @@ describe('server.js routes', () => {
             const response = await request(server).post('/').send(incompleteGame);
             expect(response.status).toEqual(422);
         });
-        it('should return a JSON object', async () => {
+        it('should return JSON', async () => {
             const response = await request(server).post('/').send(game);
             expect(response.type).toBe('application/json');
         });
@@ -32,9 +32,9 @@ describe('server.js routes', () => {
         });
         it('should return an array', async () => {
             const response = await request(server).get('/');
-            expect(typeof response.body === 'array').toBeTruthy();
+            expect(typeof response.body === 'object').toBeTruthy();
         });
-        it('should return a JSON object', async () => {
+        it('should return JSON', async () => {
             const response = await request(server).get('/');
             expect(response.type).toBe('application/json');
         });
