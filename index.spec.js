@@ -53,6 +53,7 @@ describe('server.js', () => {
         test('returns array', async () => {
             let response = await request(server).get('/games');
             expect(Array.isArray(response.body)).toBeTruthy();
+            // expect(typeof response.body === 'array').toBeTruthy();
         });
         test('returns json', async () => {
             let response = await request(server).get('/games');
