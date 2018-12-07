@@ -47,7 +47,10 @@ describe('server.js', () => {
     });
     it('should return list of games', async () => {
       let response = await request(server).get('/games');
-      expect(response.body).toEqual({ the: 'list' });
+      expect(response.body).toEqual([
+        { genre: 'Arcade', releaseYear: 1980, title: 'Pacman' },
+        { genre: 'Arcade', releaseYear: 1981, title: 'Galaga' },
+      ]);
     });
   });
 });
