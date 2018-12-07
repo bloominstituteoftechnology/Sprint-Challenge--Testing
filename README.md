@@ -5,7 +5,7 @@ For this project you will use TDD to create a simple Web API using Node.js and E
 ## Assignments
 
 - Open the `Review.md` file and answer the questions inside.
-- Use `Test Driven Development` to build a RESTful API using Node.js and Express to create and list _games_. **Data can be stored in memory. Use a simple JS array**. No need to keep track of incrementing `id`s for this project's MVP, that is part of the Stretch Problem.
+- Use `Test Driven Development` to build a RESTful API using Node.js and Express to create and list _games_. **Data can be stored in memory using a simple JS array**. No need to keep track of incrementing `id`s for this project's MVP, that is part of the Stretch Problem.
 
 ### Download Project and Install Dependencies
 
@@ -19,7 +19,7 @@ For this project you will use TDD to create a simple Web API using Node.js and E
 1.  use `jest` and `supertest` to write the tests.
 1.  Write the **tests BEFORE** writing the route handlers.
 1.  Your API must be have `POST` and `GET` endpoints for `/games`.
-1.  Write a **minimum** of two tests per endpoint.
+1.  Write a **minimum** of three tests per endpoint.
 
 #### POST /games
 
