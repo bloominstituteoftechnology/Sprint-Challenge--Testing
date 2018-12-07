@@ -19,28 +19,39 @@ describe('server.js', () => {
     });
 
     describe('post /games route', () => {
-        test('returns json', async() => {
+        test('returns json', async () => {
             let response = await request(server)
                 .post('/games')
-                .send({ name: "yusuf" });
+                .send({ title: 'fortnite', genre: 'action' });
             expect(response.type).toBe('application/json');
         });
-        test('returns status code 201 if successful', async() => {
+        test('returns status code 201 if successful', async () => {
             let response = await request(server)
                 .post('/games')
-                .send({ name: "yusuf" });
+                .send({ title: 'fortnite', genre: 'action' });
             expect(response.status).toBe(201);
         });
-        test('returns status code 500 if failed', async() => {
+        test('returns status code 422 if incomplete', async () => {
             let response = await request(server)
                 .post('/games')
-                .send();
-            expect(response.status).toBe(500);
+                .send({ title: 'Pacman' });
+            expect(response.status).toEqual({ title: 'Pacman', genre: 'Arcade' });
         });
     });
 
     describe('get /games route', () => {
-
+        test('returns array', async () => {
+            let response = await request(server).get('/games');
+            expect(Array.isArray(response)).toBeTruthy();
+        });
+        test('returns json', async () => {
+            let response = await request(server).get('/games');
+            expect(response.type).toBe('application/json');
+        })
+        test('returns status code 200 if successful', async () => {
+            let response = await request(server).get('/games');
+            expect(response.status).toBe(200);
+        });
     });
 
     // describe('post endpoint', () => {
