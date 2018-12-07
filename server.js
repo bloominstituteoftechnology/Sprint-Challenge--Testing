@@ -12,8 +12,12 @@ server.post('/games', async (req, res) => {
     try {
         const newGame = req.body;
         console.log('newGame', newGame);
-        const insertionCount = await db('games').insert(newGame);
-        res.status(201).json(insertionCount);
+        if (req.body.title && req.body.genre) {
+            const insertionCount = await db('games').insert(newGame);
+            res.status(201).json(insertionCount);
+        } else {
+            res.status(422).json({ message: 'Title and genre are both required.'});
+        }
     } catch(err) {
         console.log(err);
         res.status(500).json(err);
