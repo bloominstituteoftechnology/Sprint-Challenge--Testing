@@ -32,7 +32,7 @@ server.get('/games', (req, res) => {
 })
 
 server.delete('/games', (req, res) => {
-    
+    // games = [];
    games.pop();
    res.status(200).send(games);
 })

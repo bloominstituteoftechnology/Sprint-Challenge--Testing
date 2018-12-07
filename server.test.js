@@ -20,7 +20,12 @@ describe("/games route POST", () => {
     genre: "Arcade",
     releaseYear: 1980
   };
+  test('should return JSON', async () => {
+    let response = await request(server).post('/games');
 
+    expect(response.type).toBe('application/json');
+  });
+  
   test("should return 422 for given incomplete input ", async () => {
     let response = await request(server)
       .post("/games")
@@ -63,6 +68,14 @@ describe("/game route GET", () => {
     genre: "PC",
     releaseYear: 2050
   };
+
+  test('should return JSON', async () => {
+    let response = await request(server).get('/games');
+
+    expect(response.type).toBe('application/json');
+  });
+
+
 
   test("should return empty array ", async () => {
     // const temp = await request(server).delete("/games");
