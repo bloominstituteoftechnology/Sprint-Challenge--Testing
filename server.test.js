@@ -3,7 +3,7 @@ const request = require("supertest");
 const server = require("./server.js");
 
 beforeEach(async () => {
-    await request(server).delete("/games");
+ const temp = await request(server).delete("/games");
    });
    
 
@@ -72,15 +72,19 @@ describe("/game route GET", () => {
         releaseYear: 2050
       };
 
-    test("should return empty array ", async () => {
-    let response = await request(server).get("/games");
 
-    // expect(typeof response.body).toBe('array');
+   
+    test("should return empty array ", async () => {
+   
+        // const temp = await request(server).delete("/games");
+        let response = await request(server).get("/games");
+
+        expect(Array.isArray(response.body)).toBe(true);
     expect(response.body).toEqual([]);
   });
 
   test("should return array of games ", async () => {
-    // add 2 games info to test GET
+    
     await request(server)
       .post("/games")
       .send(input);
@@ -89,9 +93,11 @@ describe("/game route GET", () => {
       .post("/games")
       .send(input2);
 
+    //   const temp = await request(server).delete("/games");
+     
     let response = await request(server).get("/games");
 
-    // expect(typeof response.body).toBe('array');
+    expect(Array.isArray(response.body)).toBe(true);
     expect(response.body).toEqual([
         {
         title: "Pacman",
@@ -104,5 +110,6 @@ describe("/game route GET", () => {
         releaseYear: 2050
       }
     ]);
+  
   });
 });
