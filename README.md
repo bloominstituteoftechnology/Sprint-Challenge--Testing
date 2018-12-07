@@ -4,15 +4,16 @@ For this project you will use TDD to create a simple Web API using Node.js and E
 
 ## Assignments
 
-- Open the `Review.md` file and answer the questions inside.
+x Open the `Review.md` file and answer the questions inside.
+
 - Use `Test Driven Development` to build a RESTful API using Node.js and Express to create and list _games_. **Data can be stored in memory using a simple JS array**. No need to keep track of incrementing `id`s for this project's MVP, that is part of the Stretch Problem.
 
 ### Download Project and Install Dependencies
 
-1.  fork and clone this repository.
-1.  **CD into the folder** where you downloaded the repository.
-1.  run `yarn` or `npm i` to download all dependencies.
-1.  type `yarn test` or `npm test` to run the tests. The `test` script is already configured.
+1. x fork and clone this repository.
+1. x **CD into the folder** where you downloaded the repository.
+1. x run `yarn` or `npm i` to download all dependencies.
+1. x type `yarn test` or `npm test` to run the tests. The `test` script is already configured.
 
 ### Requirements
 
