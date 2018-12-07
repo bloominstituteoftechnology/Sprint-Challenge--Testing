@@ -75,5 +75,14 @@ describe('testing for GET and POST server endpoints', () => {
             const response = await request(server).post('/games').send(newGame);
             expect(response.body).toEqual({message: `Halo 4 added to games database.`})
         })
+        it('should return error 419 if a duplicate game is added', async () => {
+            const duplicateGame = {
+                    title: 'Halo:CE',
+                    genre: 'FPS',
+                    releaseYear: 2001
+            };
+            const response = await request(server).post('/games').send(duplicateGame);
+            expect(response.status).toBe(419);
+        })
     })
 }) 
