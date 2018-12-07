@@ -55,7 +55,7 @@ describe('server.js', () => {
             expect(response.status).toBe(200)
         });
 
-        it('the get is recieving an array even if it is empty', async () => {
+        it('the get is receiving an array even if it is empty', async () => {
             const response = await request(server).get('/games');
             expect(response.body).toEqual(expect.arrayContaining([]))
         });
