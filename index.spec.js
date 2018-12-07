@@ -1,5 +1,6 @@
 const request = require('supertest');
 const server = require('./server.js');
+const db = require('./data/dbconfig.js');
 
 describe("server.js", () => {
     describe("Test the root path", () => {
@@ -12,8 +13,13 @@ describe("server.js", () => {
         let response = await request(server).get('/');
         
         expect(response.body).toEqual({ api: 'alive' });
+        });
     });
-    });
+
+    afterAll(async () => {
+        await db('games').truncate();
+      });
+
      describe("POST /games", async () => {
       it("should return status code 200", async () => {
         const body = { title: 'Pacman', genre: 'Arcade', releaseYear: 1980 };
@@ -42,14 +48,14 @@ describe("server.js", () => {
             expect(response.status).toBe(200);
         });
 
-        it('should return empty array', async () => {
-            let response = await request(server).get('/games');
+        it('should return JSON', async () => {
+            let response = await request(server).post('/games');
             
-            expect(response.body).toEqual([]);
+            expect(response.type).toBe('application/json');
         });
 
         it("should return an array", async () => {
-            const body = { title: "Pacman", genre: "Arcade", releaseYear: 1980 };
+            const body = { title: "Pacman", genre: "Arcade", releaseYear: null };
             const response = await request(server)
               .get("/games")
               .send(body);
