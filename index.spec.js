@@ -53,10 +53,17 @@ describe('games database', () => {
     describe('get req to /games/:id', () => {
         it('should return status code 200', async () => {
             await request(server)
-            .post('/games')
-            .send({ title: 'Red Dead Redemption 2', genre: 'Action-Adventure', releaseYear: 2018 })
+                .post('/games')
+                .send({ title: 'Red Dead Redemption 2', genre: 'Action-Adventure', releaseYear: 2018 })
             let res = await request(server).get('/games/1')
             expect(res.status).toBe(200)
+        })
+        it('should return json', async () => {
+            await request(server)
+                .post('/games')
+                .send({ title: 'Red Dead Redemption 2', genre: 'Action-Adventure', releaseYear: 2018 })
+            let res = await request(server).get('/games/1')
+            expect(res.type).toBe('application/json')
         })
         it('should return a game', async () => {
             await request(server)
@@ -64,6 +71,22 @@ describe('games database', () => {
                 .send({ title: 'Red Dead Redemption 2', genre: 'Action-Adventure', releaseYear: 2018 })
             let res = await request(server).get('/games/1')
             expect(res.body).toEqual({ "genre": "Action-Adventure", "id": 1, "releaseYear": 2018, "title": "Red Dead Redemption 2" })
+        })
+    })
+    describe('delete req to /games/:id', () => {
+        it('should return status code 200', async () => {
+            await request(server)
+            .post('/games')
+            .send({ title: 'Red Dead Redemption 2', genre: 'Action-Adventure', releaseYear: 2018 })
+            let res = await request(server).delete('/games/1')
+            expect(res.status).toBe(200)
+        })
+        it('should return the count of deleted items', async () => {
+            await request(server)
+                .post('/games')
+                .send({ title: 'Red Dead Redemption 2', genre: 'Action-Adventure', releaseYear: 2018 })
+            let res = await request(server).delete('/games/1')
+            expect(res.body).toEqual(1)
         })
     })
 })

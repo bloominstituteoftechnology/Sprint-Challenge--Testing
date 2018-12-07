@@ -30,4 +30,12 @@ server.get('/games/:id', (req, res) => {
     .then(game => res.status(200).json(game))
     .catch(err => res.status(500).json(err))
 })
+
+server.delete('/games/:id', (req, res) => {
+    const { id } = req.params
+    games.remove(id)
+    .then(id => res.status(200).json(id))
+    .catch(err => res.status(500).json(err))
+})
+
 module.exports = server;
