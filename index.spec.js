@@ -41,7 +41,7 @@ describe("games/post", () => {
         };
         const response = await request(server).post("/api/games")
             .send(newGame);
-        expect(response).toBe(201);
+        expect(response.status).toBe(201);
     });
 
     it("should return status 422 given incomplete game object", async () => {

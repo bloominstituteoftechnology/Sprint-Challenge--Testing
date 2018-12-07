@@ -28,7 +28,7 @@ server.post("/api/games", (req, res) => {
     const game = req.body;
     if (typeof game === "object" && game.title && game.genre) {
         games.push(game);
-        res.status(201);
+        res.status(201).json({ message: "Working" });
     } else {
         res.status(422).json({ message: "Incomplete game information" });
     }
