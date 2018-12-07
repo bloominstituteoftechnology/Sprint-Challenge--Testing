@@ -25,7 +25,11 @@ server.get('/games', (req, res) => {
     .then(games => {
       return res.status(201).json(games);
     })
-    .catch(err => json(err));
+    .catch(err => {	
+      res.status(500).json({ 	
+        message: "The games could not be retrieved.",	
+        error: err })	
+    })
 })
 
 
