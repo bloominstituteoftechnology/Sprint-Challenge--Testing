@@ -38,7 +38,7 @@ describe('GET BY ID test', () => {
   });
 
   afterEach(async () => {
-    await db('games').truncate();
+    await dbModel.delete(id);
   });
 
   test('should be returning the object expected', async () => {
@@ -53,8 +53,9 @@ describe('GET BY ID test', () => {
 });
 
 describe('POST test', () => {
+  let id;
   afterEach(async () => {
-    await db('games').truncate();
+    await dbModel.delete(id);
   });
 
   const game = {
@@ -67,6 +68,9 @@ describe('POST test', () => {
     const response = await request(server)
       .post('/games')
       .send(game);
+    response.body.map(item => {
+      return (id = item);
+    });
     expect(response.status).toBe(201);
   });
 
@@ -74,6 +78,10 @@ describe('POST test', () => {
     const response = await request(server)
       .post('/games')
       .send(game);
+
+    response.body.map(item => {
+      return (id = item);
+    });
     expect(response.type).toBe('application/json');
   });
 
@@ -81,6 +89,10 @@ describe('POST test', () => {
     const response = await request(server)
       .post('/games')
       .send(game);
+
+    response.body.map(item => {
+      return (id = item);
+    });
     expect(response.res.statusMessage).toBe('Created');
   });
 });
@@ -107,7 +119,7 @@ describe('PUT request', () => {
     });
   });
   afterEach(async () => {
-    await db('games').truncate();
+    await dbModel.delete(id);
   });
 
   test('should be updating with a status code of 200', async () => {
