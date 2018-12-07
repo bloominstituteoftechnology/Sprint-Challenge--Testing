@@ -14,7 +14,7 @@ describe('GET endpoint /games', () => {
     const array = [
       {
         title: 'Pac-man',
-        genre: 'arcade',
+        genre: 'Arcade',
         releaseYear: 1980
       }
     ];
