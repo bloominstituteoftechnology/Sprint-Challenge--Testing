@@ -53,6 +53,46 @@ describe('POST test', () => {
   });
 });
 
+describe('PUT request', () => {
+  let id;
+  const game = {
+    title: 'Red Dead Redemption',
+    genre: 'Adventure',
+    releaseYear: '2018'
+  };
+
+  const updatedgame = {
+    title: 'God of War IV',
+    genre: 'Action',
+    releaseYear: '2018'
+  };
+  beforeEach(async () => {
+    const response = await request(server)
+      .post('/games')
+      .send(game);
+    response.body.map(item => {
+      return (id = item);
+    });
+  });
+  afterEach(async () => {
+    await db('games').truncate();
+  });
+
+  test('should be updating with a status code of 200', async () => {
+    await request(server)
+      .put(`/games/${id}`)
+      .send(updatedgame);
+
+    const response = await request(server).get(`/games/${id}`);
+    expect(response.body).toEqual({
+      genre: 'Action',
+      id: 1,
+      releaseYear: 2018,
+      title: 'God of War IV'
+    });
+  });
+});
+
 describe('DELETE request', () => {
   let id;
 
