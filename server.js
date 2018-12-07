@@ -11,7 +11,7 @@ server.post('/', (req, res) => {
         res.status(422).json({ message: 'Please include title and genre.' });
     } else {
         games.push(game);
-        res.status(201).json({ message: 'Game added.'});
+        res.status(201).json({ message: 'Game added.' });
     }
 });
 

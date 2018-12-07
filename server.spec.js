@@ -32,7 +32,7 @@ describe('server.js routes', () => {
         });
         it('should return an array', async () => {
             const response = await request(server).get('/');
-            expect(typeof response.body === 'object').toBeTruthy();
+            expect(Array.isArray(response.body)).toBeTruthy();
         });
         it('should return JSON', async () => {
             const response = await request(server).get('/');
