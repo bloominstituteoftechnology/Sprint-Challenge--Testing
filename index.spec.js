@@ -36,5 +36,30 @@ describe("/games route", () => {
     it("should return json object", () => {
       expect(response.type).toBe("application/json");
     });
+    it("should always return an array", () => {
+      let content = JSON.parse(response.text);
+      expect(Array.isArray(content)).toBeTruthy();
+    });
+  });
+  describe("POST", () => {
+    let response;
+    beforeAll(async () => {
+      try {
+        response = await request(server).post("/games").send({title:"Battle Chess", genre:"Board Game", releaseYear: 1988});
+      } catch (err) {
+        response = "broken";
+      }
+    });
+
+    it("should return status code 201", () => {
+      expect(response.status).toBe(201);
+    });
+    it("should return json object", () => {
+      expect(response.type).toBe("application/json");
+    });
+    it("should return string 'game added' ", () => {
+      let content = JSON.parse(response.text);
+      expect(content).toBe('Game added');
+    });
   });
 });
