@@ -43,14 +43,20 @@ describe("/games route", () => {
   });
   describe("POST", () => {
     let response;
-    beforeAll(async () => {
+    beforeEach(async () => {
       try {
-        response = await request(server).post("/games").send({title:"Battle Chess", genre:"Board Game", releaseYear: 1988});
+        response = await request(server)
+          .post("/games")
+          .send({
+            title: "Battle Chess",
+            genre: "Board Game",
+            releaseYear: 1988
+          });
       } catch (err) {
         response = "broken";
       }
     });
-
+ 
     it("should return status code 201", () => {
       expect(response.status).toBe(201);
     });
@@ -59,7 +65,16 @@ describe("/games route", () => {
     });
     it("should return string 'game added' ", () => {
       let content = JSON.parse(response.text);
-      expect(content).toBe('Game added');
+      expect(content).toBe("Game added");
     });
+  });
+  describe("POST fail checks", () => {
+    it("should return status code 422 for incomplete information", async () => {
+      let response = await request(server)
+        .post("/games")
+        .send({ title: "Kirby" });
+      expect(response.status).toBe(422);
+    });
+    
   });
 });
