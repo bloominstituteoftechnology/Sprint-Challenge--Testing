@@ -23,7 +23,7 @@ describe('server.js', () => {
         });
     });
 
-    //TEST FOR FIRST POST ROUTE..'/games' (TWO TEST CASES GROUPED UNDER THIS des)
+    //TEST FOR POST ROUTE..'/games' (TWO TEST CASES GROUPED UNDER THIS des)
     describe(" POST ROUTE '/games' ", () => {
         it('should return status code 201 on success', async () => {
              let response = await request(server).post('/games')
@@ -40,4 +40,19 @@ describe('server.js', () => {
        })
         
     });
+
+    //TEST FOR GET ROUTE..'/games' (TWO TEST CASES GROUPED UNDER THIS des)
+    describe(" GET ROUTE '/games' ", () => {
+        it('should return status code 200 on success', async () => {
+            let response = await request(server).get('/games');
+            expect(response.status).toBe(200);
+        });
+        
+        it('test to make sure this endpoint always returns an array', async () => {
+             let response = await request(server).get('/games');
+             expect(Array.isArray(response.body)).toBe(true);
+        });
+    });
+
+
 });
