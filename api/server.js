@@ -21,6 +21,18 @@ server.get('/api/games', (req, res) => {
     })
 })
 
+server.post('/api/games', (req, res) => {
+    const { title, genre, releaseYear } = req.body;
+    db('games')
+    .insert({ title, genre, releaseYear })
+    .then(() => {
+        res.status(200).json({message: 'successfully posted game'})
+    })
+    .catch(err => {
+        res.status(422).json({message: 'error posting game'})
+    })
+})
+
 
 
 module.exports = server;
