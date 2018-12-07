@@ -9,49 +9,41 @@ let games = [
     genre: 'Arcade',
     releaseYear: 1980
   },
-
   {
     title: 'Final Fantasy 3',
     genre: 'JRPG',
     releaseYear: 1994
   },
-
   {
     title: 'Sonic the Hedgehog',
     genre: 'Platform',
     releaseYear: 1991
   },
-
   {
     title: 'Overwatch',
     genre: 'FPS',
     releaseYear: 2016
   },
-
   {
     title: 'Portal',
     genre: 'Puzzle/Survival',
     releaseYear: 2007
   },
-
   {
     title: 'Tetris',
     genre: 'Puzzle',
     releaseYear: 1984
   },
-
   {
     title: 'Mortal Kombat',
     genre: 'Fighting',
     releaseYear: 1992
   },
-
   {
     title: 'Resident Evil',
     genre: 'Horror Survival',
     releaseYear: 1996
   },
-
   {
     title: 'Tomb-Raider',
     genre: 'Action-Adventure',
