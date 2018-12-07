@@ -8,7 +8,7 @@ server.use(express.json());
 let gamesDb = [];
 
 server.get('/', (req, res) => {
-    res.status(200).json({ message: 'My server is working!' });
+    res.status(200).json({ message: 'Server is up!' });
 });
 
 server.get('/games', (req, res) => {
