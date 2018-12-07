@@ -19,10 +19,14 @@ describe("games/get", () => {
     it("should return an array", async () => {
         const response = await request(server).get("/api/games");
         expect(response).toBeTruthy();
-        // expect(response).toBe(200);
-        // expect(response.body.type).toBe("application/json");
         expect(Array.isArray(response.body)).toBeTruthy();
     });
+
+    // it("should return ", async () => {
+    //     const response = await request(server).get("/api/games");
+    //  // expect(response).toBe(200);
+    //     expect(response.body.type).toBe("application/json");
+    // });
 
     it("should return status code 200", async () => {
         const response = await request(server).get("/api/games");
@@ -53,9 +57,20 @@ describe("games/post", () => {
         expect(response.status).toBe(422);
     });
 
-    // it("should add to the length of games", async () => {
-    //     const games = await request(server).get("api/games");
+    it("should add 1 to the length of games", async () => {
+        const games = await request(server).get("/api/games");
+        const len = games.body.length;
 
-    // });
+        const newGame = {
+            title: "Super Mario Bros. 1",
+            genre: "Console",
+            releaseYear: 1985
+        };
+        await request(server).post("/api/games")
+            .send(newGame);
+
+        const response = await request(server).get("/api/games");
+        expect(response.body.length).toBe(len + 1);
+    });
 
 });

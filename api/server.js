@@ -4,15 +4,7 @@ const server = express();
 
 server.use(express.json());
 
-// const fakeDb = require("../data/fakeDb.js");
-// const { games } = fakeDb;
-const games = [
-    {
-        title: "StarCraft",
-        genre: "RTS",
-        releaseYear: 1997
-    }
-];
+const games = require("../data/fakeDb.js");
 
 // Sanity check endpoint
 server.get("/", (req, res) => {
