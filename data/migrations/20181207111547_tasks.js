@@ -1,13 +1,14 @@
 exports.up = function(knex, Promise) {
-    return knex.schema.createTable('tasks', tbl => {
+    return knex.schema.createTable('games', tbl => {
       tbl.increments();
   
-      tbl.string('task', 255).notNullable();
-      tbl.string('role', 255).notNullable();
+      tbl.string('title', 255).notNullable();
+      tbl.string('genre', 255).notNullable();
+      tbl.integer('release Year', 255)
     });
   };
   
   exports.down = function(knex, Promise) {
-    return knex.schema.dropTableIfExists('tasks');
+    return knex.schema.dropTableIfExists('games');
   };
   
