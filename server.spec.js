@@ -35,6 +35,11 @@ describe('GET /games route', () => {
         expect(response.body).toEqual([])
     })
 
+    it('should return JSON', async () => {
+        const response = await request(server).get('/games')
+        expect(response.type).toBe('application/json')
+    })
+
 })
 
 describe('POST /games route', () => {
