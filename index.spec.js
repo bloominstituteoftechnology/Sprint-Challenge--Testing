@@ -41,7 +41,7 @@ describe('server.js', () => {
             const response = await request(server).get(`/games/${id}`);
             expect(response.status).toBe(200);
         });
-        it('should return status 404 when a game is not found', () => {
+        it('should return status 404 when a game is not found', async () => {
             const id = 999;
             const response = await request(server).get(`/games/${id}`);
             expect(response.status).toBe(404);
