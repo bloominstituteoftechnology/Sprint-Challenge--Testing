@@ -39,14 +39,22 @@ describe('server.js', () => {
     it('should return a 201 upon successful submission', async () => {
       let response = await request(server)
         .post('/games')
-        .send({ title: 'Maniac Mansion', genre: 'Puzzle', releaseYear: 1988 });
+        .send({
+          title: 'Maniac Mansion',
+          genre: 'Puzzle',
+          releaseYear: 1988
+        });
       expect(response.status).toBe(201);
     });
 
     it('should verify the returned message body upon successful post', async () => {
       let response = await request(server)
         .post('/games')
-        .send({ title: 'Maniac Mansion', genre: 'Puzzle', releaseYear: 1988 });
+        .send({
+          title: 'Mega Man 2',
+          genre: 'Side Scrolling',
+          releaseYear: 1988
+        });
       expect(response.body).toEqual({ message: 'successfully added' });
     });
   });
@@ -71,6 +79,22 @@ describe('server.js', () => {
     it('should return JSON', async () => {
       let response = await request(server).get('/');
       expect(response.type).toBe('application/json');
+    });
+
+    // return 404 if individual game id referenced does not exist
+    it('should return 404 upon non-existant game id', async () => {
+      let response = await request(server).get('/games/999999999999999');
+      expect(response.status).toBe(404);
+    });
+  });
+
+  /////////////////////////////////////////////////
+  // D E L E T E   R O U T E
+  /////////////////////////////////////////////////
+  describe('delete route', () => {
+    it('returns a status 200 upon successful delete', async () => {
+      let response = await request(server).delete('/games/1');
+      expect(response.status).toBe(200);
     });
   });
 });
