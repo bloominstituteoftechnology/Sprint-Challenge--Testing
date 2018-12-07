@@ -4,8 +4,11 @@
 	"description": "Testing Sprint Challenge",
 	"main": "index.js",
 	"scripts": {
-		"test": "jest --watch --verbose",
+		"test": "jest --watch --verbose --runInBand",
 		"start": "nodemon index.js"
+	},
+	"jest": {
+		"testEnvironment": "node"
 	},
 	"repository": {
 		"type": "git",
