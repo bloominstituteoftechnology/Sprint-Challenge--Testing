@@ -20,6 +20,38 @@ describe('GET test', () => {
   });
 });
 
+describe('GET BY ID test', () => {
+  let id;
+
+  const game = {
+    title: 'Red Dead Redemption',
+    genre: 'Adventure',
+    releaseYear: '2018'
+  };
+  beforeEach(async () => {
+    const response = await request(server)
+      .post('/games')
+      .send(game);
+    response.body.map(item => {
+      return (id = item);
+    });
+  });
+
+  afterEach(async () => {
+    await db('games').truncate();
+  });
+
+  test('should be returning the object expected', async () => {
+    const response = await request(server).get(`/games/${id}`);
+    expect(response.body).toEqual({
+      genre: 'Adventure',
+      id: id,
+      releaseYear: 2018,
+      title: 'Red Dead Redemption'
+    });
+  });
+});
+
 describe('POST test', () => {
   afterEach(async () => {
     await db('games').truncate();
@@ -86,7 +118,7 @@ describe('PUT request', () => {
     const response = await request(server).get(`/games/${id}`);
     expect(response.body).toEqual({
       genre: 'Action',
-      id: 1,
+      id: id,
       releaseYear: 2018,
       title: 'God of War IV'
     });
