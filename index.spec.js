@@ -18,4 +18,36 @@ describe('server.js', () => {
             expect(response.body).toEqual({ api: 'Running' });
         });
     });
+
+    describe('Get Games Enpoint', () => {
+        it('Returns Status code 200', async () => {
+            let response = await request(server).get('/games');
+            expect(response.status).toBe(200);
+        })
+
+        it('Returns JSON', async () => {
+            let response = await request(server).get('/games');
+            expect(response.type).toBe('application/json');
+        })
+
+        it('Returns games array', async () => {
+            let response = await request(server).get('/games');
+            expect(response.body).toEqual(
+                [
+                    {
+                        title: 'Pacman',
+                        genre: 'Arcade',  
+                    },
+                    {
+                        title: 'Call of Duty',
+                        genre: 'FPS',  
+                    },
+                    {
+                        title: 'Fortnite',
+                        genre: 'Battle Royal',  
+                    }
+                ]
+            );
+        })
+    })
 });
