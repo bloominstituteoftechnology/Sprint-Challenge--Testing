@@ -1,3 +1,3 @@
-const { server, port } = require('./api/server');
+const server = require('./api/server');
 
-server.listen(port, () => console.log(`This port is over ${port}!!`));
+server.listen(9000, () => console.log(`This port is over 9000!!`));
