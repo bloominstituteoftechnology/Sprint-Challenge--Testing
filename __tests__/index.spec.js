@@ -36,10 +36,19 @@ describe('server.js', () => {
       .post('/games')
       .send({ title: 'Pole Position', genre: 'Arcade' })
 
-    expect(response.body).toEqual({ added: 'Arcade: Pole Position (undefined)'})
+      expect(response.body).toEqual({ added: 'Arcade: Pole Position (undefined)'})
+
+      response = await request(server)
+      .post('/games')
+      .send({ title: 'Pharaoh', genre: 'Strategy/Simulation', releaseYear: 1999 })
+      // RED TEST: .send({ title: 'Pharaoh', releaseYear: 1999 })
+
+      expect(response.body).toEqual({ added: 'Strategy/Simulation: Pharaoh (1999)'})
+
+      // Pharaoh
 
 
-      // `${genre}: ${title}` 
+     
     })
   })
 

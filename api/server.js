@@ -2,7 +2,7 @@ const express = require('express');
 const server = express();
 server.use(express.json());
 
-// const checkTitleGenre = require('../middleware/checkTitleGenre.js')
+const checkTitleGenre = require('../middleware/checkTitleGenre.js')
 
 server.get('/', (req, res) => {
   res.status(200).json({ api: 'Ready!' })
