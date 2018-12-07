@@ -23,9 +23,9 @@ describe('videogame model', () => {
     expect(rows).toHaveLength(2);
   });
 
-  it('should update a record', () => {
-    // insert a record
-    // update the record by id = 1
-    // check that the record was updated with the new information
-  });
+  // it('should update a record', () => {
+  // insert a record
+  // update the record by id = 1
+  // check that the record was updated with the new information
+  // });
 });

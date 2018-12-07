@@ -7,7 +7,7 @@ exports.up = function(knex, Promise) {
       .notNullable()
       .unique();
     tbl.string('genre', 255).notNullable();
-    tbl.string('releaseYear', 255);
+    tbl.string('releaseYear', 4);
   });
 };
 
