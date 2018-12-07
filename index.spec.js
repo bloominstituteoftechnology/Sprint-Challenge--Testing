@@ -60,4 +60,30 @@ describe("server.js", () => {
       //test
     });
   });
+
+  describe("/games GET route", () => {
+    it.skip("returns an array", async () => {
+      let response = await request(server).get("/games");
+      expect(Array.isArray(response.body)).toBe(false);
+    });
+
+    it.skip("returns an array containing the list of games in the db, if any exist", async () => {
+      await db("games").insert({
+        title: "Ocarina of Time",
+        genre: "adventure"
+      });
+      let response = await request(server).get("/games");
+      expect(response.body).toHaveLength(2);
+    });
+
+    it.skip("returns status 200 upon successful request", async () => {
+      let response = await request(server).get("/games");
+      expect(response.status).toBe(201);
+    });
+
+    it.skip("returns an empty array if no games exist in the db", async () => {
+      let response = await request(server).get("/games");
+      expect(response.body).toHaveLength(2);
+    });
+  });
 });
