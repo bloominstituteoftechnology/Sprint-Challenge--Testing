@@ -12,6 +12,14 @@ server.get('/games', (req,res) => {
     res.status(200).send(gameList)
 })
 
-
+server.post('/games', (req,res) => {
+    if(req.body.title && req.body.genre){
+        games.push(req.body)
+        const gameList = [...games]
+        res.status(200).send(gameList)
+    }else{
+        res.status(422).send("error")
+    }
+})
 
 module.exports = server;
