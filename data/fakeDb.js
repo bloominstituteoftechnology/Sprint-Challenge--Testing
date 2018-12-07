@@ -1,4 +1,4 @@
 
-const db = [];
+const games = [];
 
-module.exports = db;
+module.exports = games;
