@@ -19,6 +19,9 @@ server.get('/games', (req, res) =>{
 
 server.post('/games', (req, res) =>{
     let {title, genre, releaseYear} = req.body;
+    if (games.some(game => game.title === title)){
+        return res.status(405).json('Game data already exists')
+    }
     if (!title || !genre || !releaseYear){
         return res.status(422).json('Title, genre and release year required')
     }

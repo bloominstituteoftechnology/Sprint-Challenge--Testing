@@ -43,7 +43,7 @@ describe("/games route", () => {
   });
   describe("POST", () => {
     let response;
-    beforeEach(async () => {
+    beforeAll(async () => {
       try {
         response = await request(server)
           .post("/games")
@@ -56,7 +56,7 @@ describe("/games route", () => {
         response = "broken";
       }
     });
- 
+
     it("should return status code 201", () => {
       expect(response.status).toBe(201);
     });
@@ -75,6 +75,16 @@ describe("/games route", () => {
         .send({ title: "Kirby" });
       expect(response.status).toBe(422);
     });
-    
+    it("should return status code 405 if game title exists", async () => {
+      let response = await request(server)
+        .post("/games")
+        .send({
+          title: "Help Ryan Study",
+          genre: "Platformer",
+          releaseYear: 2018
+        });
+        expect(response.status).toBe(405)
+    });
   });
 });
+ 
