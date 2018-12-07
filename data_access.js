@@ -23,7 +23,7 @@ module.exports = {
         }
         return this.games.map((game, index) => {
             const gameWithId = {
-                [config.FIELD_ID   ]: index++,
+                [config.FIELD_ID   ]: index + 1,
                 [config.FIELD_TITLE]: game.title,
                 [config.FIELD_GENRE]: game.genre,
             };
@@ -45,8 +45,8 @@ module.exports = {
         }
         // Insert Data
         const newGame = {
-            [config.FIELD_TITLE]: game.title,
-            [config.FIELD_GENRE]: game.genre,
+            [config.FIELD_TITLE]: gameData.title,
+            [config.FIELD_GENRE]: gameData.genre,
         };
         if(gameRelease) {
             newGame[config.FIELD_RELEASE] = gameRelease;
