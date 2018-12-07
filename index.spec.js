@@ -1,5 +1,7 @@
 const request = require("supertest");
 
+const server = require("./server");
+
 // post games tests
 describe("POST /games", () => {
   it("Should send an object with title and genre required", async () => {
@@ -25,7 +27,7 @@ describe("POST /games", () => {
     let res = await request(server)
       .post("/games")
       .send({ genre: "another test" });
-    expect(res.status).toEqual(500);
+    expect(res.status).toBe(500);
   });
 });
 
@@ -43,10 +45,9 @@ describe("GET /games", () => {
     expect(res.type).toBe("application/json");
   });
 
-  // it("Should return status code of 500 for not passing in title", async () => {
-  //   let res = await request(server)
-  //     .post("/games")
-  //     .send({ genre: "another test" });
-  //   expect(res.status).toEqual(500);
-  // });
+  it("Should return length of 2", async () => {
+    let res = await request(server).get("/games");
+
+    expect(res.body).toHaveLength(2);
+  });
 });
