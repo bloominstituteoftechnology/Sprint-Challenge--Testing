@@ -1,5 +1,8 @@
 # Please answer the following questions
 
 1.  In Jest, what are the differences between `describe()` and `it()` globals, and what are good uses for them?
+<br> 'describe()' is used to group a section of related tests together, while 'it()' is a method used to run a single test. <br>
 2.  What is the point of `Test Driven Development`? What do you think about this approach?
-3.  Mention three types of automated tests.
+<br> Test Driven Development (TDD) is a style of development where tests are created before the code. Truthfully, there is still debate as to best practices and merits of TDD or what constitutes  TDD other than the test is done first. I can see why this approach might be gaining popularity. As our ability continues to grow to create larger, more complex, and more dynamic applications, the need for testing grows. A TDD approach mirrors the "eat that frog" or "eat your veggies first" mindset found in time management and productivity areas of study. It's prioritizing the thing you *should* do first, it's making sure your bases are covered, and it's making sure that the development/product vision stays the path it was meant to take OR if changes are needed, they are made intentionally with consideration.  My opinion is, I can see why it's gaining traction and I think it makes a ton of sense in large scale applications and tech enterprises. In these situations, tests matter, not doing them creates a ton of unnecessary risk, and potentially work, both of which translate to being bad for business.  <br>
+3.  Mention three types of automated tests.<br>
+The 3 main types of automated testing are 1) unit test for functions, methods, and routines 2)web/api tests to make sure everything is talking to each other correctly and 3)GUI tests to make sure everything is displaying the way the application is intended to display. 
