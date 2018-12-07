@@ -8,7 +8,8 @@ let nextId = 0
 // with postfix operator function returns value then increments it
 const idCounter = () => nextId++
 
-const games = [
+// let because we'll be reasigning when we delete items
+let games = [
   {
     id: idCounter(),
     title: 'Life',
@@ -70,15 +71,24 @@ server.get('/games/:id', (req, res) => {
   }
 })
 
-// server.delete('/games', (req, res) => {
-//   const { item } = req.body
+server.delete('/games/:id', (req, res) => {
+  const { id } = req.params
+  // loosy equals below because we're comparing ie 0 and '0'
+  const gameIndex = games.findIndex(game => game.id == id)
 
-//   if (item) {
-//     games = [...games.filter(x => x !== item)]
-//     res.status(200).send()
-//   } else {
-//     res.status(400).send()
-//   }
-// })
+  if (gameIndex >= 0) {
+    const gamesLength = games.length
+    games = [...games.slice(0, gameIndex), ...games.slice(gameIndex + 1)]
+    const successfullyRemoved = gamesLength - games.length === 1
+
+    if (successfullyRemoved) {
+      res.send(200).send()
+    } else {
+      res.send(500).json({ message: 'an unexpected error occured' })
+    }
+  } else {
+    res.send(404).send()
+  }
+})
 
 module.exports = server

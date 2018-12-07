@@ -91,26 +91,17 @@ describe('server.js', () => {
     })
   })
 
-  // describe('DELETE /games/:id', () => {
-  //   it('should return 201 if good request is sent', async () => {
-  //     const newGame = {
-  //       title: 'Pacman',
-  //       genre: 'Arcade',
-  //       releaseYear: 1980
-  //     }
+  describe('DELETE /games/:id', () => {
+    it('should return 200 if game is deleted', async () => {
+      // search for index 0 because i'm initializing it with that
+      let response = await request(server).delete('/games/0')
+      expect(response.status).toBe(200)
+    })
 
-  //     await request(server)
-  //       .post('/games')
-  //       .send({ ...newGame })
-
-  //     await request(server)
-  //       .de
-  //     expect(response.status).toBe(201)
-  //   })
-
-  //   it('should return 400 if bad request is sent', async () => {
-  //     let response = await request(server).delete('/games')
-  //     expect(response.status).toBe(400)
-  //   })
-  // })
+    it('should return 404 if not found', async () => {
+      // search for 'a' which should never be there
+      let response = await request(server).delete('/games/a')
+      expect(response.status).toBe(404)
+    })
+  })
 })
