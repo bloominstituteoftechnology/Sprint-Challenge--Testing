@@ -22,15 +22,25 @@ describe("games/get", () => {
         expect(Array.isArray(response.body)).toBeTruthy();
     });
 
-    it("should return ", async () => {
-        const response = await request(server).get("/api/games");
-     // expect(response).toBe(200);
-        expect(response.body.type).toBe("application/json");
-    });
+    // it("should return a JSON-type response", async () => {
+    //     const response = await request(server).get("/api/games");
+    //  // expect(response).toBe(200);
+    //     expect(response.body.type).toBe("application/json");
+    // });
 
     it("should return status code 200", async () => {
         const response = await request(server).get("/api/games");
         expect(response.status).toBe(200);
+    });
+
+    it("if games isn't empty, test properties of the first object", async () => {
+        const response = await request(server).get("/api/games");
+        if (response.body.length > 0) {             // I tested that this works whether the condition is true or not
+            const firstGame = response.body[0];
+            expect(typeof firstGame).toBe("object");
+            expect(firstGame.title).toBeTruthy;
+            expect(firstGame.genre).toBeTruthy;
+        }
     });
 
 });
