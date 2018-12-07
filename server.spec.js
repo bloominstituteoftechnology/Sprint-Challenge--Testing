@@ -1,5 +1,12 @@
 const request = require('supertest');
 const server = require('./server.js');
+const games = require('./db');
+
+// beforeEach(async () => {
+//   await request(server)
+//     .post('/games')
+//     .send(games);
+// });
 
 describe('server.js', () => {
   describe('/ route', () => {
@@ -60,11 +67,13 @@ describe('server.js', () => {
           .send(game);
         expect(response.body).toEqual([
           {
+            id: 0,
             title: 'Pacman',
             genre: 'Arcade',
             releaseYear: 1980
           },
           {
+            id: 1,
             title: 'Final Fantasy VII',
             genre: 'RPG',
             releaseYear: 1997

@@ -13,6 +13,8 @@ server.get('/games', (req, res) => {
   res.status(200).json(games);
 });
 
+let gameId = 1;
+
 server.post('/games', (req, res) => {
   const newGame = req.body;
   if (!newGame.title || !newGame.genre) {
@@ -25,8 +27,10 @@ server.post('/games', (req, res) => {
       return res.status(405).json({ message: 'That title already exists.' });
     }
   });
-  const updatedGames = [...games, newGame];
+  const updatedGames = [...games, { ...newGame, id: gameId }];
+
   res.status(200).json(updatedGames);
+  gameId++;
 });
 
 module.exports = server;
