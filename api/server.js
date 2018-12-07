@@ -4,8 +4,13 @@ const server = express()
 
 server.use(express.json())
 
+let nextId = 0
+// with postfix operator function returns value then increments it
+const idCounter = () => nextId++
+
 const games = [
   {
+    id: idCounter(),
     title: 'Life',
     genre: 'General',
     releaseYear: '200k bc'
@@ -13,16 +18,18 @@ const games = [
 ]
 
 const addGame = ({ title, genre, releaseYear }) => {
+  // check for title collision
   const titleCollision = !!games.find(game => game.title === title)
 
   if (titleCollision) {
     throw new Error('Title collsion. Titles must be unique.')
   }
 
+  // add game to data
   if (releaseYear) {
-    games.push({ title, genre, releaseYear })
+    games.push({ id: idCounter(), title, genre, releaseYear })
   } else {
-    games.push({ title, genre })
+    games.push({ id: idCounter(), title, genre })
   }
 }
 
