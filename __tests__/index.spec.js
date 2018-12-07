@@ -24,4 +24,30 @@ describe('server.js', () => {
     })
   })
 
+  describe('POST /games endpoint', () => {
+    it('should add title, genre, and releaseYear', async () => {
+      let response = await request(server)
+        .post('/games')
+        .send({ title: 'Pacman', genre: 'Arcade', releaseYear: 1980 })
+
+      expect(response.body).toEqual({ add: 'Arcade: Pacman'})
+
+
+      // `${genre}: ${title}` 
+    })
+  })
+
+
+
+
+  // ```js
+  // {
+  //   title: 'Pacman', // required
+  //   genre: 'Arcade', // required
+  //   releaseYear: 1980 // not required
+  // }
+  // ```
+
+  // - in the route handler, validate that the required fields are included inside the body. If the information is incomplete, return a `422` status code.
+  // - write tests to verify that the endpoint returns the correct HTTP status code when receiving correct and incorrect game data.
 })
