@@ -25,10 +25,21 @@ server.post("/games", (req, res) => {
         "Please fill out at least title and genre fields before submitting"
     });
   } else {
+    //stretch: first make sure db doesn't already contain game with the submitted name
     db("games")
-      .insert(game)
-      .then(id => res.status(201).json(id))
-      .catch(err => res.status(500).json(err));
+      .where({ title: game.title })
+      .then(dbGame => {
+        if (dbGame && dbGame.length) {
+          // if it already exists (check length because will still return an empty array if not), status 405 Not Allowed
+          res.status(405).json({ message: "That game already exists." });
+        } else {
+          // otherwise allow POST request
+          db("games")
+            .insert(game)
+            .then(id => res.status(201).json(id))
+            .catch(err => res.status(500).json(err));
+        }
+      });
   }
 });
 

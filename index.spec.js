@@ -55,9 +55,17 @@ describe("server.js", () => {
       });
     });
 
-    //todo: stretch test
+    //stretch test
     it("returns status 405 if submitted game name already exists in db", async () => {
-      //test
+      await db("games").insert({
+        title: "Ocarina of Time",
+        genre: "adventure"
+      });
+      let response = await request(server)
+        .post("/games")
+        .send({ title: "Ocarina of Time", genre: "adventure" });
+      expect(response.status).toBe(405);
+      expect(response.body).toEqual({ message: "That game already exists." });
     });
   });
 
