@@ -43,6 +43,7 @@ describe('server.js', () => {
       })
     }) //end post describe
     describe('GET /games/:id route', () => {
+      //test should have added 3 games with ids 1-3
       it('should return a status code of 200', async () => {
         let response = await request(server).get('/games/1').send();
 
@@ -61,13 +62,19 @@ describe('server.js', () => {
     }) //end get id describe
     describe('DELETE /games/:id route', () => {
       it('should return a status code of 204', async () => {
-        let response = await request(server).delete('/games/3').send();
+        //tests have added 3 games, and they should have ids 1-3
+        let response = await request(server).delete('/games/2').send();
         expect(response.status).toBe(204);
       });
 
       it('should return a 404 code if there is no game with that id', async () => {
-        let response = await request(server).get('/games/5').send();
+        let response = await request(server).delete('/games/5').send();
         expect(response.status).toBe(404)
       });
+      it('should only delete specified game', async () => {
+        let response = await request(server).get('/games').send();
+        //we added three games and deleted one.
+        expect(response.body).toHaveLength(2); 
+      })
     }) //end delete id describe
 }) //end server.js describe
