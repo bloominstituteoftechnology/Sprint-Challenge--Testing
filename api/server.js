@@ -36,7 +36,7 @@ server.post('/addGame', (req, res) => {
             res.status(201).json({ Game: `${game.title} ${game.genre} ${game.releaseYear}` });
         })
         .catch(error => {
-            res.status(500).json({ error: 'Cannot add a new game.' });
+            res.status(422).json({ error: 'Cannot add a new game.' });
         });
 })
 
