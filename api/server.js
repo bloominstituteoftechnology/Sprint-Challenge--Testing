@@ -23,14 +23,12 @@ server.get('/games', (req, res) => {
   db('games')
     .select('title', 'genre', 'releaseYear') 
     .then(games => {
-    return res.status(201).json(games);
-  })
-  .catch(err => {
-    res.status(500).json({ 
-      message: "The games could not be retrieved.",
-      error: err })
-  })
+      return res.status(201).json(games);
+    })
+    .catch(err => json(err));
 })
+
+
 
 // const port = process.env.PORT || 7200;
 
