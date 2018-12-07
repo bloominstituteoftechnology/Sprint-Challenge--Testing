@@ -61,6 +61,13 @@ describe('server.js', () => {
       // expect(response.type).toBe('application/xml');
       expect(response.type).toBe('application/json');
     })
+
+    it('should return a JSON object from /allGames', async () => {
+      // const expectedBody = { message: 'list of games' };
+      const expectedBody = { message: "you can't play today" };
+      const response = await request(server).get('/allGames');
+      expect(response.body).toEqual(expectedBody);
+    })
   })
 
 // all title, genre, and releaseYear for all games
