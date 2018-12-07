@@ -21,7 +21,7 @@ describe('server.js', ()=>{
         //TEST 2
         it('should return 200 if complete', async ()=>{
             let gameBody2 = {
-                title: 'Pacman', 
+                title: 'Mrs. Pacman', 
                 genre: 'Arcade', 
                 releaseYear: 1980 
             }
@@ -29,6 +29,19 @@ describe('server.js', ()=>{
 
             expect(response.status).toBe(200)
             
+
+        })
+
+        it('should be able to add posted item to an array', async ()=>{
+            let gameBody3 = {
+                title: 'Star Fox', 
+                genre: 'Action-Adventure', 
+                releaseYear: 1993 
+            }
+            
+            let response = await request(server).post('/games').send(gameBody3);
+
+            expect(response.body).toBe(4); //checks the length of the new array
 
         })
 
@@ -53,18 +66,28 @@ describe('server.js', ()=>{
                     title: 'Shadow of Colossus',
                     genre: 'Action-Adventure', 
                     releaseYear: 2005 
+                },
+                {
+                    title: 'Mrs. Pacman', 
+                    genre: 'Arcade', 
+                    releaseYear: 1980 
+                },
+                {
+                    title: 'Star Fox', 
+                    genre: 'Action-Adventure', 
+                    releaseYear: 1993 
                 }
             ]
 
-            expect(response.body).toEqual(gameArray)
-            expect(response.status).toBe(200)
+            expect(response.body).toEqual(gameArray) //1
+            expect(response.status).toBe(200) //2
 
         }) 
 
         //TEST 4
         it('should always return an array', async () => {
             let response = await request(server).get('/games');
-            expect(Array.isArray(response.body)).toBeTruthy();
+            expect(Array.isArray(response.body)).toBeTruthy(); //3
         });
 
 

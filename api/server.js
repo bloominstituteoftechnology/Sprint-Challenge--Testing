@@ -29,8 +29,9 @@ function checker(req,res,next){
 
 server.post('/games', checker, (req, res)=>{
     
-    
-    res.status(200).json({message: 'All Good'})
+    let newGameArr = gameArray.push(req.body);
+
+    res.status(200).json(newGameArr)
 });
 
 
