@@ -9,6 +9,12 @@ describe('server.js', () => {
       let response = await request(server).get('/')
       expect(response.status).toBe(200);
     })
+
+    it('should return appliction/json', async () => {
+      let response = await request(server).get('/')
+      // RED TEST: expect(response.type).toBe('application/xml');
+      expect(response.type).toBe('application/json');
+    })
   })
 
 })
