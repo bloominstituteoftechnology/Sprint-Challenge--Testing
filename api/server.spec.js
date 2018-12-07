@@ -1,44 +1,74 @@
 const request = require('supertest');
 const server = require('./server');
 
-describe('POST /games', ()=>{
-    it('should include proper fields; returns 422 if incomplete', async ()=>{
+describe('server.js', ()=>{
 
-        let gameBody = {
-            title: 'Pacman',
-            genre: '',
-            releaseYear: 1980 
-        }
-        let response = await request(server).post('/games').send(gameBody)
 
-        expect(response.status).toBe(422)
-    })
 
-    it('should return 200 if complete', async ()=>{
-        let gameBody = {
-            title: 'Pacman', 
-            genre: 'Arcade', 
-            releaseYear: 1980 
-        }
-        let response = await request(server).post('/games').send(gameBody);
+    describe('POST /games', ()=>{
+        //TEST1
+        it('should include proper fields; returns 422 if incomplete', async ()=>{
 
-        expect(response.status).toBe(200)
+            let gameBody = {
+                title: 'Pacman',
+                genre: '',
+                releaseYear: 1980 
+            }
+            let response = await request(server).post('/games').send(gameBody)
+            
+            expect(response.status).toBe(422)
+        })
+        //TEST 2
+        it('should return 200 if complete', async ()=>{
+            let gameBody2 = {
+                title: 'Pacman', 
+                genre: 'Arcade', 
+                releaseYear: 1980 
+            }
+            let response = await request(server).post('/games').send(gameBody2);
+
+            expect(response.status).toBe(200)
+            
+
+        })
+
+    
         
 
+
     })
-    it('should always return an array', async () => {
-        let response = await request(server).get('/games');
-        expect(Array.isArray(response.body)).toBeTruthy();
-      });
+
+    describe('GET /games', ()=>{
+
+        //TEST 3
+        it('should return list of games w/ proper status code', async ()=>{
+            let response = await request(server).get('/games');
+            let gameArray = [
+                {
+                    title: 'Pacman', 
+                    genre: 'Arcade', 
+                    releaseYear: 1980 
+                },
+                {
+                    title: 'Shadow of Colossus',
+                    genre: 'Action-Adventure', 
+                    releaseYear: 2005 
+                }
+            ]
+
+            expect(response.body).toEqual(gameArray)
+            expect(response.status).toBe(200)
+
+        }) 
+
+        //TEST 4
+        it('should always return an array', async () => {
+            let response = await request(server).get('/games');
+            expect(Array.isArray(response.body)).toBeTruthy();
+        });
 
 
-})
 
-describe('GET /games', ()=>{
-    it('should return list of games w/ proper status code', ()=>{
-        let response = await request(server).get('/games');
+    })
 
-
-
-    }) 
 })
