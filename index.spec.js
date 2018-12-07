@@ -6,7 +6,10 @@ describe('GET endpoint /games', () => {
     const response = await request(server).get('/games');
     expect(response.status).toBe(200);
   });
-  it('', async () => {});
+  it('checks for an array (empty or otherwise)', async () => {
+    const response = await request(server).get('/games');
+    expect(response.body).toEqual(expect.arrayContaining([]));
+  });
   it('', async () => {});
 });
 
