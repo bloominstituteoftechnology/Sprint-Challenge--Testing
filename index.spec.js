@@ -20,7 +20,8 @@ describe("games/get", () => {
         const response = await request(server).get("/api/games");
         expect(response).toBeTruthy();
         expect(response).toBe(200);
-        expect(Array.isArray(response)).toBeTruthy();
+        // expect(response.text.type).toBe("application/json");
+        expect(Array.isArray(response.text)).toBeTruthy();
     });
 
     // it("should return status code 200", async () => {
