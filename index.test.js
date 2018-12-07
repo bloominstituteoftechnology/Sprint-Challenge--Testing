@@ -42,5 +42,33 @@ describe('server.js', () => {
         expect(response.status).toBe(405);
       })
     }) //end post describe
+    describe('GET /games/:id route', () => {
+      it('should return a status code of 200', async () => {
+        let response = await request(server).get('/games/1').send();
 
+        expect(response.status).toBe(200);
+      });
+
+      it('should return a single game', async () => {
+        let response = await request(server).get('/games/1').send();
+        expect(response.body).toHaveLength(1);
+      });
+
+      it('should return a 404 code if there is no game with that id', async () => {
+        let response = await request(server).get('/games/4').send();
+        expect(response.status).toBe(404)
+      });
+    }) //end get id describe
+    describe('DELETE /games/:id route', () => {
+      it('should return a status code of 204', async () => {
+        let response = await request(server).delete('/games/1').send();
+
+        expect(response.status).toBe(204);
+      });
+
+      it('should return a 404 code if there is no game with that id', async () => {
+        let response = await request(server).get('/games/4').send();
+        expect(response.status).toBe(404)
+      });
+    }) //end delete id describe
 }) //end server.js describe
