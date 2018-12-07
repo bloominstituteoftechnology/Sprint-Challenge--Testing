@@ -27,12 +27,16 @@ describe('server', () => {
       let response = await request(server).get('/api/games')
       expect(response.body.length >= 0).toBe(true)
     })
-
+//this test won't always pass. Above test looking for an object should be sufficient.
     it('should return an object with games in it', async () => {
       let response = await request(server).get('/api/games')
       expect(response.body.length).toBeTruthy()
     })
 
+    it('should return a single game', async () => {
+      let response = await request(server).get('/api/games/1')
+      expect(response.body).toEqual([{id: 1, name: "Pac-Man", genre: "Arcade", releaseYear: 1980}])
+    })
   })
 
   describe('/api/games POST route', () => {
