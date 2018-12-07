@@ -46,6 +46,9 @@ server.get('/games', (req, res) => {
 server.post('/games', (req, res) => {
     const { game } = req.body;
     if(!game.title || !game.genre) return res.status(422).json({ message: 'Must have a title and genre'});
+    gamesDb.forEach( el => {
+        if(el.title === game.title) return res.status(405).json({ message: 'Title must not be the same'});
+    });
     gamesDb.push(game);
     res.status(201).json({ data: gamesDb });
 });
