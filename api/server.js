@@ -11,15 +11,17 @@ server.get('/', (req, res) => {
 
 server.post('/games', checkTitleGenre, (req, res) => {
   const { title, genre, releaseYear } = req.body;
-  res.status(200).json({ added: `${genre}: ${title} (${releaseYear})` })
+  db('games')
+  .insert({ title, genre, releaseYear })
+  .then(ids => {
+    res.status(200).json({ added: `${genre}: ${title} (${releaseYear})` })
+  })
+  .catch(err => json(err));
 })
-
-
-
 
 server.get('/games', (req, res) => {
   db('games')
-    .select('title', 'genre', 'releaseYear')
+    .select('title', 'genre', 'releaseYear') 
     .then(games => {
     return res.status(201).json(games);
   })
