@@ -44,6 +44,21 @@ describe('Server test suite', () => {
             .send({title: 'Asteroids', genre: 'Arcade', releaseYear: 1982})
             expect(response.type).toBe('application/json')
         })
+
+        // it('server should respond with 405 if games object with that title is already in database', async () => {
+        //     const response = await request(server)
+
+        //     response
+        //     .post('/api/games')
+        //     .send({title: 'Asteroids', genre: 'Arcade', releaseYear: 1982})
+        //     expect(response.status).toBe(200)
+
+        //     response
+        //     .post('/api/games')
+        //     .send({title: 'Asteroids', genre: 'Arcade', releaseYear: 1982})
+        //     expect(response.status).toBe(405)
+        // })
+
     })// end describe for post call to api/games
 
 
@@ -55,6 +70,12 @@ describe('Server test suite', () => {
             expect(response.status).toBe(200)
         })
 
+        it('server should respond with type json', async () => {
+            const response = await request(server)
+            .get('/api/games/info')
+            expect(response.type).toBe('application/json')
+        })
+
         it('server should respond with an array', async () => {
             await db('games')
             .insert({title: 'Donkey Kong', genre: 'Arcade', releaseYear: 1982})
@@ -63,14 +84,36 @@ describe('Server test suite', () => {
             .get('/api/games/info')
             expect(Array.isArray(response.body)).toBe(true)
         })
+    })// end describe for get call to api/games/info
 
-        it('server should respond with type json', async () => {
+    describe('delete call to /api/games/:id', () => {
+
+        it('server should respond with status code 200 when deleting by id', async () => {
+            await db('games')
+            .insert({title: 'Donkey Kong', genre: 'Arcade', releaseYear: 1982})
+
             const response = await request(server)
-            .get('/api/games/info')
-            expect(response.type).toBe('application/json')
+            .delete('/api/games/1')
+            expect(response.status).toBe(200)
         })
 
+        it('server should respond with status code 404 if id specified is not in DB', async () => {
+            await db('games')
+            .insert({title: 'Donkey Kong', genre: 'Arcade', releaseYear: 1982})
 
+            const response = await request(server)
+            .delete('/api/games/2')
+            expect(response.status).toBe(404)
+        })
 
-    })// end describe for get call to api/games/info
+        it('server should respond with the id of the item you deleted as a typeof number', async () => {
+            await db('games')
+            .insert({title: 'Donkey Kong', genre: 'Arcade', releaseYear: 1982})
+
+            const response = await request(server)
+            .delete('/api/games/1')
+            expect(typeof response.body).toBe('number')
+        })
+    })// end describe for get call to api/games/:id
+
 })// end describe for Server test suite
