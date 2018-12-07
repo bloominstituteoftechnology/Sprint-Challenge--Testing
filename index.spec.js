@@ -10,18 +10,18 @@ describe('server.js', () => {
 
     describe('get request to /api/games', () => {
         it('should return a 200 status code', async () => {
-            const response = await request(server).get('/games');
+            const response = await request(server).get('/api/games');
             expect(response.status).toBe(200);
         });
 
         it('should return json', async () => {
-            const response = await request(server).get('/games');
+            const response = await request(server).get('/api/games');
             expect(response.type).toBe('application/json');
         });
 
-        it('should return a list of games', async () => {
-            const response = await request(server).get('/games');
-            expect(response.body).toEqual({});
+        it('should return an array of games', async () => {
+            const response = await request(server).get('/api/games');
+            expect(response.body).toEqual(expect.any(Array));
         });
     });
 
@@ -36,7 +36,7 @@ describe('server.js', () => {
             expect(response.status).toBe(200);
         });
 
-        it('should return a 422 status code if information is incomplete', () => {
+        it('should return a 422 status code if information is incomplete', async () => {
             const genre = 'fantasy';
             const releaseYear = 2010;
             const response = await request(server)
@@ -45,7 +45,7 @@ describe('server.js', () => {
             expect(response.status).toBe(422);
         });
 
-        it('should return json', () => {
+        it('should return json', async () => {
             const title = 'game2';
             const genre = 'adventure';
             const releaseYear = 2015;
