@@ -39,7 +39,4 @@ server.get('/games', (req, res) => {
     });
 })
 
-
-
-
 module.exports = server;
