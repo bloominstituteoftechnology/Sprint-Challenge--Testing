@@ -34,7 +34,6 @@ server.get('/games', async (req, res) => {
     }
 });
 
-const port = process.env.PORT || 9000;
-server.listen(port, () => {console.log(`\nServer up on port ${port}\n`)});
+
 
 module.exports = server;
