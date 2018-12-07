@@ -18,13 +18,32 @@ describe('server.js', () => {
 
     it('should return 201 if good request is sent without releaseYear', async () => {
       const game = {
-        title: 'Pacman',
+        title: 'Pacman2',
         genre: 'Arcade'
       }
       let response = await request(server)
         .post('/games')
         .send({ ...game })
       expect(response.status).toBe(201)
+    })
+
+    it('should return 422 if duplicate game is posted', async () => {
+      const game = {
+        title: 'Pacman3',
+        genre: 'Arcade'
+      }
+
+      // first post
+      await request(server)
+        .post('/games')
+        .send({ ...game })
+
+      // second post
+      let response = await request(server)
+        .post('/games')
+        .send({ ...game })
+
+      expect(response.status).toBe(422)
     })
 
     it('should return 422 if bad request is sent', async () => {

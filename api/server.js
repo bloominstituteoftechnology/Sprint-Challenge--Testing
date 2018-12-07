@@ -4,7 +4,7 @@ const server = express()
 
 server.use(express.json())
 
-let games = [
+const games = [
   {
     title: 'Life',
     genre: 'General',
@@ -12,25 +12,38 @@ let games = [
   }
 ]
 
-server.post('/games', (req, res) => {
-  const { title, genre, releaseYear } = req.body
+const addGame = ({ title, genre, releaseYear }) => {
+  const titleCollision = !!games.find(game => game.title === title)
 
-  if (!(title && genre)) {
-    res.status(422).send()
+  if (titleCollision) {
+    throw new Error('Title collsion. Titles must be unique.')
   }
-
-  const gamesTotal = games.length
 
   if (releaseYear) {
     games.push({ title, genre, releaseYear })
   } else {
     games.push({ title, genre })
   }
+}
 
-  if (games.length > gamesTotal) {
-    res.status(201).send()
+server.post('/games', (req, res) => {
+  const { title, genre, releaseYear } = req.body
+
+  if (!(title && genre)) {
+    res.status(422).send()
   } else {
-    res.status(500).send()
+    try {
+      const gamesTotal = games.length
+      addGame({ title, genre, releaseYear })
+
+      if (games.length > gamesTotal) {
+        res.status(201).send()
+      } else {
+        res.status(500).send()
+      }
+    } catch (error) {
+      res.send(422).send()
+    }
   }
 })
 
