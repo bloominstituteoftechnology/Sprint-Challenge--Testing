@@ -3,7 +3,7 @@ const request = require('supertest');
 const server = require('./api/server.js');
 
 describe('server.js', () => {
-  describe('/games route', () => {
+  describe('GET /games route', () => {
     it('should return status code 200', async () => {
       let response = await request(server).get('/games');
       expect(response.status).toBe(200);
@@ -32,7 +32,7 @@ describe('server.js', () => {
         expect(response.body).toHaveLength(3);
       });
 
-      it('should return a 422 code if missing information', async () => {
+      it('should return a 422 code if missing required information', async () => {
         let response = await request(server).post('/games').send({ title: 'Pacman' });
         expect(response.status).toBe(422)
       });
@@ -71,11 +71,13 @@ describe('server.js', () => {
         let response = await request(server).delete('/games/5').send();
         expect(response.status).toBe(404)
       });
+
       it('should delete the game', async () => {
         let response = await request(server).get('/games/2').send();
 
         expect(response.status).toBe(404);
-      })
+      });
+
       it('should only delete specified game', async () => {
         let response = await request(server).get('/games').send();
         //we added three games and deleted one.
