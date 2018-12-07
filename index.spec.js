@@ -15,6 +15,7 @@ describe('server.js', () => {
             let response = await request(server).get('/');
             expect(response.status).toBe(200);
         });
+    
         it('should return JSON', async () => {
             let response = await request(server).get('/');
             expect(response.type).toBe('application/json');
@@ -47,5 +48,20 @@ describe('server.js', () => {
             .send({genre: 'Arcade'});
             expect(response.status).toBe(422)
         });
-});
+    });
+    describe('GET/games route success', () => {
+        it('should return status code 200', async () => {
+            const response = await request(server).get('/games');
+            expect(response.status).toBe(200)
+        });
+
+        it('the get is recieving an array even if it is empty', async () => {
+            const response = await request(server).get('/games');
+            expect(response.body).toEqual(expect.arrayContaining([]))
+        });
+        it('should return JSON', async () => {
+            let response = await request(server).get('/games');
+            expect(response.type).toBe('application/json');
+        });
+    });
 });
