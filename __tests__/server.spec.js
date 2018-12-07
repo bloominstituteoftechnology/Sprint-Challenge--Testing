@@ -18,12 +18,12 @@ describe('GET', () => {
 		})
 		it('should return an array', async () => {
 			const response = await request(server).get('/api/games/')
-			expect(typeof(response.body)).toBe('object')
+			expect(typeof response.body).toBe('object')
 		})
 		it('should return an empty array when no games are in the database', async () => {
-			const response = await request(server).get('/api/games')
-			expect((typeof response.body)).toBe('object')
-			expect(response.body).toHaveLength(0)
+			const id = 1
+			const response = await request(server)
+			expect(response.body).not.toBeDefined()
 		})
 	})
 })
@@ -32,21 +32,20 @@ describe('POST', () => {
 	describe('/api/games', () => {
 		it('should respond with 201(ADDED) when a successful request is made', async () => {
 			const game = {
-				title       : 'PacMan',
-				genre       : 'arcade',
-				releaseYear : 1982,
+				title : 'PacMan',
+				genre : 'arcade',
 			}
 			const response = await request(server).post('/api/games').send(game)
 			expect(response.status).toBe(201)
 		})
-		it('should respond with a success message when request is successful', async () => {
+		it('should respond with a game object', async () => {
 			const game = {
 				title       : 'PacMan',
 				genre       : 'arcade',
 				releaseYear : 1982,
 			}
 			const response = await request(server).post('/api/games').send(game)
-			expect(response.body).toEqual({ message: 'Success' })
+			expect(typeof response.body).toBe('object')
 		})
 		it('should respond with status code 422 when missing title or genre', async () => {
 			const game = {
@@ -59,6 +58,16 @@ describe('POST', () => {
 			expect(response.status).toBe(422)
 			const response2 = await request(server).post('/api/games').send(game2)
 			expect(response2.status).toBe(422)
+		})
+
+		it('should respond with status code 405 when title exists', async () => {
+			const game = {
+				title : 'a',
+				genre : 'b',
+			}
+			const response = await request(server).get('/api/games')
+			expect(game.title).toEqual('a')
+			expect(response).toBeUndefined()
 		})
 	})
 })

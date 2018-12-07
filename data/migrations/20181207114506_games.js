@@ -2,8 +2,8 @@ exports.up = function(knex, Promise){
 	return knex.schema.createTable('games', table => {
 		table.increments()
 
-		table.string('title', 128).notNullable().unique()
-		table.string('genre', 128).notNullable()
+		table.string('title', 128)
+		table.string('genre', 128)
 		table.integer('release_year').unsigned()
 	})
 }
