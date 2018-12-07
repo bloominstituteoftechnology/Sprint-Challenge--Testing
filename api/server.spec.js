@@ -22,12 +22,12 @@ describe('server routes', () => {
 
         it('should check for a list of games', async () => {
             const response = await request(server).get('/api/games');
-            expect(response.body).toEqual('list');
+            expect(response.body).toEqual([]);
         });
 
         it('should have a response type of', async () => {
             const response = await request(server).get('/api/games');
-            expect(response.type).toBe('there');
+            expect(response.type).toBe('application/json');
         });
     });
 

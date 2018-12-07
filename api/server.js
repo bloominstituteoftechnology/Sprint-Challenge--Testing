@@ -9,9 +9,9 @@ server.get('/', (req, res) => {
     res.status(200).json({ message: 'running...'})
 });
 
-// server.get('/api/games', async (req, res) => {
-//     const games = await db('games')
-//     res.status(200);
-// })
+server.get('/api/games', async (req, res) => {
+    const games = await db('games')
+    res.status(200).json(games);
+})
 
 module.exports = server;
