@@ -22,7 +22,7 @@ server.post('/games', (req,res) => {
 
 //GET
 server.get('/games', (req,res) => {
-  Object.keys(req.body).length ? res.status(200).json([req.body]) : res.status(200).json([]);
+ (req.body).length ? res.status(200).json([req.body]) : res.status(200).json([]);
 })
 
 module.exports = server;

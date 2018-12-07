@@ -55,7 +55,7 @@ describe('server.js', () => {
     -Should return status code of 200 
     -should always return array, even if empty
     - */
-    describe('POST /games route', () => {
+    describe('GET /games route', () => {
        
         it('should return 200', async () => {
             const response = await request(server).get('/games');
@@ -64,7 +64,7 @@ describe('server.js', () => {
         
         it('should return list of games in array', async () => {
             const response = await request(server).get('/games');
-            expect(response.type).toBe("application/array")
+            expect(Array.isArray(response.body)).toBeTruthy();
         });
         
         it('should return empty array', async () => {
