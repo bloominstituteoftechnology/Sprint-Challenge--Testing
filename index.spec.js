@@ -28,9 +28,9 @@ describe('server.js', () => {
         .send({
           title: 'Galaga',
           genre: 'Arcade',
-          releaseYear: 
+          releaseYear: 1981,
         });
-      expect(response.status).toBe(422);
+      expect(response.status).toEqual({ wow: 'Galaga is a great Arcade game from 1981!' });
     });
   });
 });
