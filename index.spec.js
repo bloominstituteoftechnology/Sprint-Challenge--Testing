@@ -44,10 +44,30 @@ describe('server.js', () => {
                     },
                     {
                         title: 'Fortnite',
-                        genre: 'Battle Royal',  
+                        genre: 'Battle Royale',  
                     }
                 ]
             );
+        })
+    })
+
+    describe('POST /games', () => {
+        it('Returns Status of 200', async () => {
+            let response = await request(server)
+            .post('/games')
+            .send({
+                title:"PUBG",
+                genre:"Battle Royale"
+            });
+        })
+
+        it('Return Status of 422 if body does not contain required fields', async () => {
+            let response = await request(server)
+            .post('/games')
+            .send({
+                error : "This will make errors happen mwahahaha"
+            });
+            expect(response.status).toBe(422);
         })
     })
 });

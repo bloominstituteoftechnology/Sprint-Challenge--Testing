@@ -12,4 +12,6 @@ server.get('/games', (req,res) => {
     res.status(200).send(gameList)
 })
 
+
+
 module.exports = server;

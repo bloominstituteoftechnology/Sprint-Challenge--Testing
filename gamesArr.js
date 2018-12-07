@@ -9,7 +9,7 @@ const games = [
     },
     {
         title: 'Fortnite',
-        genre: 'Battle Royal',  
+        genre: 'Battle Royale',  
     }
 ]
 
