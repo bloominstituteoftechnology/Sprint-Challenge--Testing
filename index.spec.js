@@ -28,13 +28,15 @@ describe('server.js', () => {
         it('should return the new list of games', async () => {
             let first = await request(server).post('/games').send({ title: 'Halo', genre: 'FPS', releaseYear: 2001 });
             let response = await request(server).post('/games').send({ title: 'Warcraft III', genre: 'RTS', releaseYear: 2002 });
-            expect(response.body).toHaveLength(3);
+            expect(response.body).toHaveLength(2);
         });
         it('should return a 422 code if missing information', async () => {
-            let first = await request(server).post('/games').send({ title: 'Halo', genre: 'FPS', releaseYear: 2001 });
-            expect(first.status).toBe(201);
             let response = await request(server).post('/games').send({ title: 'Halo' })
             expect(response.status).toBe(422)
+        })
+        it('should return a 405 status code if a duplicate title is added', async () => {
+            let response = await request(server).post('/games').send({ title: 'Hallo', genre: 'FPS', releaseYear: 2001 });
+            expect(response.status).toBe(405);
         })
     }) //end post describe
 }) //end server.js describe
