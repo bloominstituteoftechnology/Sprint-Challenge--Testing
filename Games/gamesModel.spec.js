@@ -1,28 +1,28 @@
 const db = require('../data/dbConfig.js');
-const allGames = require('./gamesModel');
+const games = require('./gamesModel');
 
 beforeEach(async () => {
-  await db('allGames').truncate();
+  await db('games').truncate();
 });
 
 
-describe('allGames model', () => {
+describe('games model', () => {
   it('should insert provided game', async () => {
 
-    let rows = await db('allGames').where({ title: 'Pacman', genre: 'Arcade' });
+    let rows = await db('games').where({ title: 'Pacman', genre: 'Arcade' });
     expect(rows).toHaveLength(0);
 
     // insert a test record
-    await allGames.insert({ title: 'Pacman', genre: 'Arcade' });
-    await allGames.insert({ title: 'Pole Position', genre: 'Arcade' });
-    await allGames.insert({ title: 'Pharaoh', genre: 'Strategy/Simulation', releaseYear: 1999 });
+    await games.insert({ title: 'Pacman', genre: 'Arcade' });
+    // await games.insert({ title: 'Pole Position', genre: 'Arcade' });
+    // await games.insert({ title: 'Pharaoh', genre: 'Strategy/Simulation', releaseYear: 1999 });
 
     // make sure the test record is now in the db
-    rows = await db('allGames').where({ title: 'Pacman', genre: 'Arcade' });
+    rows = await db('games').where({ title: 'Pacman', genre: 'Arcade' });
     expect(rows).toHaveLength(1);
 
-    rows = await db('allGames');
-    expect(rows).toHaveLength(3);
+    // rows = await db('games');
+    // expect(rows).toHaveLength(3);
   });
 
   it('should update a record', () => {

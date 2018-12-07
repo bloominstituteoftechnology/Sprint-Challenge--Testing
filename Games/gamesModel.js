@@ -10,9 +10,9 @@ module.exports = {
 
 async function insert(game) {
   // [ 1 ]
-  const [ title ] = await db('allGames').insert(game);
+  const { title, genre, releaseYear  } = await db('games').insert(game);
 
-  return db('allGames')
-    .where({ title })
+  return db('games')
+    .where({ title, genre })
     .first();
 }

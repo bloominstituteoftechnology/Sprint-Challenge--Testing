@@ -1,10 +1,10 @@
 
 exports.seed = function(knex, Promise) {
   // Deletes ALL existing entries
-  return knex('allGames').truncate()
+  return knex('games').truncate()
     .then(function () {
       // Inserts seed entries
-      return knex('allGames').insert([
+      return knex('games').insert([
         {"title":"Quo Lux","genre":"Drama|Romance","releaseYear":1992},
 {"title":"Fintone","genre":"Comedy","releaseYear":1986},
 {"title":"Bitwolf","genre":"Drama","releaseYear":1997},

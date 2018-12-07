@@ -47,25 +47,25 @@ describe('server.js', () => {
     })
   })
 
-  describe('GET /allGames endpoint', () => {
+  describe('GET /games endpoint', () => {
     it('should return status code 200', async () => {
       let response = await request(server)
-        .get('/allGames')
+        .get('/games')
 
         expect(response.status).toBe(200);
         // RED TEST: received 404
     })
 
     it('should return application/json', async () => {
-      let response = await request(server).get('/allGames')
+      let response = await request(server).get('/games')
       // expect(response.type).toBe('application/xml');
       expect(response.type).toBe('application/json');
     })
 
-    it('should return a JSON object from /allGames', async () => {
+    it('should return a JSON object from /games', async () => {
       const expectedBody = { message: 'list of games' };
       // const expectedBody = { message: "you can't play today" };
-      const response = await request(server).get('/allGames');
+      const response = await request(server).get('/games');
       expect(response.body).toEqual(expectedBody);
     })
   })
