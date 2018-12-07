@@ -1,6 +1,6 @@
 const express = require('express');
 const server = express();
-const games = require('./db');
+let games = require('./db');
 
 server.use(express.json());
 
@@ -42,6 +42,16 @@ server.get('/games/:id', (req, res) => {
     return res.status(404).json({ message: 'That game does not exist.' });
   }
   res.status(200).json(game);
+});
+
+server.delete('/games/:id', (req, res) => {
+  const { id } = req.params;
+  const game = games.find(game => game.id == id);
+  if (!game) {
+    return res.status(404).json({ message: 'That game does not exist.' });
+  }
+  games = games.filter(g => g !== game);
+  res.status(200).json({ message: 'deleted!' });
 });
 
 module.exports = server;

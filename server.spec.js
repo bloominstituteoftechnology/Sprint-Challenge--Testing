@@ -138,5 +138,24 @@ describe('server.js', () => {
         });
       });
     });
+    describe('DELETE /:id', () => {
+      // it('should return a status code of 200', async () => {
+      //   let response = await request(server).get('/games/0');
+      //   expect(response.status).toBe(200);
+      // });
+      it('should return a status code of 404 if no id', async () => {
+        let response = await request(server).get('/games/44');
+        expect(response.status).toBe(404);
+      });
+
+      it('should return a body { message: "deleted!" }', async () => {
+        let response = await request(server).delete('/games/0');
+        expect(response.body).toEqual({ message: 'deleted!' });
+      });
+      it('should return a status code of 404 if no id', async () => {
+        let response = await request(server).get('/games/0');
+        expect(response.status).toBe(404);
+      });
+    });
   });
 });

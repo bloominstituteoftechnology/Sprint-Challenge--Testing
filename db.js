@@ -1,4 +1,4 @@
-const games = [
+let games = [
   {
     id: 0,
     title: 'Pacman', // required
