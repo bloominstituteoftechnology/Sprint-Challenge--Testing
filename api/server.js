@@ -31,17 +31,14 @@ server.get('/games/:id', (req, res) => {
 //delete specified id endpoint
 server.delete('/games/:id', (req, res) => {
   const { id } = req.params;
-  const gameExists = games.find(game => game.id == id);
-  if (gameExists) {
-    const removedGame = { ...gameExists };
-    //filter the games by returning only those with a different id
-    games = games.filter(game => {
-      game.id != id;
-    })
-  res.status(204).json(games);
+  const foundGame = games.find(game => game.id == id);
 
+  if (foundGame) {
+    const gameRemoved = { ...foundGame };
+    games = games.filter(game => game.id != id);
+    res.status(204).json();
   } else {
-    res.status(404).json({ error: 'A game with that id does not exist'})
+    res.status(404).json({ message: 'No game exists with that id' })
   }
 });
 //add new game to list endpoint
