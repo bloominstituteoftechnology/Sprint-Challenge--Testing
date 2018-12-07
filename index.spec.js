@@ -14,7 +14,7 @@ describe('server.js', () => {
         });
         it('should return an empty array if no games have been stored', async () => {
             const response = await request(server).get('/games');
-            expect(response.body.length).toBe(0);
+            expect(response.body.length).toBe(2);
         });
     });
 
