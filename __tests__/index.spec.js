@@ -50,11 +50,16 @@ describe('server.js', () => {
   describe('GET /allGames endpoint', () => {
     it('should return status code 200', async () => {
       let response = await request(server)
-        .get('/games')
+        .get('/allGames')
 
         expect(response.status).toBe(200);
         // RED TEST: received 404
+    })
 
+    it('should return application/json', async () => {
+      let response = await request(server).get('/allGames')
+      // expect(response.type).toBe('application/xml');
+      expect(response.type).toBe('application/json');
     })
   })
 

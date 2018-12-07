@@ -13,7 +13,7 @@ server.post('/games', checkTitleGenre, (req, res) => {
   res.status(200).json({ added: `${genre}: ${title} (${releaseYear})` })
 })
 
-server.get('/games', (req, res) => {
+server.get('/allGames', (req, res) => {
   res.status(200).json({ message: 'list of games' })
 })
 
