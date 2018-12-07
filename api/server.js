@@ -20,4 +20,8 @@ server.post('/games', (req, res) => {
   }
 });
 
+server.get('/games', (req, res) => {
+  res.status(200).json(games)
+})
+
 module.exports = server;
