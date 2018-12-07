@@ -1,4 +1,5 @@
 const express = require('express');
+const db = require('./database/dbConfig');
 
 const server = express();
 
@@ -10,10 +11,30 @@ server.get('/', (req, res) => {
 })
 
 //GET ROUTE.'/games' ...
-let games = []; //JUST FOR TESTING PURPOSE TO CHECK RECEIVES ARRAY.
+//let games = []; //JUST FOR TESTING PURPOSE TO CHECK RECEIVES ARRAY.
 server.get('/games', (req, res) => {
-    res.status(200).json(games);
+    db('games')
+         .then(games => { 
+               res.status(200).json(games);
+          })
+         .catch(error => {
+               response.status(500).json({error : 'The projects data could not be retrieved'})
+          })
 })
+
+server.get('/games/:id', (req, res) => {
+     db('games')
+          .where({id : req.params.id})
+          .first()
+          .then(game => { 
+                res.status(200).json(game);
+           })
+          .catch(error => {
+                response.status(500).json({error : 'The projects data could not be retrieved'})
+           })
+ })
+ 
+
 
 //POST ROUTE...
 server.post('/games', (req, res) => {
