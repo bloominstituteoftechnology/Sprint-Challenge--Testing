@@ -33,10 +33,10 @@ describe('server.js', () => {
         expect(response.body).toHaveLength(2);
       });
 
-      it('should return a 422 code if a game already exists', async () => {
+      it('should return a 422 code if missing information', async () => {
         let first = await request(server).post('/games').send({ title: 'Pacman', genre: 'Arcade', releaseYear: 1980 });
-        let response = await request(server).post('/games').send({ title: 'Pacman', genre: 'Arcade' });
-
+        expect(first.status).toBe(201);
+        let response = await request(server).post('/games').send({ title: 'Pacman' });
         expect(response.status).toBe(422)
       })
     }) //end post describe
