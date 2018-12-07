@@ -25,18 +25,25 @@ describe("server.js", () => {
   });
 
   describe("POST /games", () => {
+    const game = {
+      title: "Pacman",
+      genre: "Arcade",
+      releaseYear: 1980
+    };
+
+    const gameNull = {
+      title: "Mortal Kombat",
+      genre: null
+    };
+
     test("should return status code 201", async () => {
-      const response = await request(server).post("/games");
+      const response = await request(server)
+        .post("/games")
+        .send(game);
       expect(response.status).toBe(201);
     });
 
     test("response data should return {message: 'game created'}", async () => {
-      const game = {
-        title: "Pacman",
-        genre: "Arcade",
-        releaseYear: 1980
-      };
-
       const response = await request(server)
         .post("/games")
         .send(game);
@@ -46,7 +53,7 @@ describe("server.js", () => {
     test("should return status code 422 if required fields were not provided", async () => {
       const response = await request(server)
         .post("/games")
-        .send({ title: null, genre: "Arcade" });
+        .send(gameNull);
       expect(response.status).toBe(422);
     });
   });
