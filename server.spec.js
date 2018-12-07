@@ -2,6 +2,10 @@ const request = require('supertest')
 const server = require('./server.js')
 const db = require('./data/dbConfig.js')
 
+beforeEach(async () => {
+    await db('games').truncate()
+})
+
 describe('/ route', () => {
     it('should return status code 200', async () => {
         const response = await request(server).get('/')
@@ -16,4 +20,18 @@ describe('/ route', () => {
         const response = await request(server).get('/')
         expect(response.body).toEqual(body)
     })
+})
+
+describe('/games route', () => {
+
+    it('should return status code 200', async () => {
+        const response = await request(server).get('/games')
+        expect(response.status).toBe(200)
+    })
+
+    it('should return array', async () => {
+        const response = await request(server).get('/games')
+        expect(response.body).toEqual([])
+    })
+
 })
