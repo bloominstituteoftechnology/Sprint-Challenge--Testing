@@ -59,7 +59,7 @@ describe('server.js', () => {
                 title:"PUBG",
                 genre:"Battle Royale"
             });
-        })
+        });
 
         it('Return Status of 422 if body does not contain required fields', async () => {
             let response = await request(server)
@@ -68,6 +68,6 @@ describe('server.js', () => {
                 error : "This will make errors happen mwahahaha"
             });
             expect(response.status).toBe(422);
-        })
+        });
     })
 });
