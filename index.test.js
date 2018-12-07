@@ -36,18 +36,32 @@ describe("server.js", () => {
       genre: null
     };
 
-    test("should return status code 201", async () => {
-      const response = await request(server)
-        .post("/games")
-        .send(game);
-      expect(response.status).toBe(201);
+    const gameDuplicate = {
+      _id: 3,
+      title: "Donkey Kong",
+      genre: "Platform",
+      releaseYear: 1981
+    };
+
+    test("should return body json type", async () => {
+      const response = await request(server).post("/games");
+      expect(response.type).toBe("application/json");
     });
 
     test("response data should return {message: 'game created'}", async () => {
       const response = await request(server)
         .post("/games")
         .send(game);
+      expect(response.status).toBe(201);
       expect(response.body).toEqual({ message: "game created" });
+    });
+
+    test("response data should return {message: 'game duplicate'}", async () => {
+      const response = await request(server)
+        .post("/games")
+        .send(gameDuplicate);
+      expect(response.status).toBe(405);
+      expect(response.body).toEqual({ message: "game duplicate" });
     });
 
     test("should return status code 422 if required fields were not provided", async () => {

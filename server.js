@@ -40,13 +40,17 @@ server.get("/games", (_, res) => {
 // POST /games
 server.post("/games", (req, res) => {
   const game = req.body;
+  const duplicate = gamesDb.filter(g => g.title === game.title);
 
   if (!game.title || !game.genre) {
     return res.status(422).json({ message: "title and genre are required" });
-  } else {
+  } else if (duplicate.length === 0) {
     gamesDb.push({ _id, ...game });
     res.status(201).json({ message: "game created" });
+  } else {
+    return res.status(405).json({ message: "game duplicate" });
   }
+
   _id = _id + 1;
 });
 
