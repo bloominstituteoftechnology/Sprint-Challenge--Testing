@@ -26,12 +26,19 @@ describe('POST /games', ()=>{
         
 
     })
+    it('should always return an array', async () => {
+        let response = await request(server).get('/games');
+        expect(Array.isArray(response.body)).toBeTruthy();
+      });
+
 
 })
 
 describe('GET /games', ()=>{
     it('should return list of games w/ proper status code', ()=>{
         let response = await request(server).get('/games');
+
+
 
     }) 
 })
