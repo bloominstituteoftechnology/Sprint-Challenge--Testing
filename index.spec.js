@@ -16,6 +16,11 @@ describe('server.js', () => {
       let response = await request(server).get('/');
       expect(response.type).toBe('application/json');
     });
+
+    it('should return the proper message body', async () => {
+      let response = await request(server).get('/');
+      expect(response.body).toEqual({ message: 'welcome to root' });
+    });
   });
 
   /////////////////////////////////////////////////
@@ -27,11 +32,10 @@ describe('server.js', () => {
     it('should return a 422 if required fields are blank', async () => {
       let response = await request(server)
         .post('/games')
-        .send({ title: null, genre: null, releaseYear: 1986 });
+        .send({});
       expect(response.status).toBe(422);
     });
 
-    // write tests to verify that the endpoint returns the correct HTTP status code when receiving correct and incorrect game data.
     it('should return a 201 upon successful submission', async () => {
       let response = await request(server)
         .post('/games')
@@ -39,11 +43,11 @@ describe('server.js', () => {
       expect(response.status).toBe(201);
     });
 
-    it('should return a 422 upon unsuccessful submission', async () => {
+    it('should verify the returned message body upon successful post', async () => {
       let response = await request(server)
         .post('/games')
-        .send({ title: null, genre: null });
-      expect(response.status).toBe(422);
+        .send({ title: 'Maniac Mansion', genre: 'Puzzle', releaseYear: 1988 });
+      expect(response.body).toEqual({ message: 'successfully added' });
     });
   });
 

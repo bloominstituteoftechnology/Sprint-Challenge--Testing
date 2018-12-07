@@ -5,7 +5,7 @@ const db = require('../data/dbConfig.js');
 server.use(express.json());
 
 server.get('/', (req, res) => {
-  res.status(200).json({ message: 'this is your root' });
+  res.status(200).json({ message: 'welcome to root' });
 });
 
 server.get('/games', (req, res) => {
@@ -15,11 +15,15 @@ server.get('/games', (req, res) => {
 });
 
 server.post('/games', (req, res) => {
-  const { title, genre, releaseYear } = req.body;
+  const game = req.body;
+
+  if (!game.title || !game.genre) {
+    res.status(422).json({ message: 'Title and genre cannot be blank' });
+  }
   db('games')
-    .insert({ title, genre, releaseYear })
-    .then(() => {
-      res.status(201).json({ message: 'successfully added' });
+    .insert(game)
+    .then(id => {
+      res.status(201).json({ message: `successfully added` });
     })
     .catch(err => res.send(err));
 });
