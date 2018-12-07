@@ -52,7 +52,7 @@ describe('server.js', () => {
       let response = await request(server)
         .get('/games')
 
-        expect(response.status).toBe(200);
+        expect(response.status).toBe(201);
         // RED TEST: received 404
     })
 
