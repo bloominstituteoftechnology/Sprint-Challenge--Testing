@@ -1,9 +1,12 @@
 # Please answer the following questions
 
 1.  In Jest, what are the differences between `describe()` and `it()` globals, and what are good uses for them?
+`describe()` creates a block that groups together several tests, they are good for arranging your code into groups and can contain setup and teardown code specifically for tests in that group.
+`it()` is an alias of `test()` which contains the actual test expectations.
 
 
 2.  What is the point of `Test Driven Development`? What do you think about this approach?
+Test Driven Development refers to when you write you tests before your actual code. It makes it less likely you'll have bugs in your tests due to the fact you can make sure they all fail before you ever write one line of your actual code. I think it is a good way to go if you have clear requirements because you can write a test to make sure each requirement is met.
 
 
 3.  Mention three types of automated tests.
