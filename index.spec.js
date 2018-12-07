@@ -36,12 +36,19 @@ describe("server", () => {
         });
     });
 
-    it("should status of 400 if request incomplete", async () => {
+    it("should status of 422 if request incomplete", async () => {
       const response = await request(server)
         .post(`/games`)
         .send({ title: "Donkey Kong" });
-      expect(response.status).toBe(400);
+      expect(response.status).toBe(422);
     });
+
+    //     it("should return a status of 500 if bad request", async () => {
+    //       const response = await request(server)
+    //         .post(`/games`)
+    //         .send({ title: "Donkey Kong" });
+    //       expect(response.status).toBe(500);
+    //     });
   });
 
   describe("DELETE /games/:id", () => {
