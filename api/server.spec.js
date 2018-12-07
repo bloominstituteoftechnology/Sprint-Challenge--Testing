@@ -57,7 +57,7 @@ describe('server', () => {
             expect(typeof index).toEqual('number');
         });
 
-        it('index returned mathes index in db', async () => {
+        it('index returned matches index in db', async () => {
             let response = await request(server).post('/games').send(gameMock);
             expect(response.status).toBe(201);
 
@@ -66,6 +66,11 @@ describe('server', () => {
             const games = response.body;
 
             expect(games[index]).toEqual(gameMock);
+        });
+
+        it('should return status code 405 if title is not unique', () => {
+            let response = await request(server).post('/games').send(gameMock);
+            expect(response.status).toBe(405);
         });
 
     });
