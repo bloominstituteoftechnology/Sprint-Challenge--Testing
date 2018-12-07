@@ -35,6 +35,11 @@ describe('server.js', () => {
       it('should return a 422 code if missing information', async () => {
         let response = await request(server).post('/games').send({ title: 'Pacman' });
         expect(response.status).toBe(422)
+      });
+
+      it('should return a 405 status code if a duplicate title is added', async () => {
+        let response = await request(server).post('/games').send({ title: 'Frogger', genre: 'Arcade', releaseYear: 1981 });
+        expect(response.status).toBe(405);
       })
     }) //end post describe
 
