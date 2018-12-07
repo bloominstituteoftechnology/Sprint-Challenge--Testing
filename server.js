@@ -3,23 +3,28 @@ const server = express();
 
 server.use(express.json());
 
-const db = [
+let gamesDb = [
   {
+    _id: 1,
     title: "Pacman", // required
     genre: "Arcade", // required
     releaseYear: 1980 // not required
   },
   {
+    _id: 2,
     title: "Super Mario",
     genre: "Platform",
     releaseYear: 1985
   },
   {
+    _id: 3,
     title: "Donkey Kong",
     genre: "Platform",
     releaseYear: 1981
   }
 ];
+
+let _id = 4;
 
 // endpoints
 // root path
@@ -29,7 +34,7 @@ server.get("/", (_, res) => {
 
 // GET /games
 server.get("/games", (_, res) => {
-  res.status(200).json(db);
+  res.status(200).json(gamesDb);
 });
 
 // POST /games
@@ -39,8 +44,34 @@ server.post("/games", (req, res) => {
   if (!game.title || !game.genre) {
     return res.status(422).json({ message: "title and genre are required" });
   } else {
-    db.push(game);
+    gamesDb.push({ _id, ...game });
     res.status(201).json({ message: "game created" });
+  }
+  _id = _id + 1;
+});
+
+// GET /games/:id
+server.get("/games/:id", (req, res) => {
+  const { id } = req.params;
+  const game = gamesDb.filter(g => g._id === Number(id));
+
+  if (game.length === 0) {
+    res.status(404).json({ message: "404 not found" });
+  } else {
+    res.status(200).json(game);
+  }
+});
+
+// DELETE /games/:id
+server.delete("/games/:id", (req, res) => {
+  const { id } = req.params;
+  const deleted = gamesDb.filter(g => g._id === Number(id));
+
+  if (deleted.length === 0) {
+    res.status(404).json({ message: "404 not found" });
+  } else {
+    gamesDb = gamesDb.filter(g => g._id !== Number(id));
+    res.status(200).json({ message: `user deleted` });
   }
 });
 
