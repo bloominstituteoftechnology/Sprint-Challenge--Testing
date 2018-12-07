@@ -37,4 +37,9 @@ server.get('/games', (req, res) => {
     res.status(200).json({data: gamesDb});
 });
 
+server.post('/games', (req, res) => {
+    const { game } = req.body;
+    gamesDb.push(game);
+    res.status(201).json({ data: gamesDb });
+
 module.exports = server;
