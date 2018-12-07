@@ -18,6 +18,22 @@ describe('server.js', () => {
         });
     });
 
-    
+    describe('post games route', () => {
+        it('should return status 422 if genre is missing', async () => {
+            const game = {"title": "Super Mario Bros"}
+            const response = await request(server).post('/games').send(game);
+            expect(response.status).toBe(422);
+        });
+        it('should return status 422 if title is missing', async () => {
+            const game = {"genre": "action"}
+            const response = await request(server).post('/games').send(game);
+            expect(response.status).toBe(422);
+        });
+        it('should return status 201 if info is correct', async () => {
+            const game = { "title": "Halo", "genre": "First Person Shooter", "releaseYear": 2000 };
+            const response = await request(server).post('/games').send(game);
+            expect(response.status).toBe(201);
+        });
+    });
 
 });
