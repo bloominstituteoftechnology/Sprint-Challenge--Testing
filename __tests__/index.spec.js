@@ -30,7 +30,13 @@ describe('server.js', () => {
         .post('/games')
         .send({ title: 'Pacman', genre: 'Arcade', releaseYear: 1980 })
 
-      expect(response.body).toEqual({ add: 'Arcade: Pacman'})
+      expect(response.body).toEqual({ added: 'Arcade: Pacman (1980)'})
+
+      response = await request(server)
+      .post('/games')
+      .send({ title: 'Pole Position', genre: 'Arcade' })
+
+    expect(response.body).toEqual({ added: 'Arcade: Pole Position (undefined)'})
 
 
       // `${genre}: ${title}` 
