@@ -52,6 +52,13 @@ describe('server routes', () => {
                 .send({ title: "Pacman", genre: "Arcade", releaseYear: 1980 });
             expect(response.type).toBe('application/json')
         });
+
+        it('should fail if body is incomplete', async () => {
+            const response = await request(server)
+                .post('/api/addgame')
+                .send({ title: "Pacman", releaseYear: 1980 });
+            expect(response.status).toBe(422);
+        })
     });
 
 });

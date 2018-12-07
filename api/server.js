@@ -16,8 +16,11 @@ server.get('/api/games', async (req, res) => {
 
 server.post('/api/addgame', async (req, res) => {
     const game = req.body;
-    res.status(200).json({ message: `${game.title} has been added!`})
-
+    if (!game.title || !game.genre) {
+        res.status(422).json({ message: 'incomplete' });
+    } else {
+        res.status(200).json({ message: `${game.title} has been added!`})
+    }
 });
 
 module.exports = server;
