@@ -1,5 +1,13 @@
 const request = require('supertest');
 const server = require('./api/server.js');
+/*
+GET /games
+The GET /games endpoint should return the list of games and HTTP
+ status code 200.
+Write a test to make sure this endpoint always returns an array,
+ even if there are no games stored. If there are no games to return, 
+ the endpoint should return an empty array.
+ */
 
 describe('server.js', () => {
     describe('/ route', () => {
@@ -16,30 +24,28 @@ describe('server.js', () => {
             expect(response.body).toEqual({ api: 'working' });
         });
     });
-    describe('POST /create route', () => {
-        it('should return status code 200', async () => {
+    describe('POST /games route success', () => {
+        it('should return status code 201', async () => {
             let response = await request(server)
-            .post('/create')
-            .send({ task: 'cook', role: 'chef' });
+            .post('/games')
+            .send({title: 'Pacman', genre: 'Arcade'});
+            expect(response.status).toBe(201)
+        });  
+    });
+    describe('POST /games route error', () => {
 
-            expect(response.body).toEqual({ work: 'cook, chef' });
-            
-        });
-        it('should return JSON', async () => {
-            let response = await request(server).post('/create');
-            expect(response.type).toEqual('application/json');
-    });
-    });
-    describe('DELETE/delete/:id route', () => {
-        it('delete sends status code for success 202(Accepted)', async () => {
+        it('genre is required, error 422', async () => {
             let response = await request(server)
-            .delete('delete/1')
-            expect(response.status).toBe(202);
+            .post('/games')
+            .send({title: 'Pacman'});
+            expect(response.status).toBe(422)
         });
-        it('should return deleted status message', async () => {
+
+        it('title is required, error 422', async () => {
             let response = await request(server)
-            .delete('delete/1')
-            expect(response.text).toEqual('Deleted');
+            .post('/games')
+            .send({genre: 'Arcade'});
+            expect(response.status).toBe(422)
         });
 });
 });
