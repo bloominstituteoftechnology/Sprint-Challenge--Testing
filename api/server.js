@@ -4,12 +4,18 @@ const server = express()
 
 server.use(express.json())
 
-let games = []
+let games = [
+  {
+    title: 'Life',
+    genre: 'General',
+    releaseYear: '200k bc'
+  }
+]
 
 server.post('/games', (req, res) => {
   const { title, genre, releaseYear } = req.body
 
-  if (!title || !genre) {
+  if (!(title && genre)) {
     res.status(422).send()
   }
 
@@ -26,6 +32,10 @@ server.post('/games', (req, res) => {
   } else {
     res.status(500).send()
   }
+})
+
+server.get('/games', (req, res) => {
+  res.status(200).json(games)
 })
 
 // server.delete('/games', (req, res) => {

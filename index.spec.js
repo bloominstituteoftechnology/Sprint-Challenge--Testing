@@ -45,15 +45,15 @@ describe('server.js', () => {
       expect(response.status).toBe(200)
     })
 
-    it('should return an array, even an empty one', async () => {
+    it('should return an array', async () => {
       let response = await request(server).get('/games')
-      expect(Array.isArray(response.data)).toBe(true)
+      expect(Array.isArray(response.body)).toBe(true)
     })
 
     it('should return game objects in the correct format', async () => {
       const response = await request(server).get('/games')
-      const { title, genre } = response
-      const valid = title && genre
+      const { title, genre } = response.body[0]
+      const valid = !!title && !!genre
       expect(valid).toBe(true)
     })
   })
