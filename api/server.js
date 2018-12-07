@@ -17,6 +17,6 @@ server.get('/allGames', (req, res) => {
   res.status(200).json({ message: 'list of games' })
 })
 
-const port = process.env.PORT || 7200;
+// const port = process.env.PORT || 7200;
 
 module.exports = server;
