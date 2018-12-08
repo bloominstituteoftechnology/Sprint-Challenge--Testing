@@ -3,7 +3,7 @@ const request = require('supertest');
 
 describe('Testing the API', () => {
 	describe('get games', () => {
-		it('fetches a list of games', async () => {
+		it('fetches a list of games even if the array is empty', async () => {
 			const response = await request(server).get('/games');
 			expect(Array.isArray(response.body)).toBeTruthy();
 		});
@@ -33,8 +33,13 @@ describe('Testing the API', () => {
 			const response = await request(server).post('/games').send(game);
 			expect(response.status).toBe(422);
 		});
+		it('should 422 if improper data is provided', async () => {
+			const game = { title: 'Mortal Kombat' };
+			const response = await request(server).post('/games').send(game);
+			expect(response.status).toBe(422);
+		});
 		it('should return 201 if game is correctly added', async () => {
-			const game = { title: 'Monopoly', genre: 'Board', releaseYear: 2012 };
+			const game = { id: '4', title: 'Monopoly', genre: 'Board', releaseYear: 2012 };
 			const response = await request(server).post('/games').send(game);
 			expect(response.status).toBe(201);
 		});

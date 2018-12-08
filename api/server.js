@@ -54,12 +54,13 @@ server.get('/games', (req, res) => {
 // make a game and add to fake db
 server.post('/games', (req, res) => {
 	const { id, title, genre, releaseYear } = req.body;
-	if ((!id, !title && !genre && !releaseYear)) {
+	if ((!id, (!title && !genre && !releaseYear) || id === games.id)) {
 		res.status(422).json({ err: 'Needs all info' });
 	} else {
 		const createdGame = { id, title, genre, releaseYear };
 		games = [ ...games, createdGame ];
 		res.status(201).json({ message: `${createdGame}` });
+		game.id++;
 	}
 });
 
