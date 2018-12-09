@@ -70,7 +70,8 @@ describe("/games route", () => {
   });
   describe("POST fail checks", () => {
     it("should return status code 422 for incomplete information", async () => {
-      let response = await request(server)
+      
+        let response = await request(server)
         .post("/games")
         .send({ title: "Kirby" });
       expect(response.status).toBe(422);
