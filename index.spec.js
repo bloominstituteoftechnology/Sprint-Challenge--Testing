@@ -2,7 +2,7 @@ const request = require("supertest");
 
 const server = require("./api/server.js");
 
-const fakeDb = require("./data/fakeDb.js");
+// const fakeDb = require("./data/fakeDb.js");
 
 describe("server", () => {
     // Sanity check
@@ -22,11 +22,11 @@ describe("games/get", () => {
         expect(Array.isArray(response.body)).toBeTruthy();
     });
 
-    // it("should return a JSON-type response", async () => {
-    //     const response = await request(server).get("/api/games");
-    //  // expect(response).toBe(200);
-    //     expect(response.body.type).toBe("application/json");
-    // });
+    it("should return a JSON-type response", async () => {
+        const response = await request(server).get("/api/games");
+    //  expect(response).toBe(200);
+        expect(response.type).toBe("application/json");
+    });
 
     it("should return status code 200", async () => {
         const response = await request(server).get("/api/games");
