@@ -14,24 +14,31 @@ server.use(express.json());
 // POST call, add a new game to the database.
 
 // res.status(405).json({message: `Titles must be unique. ${gameData.title} has already been entered into this database.`})
-// console.log(db('games').where({title: gameData.title}).then(games => {games.some(object => {return object['title'] === `${gameData.title}`})}))
-server.post("/api/games", (req, res) => {
+// 
+server.post("/api/games", async (req, res) => {yarn 
   const gameData = req.body;
   if (!gameData.title || !gameData.genre || !gameData.releaseYear) {
     res
       .status(422)
-      .json({
-        message:
-          "Please include a title, genre and release year to add a new game."
-      });
+      .json({message: "Please include a title, genre and release year to add a new game."});
   }
 
-  db("games")
+const existingRecords = await db('games')
+const existingTitle = existingRecords.some(object => {return object['title'] === `${gameData['title']}`})
+
+
+  if (!existingTitle) {
+    db("games")
     .insert(gameData)
     .then(ids => {
-      res.status(200).json(ids);
+      res.status(201).json(ids);
     })
     .catch(err => res.status(500).json({ error: `Error: ${err}` }));
+  } else {
+      res.status(405).json({message: `Titles must be unique. ${gameData.title} has already been entered into this database.`})
+  }
+
+ 
 });
 
 // GET call, access all games from database.

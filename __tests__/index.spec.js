@@ -6,9 +6,6 @@ beforeEach(async () => {
     await db('games').truncate()
 })
 
-// afterEach(() => {
-//     db('games').truncate()
-// })
 
 describe('Server test suite', () => {
 
@@ -22,14 +19,14 @@ describe('Server test suite', () => {
             expect(response.status).toBe(422)
         })
 
-        it('server should respond with status code 200 if game object returns all values', async () => {
+        it('server should respond with status code 201 if game object returns all values', async () => {
             const response = await request(server)
             .post('/api/games')
             .send({title: 'Crash Bandicoot', genre: 'Undefinable', releaseYear: 1999})
-            expect(response.status).toBe(200)
+            expect(response.status).toBe(201)
         })
         
-        it('server should respond by sending back and array with the ID of the current item being added', async () => {
+        it('server should respond by sending back an array with the ID of the current item being added', async () => {
                 const response = await request(server)
                 .post('/api/games')
                 .send({title: 'Soandso', genre: 'lorem', releaseYear: 2018})
@@ -45,19 +42,19 @@ describe('Server test suite', () => {
             expect(response.type).toBe('application/json')
         })
 
-        // it('server should respond with 405 if games object with that title is already in database', async () => {
-        //     const response = await request(server)
 
-        //     response
-        //     .post('/api/games')
-        //     .send({title: 'Asteroids', genre: 'Arcade', releaseYear: 1982})
-        //     expect(response.status).toBe(200)
 
-        //     response
-        //     .post('/api/games')
-        //     .send({title: 'Asteroids', genre: 'Arcade', releaseYear: 1982})
-        //     expect(response.status).toBe(405)
-        // })
+        it('server should respond with 405 if games object with that title is already in database', async () => {
+            const response1 = await request(server)
+            .post('/api/games')
+            .send({title: 'Asteroids', genre: 'Arcade', releaseYear: 1982})
+            expect(response1.status).toBe(201)
+
+            const response2 = await request(server)
+            .post('/api/games')
+            .send({title: 'Asteroids', genre: 'Arcade', releaseYear: 1982})
+            expect(response2.status).toBe(405)
+        })
 
     })// end describe for post call to api/games
 
