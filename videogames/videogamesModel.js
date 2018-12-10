@@ -4,8 +4,8 @@ module.exports = {
   insert,
   // update,
   // remove,
-  getAll
-  // findById
+  getAll,
+  findByTitle
 };
 
 async function insert(videogame) {
@@ -19,4 +19,10 @@ async function insert(videogame) {
 
 async function getAll() {
   return db('videogames');
+}
+
+async function findByTitle(id) {
+  return db('videogames')
+    .where({ title: String(id) })
+    .select('id', 'title', 'genre', 'releaseYear');
 }

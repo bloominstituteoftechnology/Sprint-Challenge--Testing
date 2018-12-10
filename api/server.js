@@ -7,7 +7,6 @@ server.use(express.json());
 const videogamesRoutes = require('../videogames/videogamesroutes.js');
 
 //sanity check endpoint
-
 server.get('/', (req, res) => {
   res.status(200).json({ api: 'up' });
 });

@@ -22,6 +22,8 @@ router.post('/api/games/', async (req, res) => {
   console.log(req.body);
   if (!GameData.title || !GameData.genre) {
     res.status(422).json({ errorMessage: 'Please provide a title and a genre for your videogame.' });
+  } else if (!db.findByTitle(GameData.title)) {
+    res.status(405).json({ errorMessage: 'Duplicate Game Titles Not Allowed' });
   } else {
     try {
       const newGame = await db.insert(GameData);

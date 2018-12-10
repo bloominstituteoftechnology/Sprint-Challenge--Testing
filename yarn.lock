@@ -18,6 +18,11 @@
     esutils "^2.0.2"
     js-tokens "^4.0.0"
 
+"@coetry/simpletypes@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@coetry/simpletypes/-/simpletypes-1.0.0.tgz#127fcdda23e239ba36270bbd19b2e7c282400f86"
+  integrity sha512-u4X1Qn98NOpnFP2m/cVFcF+ZRt6Ic76My6zJwvbXWgZjz1K16ItyNfSUxl6rFkQqEokaBaTWwuLxZj6dS8rv4w==
+
 abab@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/abab/-/abab-2.0.0.tgz#aba0ab4c5eee2d4c79d3487d85450fb2376ebb0f"
