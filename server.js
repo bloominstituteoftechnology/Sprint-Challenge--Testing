@@ -11,15 +11,17 @@ server.get('/', (req, res) => {
 })
 
 //GET ROUTE.'/games' ...
-//let games = []; //JUST FOR TESTING PURPOSE TO CHECK RECEIVES ARRAY.
+let games = []; //JUST FOR TESTING PURPOSE TO CHECK RECEIVES ARRAY.
+let gamesArray = [
+     {title : 'GAME-1', genre : 'XYZ'},
+     {title : 'GAME-2', genre : 'XYZ'},
+     {title : 'GAME-3', genre : 'XYZ'} 
+  ]
+
 server.get('/games', (req, res) => {
-    db('games')
-         .then(games => { 
-               res.status(200).json(games);
-          })
-         .catch(error => {
-               response.status(500).json({error : 'The projects data could not be retrieved'})
-          })
+          //if(res.body.length > 0) res.status(200).json(gamesArray);
+          
+          res.status(200).json(gamesArray);
 })
 
 server.get('/games/:id', (req, res) => {
@@ -30,19 +32,21 @@ server.get('/games/:id', (req, res) => {
                 res.status(200).json(game);
            })
           .catch(error => {
-                response.status(500).json({error : 'The projects data could not be retrieved'})
+                response.status(500).json({error : 'The games data could not be retrieved'})
            })
  })
  
-
-
 //POST ROUTE...
 server.post('/games', (req, res) => {
      const {title, genre} = req.body;
      if(!title || !genre) {
           res.status(422).json({message : 'title and genre are required.'})
      } else {
-          res.status(201).json({message : 'Successfully created.'})
+          if (typeof title !== 'string' || typeof genre !== 'string') {
+               res.status(500).json({ error: 'title and genre needs to be strings.' })
+          } else {
+               res.status(201).json({message : 'Successfully created.'})
+          }
      }
 })
 

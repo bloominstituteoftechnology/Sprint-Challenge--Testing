@@ -15,3 +15,8 @@
         - Unit tests : are fast, small tests written by developers. 
         - Integration tests : are important to test different components in a system and how they interact.
         - Snapshot testing : are unique tests that checks the current output to prior output and fails with any new changes. You can update the snapshots    using `u` button.
+
+4. What are mocks? What are a good use cases for them?
+--> Mocking is you create 'imaginary—similar to real'.
+    Mock is a method/object that simulates the behavior of a real method/object in controlled ways. Mock objects are used in unit testing.
+    Mocks may be useful for testing where we need database connection, and client alone testing by server mocking and vice-versa.
