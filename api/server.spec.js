@@ -30,4 +30,47 @@ describe('server.js testing', () => {
 
     });
 
+    describe('testing /games POST endpoint', () => {
+
+        it('should add a new game to the database', async () => {
+            const body = { title: 'Super Mario Bros.', genre: 'Platformer', releaseYear: 1983 };
+      
+            let response = await request(server)
+              .post('/games')
+              .send(body);
+      
+            expect(response.status).toBe(201);
+      
+          });
+
+        
+        it("should return 422 if game's title or game's genre is missing", async () => {
+            let response = await request(server)
+            .post('/games')
+            .send({ title: 'Super Mario Bros.' });
+            expect(response.status).toBe(422);
+    
+            response = await request(server)
+            .post('/games')
+            .send({ genre: 'Platformer' });
+            expect(response.status).toBe(422);
+        });
+
+        it("should return 422 if game's title or game's genre is a not a string", async () => {
+            const body1 =  { title: true, genre: 'Platformer', releaseYear: 1983 };
+            const body2 = { title: 'Super Mario Bros.', genre: 55, releaseYear: 1983 };
+
+            let response = await request(server)
+            .post('/games')
+            .send(body1);
+            expect(response.status).toBe(422);
+    
+            response = await request(server)
+            .post('/games')
+            .send(body2);
+            expect(response.status).toBe(422);
+        });
+
+    });
+
 });
