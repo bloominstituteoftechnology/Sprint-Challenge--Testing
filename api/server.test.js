@@ -23,6 +23,41 @@ describe('server.js', () => {
          res = await request(server).get('/games');
          expect(res.body).toEqual(expected);
       });
+
+      it('should respond with an array of games', async () => {
+         let expected = [
+            {
+               title: 'Kingdom Hearts',
+               genre: 'RPG',
+               releaseYear: 2019,
+            },
+            {
+               title: 'Red Dead Redemption',
+               genre: 'Action',
+               releaseYear: 2018,
+            },
+         ];
+
+         let res = await request(server)
+            .post('/games')
+            .send({
+               title: 'Kingdom Hearts',
+               genre: 'RPG',
+               releaseYear: 2019,
+            });
+
+         res = await request(server)
+            .post('/games')
+            .send({
+               title: 'Red Dead Redemption',
+               genre: 'Action',
+               releaseYear: 2018,
+            });
+
+         res = await request(server).get('/games');
+
+         expect(res.body).toEqual(expected);
+      });
    });
 
    describe('POST /games endpoint', () => {
