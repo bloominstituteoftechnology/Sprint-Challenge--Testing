@@ -73,4 +73,26 @@ describe('server.js testing', () => {
 
     });
 
+    describe('DELETE /games/:id endpoint', () => {
+
+        it('should delete a game from the database', async () => {
+            
+            let response = await request(server)
+            .delete(`/games/2`);
+    
+            expect(response.status).toBe(200);
+            
+        });
+
+        it('should return a response with status code 404 when a game was not found in the database', async () => {
+            
+            let response = await request(server)
+            .delete(`/games/45`);
+    
+            expect(response.status).toBe(404);
+            
+        });
+    
+    });
+
 });

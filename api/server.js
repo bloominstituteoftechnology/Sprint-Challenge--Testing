@@ -32,6 +32,22 @@ server.post('/games', async (req, res) => {
   }
 });
 
+server.delete('/games/:id', async (req, res) => {
+    try {
+      const {id} = req.params;
+      const count = await games.remove(id);
+  
+      if(!count || count < 1){
+          res.status(404).json({message: "Game was not found to be removed"})
+      } else{
+          res.status(200).json(count);
+      }
+    }
+    catch (err) {
+      res.status(500).json({message: "There was an error while trying to delete a game from the data base"});
+      }
+  });
+
 
 
 module.exports = server;
