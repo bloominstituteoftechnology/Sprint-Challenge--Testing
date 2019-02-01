@@ -25,54 +25,64 @@ In this challenge use `Test Driven Development` to build a RESTful API using Nod
 Demonstrate your understanding of this week's concepts by answering the following free-form questions. Edit this document to include your answers after each question. Make sure to leave a blank line above and below your answer so it is clear and easy to read by your project manager.
 
 1. In Jest, what are the differences between `describe()` and `it()` globals, and what are good uses for them?
+
+-  `Describe()` creates a block that groups together several related tests. `it()` creates a test case. `Describe()` is good for grouping similar tests scenrarios and `it()` is good for testing specific cases.
+
 1. What is the point of `Test Driven Development`? What do you think about this approach?
+
+-  To create tests and build software that must pass the tests. It is very tedios to write the tests but I can see the advantages when there is a huge enterprise application. It can help figure out what went wrong during an update and can rollback to a version where the application passes all of the tests.
+
 1. Mention three types of automated tests.
+
+-  TDD
+-  BDD
+-  ATDD
 
 ## Project Set Up
 
-- [ ] fork and clone this repository.
-- [ ] **CD into the folder** where you downloaded the repository.
-- [ ] run `yarn` or `npm i` to download all dependencies.
-- [ ] type `yarn test` or `npm test` to run the tests. The `test` script is already configured.
+-  [ ] fork and clone this repository.
+-  [ ] **CD into the folder** where you downloaded the repository.
+-  [ ] run `yarn` or `npm i` to download all dependencies.
+-  [ ] type `yarn test` or `npm test` to run the tests. The `test` script is already configured.
 
 ## Minimum Viable Product
 
 Your finished project must include all of the following requirements:
 
-- [ ] use `jest` and `supertest` to write the tests.
-- [ ] Write the **tests BEFORE** writing the route handlers.
-- [ ] Your API must be have `POST` and `GET` endpoints for `/games`.
-- [ ] Write a **minimum** of three tests per endpoint.
+-  [ ] use `jest` and `supertest` to write the tests.
+-  [ ] Write the **tests BEFORE** writing the route handlers.
+-  [ ] Your API must be have `POST` and `GET` endpoints for `/games`.
+-  [ ] Write a **minimum** of three tests per endpoint.
 
 Below is a product specification covering the requirements for your endpoints.
 
 ### POST /games
 
-- [ ] The `POST /games` endpoint should take in an object that looks like this
+-  [ ] The `POST /games` endpoint should take in an object that looks like this
 
-  ```js
-  {
-    title: 'Pacman', // required
-    genre: 'Arcade', // required
-    releaseYear: 1980 // not required
-  }
-  ```
+   ```js
+   {
+     title: 'Pacman', // required
+     genre: 'Arcade', // required
+     releaseYear: 1980 // not required
+   }
+   ```
 
-- [ ] In the route handler, validate that the required fields are included inside the body. If the information is incomplete, return a `422` status code.
-- [ ] Write tests to verify that the endpoint returns the correct HTTP status code when receiving correct and incorrect game data.
+-  [ ] In the route handler, validate that the required fields are included inside the body. If the information is incomplete, return a `422` status code.
+-  [ ] Write tests to verify that the endpoint returns the correct HTTP status code when receiving correct and incorrect game data.
 
 ### GET /games
 
-- [ ] The `GET /games` endpoint should return the list of games and HTTP status code 200.
-- [ ] Write a test to make sure this endpoint always returns an array, even if there are no games stored. If there are no games to return, the endpoint should return an empty array.
+-  [ ] The `GET /games` endpoint should return the list of games and HTTP status code 200.
+-  [ ] Write a test to make sure this endpoint always returns an array, even if there are no games stored. If there are no games to return, the endpoint should return an empty array.
 
 ## Stretch Problems
 
 The following exercises are optional, but we suggest that you tackle them if you finish the MVP early.
 
-- validate that the game `title` is unique. If the client tries to create a duplicate game, return a status code 405 (Not Allowed). Write a test that checks for this.
-- add an `id` property to the game schema and write code in the server to increment it automatically. After implementing this functionality work on the following:
-  - Write a `GET /games/:id` endpoint that returns the information about a single game. Respond with a 404 status code when a game is not found for the provided `id`. Add the corresponding tests for it.
-  - add a `DELETE /games/:id` endpoint that can remove the corresponding game. If the game does not exists return a 404 status code. Write tests for this endpoint.
+-  validate that the game `title` is unique. If the client tries to create a duplicate game, return a status code 405 (Not Allowed). Write a test that checks for this.
+-  add an `id` property to the game schema and write code in the server to increment it automatically. After implementing this functionality work on the following:
+   -  Write a `GET /games/:id` endpoint that returns the information about a single game. Respond with a 404 status code when a game is not found for the provided `id`. Add the corresponding tests for it.
+   -  add a `DELETE /games/:id` endpoint that can remove the corresponding game. If the game does not exists return a 404 status code. Write tests for this endpoint.
 
 **Remember you can use any resources you want to solve these problems, but avoid copying/pasting solutions you've previously written. Also if you don't finish all of the challenges, that's fine! Just do what you can and submit your challenges in the end! HAVE FUN!**
