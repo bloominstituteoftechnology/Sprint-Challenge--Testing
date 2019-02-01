@@ -11,10 +11,8 @@ server.get('/', (req, res) => {
 });
 
 server.get('/games', async (req, res) => {
-  console.log("We're in.");
   try {
     const gameInfo = await games.getAll();
-    console.log('Game info', gameInfo);
     res.status(200).json(gameInfo);
   } catch (error) {
     res.status(500).json(error);
@@ -22,11 +20,22 @@ server.get('/games', async (req, res) => {
 });
 
 server.post('/games', async (req, res) => {
-  console.log("We're in.");
   try {
     const info = req.body;
-    const gameResponse = await games.insert(info);
-    res.status(201).json(`Added game: ${info.title}`);
+    if (info.title && info.genre && info.releaseYear) {
+      if (
+        typeof info.title !== 'string' ||
+        typeof info.genre !== 'string' ||
+        typeof info.releaseYear !== 'number'
+      ) {
+        res.status(400).json(`You haven't inserted the correct type of data.`);
+      } else {
+        const gameResponse = await games.insert(info);
+        res.status(201).json(`Added game: ${info.title}`);
+      }
+    } else {
+      res.status(422).json(`You haven't entered the correct information.`);
+    }
   } catch (error) {
     res.status(500).json(error);
   }
