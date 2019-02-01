@@ -48,6 +48,21 @@ server.delete('/games/:id', async (req, res) => {
       }
   });
 
+server.get('/games/:id', async (req, res) => {
+    try {
+      const {id} = req.params;
+      const gameById = await games.findById(id);
+      if(gameById){
+        res.status(200).json(gameById);
+      } else {
+        res.status(404).json({message: "Please provide the correct ID of the game"})
+      }
+    }
+    catch (err){
+      res.status(500).json({message: "There was an error while trying to retrieve a game from the data base"});
+    }
+  });   
+
 
 
 module.exports = server;

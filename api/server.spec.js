@@ -78,7 +78,7 @@ describe('server.js testing', () => {
         it('should delete a game from the database', async () => {
             
             let response = await request(server)
-            .delete(`/games/2`);
+            .delete(`/games/3`);
     
             expect(response.status).toBe(200);
             
@@ -88,6 +88,29 @@ describe('server.js testing', () => {
             
             let response = await request(server)
             .delete(`/games/45`);
+    
+            expect(response.status).toBe(404);
+            
+        });
+    
+    });
+
+
+    describe('GET /games/:id endpoint', () => {
+
+        it('should get a game with a specific id from the database', async () => {
+            
+            let response = await request(server)
+            .get(`/games/4`);
+    
+            expect(response.status).toBe(200);
+            
+        });
+
+        it('should return a response with status code 404 when a game was not found in the database', async () => {
+            
+            let response = await request(server)
+            .get(`/games/45`);
     
             expect(response.status).toBe(404);
             
