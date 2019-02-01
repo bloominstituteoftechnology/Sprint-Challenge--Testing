@@ -7,15 +7,11 @@ afterEach(async () => {
 });
 
 describe('server.js', () => {
-   describe('GET /games endpoint', () => {
-      it('should respond with status code 200 ok', async () => {
+   describe('GET /games endpoint', async () => {
+      it('should respond with status code 200', async () => {
          let res = await request(server).get('/games');
+         console.log('res', res);
          expect(res.status).toBe(200);
-      });
-
-      it('should respond with JSON', async () => {
-         let res = await request(server).get('/games');
-         expect(res.type).toMatch(/json/i);
       });
 
       it('should respond with an empty array', async () => {
@@ -27,14 +23,16 @@ describe('server.js', () => {
       it('should respond with an array of games', async () => {
          let expected = [
             {
+               id: 1,
                title: 'Kingdom Hearts',
                genre: 'RPG',
-               releaseYear: 2019,
+               releaseYear: '2019',
             },
             {
+               id: 2,
                title: 'Red Dead Redemption',
                genre: 'Action',
-               releaseYear: 2018,
+               releaseYear: '2018',
             },
          ];
 
@@ -43,7 +41,7 @@ describe('server.js', () => {
             .send({
                title: 'Kingdom Hearts',
                genre: 'RPG',
-               releaseYear: 2019,
+               releaseYear: '2019',
             });
 
          res = await request(server)
@@ -51,7 +49,7 @@ describe('server.js', () => {
             .send({
                title: 'Red Dead Redemption',
                genre: 'Action',
-               releaseYear: 2018,
+               releaseYear: '2018',
             });
 
          res = await request(server).get('/games');
@@ -65,7 +63,7 @@ describe('server.js', () => {
          let body = {
             title: 'Kingdom Hearts',
             genre: 'RPG',
-            releaseYear: 2019,
+            releaseYear: '2019',
          };
 
          let res = await request(server)
@@ -78,7 +76,7 @@ describe('server.js', () => {
          let body = {
             title: 'Kingdom Hearts',
             genre: 'RPG',
-            releaseYear: 2019,
+            releaseYear: '2019',
          };
 
          let res = await request(server)
@@ -88,11 +86,10 @@ describe('server.js', () => {
          expect(res.body).toEqual([1]);
       });
 
-      it('should return the id of the game created', async () => {
+      it('should return status code error of 422', async () => {
          let body = {
             title: 'Kingdom Hearts',
-            genre: null,
-            releaseYear: 2019,
+            releaseYear: '2019',
          };
 
          let res = await request(server)

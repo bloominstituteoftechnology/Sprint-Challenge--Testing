@@ -5,15 +5,38 @@ const db = require('../data/dbConfig');
 
 configMiddleware(server);
 
-server.get('/games', async (res, req) => {
+server.get('/', (req, res) => {
+   res.status(200).send('Sanity check');
+});
+
+server.get('/games', async (req, res) => {
    const games = await db('games');
-   res.statusCode(200).json(games);
+
+   try {
+      res.status(200).json(games);
+   } catch (err) {
+      res.status(500).json(err);
+   }
+});
+
+server.get('/games', async (req, res) => {
+   try {
+      const games = await db('games');
+      res.status(200).json(games);
+   } catch (err) {
+      res.status(500).json({ message: 'failed' });
+   }
 });
 
 server.post('/games', async (req, res) => {
    const game = req.body;
-   const result = await db('games').insert(game);
-   res.status(201).json(result);
+
+   try {
+      const result = await db.insert(game).into('games');
+      res.status(201).json(result);
+   } catch (err) {
+      res.status(422).json(err);
+   }
 });
 
 module.exports = server;

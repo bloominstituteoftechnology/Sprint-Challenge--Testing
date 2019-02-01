@@ -3,7 +3,7 @@ exports.up = function(knex, Promise) {
       tbl.increments();
       tbl.string('title', 255).notNullable();
       tbl.string('genre', 255).notNullable();
-      tbl.string('releaseYear', 4).notNullable();
+      tbl.string('releaseYear', 4);
    });
 };
 
