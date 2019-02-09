@@ -50,7 +50,7 @@ describe("POST /games tests", () => {
 				genre: "arcade",
 				releaseYear: 1980
 			},
-			{ title: "007", genre: "Shooter", releaseYear: 1997 }
+			{ title: "Soulcalibur", genre: "Fighting", releaseYear: 1999 }
 		];
 		const newgame = { title: "Soulcalibur", genre: "Fighting", releaseYear: 1999 };
 		const response = await request(server)
