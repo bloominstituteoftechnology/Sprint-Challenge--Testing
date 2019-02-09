@@ -3,7 +3,7 @@ const db = require('../dbConfig')
 
 module.exports = {
     getAll: () => {
-        null
+       return db('games')
     },
     insert: () => {
         null
