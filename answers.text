@@ -1,0 +1,11 @@
+1. In Jest, what are the differences between `describe()` and `it()` globals, and what are good uses for them?
+    A) Describe is used to contain a test suite. A good use for describe is organization of tests it contains. 
+
+1. What is the point of `Test Driven Development`? What do you think about this approach?
+    A) Test Driven Development or TDD practices are used to catch as many possible issues with code before going
+        into production. Untested code should NEVER make it into production.
+
+1. Mention three types of automated tests.
+    A) 1. Unit testing
+       2. Component testing
+       3. Snapshot testing
