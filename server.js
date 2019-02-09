@@ -1,5 +1,6 @@
 const express = require('express');
 const server = express();
+const db = require('./dbConfig');
 const games = require('./gameModel');
 
 server.use(express.json());
@@ -18,7 +19,6 @@ server.use(express.json());
 //  Write tests to verify that the endpoint returns the correct HTTP status code when receiving 
 //  correct and incorrect game data.
 
-
-module.exports = {
-    server
-}
+server.listen(4000, () =>{
+    console.log('Server is up and running my dude!')
+})

@@ -1,7 +1,12 @@
 const request = require('supertest');
-const sever = require('./server');
-
+const server = require('./server');
+const db = require('./dbConfig');
 const games = require('./gameModel');
+
+
+beforeEach(async () => {
+    await db('games').truncate()
+})
 
 describe('Route handlers', () =>{
     describe('Get endpoints for games', () =>{
@@ -20,4 +25,12 @@ describe('Route handlers', () =>{
         });
 
     });
+    describe('Post endpoint for games', () =>{
+        it('Should respond with a 422 status code if information is missing', async() =>{
+            const response = await request(server).post('/games')
+            .send({title: 'Super Smash Bros'});
+            expect(response.status).toBe(422);
+        });
+        it('Should ')
+    })
 });
