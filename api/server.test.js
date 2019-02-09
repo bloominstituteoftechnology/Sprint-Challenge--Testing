@@ -51,4 +51,18 @@ describe("SERVER", () => {
 
         expect(res.body).toEqual(expected)
     })
+
+    describe("POST /games endpoint", () => {
+        it("Respond with status code 201", async () => {
+            let body = {
+                title: "Halo 2",
+                genre: "FPS",
+                releaseYear: 2004
+            };
+
+            let res = await request(server).post("/games").send(body)
+
+            expect(res.status).toBe(201)
+        })
+    });
 });
