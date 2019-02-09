@@ -5,7 +5,7 @@ const server = require('./api/server.js');
 const request = require('supertest');
 
 
-describe.skip('GET /games testing',()=>{
+describe('GET /games testing',()=>{
 
   it('should respond with status code 200', async ()=>{
     const response = await request(server).get('/games');
@@ -25,7 +25,6 @@ describe.skip('GET /games testing',()=>{
 
     expect(response.body).toEqual(expected);
   });
-
 
 });
 
