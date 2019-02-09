@@ -4,13 +4,11 @@
 	"description": "Testing Sprint Challenge",
 	"main": "index.js",
 	"scripts": {
-		"test": "jest --watch --verbose",
-		"start": "nodemon index.js"
+		"test": "cross-env DB_ENV=testing jest --watch --verbose",
+		"start": "nodemon index.js",
+		"server": "nodemon"
 	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/LambdaSchool/Sprint-Challenge--Testing.git"
-	},
+	"repository": "git+https://github.com/LambdaSchool/Sprint-Challenge--Testing.git",
 	"keywords": [],
 	"author": "Lambda School",
 	"license": "ISC",
@@ -19,6 +17,7 @@
 	},
 	"homepage": "https://github.com/LambdaSchool/Sprint-Challenge--Testing#readme",
 	"dependencies": {
+		"dotenv": "^6.2.0",
 		"express": "^4.16.4",
 		"knex": "^0.16.3",
 		"nodemon": "^1.18.10",
