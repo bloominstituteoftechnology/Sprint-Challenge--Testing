@@ -9,8 +9,12 @@ server.get('/', async (req, res) => {
 
 server.get('/games', async (req, res) => {
     const gameData = await games.getAll();
-
-    res.status(200).json(rows);
+    if (gameData === '') {
+        res.status(200).json({});
+    }else {
+        res.status(200).json(gameData)
+    }    
+   // res.status(200).json(gameData);
 });
 
 server.post('/games', async (req, res) => {
@@ -19,10 +23,10 @@ server.post('/games', async (req, res) => {
         const ids = await db.insert(game)
         res.status(201).json(ids);
     } else {
-        res.status(400).json({})
+        res.status(422).json({})
 
     }
-    res.status(200).json();
+   // res.status(200).json();
 });
 
 
