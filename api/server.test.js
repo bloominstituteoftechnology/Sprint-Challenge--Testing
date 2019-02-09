@@ -45,3 +45,28 @@ describe('Testing database connection', () => {
     })
 
 })
+
+describe('post /games', () => {
+
+    //Validates we are making a post to games while getting repsonse 201
+    it('responds with 201', async () => {
+        const body = {
+            title: 'Space Invaders',
+            genre: 'Arcade',
+            releaseDate: '1978'
+        }
+        const response = await request(server)
+            .post('/games')
+            .send(body);
+        expect(response.status).toBe(201);
+    })
+//Validates that we are sending back the error status code 422
+    it('responds with 422', async () => {
+        const body = {}
+        const response = await request(server)
+            .post('/games')
+            .send(body);
+        expect(response.status).toBe(422);
+    })
+
+})

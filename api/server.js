@@ -17,6 +17,18 @@ server.get('/games', async (req, res) => {
     res.status(200).json(list);
 })
 
+server.post('/games', async (req, res) => {
+    const game = req.body;
+
+    if (game.title) {
+        const ids = await games.insert(game)
+        res.status(201).json(ids);
+    }
+    else {
+        res.status(422).json({error: 'missing title'})
+    }
+})
+
 
 
 module.exports = server;
