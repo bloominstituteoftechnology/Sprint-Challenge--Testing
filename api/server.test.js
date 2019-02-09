@@ -76,5 +76,16 @@ describe("SERVER", () => {
 
             expect(res.body).toEqual([1])
         })
+
+        it("Respond with status code 422 when incomplete", async () => {
+            let body = {
+                genre: "FPS",
+                releaseYear: 2004
+            };
+
+            let res = await request(server).post("/games").send(body)
+
+            expect(res.status).toBe(422)
+        })
     });
 });
