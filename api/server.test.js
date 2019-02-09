@@ -2,7 +2,7 @@ const request = require('supertest');
 const server = require('./server.js');
 const db = require('../data/dbConfig')
 
- describe('the route handler', () => {
+describe('the route handler', () => {
     describe('get /games', () => {
         it('respond with 200 when get is successful', async () => {
             const response = await request(server)
@@ -12,8 +12,8 @@ const db = require('../data/dbConfig')
         it('should return an empty array when db is empty', async () => {
             const response = await request(server)
                 .get('/');
-            
-                expect(response.status).toBe(200);
+
+            expect(response.status).toBe(200);
         })
         it('respond with 200', async () => {
             const response = await request(server)
@@ -38,14 +38,14 @@ describe('create new games entry', () => {
 
         })
         it('respond with 422 when the genre is missing', async () => {
-            const body = { title: 'test'};
+            const body = { title: 'test' };
             const response = await request(server)
                 .post('/games').send(body);
             expect(response.status).toBe(422);
 
         })
         it('respond with 422 when the title is missing', async () => {
-            const body = { genre: 'testGenre'};
+            const body = { genre: 'testGenre' };
             const response = await request(server)
                 .post('/games').send(body);
             expect(response.status).toBe(422);
@@ -60,3 +60,16 @@ describe('create new games entry', () => {
         })
     })
 })
+
+describe('get the games by id', () => {
+    describe('get /game with id', () => {
+        it('respond with 200 when get is successful', async () => {
+            const id = ('1');
+            const response = await request(server)
+                .get('/games').send(id);
+            expect(response.status).toBe(200);
+        })
+    })
+})
+
+

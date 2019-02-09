@@ -8,7 +8,7 @@ server.get('/', async (req, res) => {
 });
 
 server.get('/games', async (req, res) => {
-    const gameData = await games.getAll();
+    const gameData = await db.getAll();
     if (gameData === '') {
         res.status(200).json({});
     }else {
@@ -30,6 +30,39 @@ server.post('/games', async (req, res) => {
 });
 
 
+/* server.get('/:id', async (req, res) => {
+    const { id } = req.params
+    projects.get(id)
+        .then(project => {
+            if (project) {
+                res.json(project);
+            } else {
+                res
+                    .status(404)
+                    .json({ message: "The project with the specified ID does not exist." })
+            }
+        })
+        .catch(err => {
+            res
+                .status(500)
+                .json({ error: "The project information could not be retrieved." });
+        });
+}); */
+
+server.get('/games/:id', async (req, res) => {
+    const { id } = req.params;
+    db
+        .get(id)
+        .then(game => {
+            if (game === 0) {
+                return sendUserError(404, 'No game with that id is in the db', res);
+            }
+            res.json(game);
+        })
+        .catch(err => {
+            return sendUserError(500, 'Db unavailable', res);
+        });
+});
 /* server.delete('/:id', (req, res) => {
     const { id } = req.params
 

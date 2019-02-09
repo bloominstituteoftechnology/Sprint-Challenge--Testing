@@ -6,6 +6,7 @@ module.exports = {
   remove,
   getAll,
   findById,
+  get
 };
 
 async function insert(game) {
@@ -24,6 +25,24 @@ function getAll() {
   return db('games');
 }
 
-function findById(id) {
+/* function findById(id) {
   return null;
-}
+} */
+
+function find() {
+    return db('games');
+  }
+  
+  function findById(id) {
+    return db('games').where({ id: Number(id) });
+  }
+
+  function get(id) {
+    let query = db('games');
+    if (id) {
+      query.where('id', Number(id)).first();
+      console.log("id:", id)
+    }
+
+    return query;
+  }
