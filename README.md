@@ -25,24 +25,35 @@ In this challenge use `Test Driven Development` to build a RESTful API using Nod
 Demonstrate your understanding of this week's concepts by answering the following free-form questions. Edit this document to include your answers after each question. Make sure to leave a blank line above and below your answer so it is clear and easy to read by your project manager.
 
 1. In Jest, what are the differences between `describe()` and `it()` globals, and what are good uses for them?
-1. What is the point of `Test Driven Development`? What do you think about this approach?
-1. Mention three types of automated tests.
+
+Describe allows us to segment our tests into related categories, for organization. For example, all tests relating to one endpoint could go into a describe.
+
+It holds a single test that will be seen within Jest, even if it has multiple expects. It tests one independent test - such as if the endpoint will return the correct status code, or object.
+
+2. What is the point of `Test Driven Development`? What do you think about this approach?
+
+Test Driven Development begins with building the tests before writing the code. This type of development asks the developer to think through the entire codebase before writing, to pre-emptively consider edge cases, issues and how the resources should be handled. This extra time spent planning can make writing the code simpler and faster, and less prone to bugs that would require extensive refactoring.
+
+3. Mention three types of automated tests.
+
+Input-output tests, regression tests, and unit testing.
+
 
 ## Project Set Up
 
-- [ ] fork and clone this repository.
-- [ ] **CD into the folder** where you downloaded the repository.
-- [ ] run `yarn` or `npm i` to download all dependencies.
+- [x] fork and clone this repository.
+- [x] **CD into the folder** where you downloaded the repository.
+- [x] run `yarn` or `npm i` to download all dependencies.
 - [ ] type `yarn test` or `npm test` to run the tests. The `test` script is already configured.
 
 ## Minimum Viable Product
 
 Your finished project must include all of the following requirements:
 
-- [ ] use `jest` and `supertest` to write the tests.
-- [ ] Write the **tests BEFORE** writing the route handlers.
-- [ ] Your API must be have `POST` and `GET` endpoints for `/games`.
-- [ ] Write a **minimum** of three tests per endpoint.
+- [x] use `jest` and `supertest` to write the tests.
+- [x] Write the **tests BEFORE** writing the route handlers.
+- [x] Your API must be have `POST` and `GET` endpoints for `/games`.
+- [x] Write a **minimum** of three tests per endpoint.
 
 Below is a product specification covering the requirements for your endpoints.
 
@@ -76,3 +87,44 @@ The following exercises are optional, but we suggest that you tackle them if you
   - add a `DELETE /games/:id` endpoint that can remove the corresponding game. If the game does not exists return a 404 status code. Write tests for this endpoint.
 
 **Remember you can use any resources you want to solve these problems, but avoid copying/pasting solutions you've previously written. Also if you don't finish all of the challenges, that's fine! Just do what you can and submit your challenges in the end! HAVE FUN!**
+
+
+
+[
+    {
+        title: 'Asteroids',
+        genre: 'Shooter',
+        releaseYear: 1979
+    },
+    {
+        title: 'Monkey Island',
+        genre: 'Adventure',
+        releaseYear: 1990
+    },
+    {
+        title: 'Donkey Kong',
+        genre: 'Platform',
+        releaseYear: 1981
+    },
+    {
+        title: 'EverQuest',
+        genre: 'RPG',
+        releaseYear: 1999
+    },
+    {
+        title: 'Pillars of Eternity',
+        genre: 'RPG',
+        releaseYear: 2015
+    }
+]
+
+{
+    title: 'Galaga',
+    genre: 'Shooter',
+    releaseYear: 1979
+}
+{
+    title: 'Ms. Pac Man',
+    genre: 'Maze',
+    releaseYear: 1982
+}
