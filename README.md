@@ -25,8 +25,21 @@ In this challenge use `Test Driven Development` to build a RESTful API using Nod
 Demonstrate your understanding of this week's concepts by answering the following free-form questions. Edit this document to include your answers after each question. Make sure to leave a blank line above and below your answer so it is clear and easy to read by your project manager.
 
 1. In Jest, what are the differences between `describe()` and `it()` globals, and what are good uses for them?
-1. What is the point of `Test Driven Development`? What do you think about this approach?
-1. Mention three types of automated tests.
+
+**describe()- this global is used to partition your tests into different sections.  It is good for organizing your tests into sections. For example, in a react app component a set of tests could be used to make sure individual elements exists within the component. Another set of tests could be used for testing the functionality of the component.  Each of these sets could be wrapped in a describe() with test describing what the tests are for. This making the test file more organized and readable.**
+
+**it() - this global is used for the actual testing.  Included within it is the execution of the test code as well as the assertions that check whether the test is true or false.**
+
+2. What is the point of `Test Driven Development`? What do you think about this approach?
+
+**Test Driven Development is a testing method that calls for writing tests before writing the program code. Writing the tests first helps one to think more thoroughly about the requirement of the program before codeing. It can help the developer to think more about covering any edge cases that could break the code. Although this can seem tedious, I think this is a good strategy in that it helps to discipine one to think first about all aspects of the program before codeing. This can help prevent headaches in the future as it helps to prevent regressions that can occur furthur along the development cycle.** 
+
+3. Mention three types of automated tests.
+
+* Unit tests
+* Integration tests
+* Component testing
+
 
 ## Project Set Up
 
