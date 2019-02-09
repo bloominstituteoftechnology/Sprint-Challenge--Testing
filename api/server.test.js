@@ -38,6 +38,7 @@ describe('Testing database connection', () => {
             {
                 id: 1,
                 title: "Pacman",
+                genre: "Arcade",
                 releaseDate: 1980
             }
         ]);

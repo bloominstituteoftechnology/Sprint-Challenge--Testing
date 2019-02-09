@@ -5,7 +5,7 @@ exports.seed = function(knex, Promise) {
     .then(function () {
       // Inserts seed entries
       return knex('games').insert([
-        { title: 'Pacman', releaseDate: '1980'},
+        { title: 'Pacman', genre:'Arcade', releaseDate: '1980'},
       ]);
     });
 };
