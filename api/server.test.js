@@ -64,5 +64,17 @@ describe("SERVER", () => {
 
             expect(res.status).toBe(201)
         })
+
+        it("Return the ID of the game created", async () => {
+            let body = {
+                title: "Halo 2",
+                genre: "FPS",
+                releaseYear: 2004
+            };
+
+            let res = await request(server).post("/games").send(body)
+
+            expect(res.body).toEqual([1])
+        })
     });
 });
