@@ -4,7 +4,7 @@
 	"description": "Testing Sprint Challenge",
 	"main": "index.js",
 	"scripts": {
-		"test": "cross-env DB_ENV=testing jest --watch --verbose",
+		"test": "jest --watch --verbose",
 		"start": "nodemon index.js",
 		"server": "nodemon"
 	},
@@ -25,6 +25,6 @@
 	},
 	"devDependencies": {
 		"jest": "^23.6.0",
-		"supertest": "^3.3.0"
+		"supertest": "^3.4.2"
 	}
 }
