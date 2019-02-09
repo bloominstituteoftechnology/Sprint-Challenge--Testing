@@ -1,11 +1,10 @@
-const db = require('../data/dbConfig');
+const db = require("../data/dbConfig");
 const request = require("supertest");
 const server = require("../api/server");
 
-
 afterEach(async () => {
-    await db("games").truncate();
-  });
+  await db("games").truncate();
+});
 
 describe("the route handler", () => {
   describe("get /games", () => {
@@ -21,8 +20,14 @@ describe("the route handler", () => {
       const response = await request(server).get("/games");
       expect(response.body).toEqual([]);
     });
-  })
-  // describe("post /games", () => {
-
-  // })
-})
+  });
+  describe("post /games", () => {
+    it("responds with 201 when the body is correct", async (req, res) => {
+      const body = { title: "Kingdom Hearts", genre: "RPG", releaseYear: 2002 };
+      const response = await request(server)
+        .post("/games")
+        .send(body);
+      expect(response.status).toBe(201);
+    });
+  });
+});
