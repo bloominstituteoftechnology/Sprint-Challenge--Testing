@@ -23,11 +23,11 @@ server.post('/games', async (req, res) => {
   try {
     const gameData = req.body;
 
-    if (gameData.name) {
+    if (gameData.title && gameData.genre) {
       const count = await games.insert(gameData);
-      res.status(201).json(ids);
+      res.status(201).json(count);
     } else {
-      res.status(400).json({ error: 'Body missing info' });
+      res.status(422).json({ error: 'Body missing info' });
     }
   }
 
@@ -36,3 +36,5 @@ server.post('/games', async (req, res) => {
   }
 
 })
+
+module.exports = server;
