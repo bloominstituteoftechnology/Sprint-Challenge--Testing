@@ -2,7 +2,7 @@
 	"name": "testing-challenge",
 	"version": "1.0.0",
 	"description": "Testing Sprint Challenge",
-	"main": "index.js",
+	"main": "server.js",
 	"scripts": {
 		"test": "cross-env DB_ENV=testing jest --watch --verbose",
 		"start": "nodemon index.js"
