@@ -22,12 +22,26 @@ describe("the route handler", () => {
     });
   });
   describe("post /games", () => {
-    it("responds with 201 when the body is correct", async (req, res) => {
+    it("responds with 201 when the body is correct", async () => {
       const body = { title: "Kingdom Hearts", genre: "RPG", releaseYear: 2002 };
       const response = await request(server)
         .post("/games")
         .send(body);
       expect(response.status).toBe(201);
+    });
+    it("respods with 422 when title is missing", async () => {
+      const body = { title: "", genre: "RPG", releaseYear: 2002 };
+      const response = await request(server)
+        .post("/games")
+        .send(body);
+      expect(response.status).toBe(422);
+    });
+    it("respods with 422 when genre is missing", async () => {
+      const body = { title: "Kingdom Hearts", releaseYear: 2002 };
+      const response = await request(server)
+        .post("/games")
+        .send(body);
+      expect(response.status).toBe(422);
     });
   });
 });
