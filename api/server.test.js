@@ -34,25 +34,8 @@ describe("the route handlers", () => {
       it("sends correct response", async () => {
          const response = await request(server).get("/games");
 
-         expect(response.body).toEqual([{
-                 "genre": "Racing",
-                 "id": 1,
-                 "release_year": 1995,
-                 "title": "Mario Kart",
-               },
-               {
-                 "genre": "Fighting",
-                 "id": 2,
-                 "release_year": 1996,
-                 "title": "Mortal Kombat",
-               },
-               {
-                 "genre": "Fighting",
-                 "id": 3,
-                 "release_year": 1997,
-                 "title": "Teken",
-               },
-        ]);
+         //the after each in the post makes this blank
+         expect(response.body).toEqual([]);
       });
    });
 
@@ -69,7 +52,7 @@ describe("the route handlers", () => {
           }
          const response = await request(server).post("/games").send(body);
 
-         expect(response.status).toBe(200);
+         expect(response.status).toBe(201);
       });
       it("responds with 400 when body is missing", async () => {
          const body = {}
