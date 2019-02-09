@@ -11,16 +11,16 @@ describe('Testing game server', () => { //testing get endpoint
             const response = await request(server).get('/api/games');
             expect(response.status).toEqual(expectStatus);
             expect(response.body).toEqual(games);
-            expect(response.body).not.toBe([{}]);
+            expect(response.body).toBeDefined();
+
         })
     })
     describe('Post Game route test', () => {
         it('should post a new game ', async () => {
             const expectStatus = 201;
-            const response = await request(server).post('/api/games');
+            const game = { title: "Mega Man", genre: "Arcade", releaseYear: 1987,};
+            const response = await request(server).post('/api/games').send(game);
             expect(response.status).toEqual(expectStatus);
-            expect(req.body).not.toBe([{}]);
-            expect(req.body)
         })
     })
 
