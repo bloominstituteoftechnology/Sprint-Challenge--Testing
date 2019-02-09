@@ -8,7 +8,7 @@ module.exports = {
       filename: './data/gameDb'
     },
     useNullAsDefault: true,
-    migrartions: {
+    migrations: {
       directory: './data/migrations'
     }
   },

@@ -5,7 +5,7 @@ const games = require('./gameModel');
 
 
 afterEach(async () => {
-    await db('games').truncate()
+    await db('games').truncate();
 })
 
 describe('Route handlers', () =>{
