@@ -87,3 +87,44 @@ The following exercises are optional, but we suggest that you tackle them if you
   - add a `DELETE /games/:id` endpoint that can remove the corresponding game. If the game does not exists return a 404 status code. Write tests for this endpoint.
 
 **Remember you can use any resources you want to solve these problems, but avoid copying/pasting solutions you've previously written. Also if you don't finish all of the challenges, that's fine! Just do what you can and submit your challenges in the end! HAVE FUN!**
+
+
+
+[
+    {
+        title: 'Asteroids',
+        genre: 'Shooter',
+        releaseYear: 1979
+    },
+    {
+        title: 'Monkey Island',
+        genre: 'Adventure',
+        releaseYear: 1990
+    },
+    {
+        title: 'Donkey Kong',
+        genre: 'Platform',
+        releaseYear: 1981
+    },
+    {
+        title: 'EverQuest',
+        genre: 'RPG',
+        releaseYear: 1999
+    },
+    {
+        title: 'Pillars of Eternity',
+        genre: 'RPG',
+        releaseYear: 2015
+    }
+]
+
+{
+    title: 'Galaga',
+    genre: 'Shooter',
+    releaseYear: 1979
+}
+{
+    title: 'Ms. Pac Man',
+    genre: 'Maze',
+    releaseYear: 1982
+}

@@ -2,17 +2,99 @@ const request = require('supertest');
 const server = require('./server');
 const db = require('../data/dbConfig');
 
-//minimum 3 tests per endpoint
+{
+    title: 'Ms. Pac Man',
+    genre: 'Maze',
+    releaseYear: 1982
+}
+
+describe('the route handlers', () => {
+
+    beforeEach( () => {
+        return db.migrate.rollback()
+            .then( () => {
+                return db.migrate.latest()
+                    .then( () => {
+                        return db.seed.run()
+                    })
+            })
+    })
+
+    afterEach(async () => {
+        await db.migrate.rollback()
+    })
 
 
-//GET (200 status) (always return an array, even if no games)
+    describe('get /', () => {
 
+        it('responds with status 200', async () => {
 
-//GET /:id responds 200, sends correct response, (404 if doesn't exist)
+        })
 
+        it('sends the correct response', async () => {
 
-//POST - 201 success, sends correct response, unique title (405 error if not) (422 if missing title/genre)
+        })
 
+        it('sends an empty array if nothing in the database', () => {
 
-//DELETE /:id, 200 success, sends correct response, (404 if doesn't exist)
+        })
 
+    })
+
+    describe('get /:id', () => {
+
+        it('responds with 200', async () => {
+
+        })
+
+        it('sends the correct response', async () => {
+
+        })
+
+        it('responds with status 404 if that id is invalid', async () => {
+
+        })
+
+    })
+
+    describe('post to /', () => {
+
+        it('responds with 201', async () => {
+
+        })
+
+        it('sends the correct response', async () => {
+
+        })
+
+        it('responds with 405 if title is not unique', async () => {
+
+        })
+
+        it('responds with 422 if missing title', async () => {
+
+        })
+
+        it('responds with 422 if missing genre', async () => {
+
+        })
+
+    })
+
+    describe('delete /:id', () => {
+
+        it('responds with 200', async () => {
+
+        })
+
+        it('sends the correct response', async () => {
+
+        })
+
+        it('responds with 404 if the title is invalid', async () => {
+
+        }
+
+    })
+
+})
