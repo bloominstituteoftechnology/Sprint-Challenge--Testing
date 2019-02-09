@@ -14,11 +14,12 @@ describe('Arcade Model Testing', () => {
     it('should insert a new game', async () => {
         const ids = await games.insert(
             {
-                title: 'Space Invaders',
+                title: ' Asteroids',
                 genre: 'Arcade',
                 releaseDate: '1978'
             }
         )
+        expect(ids.length).toBe(1);
     })
 
 

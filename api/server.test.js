@@ -27,6 +27,8 @@ describe('Testing Server Connection and Setup', () => {
 
 describe('Testing database connection', () => {
 
+
+
     it('sends a response from the arcade database', async () => {
         const response = await request(server).get('/games');
         expect(response.status).toBe(200);
@@ -47,13 +49,21 @@ describe('Testing database connection', () => {
 })
 
 describe('post /games', () => {
-    // beforeEach(async () => {
-    //     await db('games').truncate();
-    //     await db.seed.run();
-    // });
 
+
+//Validates that it responds with a 200 and sends back array of the data
+    it('responds with 200 returns an array', async () => {
+        const response = await request(server).get('/games');
+
+        const games = await response.body;
+
+        const expected = games.map(game => game);
+
+        expect(games).toEqual(expected);
+    })
     //Validates we are making a post to games while getting repsonse 201
     it('responds with 201', async () => {
+
         const body = {
             title: 'Space Invaders',
             genre: 'Arcade',
@@ -71,6 +81,19 @@ describe('post /games', () => {
             .post('/games')
             .send(body);
         expect(response.status).toBe(422);
+    })
+    // Validates game title is unique - Stretch items
+    it('responds with 405 for unique game.title', async () => {
+        const title = {
+            title: 'Space Invaders',
+            genre: 'Arcade',
+            releaseDate: '1978'
+        }
+        const response = await request(server)
+            .post('/games')
+            .send(title)
+        expect(response.status).toBe(405);
+
     })
 
 })

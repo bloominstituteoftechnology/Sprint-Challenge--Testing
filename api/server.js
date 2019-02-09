@@ -21,8 +21,13 @@ server.post('/games', async (req, res) => {
     const game = req.body;
 
     if (game.title) {
-        const ids = await games.insert(game)
-        res.status(201).json(ids);
+        games.insert(game)
+            .then(response => res.status(201).json(response))
+            .catch(err => {
+                res.status(405).json({
+                    message: "This game already exists"
+                })
+            })
     }
     else {
         res.status(422).json({error: 'missing title'})
