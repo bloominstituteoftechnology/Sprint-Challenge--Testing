@@ -35,7 +35,13 @@ describe('the route handlers', () => {
 
         })
 
-        
+        it('responds with 422 when body is incomplete', async () => {
+            const body = {};
+            const response = await request(server)
+                .post('/games')
+                .send(body);
+            expect(response.status).toBe(400);
+        })
 
     })
 })
