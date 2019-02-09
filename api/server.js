@@ -13,7 +13,8 @@ server.get('/', (req, res) => {
 });
 
 server.get(GAMES_GET_ENDPOINT, (req, res) => {
-
+  const games = data.list();
+  res.status(200).json(games);
 });
 
 server.post(GAMES_POST_ENDPOINT, (req, res) => {
