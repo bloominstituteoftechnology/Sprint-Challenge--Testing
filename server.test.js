@@ -23,7 +23,7 @@ describe('/games', () => {
     it('sends the correct response object', async () => {
         const response = await request(server).get('/games');
 
-        expect(response.body).toEqual([])
+        expect(typeof response.body).toBe('object');
     })
 })
 describe('post to /games', () => {
@@ -42,7 +42,7 @@ describe('post to /games', () => {
         const body = {}
         const response = await request(server).post('/games').send(body);
 
-        expect(response.status).toBe(400)
+        expect(response.status).toBe(422)
     })
     it('responds with id of created post', async () => {
         const body = {
@@ -52,31 +52,32 @@ describe('post to /games', () => {
         }
         const response = await request(server).post('/games').send(body);
 
-        expect(response.body).toBe(5);
+        expect(response.body).toEqual([5]);
         
     })
 })
 describe('retrieve single game', () => {
     it('responds with single game', async () => {
-        const response = await request(server).delete('/games/5');
-        expect(response.body).toEqual([]);
+        const response = await request(server).get('/games/5');
+        expect(typeof response.body).toBe('object');
+        
 
     })
 
     it('responds with 404 when game cant be found', async () => {
-        const response = await request(server).del('/games/11').send();
+        const response = await request(server).get('/games/11');
         expect(response.status).toBe(404)
     })
 })
 describe('delete to /games', () => {
     it('responds with amount of items deleted', async () => {
-        const response = await request(server).delete('/games/5');
+        const response = await request(server).del('/games/5');
         expect(response.body).toBe(1);
         
     })
 
     it('responds with 404 when game cant be deleted', async () => {
-        const response = await request(server).del('/games/11').send();
+        const response = await request(server).del('/games/11');
         expect(response.status).toBe(404)
     })
 })
