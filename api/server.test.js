@@ -19,4 +19,36 @@ describe("SERVER", () => {
         res = await request(server).get("/games");
         expect(res.body).toEqual(expected);
     });
+
+    it("Respond with an array of games", async () => {
+        let expected = [{
+            id: 1,
+            title: "Halo 2",
+            genre: "FPS",
+            releaseYear: 2004
+        },
+        {
+            id: 2,
+            title: "Destiny",
+            genre: "FPS",
+            releaseYear: 2014
+        }
+        ];
+
+        let res = await request(server).post("/games").send({
+            title: "Halo 2",
+            genre: "FPS",
+            releaseYear: 2004
+        })
+
+        res = await request(server).post("/games").send({
+            title: "Destiny",
+            genre: "FPS",
+            releaseYear: 2014
+        })
+
+        res = await request(server).get("/games")
+
+        expect(res.body).toEqual(expected)
+    })
 });
