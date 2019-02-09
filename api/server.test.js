@@ -13,4 +13,10 @@ describe("SERVER", () => {
             expect(res.status).toBe(200);
         });
     });
+
+    it("Respond with an empty array", async () => {
+        let expected = [];
+        res = await request(server).get("/games");
+        expect(res.body).toEqual(expected);
+    });
 });
