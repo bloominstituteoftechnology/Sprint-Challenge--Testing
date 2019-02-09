@@ -5,7 +5,7 @@ module.exports = {
     getAll: () => {
        return db('games')
     },
-    insert: () => {
-        null
+    insert: (game) => {
+        return db('games').insert(game)
     },
 }
