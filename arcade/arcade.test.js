@@ -23,6 +23,11 @@ describe('Arcade Model Testing', () => {
         expect(list.length).toBe(1);
     })
 
+    it('should get game by id', async () => {
+        const id = await games.getById(1);
+        expect(id.title).toBe('Pacman')
+    })
+
     it('should insert a new game', async () => {
         const ids = await games.insert(
             {
