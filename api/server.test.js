@@ -20,4 +20,21 @@ describe("the route handlers", () => {
          expect(response.body).toEqual({api: "up and running"});
       });
    });
+   describe("get /games", () => {
+      it("responds with 200", async () => {
+         const response = await request(server).get("/games");
+
+         expect(response.status).toBe(200);
+      });
+      it("responds with json", async () => {
+         const response = await request(server).get("/games");
+
+         expect(response.type).toMatch(/json/i);
+      });
+      it("sends correct response", async () => {
+         const response = await request(server).get("/games");
+
+         expect(response.body).toEqual([]);
+      });
+   });
 });
