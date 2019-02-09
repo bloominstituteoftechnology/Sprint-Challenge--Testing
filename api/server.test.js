@@ -47,6 +47,10 @@ describe('Testing database connection', () => {
 })
 
 describe('post /games', () => {
+    // beforeEach(async () => {
+    //     await db('games').truncate();
+    //     await db.seed.run();
+    // });
 
     //Validates we are making a post to games while getting repsonse 201
     it('responds with 201', async () => {
