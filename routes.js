@@ -9,11 +9,19 @@ server.post('/games',(req,res) => {
   db('games').insert(game)
   .then(id => {
     res.send(id).status(201)
+    .catch(err => res.send(err))
   })
   } else {
     res.status(422).send('incomplete information')
   }
+  
 })
+
+server.get('/games', async (req,res) => {
+   let rows = await db('games');
+   res.status(200).json(rows)
+})
+
 
 module.exports = server;
 
