@@ -13,7 +13,7 @@ server.get('/games', async (req, res) => {
         .json(db);
 });
 
-server.post('/games', () => {
+server.post('/games', (req, res) => {
     const game = {
         title: req.body.title,
         genre: req.body.genre,
