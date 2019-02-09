@@ -1,24 +1,40 @@
 const express = require('express');
 const server = express();
 const db = require('./dbConfig');
-const games = require('./gameModel');
+//const games = require('./gameModel');
 
 server.use(express.json());
 
 
-// The GET /games endpoint should return the list of games and HTTP status code 200.
-//  Write a test to make sure this endpoint always returns an array, even if there are no games stored. 
-//  If there are no games to return, the endpoint should return an empty array.
+server.post('/games', (req,res) =>{
+    const gameData = req.body;
+    if(!gameData.title || !gameData.genre){
+        res.status(422).json({message : 'Missing data for post request'})
+    }else{
+        db('games').insert(gameData).then(ids =>{
+            res.status(201).json(ids);
+        })
+        .catch(() =>{
+            res.status(500).json({message: 'failed to insert new game'});
+        })
+    }
+});
+
+server.get('/games', (req, res) =>{
+    db('games').then(games =>{
+        res.status(200).json(games)
+    })
+    .catch(() =>{
+        res.status(500).json({message: 'Failed to get games'})
+    });
+});
 
 
 
 
-// n the route handler, validate that the required fields are included inside the body. 
-// If the information is incomplete, return a 422 status code.
 
-//  Write tests to verify that the endpoint returns the correct HTTP status code when receiving 
-//  correct and incorrect game data.
-
-server.listen(4000, () =>{
+server.listen(4141, () =>{
     console.log('Server is up and running my dude!')
-})
+});
+
+module.exports = server
