@@ -22,3 +22,42 @@ describe("GET /games tests", () => {
     expect(response.body).toEqual(gamesArray);
   });
 });
+
+describe("POST /games tests", () => {
+	it("Return status 201", async () => {
+		const newgame = { title: "Donkey Kong", genre: "Platformer", releaseYear: 1994 };
+		const response = await request(server)
+			.post("/games")
+			.type("JSON")
+			.send(newgame)
+			.set("Accept", "application/json");
+		expect(response.status).toBe(201);
+	});
+	it("Return error 422 if missing required data", async () => {
+		const newGame = { title: null, genre: "Shooter", releaseYear: 2004 };
+		const response = await request(server)
+			.post("/games")
+			.type("JSON")
+			.send(newGame)
+			.set("Accept", "application/json");
+
+		expect(response.status).toBe(422);
+	});
+	it("Return the new array", async () => {
+		const gameArray = [
+			{
+				title: "Pac-man",
+				genre: "arcade",
+				releaseYear: 1980
+			},
+			{ title: "007", genre: "Shooter", releaseYear: 1997 }
+		];
+		const newgame = { title: "Soulcalibur", genre: "Fighting", releaseYear: 1999 };
+		const response = await request(server)
+			.post("/games")
+			.type("JSON")
+			.send(newgame)
+			.set("Accept", "application/json");
+		expect(response.body).toEqual(gameArray);
+	});
+});
