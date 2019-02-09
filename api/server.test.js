@@ -4,11 +4,6 @@ const db = require('../dbConfig')
 
 describe('Testing Server Connection and Setup', () => {
 
-    beforeEach(async () => {
-        await db('games').truncate()
-        await db.seed.run()
-
-    });
 
     afterEach(async () => {
         await db('games').truncate();
@@ -60,7 +55,7 @@ describe('Testing database connection', () => {
 
 })
 
-describe('post /games', () => {
+describe('Post Function', () => {
 
 
 //Validates that it responds with a 200 and sends back array of the data
@@ -106,6 +101,25 @@ describe('post /games', () => {
             .send(title)
         expect(response.status).toBe(405);
 
+    })
+
+})
+
+describe('Get By Id function', () => {
+
+    it('should get by id ', async () => {
+        const response = await request(server).get('/games/1')
+        expect(response.status).toBe(200)
+
+    })
+
+})
+describe('Delete Function', () => {
+
+    it('responds with 200', async () => {
+        const response = await request(server).delete('/games/2')
+
+        expect(response.status).toBe(200)
     })
 
 })

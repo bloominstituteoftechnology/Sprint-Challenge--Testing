@@ -33,7 +33,35 @@ server.post('/games', async (req, res) => {
         res.status(422).json({error: 'missing game'})
     }
 })
+server.get('/games/:id',  (req, res) => {
 
+    const { id } = req.params;
 
+    games.getById(id)
+        .then(response => {
+            res.status(200).json(response)
+        })
+        .catch()
+
+})
+
+server.delete('/games/:id', async (req, res) => {
+    const { id } = req.params;
+
+    games.getById(id)
+        .then(game => {
+            const newGame = game;
+
+            games.delete(id)
+                .then(response => {
+                    res.status(200).json(newGame)
+                })
+        })
+        .catch(err => {
+            res.status(500).json({message: "."
+
+            })
+        })
+})
 
 module.exports = server;

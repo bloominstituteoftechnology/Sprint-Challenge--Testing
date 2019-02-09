@@ -15,8 +15,10 @@ module.exports = {
             .insert(game)
             .into('games')
     },
-    remove: (id) => {
-        null
+    delete: (id) => {
+        return db('games')
+            .where({ id }, id)
+            .del(id)
     },
     update: (id, changes) => {
         null
