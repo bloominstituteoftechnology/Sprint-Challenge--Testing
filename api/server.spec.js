@@ -29,9 +29,10 @@ describe('Checking the get endpoint for /games', () => {
     });
 });
 
-/* Check this endpoint for...
+/* Check the post endpoint for...
 *  The correct status code.
 *  That it is sending back a JSON object.
+*  That it sends back the id of the added object.
 *  Sending a malformed object sends back a 422 server status code.
 */
 describe('Checking the post endpoint for /games', () => {
@@ -52,6 +53,7 @@ describe('Checking the post endpoint for /games', () => {
             releaseYear: 1991
         }
         const response = await request(server).post('/games').send(body);
+        /* Always expect to be receiving a JSON response from this endpoint on the server */
         expect(response.type).toMatch(/json/i);
     });
     it('Sends the added games ID.', async () => {
@@ -61,6 +63,7 @@ describe('Checking the post endpoint for /games', () => {
             releaseYear: 1991
         }
         const response = await request(server).post('/games').send(body);
+        /* Since we are clearing the games table after every test this should always return 'id: 1' */
         expect(response.body).toEqual({id: 1});
     });
     it('Sends the server code 422 with a malformed/missing body', async () => {
@@ -68,6 +71,7 @@ describe('Checking the post endpoint for /games', () => {
             title: 'Final Fantasy 4',
         }
         const response = await request(server).post('/games').send(body);
+        /* Objects missing the title and/or genre will always be rejected and return server status code 422 */
         expect(response.status).toBe(422);
     });
 });

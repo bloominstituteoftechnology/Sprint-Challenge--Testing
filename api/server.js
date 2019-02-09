@@ -21,7 +21,8 @@ server.get('/games', async (req, res) => {
 */
 server.post('/games', async (req, res) => {
     const game = req.body;
-    if (game.title && game.genre) {
+    /* Check that the object received always contains a title and genre in string format. */
+    if (typeof(game.title) === 'string' && typeof(game.genre) === 'string') {
         const ids = await dbHelpers.insert(game);
         res.status(201).json({id: ids[0]});
     }
