@@ -15,6 +15,25 @@ server.get('/games', async (req , res) => {
     res.status(200).json(rows);
 })
 
+server.get('/games/:id', async (req, res) => {
+    const {id} = req.params;
+    games.findById(id)
+    .then(game => {
+        if(game){
+            res.json(game);
+        } else {
+            res 
+            .status(404)
+            .json({message: "The Game with the specified ID does not exist "})
+        }
+    })
+    .catch(err => {
+        res 
+        .status(500)
+        .json({error: "The Game information could not be retrieved."})
+    })
+})
+
 server.post('/games', async (req, res) => {
     const gameData = req.body;
     if (gameData.title){
