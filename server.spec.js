@@ -19,7 +19,7 @@ describe("POST route for '/games'", () => {
     });
     it("returns error message if sent invalid data", async () => {
         const response = await request(server).post("/games").send({invalid: "data"});
-        expect(response.body).toBe({ error: "malformed game data" });
+        expect(response.body.error).toBe("malformed game data")
     });
     it("returns status 201 if data posts successfully", async () => {
         const response = await request(server).post("/games").send({
