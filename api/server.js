@@ -11,4 +11,16 @@ server.get("/", async (req, res) => {
     });
 });
 
+server.get("/games", async (req, res) => {
+    const games = await db("games");
+
+    try {
+        res.status(200).json(games)
+    } catch (err) {
+        res.status(500).json({
+            message: "Error getting list of games."
+        })
+    }
+})
+
 module.exports = server;
