@@ -19,6 +19,11 @@ server.get('/games', (req, res)=>{
   res.status(200).json(games);
 })
 
+//POST Route Handler
+server.post('/games', (req, res)=>{
+  
+})
+
 
 
 module.exports = server;
