@@ -11,6 +11,11 @@ describe('the route handlers', () => {
             const response = await request(server).get('/games');
             expect(response.status).toBe(200);
         });
+
+        it('returns an array', async () => {
+            const response = await request(server).get('/games');
+            expect(response.body).toEqual([{"genre": "Arcade", "id": 1, "releaseYear":1980, "title": "Pacman"}, {"genre": "Action", "id": 2, "releaseYear": 1985, "title": "Contra"}, {"genre": "Arcade", "id": 3, "releaseYear": 1983, "title": "Donkey Kong"}]);
+        });
     })
 
 })
