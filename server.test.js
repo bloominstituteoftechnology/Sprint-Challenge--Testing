@@ -14,6 +14,27 @@ describe('testing server', () => {
         it('returns empty array', async () => {
             const response = await request(server).get('/games');
             expect(response.body).toEqual([]);
-        })
+        });
+    });
+
+    describe('POST tests', () => {
+        it('returns status 200', async () => {
+            const response = await request(server)
+                .post('/games')
+                .send({ title: 'Landstalker', genre: 'RPG', releaseYear: 1992 });
+            expect(response.status).toEqual(200);
+        });
+        it('returns status 422', async () => {
+            const response = await request(server)
+                .post('/games')
+                .send({ title: 'Landstalker', genre: '', releaseYear: 1992 });
+            expect(response.status).toEqual(422);
+        });
+        it('returns status 422', async () => {
+            const response = await request(server)
+                .post('/games')
+                .send({ title: '', genre: 'RPG', releaseYear: 1992 });
+            expect(response.status).toEqual(422);
+        });
     })
 })
