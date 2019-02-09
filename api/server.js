@@ -9,7 +9,8 @@ const server = express();
 server.use(express.json());
 
 server.get('/games', async (req, res) => {
-
+    const games = await dbHelpers.getAll();
+    res.status(200).json(games);
 });
 
 module.exports = server;

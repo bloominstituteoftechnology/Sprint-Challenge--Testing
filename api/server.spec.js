@@ -13,17 +13,17 @@ afterEach(async () => {
 */
 describe('Checking the get endpoint for /games', () => {
     it('Sends back the correct status code.', async () => {
-        const response = request(server).get('/games');
+        const response = await request(server).get('/games');
         // Expect the response to be the 200 OK server status code.
         expect(response.status).toBe(200);
     });
     it('Sends back the correct data type.', async () => {
-        const response = request(server).get('/games');
+        const response = await request(server).get('/games');
         // This endpoint must send back a JSON object.
         expect(response.type).toMatch(/json/i);
     });
     it('Sends back a JSON object containing nothing.', async () => {
-        const response = request(server).get('/games');
+        const response = await request(server).get('/games');
         // Since there should be nothing in the database we expect it to return nothing.
         expect(response.body).toEqual({});
     });
@@ -41,26 +41,26 @@ describe('Checking the post endpoint for /games', () => {
             genre: 'JRPG',
             releaseYear: 1991
         }
-        const response = request(server).post('/games').send(body);
+        const response = await request(server).post('/games').send(body);
         // Expect the response status to be the 201 created server status code.
         expect(response.status).toBe(201);
     });
-    it('Sends back a JSON object.', () => {
+    it('Sends back a JSON object.', async () => {
         const body = {
             title: 'Final Fantasy 4',
             genre: 'JRPG',
             releaseYear: 1991
         }
-        const response = request(server).post('/games').send(body);
+        const response = await request(server).post('/games').send(body);
         expect(response.type).toMatch(/json/i);
     });
-    it('Sends the added games ID.', () => {
+    it('Sends the added games ID.', async () => {
         const body = {
             title: 'Final Fantasy 4',
             genre: 'JRPG',
             releaseYear: 1991
         }
-        const response = request(server).post('/games').send(body);
+        const response = await request(server).post('/games').send(body);
         expect(response.body).toEqual({id: 0});
     });
 });
