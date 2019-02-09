@@ -1,13 +1,33 @@
 
 exports.seed = function(knex, Promise) {
-  // Deletes ALL existing entries
-  return knex('table_name').del()
+  return knex('games').truncate()
     .then(function () {
-      // Inserts seed entries
-      return knex('table_name').insert([
-        {id: 1, colName: 'rowValue1'},
-        {id: 2, colName: 'rowValue2'},
-        {id: 3, colName: 'rowValue3'}
-      ]);
+      return knex('games').insert([
+        {
+            title: 'Asteroids',
+            genre: 'Shooter',
+            releaseYear: 1979
+        },
+        {
+            title: 'Monkey Island',
+            genre: 'Adventure',
+            releaseYear: 1990
+        },
+        {
+            title: 'Donkey Kong',
+            genre: 'Platform',
+            releaseYear: 1981
+        },
+        {
+            title: 'EverQuest',
+            genre: 'RPG',
+            releaseYear: 1999
+        },
+        {
+            title: 'Pillars of Eternity',
+            genre: 'RPG',
+            releaseYear: 2015
+        }
+    ]);
     });
 };
