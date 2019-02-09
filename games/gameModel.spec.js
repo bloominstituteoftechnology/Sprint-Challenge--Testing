@@ -20,15 +20,15 @@ describe('the games model', () => {
 
 
     it('should fetch the games', async () => {
-        const games = await games.fetch()
+        const gamelist = await games.fetch()
 
-        expect(games.length).toBe(5)
+        expect(gamelist.length).toBe(5)
     })
 
     it('should fetch a game by id', async () => {
         const game = await games.fetch(1)
 
-        expect(game.name).toBe('Asteroids')
+        expect(game.title).toBe('Asteroids')
     })
 
     it('should add a new game', async () => {
@@ -44,7 +44,7 @@ describe('the games model', () => {
     it('should delete an existing game by id', async () => {
         const deleted = await games.remove(5)
 
-        expect(deleted).toBe(5)
+        expect(deleted).toBe(1)
     })
 
 })

@@ -16,8 +16,7 @@ describe('the route handlers', () => {
 
     afterEach(async () => {
         await db.migrate.rollback()
-    })
-
+    });
 
     describe('get /', () => {
 
@@ -33,8 +32,13 @@ describe('the route handlers', () => {
             expect(success.body.length).toBe(5)
         })
 
-        it('sends an empty array if nothing in the database', () => {
-            db.migrate.rollback();
+
+        it('sends an empty array if nothing in the database', async () => {
+            await request(server).delete('/1')
+            await request(server).delete('/2')
+            await request(server).delete('/3')
+            await request(server).delete('/4')
+            await request(server).delete('/5')
             const success = await request(server).get('/')
 
             expect(success.body).toEqual([])
@@ -130,7 +134,7 @@ describe('the route handlers', () => {
         it('responds with 200', async () => {
             const success = await request(server).delete('/1')
 
-            expect(response.status).toBe(200)
+            expect(success.status).toBe(200)
         })
 
         it('sends the correct response', async () => {

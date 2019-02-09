@@ -7,7 +7,9 @@ require('events').EventEmitter.defaultMaxListeners = 0;
 
 server.get('/', (req, res) => {
     db.fetch()
-        .then(games => res.json(games))
+        .then(games => {
+            res.json(games)
+        })
         .catch(err => {
             res.status(500).json({
                 message: "Could not fetch the games!"
@@ -70,7 +72,7 @@ server.delete('/:id', (req, res) => {
 
             db.remove(id)
                 .then(response => {
-                    if(response){res.json(theGame)}
+                    if(response){res.status(200).json(theGame)}
                     else{
                         res.status(404).json({
                             message: "This game does not seem to exist..."
