@@ -34,7 +34,7 @@ describe("server.js", () => {
     it("should return a 422 status code", async () => {
       const response = await request(server)
         .post("/games")
-        .send({ title: "Wow", genre: "Arcade", releaseYear: 2016 });
+        .send({ title: "", genre: "Arcade", releaseYear: 2016 });
       expect(response.status).toEqual(422);
     });
 
@@ -44,6 +44,13 @@ describe("server.js", () => {
         .send({ title: "Who is this", genre: "", releaseYear: 2014 });
       expect(response.status).toEqual(422);
     });
+
+    it("should return a 422 status code", async () => {
+        const response = await request(server)
+          .post("/games")
+          .send({ title: "Who is this", genre: "", releaseYear:null  });
+        expect(response.status).toEqual(422);
+      });
 
 
   });
