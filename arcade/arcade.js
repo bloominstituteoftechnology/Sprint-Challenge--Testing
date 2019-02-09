@@ -15,4 +15,11 @@ module.exports = {
             .insert(game)
             .into('games')
     },
+    remove: (id) => {
+        null
+    },
+    update: (id, changes) => {
+        null
+    }
+
 }

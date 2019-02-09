@@ -3,16 +3,6 @@ const server = require('./server')
 const db = require('../dbConfig')
 
 describe('Testing Server Connection and Setup', () => {
-    beforeEach(async () => {
-        await db('games').truncate()
-        await db.seed.run()
-
-    });
-
-    afterEach(async () => {
-        await db('games').truncate();
-        await db.seed.run();
-    });
     //Validates we get a response back from server with response code 200
     it('test server response', async () => {
         const response = await request(server).get('/')
