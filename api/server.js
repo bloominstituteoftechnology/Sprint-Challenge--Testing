@@ -20,7 +20,7 @@ server.post("/games", async (req, res) => {
       const ids = await games.insert(game);
       res.status(201).json(ids);
    } else {
-      res.status(400).json({error: "please provide game title and/or genre"})
+      res.status(422).json({error: "please provide game title and/or genre"})
    }
 });
 
