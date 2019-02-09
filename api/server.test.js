@@ -34,7 +34,25 @@ describe("the route handlers", () => {
       it("sends correct response", async () => {
          const response = await request(server).get("/games");
 
-         expect(response.body).toEqual([]);
+         expect(response.body).toEqual([{
+                 "genre": "Racing",
+                 "id": 1,
+                 "release_year": 1995,
+                 "title": "Mario Kart",
+               },
+               {
+                 "genre": "Fighting",
+                 "id": 2,
+                 "release_year": 1996,
+                 "title": "Mortal Kombat",
+               },
+               {
+                 "genre": "Fighting",
+                 "id": 3,
+                 "release_year": 1997,
+                 "title": "Teken",
+               },
+        ]);
       });
    });
 });
