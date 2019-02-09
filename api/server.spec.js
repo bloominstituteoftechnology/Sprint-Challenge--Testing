@@ -4,7 +4,7 @@ const db = require('../data/dbConfig');
 
 /* Clear the DB after each test */
 afterEach(async () => {
-    db.truncate();
+    await db('games').truncate();
 });
 
 /* Check this endpoint for...
@@ -25,7 +25,7 @@ describe('Checking the get endpoint for /games', () => {
     it('Sends back a JSON object containing nothing.', async () => {
         const response = await request(server).get('/games');
         // Since there should be nothing in the database we expect it to return nothing.
-        expect(response.body).toEqual({});
+        expect(response.body).toEqual([]);
     });
 });
 
@@ -61,6 +61,13 @@ describe('Checking the post endpoint for /games', () => {
             releaseYear: 1991
         }
         const response = await request(server).post('/games').send(body);
-        expect(response.body).toEqual({id: 0});
+        expect(response.body).toEqual({id: 1});
+    });
+    it('Sends the server code 422 with a malformed/missing body', async () => {
+        const body = {
+            title: 'Final Fantasy 4',
+        }
+        const response = await request(server).post('/games').send(body);
+        expect(response.status).toBe(422);
     });
 });
