@@ -1,31 +1,38 @@
 const request = require("supertest");
 const server = require("./server");
+const DB = require("../data/dbConfig");
 
 describe("route handlers", () => {
   describe("POST /games", () => {
+    afterEach(async () => {
+      await DB("games").truncate();
+    });
     it("recieves a 201 status", async () => {
       const game = { title: "PacMan", genre: "Arcade", releaseYear: 1980 };
+      const body = { game };
       const response = await request(server)
         .post("/games")
-        .send(game);
+        .send(body);
 
       expect(response.status).toBe(201);
     });
 
     it("recieves a 422 status for incomplete game data", async () => {
-      const game = { title: "PacMan", genre: "", releaseYear: 1980 };
+      const game = { title: "Aliens", genre: "", releaseYear: 0 };
+      const body = { game };
       const response = await request(server)
         .post("/games")
-        .send(game);
+        .send(body);
 
       expect(response.status).toBe(422);
     });
 
     it("response is in json format", async () => {
       const game = { title: "PacMan", genre: "Arcade", releaseYear: 1980 };
+      const body = { game };
       const response = await request(server)
         .post("/games")
-        .send(game);
+        .send(body);
 
       expect(response.type).toMatch(/json/i);
     });
