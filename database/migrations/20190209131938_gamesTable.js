@@ -3,7 +3,7 @@ exports.up = function(knex, Promise) {
 return knex.schema.createTable('games', games => {
   games.increments();
   games.string('title').notNullable().unique();
-  games.string('genere').notNullable;
+  games.string('genre').notNullable;
   games.string('releaseYear').notNullable;
 })
 };
