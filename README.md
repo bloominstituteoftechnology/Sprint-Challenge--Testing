@@ -30,10 +30,10 @@ Demonstrate your understanding of this week's concepts by answering the followin
 
 ## Project Set Up
 
-- [ ] fork and clone this repository.
-- [ ] **CD into the folder** where you downloaded the repository.
-- [ ] run `yarn` or `npm i` to download all dependencies.
-- [ ] type `yarn test` or `npm test` to run the tests. The `test` script is already configured.
+- [x] fork and clone this repository.
+- [x] **CD into the folder** where you downloaded the repository.
+- [x] run `yarn` or `npm i` to download all dependencies.
+- [x] type `yarn test` or `npm test` to run the tests. The `test` script is already configured.
 
 ## Minimum Viable Product
 
