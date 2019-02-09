@@ -30,7 +30,7 @@ server.post('/games', async (req, res) => {
             })
     }
     else {
-        res.status(422).json({error: 'missing title'})
+        res.status(422).json({error: 'missing game'})
     }
 })
 

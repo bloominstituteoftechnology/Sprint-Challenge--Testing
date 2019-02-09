@@ -1,9 +1,18 @@
 const request = require('supertest');
 const server = require('./server')
-
+const db = require('../dbConfig')
 
 describe('Testing Server Connection and Setup', () => {
+    beforeEach(async () => {
+        await db('games').truncate()
+        await db.seed.run()
 
+    });
+
+    afterEach(async () => {
+        await db('games').truncate();
+        await db.seed.run();
+    });
     //Validates we get a response back from server with response code 200
     it('test server response', async () => {
         const response = await request(server).get('/')
@@ -27,7 +36,16 @@ describe('Testing Server Connection and Setup', () => {
 
 describe('Testing database connection', () => {
 
+    beforeEach(async () => {
+        await db('games').truncate()
+        await db.seed.run()
 
+    });
+
+    afterEach(async () => {
+        await db('games').truncate();
+        await db.seed.run();
+    });
 
     it('sends a response from the arcade database', async () => {
         const response = await request(server).get('/games');
