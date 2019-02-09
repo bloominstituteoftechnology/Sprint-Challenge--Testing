@@ -38,7 +38,7 @@ describe('the games model', () => {
     });
 
     it('Should delete existing game by ID', async () => {
-        const deleteGame - await games.remove(3)
+        const deleteGame = await games.remove(3)
         expect(deleteGame).toBe(3)
     })
 })
