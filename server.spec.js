@@ -8,7 +8,7 @@ describe("GET route for '/games' while empty", () => {
     });
     it("returns empty array if no games are stored", async () => {
         const response = await request(server).get("/games");
-        expect(response.body).toBe([]);
+        expect(response.body).toEqual([]);
     });
 });
 
