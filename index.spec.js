@@ -5,7 +5,7 @@ const server = require('./api/server.js');
 const request = require('supertest');
 
 
-describe('GET /games testing',()=>{
+describe.skip('GET /games testing',()=>{
 
   it('should respond with status code 200', async ()=>{
     const response = await request(server).get('/games');
@@ -29,17 +29,41 @@ describe('GET /games testing',()=>{
 
 });
 
-describe.skip('POST /games testing', ()=>{
-  it('should return status code of 201', async ()=>{
+describe('POST /games testing',()=>{
+
+  it('should respond with status code 201', async ()=>{
     const response = await request(server).post('/games')
-      .send(  {
+      .send({
         "title": "Asteroids",
         "genre": "Arcade",
         "releaseYear": "1979"
       });
-    
     expect(response.status).toBe(201);
   });
 
-  it('should return ')
+  it('should return message to client if request body is in an incorrect format', async ()=>{
+    //attempt to pass data as an array
+    const response = await request(server).post('/games')
+      .send([
+        "title : Asteroids",
+        "genre : Arcade",
+        "releaseYear :1979"
+      ])
+    expect(response.body).toEqual({error: "Incorrect data format"});
+  });
+
+  it('should return message to client if request body is missing required properties', async ()=>{
+    //attempt to pass data missing genre
+    const response = await request(server).post('/games')
+      .send({
+        "title": "Asteroids",
+        "releaseYear": "1979"
+      })
+    expect(response.body).toEqual({error: "Missing game data"});
+  });
+
+
+
+
 });
+

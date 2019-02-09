@@ -21,7 +21,22 @@ server.get('/games', (req, res)=>{
 
 //POST Route Handler
 server.post('/games', (req, res)=>{
+  const newGame = req.body;
+
+  if(!newGame || !(typeof newGame === 'object') || Array.isArray(newGame)){
+    res.status(422).json({error: "Incorrect data format"});
+  }else if(!newGame.title || !newGame.genre){
+    res.status(422).json({error: "Missing game data"});
+  }else {
+    games.push(newGame);
+    res.status(201).json(newGame);
+  }
+
   
+
+
+
+
 })
 
 
