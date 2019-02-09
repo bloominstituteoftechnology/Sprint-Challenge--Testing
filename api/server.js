@@ -16,7 +16,6 @@ let gameArray = [
     }
 ]
 
-
 function checker(req,res,next){
     let {title, genre} = req.body;
 
@@ -29,10 +28,15 @@ function checker(req,res,next){
 }
 
 server.post('/games', checker, (req, res)=>{
-    res.status(200).json({message: 'All Good'})
+    
+    let newGameArr = gameArray.push(req.body);
+
+    res.status(200).json(newGameArr)
 });
-    server.get('/games', (req, res)=>{
+
+
+ server.get('/games', (req, res)=>{
     res.status(200).json(gameArray)
 });
 
-module.exports = server 
+module.exports = server
