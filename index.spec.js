@@ -2,6 +2,8 @@ const request = require('supertest');
 const server = require('./api/server');
 const db = require('./dbConfig');
 
+afterAll(() => db('games').truncate());
+
 describe('server.js', () => {
   describe('/games endpoint POST', () => {
     it('should return 201 status code', async () => {
