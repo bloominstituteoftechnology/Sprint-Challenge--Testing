@@ -1,10 +1,10 @@
 const request = require('supertest');
 const server = require('./server');
 const db = require('./dbConfig');
-const games = require('./gameModel');
 
 
-afterEach(async () => {
+
+afterEach(async() => {
     await db('games').truncate();
 })
 
