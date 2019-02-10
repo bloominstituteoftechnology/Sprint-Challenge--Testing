@@ -21,7 +21,7 @@ server.post('/games', async (req, res) => {
     const game = req.body;
 
     if (game.title) {
-        games.insert(game)
+        await games.insert(game)
             .then(response => res.status(201).json(response))
             .catch(err => {
                 res.status(405).json({
@@ -33,11 +33,11 @@ server.post('/games', async (req, res) => {
         res.status(422).json({error: 'missing game'})
     }
 })
-server.get('/games/:id',  (req, res) => {
+server.get('/games/:id', async (req, res) => {
 
     const { id } = req.params;
 
-    games.getById(id)
+    await games.getById(id)
         .then(response => {
             res.status(200).json(response)
         })
@@ -48,7 +48,7 @@ server.get('/games/:id',  (req, res) => {
 server.delete('/games/:id', async (req, res) => {
     const { id } = req.params;
 
-    games.getById(id)
+    await games.getById(id)
         .then(game => {
             const newGame = game;
 

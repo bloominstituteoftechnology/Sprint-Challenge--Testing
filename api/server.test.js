@@ -41,18 +41,23 @@ describe('Testing Server Connection and Setup', () => {
 
 
 describe('Testing database connection', () => {
+    beforeAll(async () => {
+        await db('games').truncate()
+        await db.seed.run()
+
+    }, 20000);
 
     //Before Each allows you to make sure you have cleanup before each test run
     beforeEach(async () => {
         await db('games').truncate()
         await db.seed.run()
 
-    });
+    },20000);
     //After each should cleanup after each test has ran
     afterEach(async () => {
         await db('games').truncate();
         await db.seed.run();
-    });
+    }, 20000);
 
 
     it('sends a response from the arcade database', async () => {
@@ -148,18 +153,18 @@ describe('Get By Id function', () => {
         await db('games').truncate()
         await db.seed.run()
 
-    });
+    },20000);
 
     beforeEach(async () => {
         await db('games').truncate()
         await db.seed.run()
 
-    });
+    }, 20000);
     //After each should cleanup after each test has ran
     afterEach(async () => {
         await db('games').truncate();
         await db.seed.run();
-    });
+    }, 20000);
 
 //Validates that we can get by id
     it('should get by id ', async () => {
@@ -174,18 +179,18 @@ describe('Delete Function', () => {
         await db('games').truncate()
         await db.seed.run()
 
-    });
+    }, 20000);
 
     beforeEach(async () => {
         await db('games').truncate()
         await db.seed.run()
 
-    });
+    }, 20000);
     //After each should cleanup after each test has ran
     afterEach(async () => {
         await db('games').truncate();
         await db.seed.run();
-    });
+    }, 20000);
     //Validates that we can delete by id
     it('responds with 200', async () => {
         const response = await request(server).delete('/games/1')
