@@ -34,7 +34,7 @@ describe('The Route Handlers',()=> {
                  const game = {title:'tiles', genre:'drama', releaseYear: '2019'};
                  const response = await request(server).post('/games').send(game);
                  expect(response.status).toBe(201);
-                 
+
           });
 
           test(`It should send with a 201 success code when body is correct`, async () => {
@@ -60,6 +60,12 @@ describe('The Route Handlers',()=> {
             const response = await request(server).post('/games').send(body);
             expect(response.status).toBe(422);
          });
+       
+     });
 
+     describe(`Delete games`, () => {                    
+         test(`It should delete the game from database`, ()=> {
+               
+         });
      });
 });

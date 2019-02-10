@@ -23,10 +23,11 @@ server.get('/games', async (req,res) => {
       const game = req.body;
       const title = game.title;
       const genre = game.genre;
-
+      
       if(title && genre) {
          games.insert(game)
               .then( ids => {
+                 console.log(ids);
                  res.status(201).json({ids});
               })
               .catch(err => {
@@ -47,8 +48,16 @@ server.get('/games', async (req,res) => {
       // } else {
       //   res.status(422).json({err:`Missing title or genre`});
       // }  
-       
-      
- });
+});
+
+server.delete('/games/:id', (req,res) => {
+     const {id} = req.params;
+     games.remove(id)
+          .then( count => {
+              res.status(201).json({count:count});
+          }).catch(err => {
+              res.status(500).json({err:`Something went wrong`});
+          })
+})
 
 module.exports = server;
