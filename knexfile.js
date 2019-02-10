@@ -20,10 +20,10 @@ module.exports = {
     },
     useNullAsDefault: true,
     migrations: {
-      directory: './data/test/migrations',
+      directory: './data/migrations',
     },
     seeds: {
-      directory: './data/test/seeds',
+      directory: './data/seeds',
     },
   },
 

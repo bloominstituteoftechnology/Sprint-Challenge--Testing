@@ -3,7 +3,11 @@ const server = require('./server')
 const db = require('../dbConfig')
 
 describe('Testing Server Connection and Setup', () => {
+    beforeEach(async () => {
+        await db('games').truncate()
+        await db.seed.run()
 
+    });
 
     afterEach(async () => {
         await db('games').truncate();
@@ -33,7 +37,17 @@ describe('Testing Server Connection and Setup', () => {
 
 describe('Testing database connection', () => {
 
+    //Before Each allows you to make sure you have cleanup before each test run
+    beforeEach(async () => {
+        await db('games').truncate()
+        await db.seed.run()
 
+    });
+    //After each should cleanup after each test has ran
+    afterEach(async () => {
+        await db('games').truncate();
+        await db.seed.run();
+    });
 
 
     it('sends a response from the arcade database', async () => {
@@ -57,7 +71,16 @@ describe('Testing database connection', () => {
 
 describe('Post Function', () => {
 
+    beforeEach(async () => {
+        await db('games').truncate()
+        await db.seed.run()
 
+    });
+    //After each should cleanup after each test has ran
+    afterEach(async () => {
+        await db('games').truncate();
+        await db.seed.run();
+    });
 //Validates that it responds with a 200 and sends back array of the data
     it('responds with 200 returns an array', async () => {
         const response = await request(server).get('/games');
@@ -74,7 +97,7 @@ describe('Post Function', () => {
         const body = {
             title: 'Space Invaders',
             genre: 'Arcade',
-            releaseDate: '1978'
+            releaseDate: 1978
         }
         const response = await request(server)
             .post('/games')
@@ -83,30 +106,47 @@ describe('Post Function', () => {
     })
 //Validates that we are sending back the error status code 422
     it('responds with 422', async () => {
-        const body = {}
+        const title = {
+            title: '',
+            genre: 'Arcade',
+            releaseDate: 1978
+        }
         const response = await request(server)
             .post('/games')
-            .send(body);
+            .send(title);
         expect(response.status).toBe(422);
     })
     // Validates game title is unique - Stretch items
     it('responds with 405 for unique game.title', async () => {
-        const title = {
-            title: 'Space Invaders',
+        const arcadeGame = {
+            title: 'Pacman',
             genre: 'Arcade',
-            releaseDate: '1978'
+            releaseDate: 1980
         }
         const response = await request(server)
             .post('/games')
-            .send(title)
+            .send(arcadeGame)
         expect(response.status).toBe(405);
 
     })
 
 })
 
+
 describe('Get By Id function', () => {
 
+    beforeEach(async () => {
+        await db('games').truncate()
+        await db.seed.run()
+
+    });
+    //After each should cleanup after each test has ran
+    afterEach(async () => {
+        await db('games').truncate();
+        await db.seed.run();
+    });
+
+//Validates that we can get by id
     it('should get by id ', async () => {
         const response = await request(server).get('/games/1')
         expect(response.status).toBe(200)
@@ -116,10 +156,26 @@ describe('Get By Id function', () => {
 })
 describe('Delete Function', () => {
 
+    beforeEach(async () => {
+        await db('games').truncate()
+        await db.seed.run()
+
+    });
+    //After each should cleanup after each test has ran
+    afterEach(async () => {
+        await db('games').truncate();
+        await db.seed.run();
+    });
+    //Validates that we can delete by id
     it('responds with 200', async () => {
-        const response = await request(server).delete('/games/2')
+        const response = await request(server).delete('/games/1')
 
         expect(response.status).toBe(200)
     })
 
+    it('responds with a 404 game doesnt exist', async () => {
+        const response = await request(server).delete('/games/9')
+        expect(response.status).toBe(404)
+    })
 })
+

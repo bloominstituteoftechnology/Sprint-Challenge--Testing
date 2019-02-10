@@ -54,7 +54,13 @@ server.delete('/games/:id', async (req, res) => {
 
             games.delete(id)
                 .then(response => {
-                    res.status(200).json(newGame)
+                    if (response) {
+
+                        res.status(200).json(newGame)
+                    }
+                    else {
+                        res.status(404).json({message: 'This game doesnt exists'})
+                    }
                 })
         })
         .catch(err => {
