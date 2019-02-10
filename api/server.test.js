@@ -3,16 +3,21 @@ const server = require('./server')
 const db = require('../dbConfig')
 
 describe('Testing Server Connection and Setup', () => {
+    beforeAll(async () => {
+        await db('games').truncate()
+        await db.seed.run()
+
+    }, 20000);
     beforeEach(async () => {
         await db('games').truncate()
         await db.seed.run()
 
-    });
+    }, 20000);
 
     afterEach(async () => {
         await db('games').truncate();
         await db.seed.run();
-    });
+    }, 20000);
 
     //Validates we get a response back from server with response code 200
     it('test server response', async () => {
@@ -70,6 +75,11 @@ describe('Testing database connection', () => {
 })
 
 describe('Post Function', () => {
+    beforeAll(async () => {
+        await db('games').truncate()
+        await db.seed.run()
+
+    });
 
     beforeEach(async () => {
         await db('games').truncate()
@@ -134,6 +144,11 @@ describe('Post Function', () => {
 
 
 describe('Get By Id function', () => {
+    beforeAll(async () => {
+        await db('games').truncate()
+        await db.seed.run()
+
+    });
 
     beforeEach(async () => {
         await db('games').truncate()
@@ -155,6 +170,11 @@ describe('Get By Id function', () => {
 
 })
 describe('Delete Function', () => {
+    beforeAll(async () => {
+        await db('games').truncate()
+        await db.seed.run()
+
+    });
 
     beforeEach(async () => {
         await db('games').truncate()
