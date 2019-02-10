@@ -21,7 +21,7 @@ describe('routeHandlers', () => {
         it('sends back correct type', async () => {
             const response = await request(server).get('/games');
 
-            expect(typeof response.body).toBe('array');
+            expect(typeof response.body).toBe('object');
         })
 
         it('sends back correct items', async () => {

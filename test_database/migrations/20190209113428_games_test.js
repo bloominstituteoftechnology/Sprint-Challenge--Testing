@@ -1,6 +1,6 @@
 
 exports.up = function(knex, Promise) {
-    knex.schema.createTable('GAMES_TEST', table => {
+    return knex.schema.createTable('GAMES_TEST', table => {
         table.increments();
         table.string('title').notNullable();
         table.string('genre').notNullable();
@@ -9,5 +9,5 @@ exports.up = function(knex, Promise) {
 };
 
 exports.down = function(knex, Promise) {
-    knex.schema.dropTable('GAMES_TEST')
+    return knex.schema.dropTable('GAMES_TEST')
 };
