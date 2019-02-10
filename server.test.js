@@ -1,6 +1,6 @@
 
 const request = require('supertest')
-
+const db = require('./dbConfig.js')
 const server = require('./server.js')
 
 describe('routeHandlers', () => {
@@ -33,14 +33,16 @@ describe('routeHandlers', () => {
 
     describe('/post games', () => {
 
+        afterEach(async () => {
+            await db('GAMES_TEST').truncate();
+        })
+
         it('responds with status 201', async () => {
-            const body = {title: 'Tetris', genre: 'arcade', yearReleased: 1984}
+            const body = {title: 'Tetris', genre: 'arcade', releaseYear: 1984}
             const response = await request(server).post('/games').send(body);
-            const missing = ['title', 'genre'].filter(item => {return response.hasOwnProperty(item) === false})
 
             expect(response.status).toBe(201);
             expect(response.body.length).toBe(1);
-            expect(missing.length).toBe(0);
 
         })
 
@@ -48,22 +50,20 @@ describe('routeHandlers', () => {
             const body = {}
             const response = await request(server).post('/games').send(body);
 
-            expect(response.status).toBe(400);
+            expect(response.status).toBe(422);
         })
 
         it('sends back correct type', async () => {
-            const body = {title: 'Tetris', genre: 'arcade', yearReleased: 1984}
+            const body = {title: 'Tetris', genre: 'arcade', releaseYear: 1984}
             const response = await request(server).post('/games').send(body);
 
             expect(typeof response.body).toBe('object');
         })
 
         it('all needed properties added', async () => {
-            const body = {title: 'Tetris', yearReleased: 1984}
+            const body = {title: 'Tetris', releaseYear: 1984}
             const response = await request(server).post('/games').send(body);
-            const missing = ['title', 'genre'].filter(item => {return response.hasOwnProperty(item) === false})
 
-            expect(missing.length).toBeGreaterThan(0);
             expect(response.status).toBe(422);
 
         })
