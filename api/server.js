@@ -3,19 +3,45 @@ const db = require('../helpers/gameModel.js');
 const server = express();
 server.use(express.json());
 
-server.get('/', async (req, res) => {
+ server.get('/', async (req, res) => {
     res.status(200).json({ api: 'up' });
+}); 
+
+
+server.get('/games/:id', async (req, res) => {
+    const { id } = await req.params;
+    db
+        .findById(id)
+        .then(game => {
+            if (game == '') {
+             return res.status(404).json(game); 
+                //return sendUserError(404, 'No game with that id is in the db', res);
+            } else {
+
+                res.json(game);
+            }
+            
+            //res.status(200).json(game);
+           // res.json(game);
+        })
+        .catch(err => {
+            res
+                    .status(404)
+                    .json({ error: "The game id is invalid" });
+        });
 });
 
-server.get('/games', async (req, res) => {
-    const gameData = await db.getAll();
+ server.get('/games', async (req, res) => {
+    const gameData = await db.get();
     if (gameData === '') {
-        res.status(200).json({});
+        console.log("gamedata:", gameData)
+        res.status(404).json({});
     }else {
+        console.log("gamedata:", gameData)
         res.status(200).json(gameData)
     }    
    // res.status(200).json(gameData);
-});
+}); 
 
 server.post('/games', async (req, res) => {
     const game = req.body;
@@ -49,20 +75,7 @@ server.post('/games', async (req, res) => {
         });
 }); */
 
-server.get('/games/:id', async (req, res) => {
-    const { id } = req.params;
-    db
-        .get(id)
-        .then(game => {
-            if (game === 0) {
-                return sendUserError(404, 'No game with that id is in the db', res);
-            }
-            res.json(game);
-        })
-        .catch(err => {
-            return sendUserError(500, 'Db unavailable', res);
-        });
-});
+
 /* server.delete('/:id', (req, res) => {
     const { id } = req.params
 

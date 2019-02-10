@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const parser = express.json();
-const server = express();
+//const server = express();
 const server = require('./api/server.js');
 server.use(express.json());
 server.use(parser);

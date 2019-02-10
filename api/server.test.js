@@ -9,12 +9,12 @@ describe('the route handler', () => {
                 .get('/');
             expect(response.status).toBe(200);
         })
-        it('should return an empty array when db is empty', async () => {
+     /*    it('should return an empty array when db is empty', async () => {
             const response = await request(server)
                 .get('/');
 
             expect(response.status).toBe(200);
-        })
+        }) */
         it('respond with 200', async () => {
             const response = await request(server)
                 .get('/');
@@ -27,9 +27,9 @@ describe('the route handler', () => {
 
 describe('create new games entry', () => {
     describe('post /games', () => {
-        afterEach(async () => {
+       /*  afterEach(async () => {
             await db('games').truncate();
-        })
+        }) */
         it('respond with 201 when post is successful', async () => {
             const body = { title: 'test', genre: 'testGenre' };
             const response = await request(server)
@@ -64,12 +64,20 @@ describe('create new games entry', () => {
 describe('get the games by id', () => {
     describe('get /game with id', () => {
         it('respond with 200 when get is successful', async () => {
-            const id = ('1');
+            const id = ('2');
             const response = await request(server)
                 .get('/games').send(id);
             expect(response.status).toBe(200);
         })
     })
+     describe('get /game with bad id', () => {
+        it('respond with 404 when get is successful', async () => {
+            const id = ('5');
+            const response = await request(server)
+                .get('/games').send(id);
+            expect(response.status).toBe(404);
+        })
+    }) 
 })
 
 
