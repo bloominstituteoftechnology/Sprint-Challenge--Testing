@@ -19,20 +19,34 @@ server.get('/games', async (req,res) => {
     }
  });
 
- server.post('/games', async (req,res) => {
+ server.post('/games',  (req,res) => {
       const game = req.body;
-      console.log('game',game);
-      if(game.title && game.genre) {
-        try {
-        const ids = await games.insert(game);
-        console.log('id',ids);
-        res.status(201).json(ids);
-        } catch(error) {
-          res.status(500).json({error:`cannot post at this time`});
-        }
+      const title = game.title;
+      const genre = game.genre;
+
+      if(title && genre) {
+         games.insert(game)
+              .then( ids => {
+                 res.status(201).json({ids});
+              })
+              .catch(err => {
+                 res.status(500).json({err:`something went wrong`});
+              });
       } else {
-        res.status(422).json({err:`Missing title or genre`});
-      }  
+               res.status(422).json({err:`Missing title or genre`});
+      }
+    
+      // if(title && genre) {
+      //   try {
+      //   const ids = await games.insert(game);
+      //   // console.log('id',ids);
+      //   res.status(201).json(ids);
+      //   } catch(error) {
+      //     res.status(500).json({error:`cannot post at this time`});
+      //   }
+      // } else {
+      //   res.status(422).json({err:`Missing title or genre`});
+      // }  
        
       
  });

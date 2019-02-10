@@ -5,10 +5,9 @@ exports.up = function(knex, Promise) {
       table.string('title').notNullable();
       table.string('genre').notNullable();
       table.string('releaseYear');
-      table.timestamps();
-    })
+   })
 };
 
 exports.down = function(knex, Promise) {
-  return knex.schema.dropTableIfExists('games');
+      return knex.schema.dropTableIfExists('games');
 };

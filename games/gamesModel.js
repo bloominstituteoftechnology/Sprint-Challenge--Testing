@@ -1,10 +1,10 @@
 const db = require('../data/dbConfig.js');
 
-async function insert(game) {
-   return db.insert(game);
+ function insert(game) {
+   return db('games').insert(game);
 }
 
-async function getAll() {
+ function getAll() {
    return db('games');
 }
 

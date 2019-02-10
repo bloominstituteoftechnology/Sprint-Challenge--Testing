@@ -29,11 +29,18 @@ describe('The Route Handlers',()=> {
           afterEach( async () => {
              await db('games').truncate();
           });
+          
+          test('It should send with a 201 success code when body is correct', async () => {
+                 const game = {title:'tiles', genre:'drama', releaseYear: '2019'};
+                 const response = await request(server).post('/games').send(game);
+                 expect(response.status).toBe(201);
+                 
+          });
 
-          test(`It should send with a 500 error code when body is correct and server error`, async () => {
+          test(`It should send with a 201 success code when body is correct`, async () => {
                   const body = {title:"cricket", genre:"outdoor", releaseYear:"1550"};
                   const response = await request(server).post('/games').send(body);
-                  expect(response.status).toBe(500);
+                  expect(response.status).toBe(201);
           });
 
           test(`It should send with a 422 error code when there is no body`, async ()=>{
@@ -53,6 +60,6 @@ describe('The Route Handlers',()=> {
             const response = await request(server).post('/games').send(body);
             expect(response.status).toBe(422);
          });
-         
+
      });
 });
