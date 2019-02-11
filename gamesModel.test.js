@@ -13,5 +13,6 @@ describe('games helper methods', () => {
         console.log(ids)
         expect(ids.length).toBe(1);
         expect(ids[0]).toBe(1);
+
     })
 })

@@ -46,7 +46,7 @@ describe('routeHandlers', () => {
 
         })
 
-        it('responds with status 400', async () => {
+        it('responds with status 422', async () => {
             const body = {}
             const response = await request(server).post('/games').send(body);
 
