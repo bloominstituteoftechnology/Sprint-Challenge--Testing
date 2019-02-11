@@ -63,9 +63,10 @@ describe('The Route Handlers',()=> {
        
      });
 
-     describe(`Delete games`, () => {                    
-         test(`It should delete the game from database`, ()=> {
-               
+     describe(`Delete games --> 'delete(/games/:id)'`, () => {                    
+         test(`It should respond with a success code 200 when game is deleted`, ()=> {
+                const response = await request(server).delete('/games/:id');
+                expect(response.status).toBe(200);
          });
      });
 });

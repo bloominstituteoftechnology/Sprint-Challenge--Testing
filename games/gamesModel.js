@@ -8,9 +8,13 @@ const db = require('../data/dbConfig.js');
    return db('games');
 }
 
+function findById(id) {
+    return db('games').where('id', id);
+}
+
 function remove(id) {
    return db('games').where('id', id).del();
 }
 module.exports = {
-   insert, getAll
+   insert, getAll, remove, findById
 }
