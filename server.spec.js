@@ -21,6 +21,8 @@ describe('Testing game server', () => { //testing get endpoint
             const game = { title: "Mega Man", genre: "Arcade", releaseYear: 1987,};
             const response = await request(server).post('/api/games').send(game);
             expect(response.status).toEqual(expectStatus);
+            expect(response.body).toBeDefined()
+            expect(response.body).toContainEqual(game)
         })
     })
 

@@ -1,15 +1,16 @@
 const express = require('express');
 
-
-const games = [
+let games = [
 
     {
-    title: "Pacman",
-    genre: "Arcade",
-    releaseYear: 1980,
+        title: "Pacman",
+        genre: "Arcade",
+        releaseYear: 1980,
     }
 
 ]
 
 
-module.exports =  games
+    module.exports = {
+        games,
+    }
