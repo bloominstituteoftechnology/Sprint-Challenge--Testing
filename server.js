@@ -20,14 +20,20 @@ server.get('/games', async (req, res) => {
 
 server.post('/games', async (req, res) => {
     const { title, genre } = req.body;
-    const game = req.body;
     if (!title || !genre) {
         res.status(422).json('title and genre are required');
     }
     db('games')
-        .insert(game)
-        .then(ids => {
-            res.status(201).json(ids);
+        .where('title', title)
+        .then(game => {
+            if (game.length) {
+                res.status(405).json({ error: "duplicate game" });
+            } else {
+                db('games').insert({ title, genre })
+                    .then(ids => {
+                        res.status(201).json(ids);
+                    })
+            }
         })
         .catch(err => {
             res.status(500).json('Err');

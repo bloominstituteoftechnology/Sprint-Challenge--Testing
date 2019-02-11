@@ -29,18 +29,28 @@ describe('the route hanlder', () => {
 
     describe('post /', () => {
         it('response with 201', async () => {
-            const body = { title: 'Overcook', genre: 'Strategy' };
+            const body = { title: '2K20', genre: 'Sports' };
             const response = await request(server)
                 .post('/games')
                 .send(body);
             expect(response.status).toBe(201);
         });
+
         it('response with 422 when missing required fields', async () => {
             const body = { title: 'Game with no genre' };
             const response = await request(server)
-                .post('/games');
+                .post('/games')
+                .send(body);
             expect(response.status).toEqual(422);
         });
+
+        it('response with 405 with duplicate game title', async () => {
+            const body = { title: 'SpiderMan', genre: 'RPG', releaseYear: 2018 };
+            const response = await request(server)
+                .post('/games')
+                .send(body);
+            expect(response.status).toBe(405);
+        })
 
     });
 });
