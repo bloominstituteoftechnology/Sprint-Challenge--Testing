@@ -9,13 +9,8 @@ describe('the route handler', () => {
                 .get('/');
             expect(response.status).toBe(200);
         })
-     /*    it('should return an empty array when db is empty', async () => {
-            const response = await request(server)
-                .get('/');
-
-            expect(response.status).toBe(200);
-        }) */
-        it('respond with 200', async () => {
+  
+        it('respond with 400 when db is empty', async () => {
             const response = await request(server)
                 .get('/');
             expect(response.status).toBe(200);
@@ -64,20 +59,30 @@ describe('create new games entry', () => {
 describe('get the games by id', () => {
     describe('get /game with id', () => {
         it('respond with 200 when get is successful', async () => {
-            const id = ('2');
+            const id = '1';
             const response = await request(server)
-                .get('/games').send(id);
+                .get('/games/1').send(id);
             expect(response.status).toBe(200);
         })
     })
-     describe('get /game with bad id', () => {
-        it('respond with 404 when get is successful', async () => {
-            const id = ('5');
-            const response = await request(server)
-                .get('/games').send(id);
-            expect(response.status).toBe(404);
-        })
-    }) 
+ 
 })
 
 
+describe('the Delete handler', () => {
+    describe('delete /games', () => {
+        it('respond with 200 when delete is successful', async () => {
+            const id = '6';
+            const response = await request(server)
+                .delete('/games/6').send(id);
+            expect(response.status).toBe(200);
+        })
+
+        it('respond with 404 when delete fails', async () => {
+            const id = '7';
+            const response = await request(server)
+                .delete('/games/7').send(id);
+            expect(response.status).toBe(404);
+        })
+    })
+})

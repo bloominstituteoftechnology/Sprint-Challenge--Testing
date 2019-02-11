@@ -17,8 +17,14 @@ async function update(id, changes) {
   return null;
 }
 
-function remove(id) {
+/* function remove(id) {
   return null;
+} */
+
+function remove(id) {
+  return db('games')
+    .where('id', id)
+    .del();
 }
 
 function get() {
@@ -34,7 +40,15 @@ function find() {
   }
   
   async  function findById(id) {
-    return db('games').where({ id: Number(id) });
+   // return db('games').where({ id: Number(id) });
+   let query = db('games');
+   if (id) {
+     query.where('id', Number(id)).first();
+     console.log("id:", id)
+     console.log("query:", query)
+   }
+
+   return query;
   }
 
   async  function getId(id) {
