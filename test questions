@@ -1,3 +1,8 @@
 1. In Jest, what are the differences between `describe()` and `it()` globals, and what are good uses for them?
+-it() globals are the actual test methods, while describe() helps you categorize all the it()/test() methods, etc to make them more organized in the console.
 1. What is the point of `Test Driven Development`? What do you think about this approach?
+-TDD is a code writing stategy that helps catch errors while you code preventing errors/glitches to snowball over time.
 1. Mention three types of automated tests.
+-snapshot testing
+-unit testing
+-integration testing
