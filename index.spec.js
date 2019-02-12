@@ -49,7 +49,7 @@ describe("GET test", () => {
 	// Test for array on '/games'
 	it("Is an array being returned?", async () => {
 		const response = await request(server).get("/games");
-		expect(response.body).toEqual("app/array");
+		expect(response.body).toEqual(Array());
 	});
 	
 	// Test for empty array on '/games'

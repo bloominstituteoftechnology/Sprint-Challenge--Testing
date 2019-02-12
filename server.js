@@ -2,7 +2,7 @@ const express = require("express");
 const server = express();
 
 server.use(express.json());
-server.get("/",(req,res)) => res.send("Helloooooooooooooo");
+server.get("/",(req,res) => res.send("Helloooooooooooooo"));
 
 server.post("/games", (req,res) => {
 	const { title, genre } = req.body;
@@ -16,7 +16,7 @@ server.post("/games", (req,res) => {
 });
 
 
-server.get("/games", req,res) => {
+server.get("/games", (req,res) => {
 	Object.keys(req.body).length ? res.status(200).json([req.body]) : res.status(200).json([]);
 });
 
