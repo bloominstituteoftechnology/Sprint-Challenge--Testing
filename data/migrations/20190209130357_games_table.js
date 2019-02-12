@@ -3,10 +3,12 @@ exports.up = function(knex, Promise) {
         table.increments();
         table.string('title').notNullable().unique();
         table.string('genre').notNullable();
-        table.integer('releaseYear');
-    });
+        table.integer('releaseYear').unsigned();
+    })
 };
 
 exports.down = function(knex, Promise) {
-    return knex.schema.dropTableIfExists('games');
+    return knex.schema.dropTableIfExists('games')
 };
+
+

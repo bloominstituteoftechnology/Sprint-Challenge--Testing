@@ -7,10 +7,7 @@
 		"test": "cross-env DB_ENV=testing jest --watch --verbose",
 		"start": "nodemon index.js"
 	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/LambdaSchool/Sprint-Challenge--Testing.git"
-	},
+	"repository": "git+https://github.com/LambdaSchool/Sprint-Challenge--Testing.git",
 	"keywords": [],
 	"author": "Lambda School",
 	"license": "ISC",
