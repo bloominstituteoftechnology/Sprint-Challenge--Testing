@@ -78,9 +78,9 @@ describe('get the games by id', () => {
 describe('the Delete handler', () => {
     describe('delete /games', () => {
         it('respond with 200 when delete is successful', async () => {
-            const id = '9';
+            const id = '10';
             const response = await request(server)
-                .delete('/games/9').send(id);
+                .delete('/games/10').send(id);
             expect(response.status).toBe(200);
         })
 
