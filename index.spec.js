@@ -1,13 +1,6 @@
 const request = require('supertest');
 const server = require('./api/server.js');
-/*
-GET /games
-The GET /games endpoint should return the list of games and HTTP
- status code 200.
-Write a test to make sure this endpoint always returns an array,
- even if there are no games stored. If there are no games to return, 
- the endpoint should return an empty array.
- */
+
 
 describe('server.js', () => {
     describe('/ route', () => {
