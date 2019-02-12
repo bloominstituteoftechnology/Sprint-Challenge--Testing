@@ -25,15 +25,31 @@ In this challenge use `Test Driven Development` to build a RESTful API using Nod
 Demonstrate your understanding of this week's concepts by answering the following free-form questions. Edit this document to include your answers after each question. Make sure to leave a blank line above and below your answer so it is clear and easy to read by your project manager.
 
 1. In Jest, what are the differences between `describe()` and `it()` globals, and what are good uses for them?
-1. What is the point of `Test Driven Development`? What do you think about this approach?
-1. Mention three types of automated tests.
+		- 'Describe' is for testing components, implying that there are sub
+		systems needing to be testing aswell. 'It' comes in use for individual 
+		tests on singular outputs.
+
+2. What is the point of `Test Driven Development`? What do you think about this approach?
+		- The point of test driven development is that it's a better way
+		to program and face issues. However it requires somebody to actually be 
+		good at what they are doing, writing code tests for a project to me
+		is like the scaffolding of a construction project. It doesn 'need'
+		to be there, but it lets the workers navigate the project much more
+		efficiently. It's a short term effort that yeilds undeniable long
+		term results. However it's still neglecting most of the time because
+		humans are lazy.
+
+3. Mention three types of automated tests.
+		- Unit tests (does the code even work)
+		- API tests (does the code talk to other code)
+		- GUI tests (do the graphics do what the dev's want)
 
 ## Project Set Up
 
-- [ ] fork and clone this repository.
-- [ ] **CD into the folder** where you downloaded the repository.
-- [ ] run `yarn` or `npm i` to download all dependencies.
-- [ ] type `yarn test` or `npm test` to run the tests. The `test` script is already configured.
+- [x] fork and clone this repository.
+- [x] **CD into the folder** where you downloaded the repository.
+- [x] run `yarn` or `npm i` to download all dependencies.
+- [x] type `yarn test` or `npm test` to run the tests. The `test` script is already configured.
 
 ## Minimum Viable Product
 
