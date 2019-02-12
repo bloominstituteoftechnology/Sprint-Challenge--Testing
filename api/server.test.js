@@ -6,14 +6,20 @@ describe('the route handler', () => {
     describe('get /games', () => {
         it('respond with 200 when get is successful', async () => {
             const response = await request(server)
-                .get('/');
+                .get('/games');
             expect(response.status).toBe(200);
         })
-  
+        it('respond with json', async () => {
+            const response = await request(server)
+            .get('/games');
+            expect(response.type).toMatch(/json/i);
+        })
+      
         it('respond with 400 when db is empty', async () => {
             const response = await request(server)
-                .get('/');
-            expect(response.status).toBe(200);
+                .get('/games');
+            
+                expect(response.status).toBe(200);
         })
     })
 })
@@ -72,9 +78,9 @@ describe('get the games by id', () => {
 describe('the Delete handler', () => {
     describe('delete /games', () => {
         it('respond with 200 when delete is successful', async () => {
-            const id = '6';
+            const id = '9';
             const response = await request(server)
-                .delete('/games/6').send(id);
+                .delete('/games/9').send(id);
             expect(response.status).toBe(200);
         })
 

@@ -5,6 +5,7 @@ module.exports = {
   update,
   remove,
   get,
+  find,
   findById,
   getId
 };
@@ -17,47 +18,33 @@ async function update(id, changes) {
   return null;
 }
 
-/* function remove(id) {
-  return null;
-} */
-
-function remove(id) {
+async function remove(id) {
   return db('games')
     .where('id', id)
     .del();
 }
 
-function get() {
+async function get() {
   return db('games');
 }
 
-/* function findById(id) {
-  return null;
-} */
+async function find() {
+  return db('games');
+}
 
-function find() {
-    return db('games');
+async function findById(id) {
+
+  let query = db('games');
+  if (id) {
+    query.where('id', Number(id)).first();
   }
-  
-  async  function findById(id) {
-   // return db('games').where({ id: Number(id) });
-   let query = db('games');
-   if (id) {
-     query.where('id', Number(id)).first();
-     console.log("id:", id)
-     console.log("query:", query)
-   }
+  return query;
+}
 
-   return query;
+async function getId(id) {
+  let query = db('games');
+  if (id) {
+    query.where('id', Number(id)).first();
   }
-
-  async  function getId(id) {
-    let query = db('games');
-    if (id) {
-      query.where('id', Number(id)).first();
-      console.log("id:", id)
-      console.log("query:", query)
-    }
-
-    return query;
-  }
+  return query;
+}
