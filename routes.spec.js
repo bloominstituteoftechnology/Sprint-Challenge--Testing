@@ -35,4 +35,4 @@ describe('the get endpoint for games', () => {
     const response = await request(server).get('/games');
     expect(response.body).toEqual([]);
   });
-})
+});
