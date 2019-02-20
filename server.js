@@ -19,7 +19,7 @@ server.post('/games', (req,res)=>{
 server.get('/games', (req,res)=>{
      
     if (games.length !== 0){
-     res.status(200).json({games,status :200})
+     res.status(200).json({games})
      }
     else{
          res.json({games})
