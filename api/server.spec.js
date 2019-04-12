@@ -12,7 +12,7 @@ describe("server.js", () => {
     it("should return 200 when posting a game correctly", () => {
       return request(server)
         .post("/games")
-        .send({ title: "test", genre: "test" })
+        .send({ title: "test", genre: "test", releaseYear:"1902" })
         .expect(200);
     });
 
@@ -32,14 +32,14 @@ describe("server.js", () => {
     it("should return an array empty array", async () => {
       const res = await request(server).get("/games");
 
-      expect(res.body).toEqual([]);
+      expect(Array.isArray(res.body)).toEqual(true);
     });
 
     it("should return an array with the new game created", async () => {
       const game = {
         title: "test",
         genre: "test",
-        release_year: 2013
+        releaseYear: "2013"
       };
 
       await Games.insert(game);
