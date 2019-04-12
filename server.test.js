@@ -1,5 +1,5 @@
 const request = require('supertest');
-const server = request('./server');
+const server = require('./server');
 
 //  // test away!
 // it('runs the test',() =>{
@@ -12,11 +12,18 @@ describe('games', () => {
           return request(server)
           .get('/')
           .then( res => expect(res.status).toBe(200))
-          .catch();
       });
+
+      it('runs server with 200', () => {
+        return request(server)
+        .get('/games')
+        .then( res => expect(res.status).toBe(200))
+    });
   
-  });
-  
+
+
+    
+    });
   });
 
 
