@@ -19,4 +19,17 @@ server.get('/games', async (req, res) => {
 
 //Add a Game
 
+server.post('/games', (req, res) => {
+    const { title, genre, releaseYear} = req.body
+    if(!title || !genre || !releaseYear){
+        return res.status(422).json({errorMessage: "Add Title or Genre or Release Year"})
+    }
+    games.insert({ title, genre, releaseYear}).then(game => {
+            res.status(201).json({game})
+    }).catch( error => {
+        res.status(422).json(error)
+    })
+});
+
+
 module.exports = server;

@@ -1,5 +1,7 @@
 const gamesDb = require('./gamesModel.js')
 const db = require('../data/dbConfig.js');
+const server = require('../api/server.js')
+const request = require('supertest')
 describe('games model', () =>{
 
     
@@ -23,6 +25,15 @@ describe('games model', () =>{
             const games = await db('games')
             expect(games[0].title).toBe('NewGameToday')
 
+        })
+
+        it('if content is missing, respond with 422', () => {
+            return request(server)
+            .post('/games')
+            .send({
+                title: 'Chess', 
+            })
+            .expect(422)
         })
     })
 })
