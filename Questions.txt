@@ -1,0 +1,25 @@
+In Jest, what are the differences between describe() and it() globals, and what are good uses for them?
+
+    describe refers to a suite of tests, kind of like a main folder. 
+    Every test is within an it, which includes a description of what
+    is being tested under the main category of describe.
+
+What is the point of Test Driven Development? What do you think about this approach?
+
+    It forces you to think about what the output of a certain function or component is.
+    It helps you understand the purpose of all the functions being written, it also helps
+    you to write more thorough code. It will help you to consider the user a little more.
+
+Mention three types of automated tests.
+
+    Unit Testing
+    End-to-end Testing
+    Integration Testing
+    Component Testing
+    Snapshot Testing
+
+    Every test has a purpose. The unit test is the simplest and easiest to write. This 
+    deals with the smallest parts of a file, like an individual function. Other tests are
+    more involved and include testing many files working together. Tests also go beyond 
+    BackEnd. Component and Snapshot Testing work with the FrontEnd user experience, making
+    sure everything displays properly or an entire component is not changed.
