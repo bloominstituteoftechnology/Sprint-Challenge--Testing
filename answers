@@ -1,0 +1,19 @@
+1. In Jest, what are the differences between describe() and it() globals, and what are good uses for them?
+
+Describe() defines the testing suite function whereas it() describes the test assertion itself.
+One would use describe() to define a whole suit of related tests. It's useful for organizational purposes.
+One would use it() when testing some functionality of the code.
+
+2. What is the point of Test Driven Development? What do you think about this approach?
+
+The point of TDD is to give priority to testing during development. This gives the developer a sense of the weak spots of the program and where it can break.
+It essentially proves that the code works as it's being developed--much like a scientific study proving some hypothesis.
+It can also be useful in intentionally finding and testing edge cases.
+I think TDD can potentially be a waste of time but also very important depending on how it's used. I think strategically implementing testing where it would really be useful is the best approach.
+For instance, testing code that could potentially break the app or more complicated sections of the code that could be hard to manually test and are subject to alteration in their delicate balance, or giving other developers an insight into how it should work.
+
+3. Mention three types of automated tests.
+
+Unit tests
+Integration tests
+API tests
