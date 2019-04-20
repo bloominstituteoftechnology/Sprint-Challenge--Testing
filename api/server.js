@@ -10,7 +10,7 @@ const server = express();
   res.status(200).json({ api: 'up' });
 });
 
-const games = [
+let games = [
   {
       title: 'Pacman',
       genre: 'Arcade',
@@ -34,10 +34,13 @@ server.get('/games', (req, res) => {
 })
 
 server.post('/games', (req, res) => {
-  let {title, genre, releaseYear} = req.body;
-  if (!title || !genre){
-      return res.status(422)
-                .json({ error: 'You forgot title and genre.' })
+  let {title, genre} = req.body;
+  // check for required fields
+  if (title && genre){
+		res.status(201).json(req.body);
+  }else{
+    res
+    .status(422)
+    .json({message : "Missing Info"});
   }
-
 });

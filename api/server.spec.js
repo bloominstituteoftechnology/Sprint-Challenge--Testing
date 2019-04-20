@@ -46,8 +46,53 @@ describe('testing module', () => {
       expect(res.body).toEqual(expected);
       expect(Array.isArray(res.body)).toBe(true);
     });
+  });
+  describe('POST /games endpoint test', () => {
+    it('should return a 422 status code if information is incomplete', async () => {
+      const incompleteGame = 
+        {
+        title: "Plants vs Zombies 0",
+        releaseYear: 2009
+      }
+    
+      const res = await request(server)
+      .post('/games')
+      .send(incompleteGame);
 
+       expect(res.status).toBe(422);
+    });
+
+    it('should return JSON', async () => {
+      const newGame = 
+        {
+        title: 'Plants vs Zombies 1 ', 
+        genre: 'Tower defense', 
+        releaseYear: 2009 
+      }
+    
+    const res = await request(server).post('/games').send(newGame);
+       expect(res.type).toBe('application/json');
+    });
+
+
+    it('should return status 201 if information is right', async () => {
+      const body = 
+        {
+        title: 'Plants vs Zombies 2', 
+        genre: 'Tower', 
+        releaseYear: 2009 
+      }
+  
+
+       const res = await request(server).post('/games').send(body);
+
+       expect(res.status).toBe(201);
+    });
+ 
   });
 
-  
+
+
+
+
 });
