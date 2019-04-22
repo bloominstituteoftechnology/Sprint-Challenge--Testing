@@ -1,6 +1,8 @@
 const request = require('supertest');
 
-const server = require('..api/server');
+const server = require('./server');
+
+const db = require('../data/dbConfig');
 
 describe('The route handlers', () => {
     describe('get /', () => {
@@ -12,7 +14,30 @@ describe('The route handlers', () => {
 
         it('responds with an array', async () => {
             const response = await request(server).get('/');
-            expect(response.type).toMatch(/array/a);
+            expect(typeof response.body).toBe('array');
+        });
+    });
+
+    describe('post /videogame', () => {
+        afterEach(async () => {
+            await db('videogames').truncate();
+            await db.seed.run();
+        });
+
+        it('resonds with 201 if body is correct', async () => {
+            const body = {title: 'Shining Force', genre: 'Role-playing'}
+            const response = await request(server).post('/videogame').send(body);
+
+            expect(response.status).toBe(201);
+            db('videogames').truncate();
+        });
+
+        it('responds with 401 when body is missing data', async () => {
+            const body = { }
+            const response = await request(server).post('/videogame').send(body);
+
+            expect(response.status).toBe(401)
+            db('videogames').truncate();
         });
     });
 });
