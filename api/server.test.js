@@ -9,5 +9,10 @@ describe('The route handlers', () => {
 
             expect(response.status).toBe(200);
         });
+
+        it('responds with an array', async () => {
+            const response = await request(server).get('/');
+            expect(response.type).toMatch(/array/a);
+        });
     });
 });
