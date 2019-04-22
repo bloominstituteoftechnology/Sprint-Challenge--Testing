@@ -8,4 +8,4 @@ server.get('/games', (req, res) => {
     res.status(200).json({})
 })
 
-moudule.exports = server;
+module.exports = server;
