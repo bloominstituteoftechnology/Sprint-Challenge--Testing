@@ -37,12 +37,13 @@ describe('The Game Model', () => {
                 releaseYear: 1980
             });
 
-            const games = await db('games');
+            const data = await db('games');
 
-            expect(games[0]).toEqual({
+            expect(data[0]).toEqual({
                 "title": "Pacman",
                 "genre": "Arcade",
-                "releaseYear": "1980"
+                "id": 1,
+                "releaseYear": 1980
             })
         });
     });
@@ -64,7 +65,7 @@ describe('The Game Model', () => {
         it('should return an empty array if there are no games', async () => {
             const games = await Games.getAll();
 
-            expect(games).toBe([]);
+            expect(games).toEqual([]);
         });
     });
 });

@@ -4,6 +4,9 @@ const db = require('../data/dbConfig.js');
 
 
 describe('Server tests', () => {
+    beforeEach(() => {
+        return db('games').truncate(); //cleanup
+    });
 
     it('should set testing env', () => {
         const env = process.env.DB_ENV;
@@ -36,31 +39,40 @@ describe('GET /games', () => {
 
 describe('POST /games', () => {
     it('should return 422 if data is missing', async () => {
-        const res = await db('games').insert({
+        await db('games').insert({
             title: "Pacman",
-            ganra: "Arcade",
+            genre: "Arcade",
             releaseYear: 1980
         });
+
+        const res = await request(server).post('/games');
 
         expect(res.status).toBe(422);
     });
     it('should return 200', async () => {
-        const res = await db('games').insert({
+        const info = [{
             title: "Pacman",
             genre: "Arcade",
             releaseYear: 1980
-        });
+        }]
+
+        await db('games').insert(info);
+
+        const res = await request(server).post('/games', info);
 
         expect(res.status).toBe(200);
     });
-    it('should return id', async () => {
-        const [id] = await db('games').insert({
-            title: "Pacman",
-            genre: "Arcade",
-            releaseYear: 1980
-        });
+    it('should return json', async () => {
+        await db('games').insert(
+            {
+                title: "Pacman",
+                genre: "Arcade",
+                releaseYear: 1980
+            }
+        );
 
-        expect(hobbit.id).toBe(1);
+        const res = await request(server).post('/games');
+            expect(res.type).toBe('application/json');
     });
 })
 
