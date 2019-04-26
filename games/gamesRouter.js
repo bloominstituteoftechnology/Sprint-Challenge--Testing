@@ -18,7 +18,7 @@ router.post('/', async (req, res) => {
         const game = await games.insert(req.body);
         res.status(201).json(game)
     } catch (err) {
-        res.status(500).json({ error: 'You are not a gamer!' })
+        res.status(422).json({ error: 'Incomplete game data...you are not a gamer!' })
     }
 });
 
