@@ -1,5 +1,9 @@
 const db = require('../data/dbConfig.js');
 
+const request = require('supertest');
+const server = require('../api/server.js');
+const router = require('./gamesRouter.js');
+
 const Games = require('./gamesModel.js');
 
 describe('games model', () => {
@@ -15,6 +19,14 @@ describe('games model', () => {
 
             const games = await db('games')
             expect(games).toHaveLength(4)
+        })
+        it('should return 422', async () => {
+            await Games.insert({  title: 'Grand Theft Auto', genre: 'Action-adventure', releaseYear: 1997 })
+            
+            const game = await db('games')
+            expect (game).toHaveLength(1)
+            const res = await request(server.use(router)).post('/')
+            expect(res.status).toBe(422)
         })
     });
 });
