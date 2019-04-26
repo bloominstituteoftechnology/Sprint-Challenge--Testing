@@ -34,7 +34,7 @@ Demonstrate your understanding of this week's concepts by answering the followin
 
 1. Mention three types of automated tests.
 
-[There are unit tests, integration tests and end-to-end tests]
+[There are unit tests to test small units of code i.e functions/methods, integration tests are used to test several units of code i.e endpoints and end-to-end tests are used to test the whole application as a whole, but these are not often used as they can be expensive and slow. Therefore the more affordable approach to testing an application is by having multiple unit and integration tests ]
 
 ## Project Set Up
 
