@@ -54,8 +54,8 @@ describe('testing module', () => {
         test('should return a 422 status code if information is incomplete', async () => {
             const incompleteGame = 
                 {
-                    title: "Plants vs Zombies 0",
-                    releaseYear: 2009
+                    title: "Super Smash Bros",
+                    releaseYear: ""
                 }
         
             const res = await request(server)
