@@ -32,16 +32,22 @@ describe('create new games entry', () => {
         afterEach(async () => {
             await db('videogames').truncate();
         })
+        it('respond with 201 when post is successful', async () => {
+            const body = { title: 'Shining Force', genre: 'Role-playing' };
+            const response = await request(server)
+                .post('/games').send(body);
+            expect(response.status).toBe(201);
 
+        })
         it('respond with 422 when the genre is missing', async () => {
-            const body = { title: 'test'};
+            const body = { title: 'Shining Force'};
             const response = await request(server)
                 .post('/games').send(body);
             expect(response.status).toBe(422);
 
         })
         it('respond with 422 when the title is missing', async () => {
-            const body = { genre: 'testGenre'};
+            const body = { genre: 'Role-playing'};
             const response = await request(server)
                 .post('/games').send(body);
             expect(response.status).toBe(422);
