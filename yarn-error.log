@@ -43,6 +43,9 @@ npm manifest:
   		"jest": "^23.6.0",
   		"nodemon": "^1.18.11",
   		"supertest": "^3.3.0"
+  	},
+  	"jest": {
+  		"testEnvironment": "node"
   	}
   }
 
