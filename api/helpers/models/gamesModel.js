@@ -1,6 +1,6 @@
 // intialize knex & database
 const knex = require('knex');
-const db = require('../../dbConfig'); // intialize database
+const db = require('../../../dbConfig'); // intialize database
 
 /* Functions for database searching, to be exported. */
 

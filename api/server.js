@@ -1,7 +1,7 @@
 // initialize server and routes
 const express = require('express');
 const server = express();
-// const REPLACE_ROUTE = require('./data/routers/REPLACE_ROUTE');
+const games = require('./data/routers/games');
 
 // server variables and middleware
 const port = 5511; 
@@ -19,7 +19,7 @@ server.use(
     );
 
 // define routes and activate server
-// server.use('/api/REPLACE_ROUTE', REPLACE_ROUTE);
+server.use('/api/games', games);
 
 
 server.listen(port, () => {
