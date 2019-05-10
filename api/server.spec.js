@@ -39,11 +39,40 @@ describe('GET ("/games")', () => {
 
     it('returns an object array', async () => {
         let res = await request(server).get('/games');
-        for (i = 0; i < res.body.length; i++) {
+        for (i = 0; i < res.body.length; i++) { // iterate through each item in the response body
             expect(typeof res.body[i]).toEqual('object');
-        }
+        };
     });
 });
 
 /* Games POST testing */
-describe('POST ("/games")', () =>{});
+describe('POST ("/games")', () =>{
+    it('returns 201 with correct data', async () => {
+        const body = {
+            title: 'Pacman',
+            genre: 'Arcade',
+            releaseYear: 1980
+        };
+        let res = await request(server).post('/games').send(body);
+        expect(res.status).toBe(201);
+    });
+
+    it('returns the new object', async () => {
+        const body = {
+            title: 'Pacman',
+            genre: 'Arcade',
+            releaseYear: 1980
+        };
+        let res = await request(server).post('/games').send(body);
+        expect(res.body).toBe(body);
+    });
+
+    it('returns 422 with incorrect data', async () => {
+        const body = {
+            title: 'Pacman',
+            releaseYear: 1980
+        };
+        let res = await request(server).post('/games').send(body);
+        expect(res.status).toBe(422);
+    });
+});
