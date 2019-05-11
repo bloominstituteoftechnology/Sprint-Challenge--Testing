@@ -8,10 +8,11 @@ const db = require('../helpers/models/gamesModel.js');
 // Create/Post logic
 router.post('/', (req, res) => {
     const game = req.body;
-    const {title, genre} = game
+    const { genre, title } = game;
+    
     if (title && genre) {
         db
-            .insert(game)
+            .add(game)
             .then(newGame => {
                     res
                     .status(201)
