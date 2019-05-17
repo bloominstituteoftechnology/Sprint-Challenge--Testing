@@ -60,7 +60,7 @@ describe("POST /games", () => {
 
     const res = await request(server).post("/games", info);
 
-    expect(res.status).toBe(200);
+    expect(res.status).toBe(422);
   });
   it("should return json", async () => {
     await db("games").insert({
