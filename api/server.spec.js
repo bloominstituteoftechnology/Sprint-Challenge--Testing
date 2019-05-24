@@ -33,8 +33,7 @@ describe('GET /games', () => {
 	});
 });
 
-//post tests
-
+// post tests
 describe('POST /games', () => {
 	it('should return 422 if data is missing', async () => {
 		await db('games').insert({

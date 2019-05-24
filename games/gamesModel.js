@@ -2,7 +2,7 @@ const db = require('../data/dbConfig.js');
 
 module.exports = {
 	insert,
-	get,
+	getAll,
 	getById
 };
 
@@ -12,7 +12,7 @@ async function insert(game) {
 	});
 }
 
-function get() {
+function getAll() {
 	return db('games');
 }
 
