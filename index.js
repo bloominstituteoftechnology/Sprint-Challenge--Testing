@@ -1,6 +1,6 @@
-const server = reuire('server.js');
+require('dotenv').config();
 
-const port = 5000;
-server.listen(port, () => {
-	console.log('\n*** API listening on 5k ***\n');
-});
+const server = require('./api/server.js');
+
+const port = process.env.PORT || 5000;
+server.listen(port, () => console.log(`\n** server up on port ${port} **\n`));
