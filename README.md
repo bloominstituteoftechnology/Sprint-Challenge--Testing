@@ -55,8 +55,8 @@ regression test, unit test, integration test
 
 Your finished project must include all of the following requirements:
 
-- [ ] use `jest` and `supertest` to write the tests.
-- [ ] Write the **tests BEFORE** writing the route handlers.
+- [X] use `jest` and `supertest` to write the tests.
+- [X] Write the **tests BEFORE** writing the route handlers.
 - [ ] Your API must be have `POST` and `GET` endpoints for `/games`.
 - [ ] Write a **minimum** of three tests per endpoint.
 
@@ -79,7 +79,7 @@ Below is a product specification covering the requirements for your endpoints.
 
 ### GET /games
 
-- [ ] The `GET /games` endpoint should return the list of games and HTTP status code 200.
+- [X] The `GET /games` endpoint should return the list of games and HTTP status code 200.
 - [ ] Write a test to make sure this endpoint always returns an array, even if there are no games stored. If there are no games to return, the endpoint should return an empty array.
 
 ## Stretch Problems
