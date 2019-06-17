@@ -14,3 +14,26 @@ describe('GET/games', () => {
             });
     });
 });
+describe('POST/games', () => {
+    it('getting 201 status code if the information is complete', () => {
+        const game = { title: 'Pacman', genre: 'Arcade' };
+        return request(app)
+            .post('/games')
+            .send(game)
+            .expect(201)
+    });
+    it('getting 422 status code if genre is missing', () => {
+        const game = { title: 'Pacman' };
+        return request(app)
+            .post('/games')
+            .send(game)
+            .expect(422)
+    });
+    it('getting 422 status code if title is missing', () => {
+        const game = { genre: "Arcade" };
+        return request(app)
+            .post('/games')
+            .send(game)
+            .expect(422)
+    });
+});
