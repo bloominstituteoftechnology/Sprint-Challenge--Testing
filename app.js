@@ -13,6 +13,26 @@ app.get('/games', (req, res) => {
     res.status(200).send(games);
 });
 
-
+app.post('/games', (req, res) => {
+    if (!req.body.title) {
+        return res.status(422).send({
+            message: 'title is required'
+        });
+    } else if (!req.body.genre) {
+        return res.status(422).send({
+            message: 'genre is required'
+        });
+    }
+    const game = {
+        title: req.body.title,
+        genre: req.body.genre,
+        releaseYear: req.body.releaseYear
+    }
+    games.push(game);
+    return res.status(201).send({
+        message: 'game added successfully',
+        games
+    });
+});
 
 module.exports = app;
