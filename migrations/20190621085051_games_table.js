@@ -10,6 +10,7 @@ exports.up = function(knex, Promise) {
         .notNullable();
 
         tbl.integer('releaseYear')
+        .notNullable();
         
     });
 };

@@ -5,7 +5,7 @@ describe('server', () => {
     describe('GET /', () => {
 
         it('responds with 200 OK', () => {
-            supertest(server).get('./').expect(200);
+            supertest(server).get('/').expect(200);
         })
 
         it('responds with 200 OK', async () => {
