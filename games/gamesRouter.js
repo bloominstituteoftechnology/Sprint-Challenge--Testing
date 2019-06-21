@@ -6,7 +6,12 @@ const Games = require('./gamesModel');
 router.get('/', async (req, res) => {
     Games.get()
     .then(games => {
-        res.status(200).json(games)
+        if (games) {
+            res.status(200).json(games)
+        } 
+        else {
+            res.status(422).json({ message: 'Incomplete Entry' })
+        }
     })
     .catch(error => {
         res.status(500).json(error)
