@@ -6,7 +6,9 @@ const request = require('supertest');
 
 describe('server.js', () => {
 
-    it('should return 200', () => {
+
+    describe('Get/', () => {
+        it('should return 200', () => {
         return request(server).get('/api/games')
         .expect(200)
     })
@@ -18,28 +20,27 @@ describe('server.js', () => {
         })
     })
 
-
-    
-
     it("should return json type", () => {
         return request(server)
         .get('/api/games')
         .expect(res.type)
         .toBe("application/json");
     })
+    })
+    
 
 
     describe('Post to api/games', () => {
-        it('should recieve 201 if successful')
-        const game = { title: 'Centipede', genre: 'Arcade'};
+        it('should recieve 201 if successful', () => {
+             const game = { title: 'Centipede', genre: 'Arcade'};
         return request(server)
         .post('/api/games')
         .send(game)
         .expect(201)
-    })
-
+        })
+   
     it('returns a 422 when missing genre', () => {
-        const game = { title: 'Centiped'}
+        const game = { title: 'Centipede'}
         return request(server)
         .post('/api/games')
         .send(game)
@@ -53,6 +54,6 @@ describe('server.js', () => {
         .send(game)
         .expect(422)
     })
-    
+})
 })
 

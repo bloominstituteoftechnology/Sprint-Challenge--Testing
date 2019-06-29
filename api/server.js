@@ -6,7 +6,7 @@ const server = express();
 
 
 server.use(helmet());
-server.use(express());
+server.use(express.json());
 server.use(cors());
 
 server.get('/', (req, res) => {
@@ -18,17 +18,23 @@ server.get('/api/games', (req, res) => {
 })
 
 server.post('/api/games', (req, res) => {
+    
     if(!req.body.title) {
-        return res.status(422).json({ message: 'missing game title'})
-    }
+        return res.status(422).send({ message: 'missing game title'})
+    } else if(!req.body.genre) {
+        return res.status(422).send({ message: 'missing game genre'})
+    } else {
 
-    const game = {
+        const game = [{
+            
         title: req.body.title,
-        // genre: req.body.genre,
-    }
+        genre: req.body.genre,
+    }]
 
     games.push(game);
     return res.status(201).json({ message: 'added game to database'})
+    }
+        
 })
 
 module.exports = server;
