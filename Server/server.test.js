@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const request = require('supertest');
 const server = require('./server');
 
@@ -18,7 +20,7 @@ describe("SERVER", () => {
         it('should run on environmental port', () => {
             const port = process.env.PORT;
 
-            expect(port).not.toBe(undefuned);
+            expect(port).not.toBe(undefined);
         });
     });
 
@@ -32,7 +34,7 @@ describe("SERVER", () => {
         it('should return { api: \'Server Running...\' }', async () => {
             const res = await request(server).get('/');
 
-            expect(res.body.api).toBe("Server Running");
+            expect(res.body.api).toBe("Server Running...");
         });
     });
 
