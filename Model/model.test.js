@@ -37,7 +37,7 @@ describe('GAMES', () => {
 
             const games = await Games.getAll();
 
-            expect(games[0].id).toBe(0);
+            expect(games[0].id).toBe(1);
         });
 
         it('should insert a game into the database', async () => {
