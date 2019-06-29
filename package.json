@@ -4,8 +4,11 @@
 	"description": "Testing Sprint Challenge",
 	"main": "index.js",
 	"scripts": {
-		"test": "jest --watch --verbose",
-		"start": "nodemon index.js"
+		"test": "cross-env DB_ENV=testing jest --watchAll --verbose",
+		"server": "nodemon index.js"
+	},
+	"jest": {
+		"testEnvironment": "node"
 	},
 	"repository": {
 		"type": "git",
