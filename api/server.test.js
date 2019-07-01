@@ -10,5 +10,8 @@ describe('GET /games tests', () => {
     const res = await request(server).get('/games');
     expect(Array.isArray(res.body)).toBe(true);
   });
-  it('should return an array if empty', async () => {});
+  it('should return an array if empty', async () => {
+    const res = await request(server).get('/games');
+    expect(res.body).toEqual([]);
+  });
 });
