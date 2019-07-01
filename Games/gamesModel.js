@@ -1,19 +1,13 @@
-const db = require('../data/dbConfig.js');
+const db = require("../data/dbConfig.js");
 
 module.exports = {
-    getAll,
-    add, 
-    findById
+  getAll,
+  add,
+  findById
 };
 
-function getAll() {
-    
-}
+function getAll() {}
 
-function findById() {
-    
-}
+function findById() {}
 
-function add() {
-    
-}
+function add() {}
