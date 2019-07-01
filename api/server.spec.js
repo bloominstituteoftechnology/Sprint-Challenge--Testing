@@ -18,3 +18,16 @@ describe('get/games', () => {
         expect(res.text).toContain([]);
     })
 })
+
+describe('post/games', () => {
+    it('should return the game that was just added', async () => {
+        const game = { title: 'Final Fantasy VII', genre: 'JRPG', releaseYear: 1997};
+        const post = await request(server).post('/games').send(game);
+        expect(post.status).toBe(201);
+    });
+    it('should return a 422 error if a field is missing', () => {
+        const game = { title: 'Final Fantasy VII', genre: 'JRPG'};
+        const post = await request(server).post('/games').send(game);
+        expect(post.status).toBe(422);
+    })
+})
