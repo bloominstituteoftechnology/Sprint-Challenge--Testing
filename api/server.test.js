@@ -6,6 +6,9 @@ describe('GET /games tests', () => {
     const res = await request(server).get('/games');
     expect(res.status).toBe(200);
   });
-  it('should ', () => {});
-  it('should ', () => {});
+  it('should return an array', async () => {
+    const res = await request(server).get('/games');
+    expect(Array.isArray(res.body)).toBe(true);
+  });
+  it('should return an array if empty', async () => {});
 });
