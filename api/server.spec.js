@@ -9,3 +9,12 @@ describe("server.js", () => {
     expect(res.status).toBe(200);
   });
 });
+
+describe('get/games', () => {
+    it('should return an array of objects', async () => {
+        const res = await request(server).get('/games');
+        expect(res.status).toBe(200);
+        expect(res.text).toBeTruthy();
+        expect(res.text).toContain([]);
+    })
+})

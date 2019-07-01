@@ -6,7 +6,9 @@ module.exports = {
   findById
 };
 
-function getAll() {}
+function getAll() {
+    return db('Games')
+}
 
 function findById() {}
 
