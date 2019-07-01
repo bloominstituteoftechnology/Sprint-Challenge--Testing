@@ -25,7 +25,7 @@ describe('post/games', () => {
         const post = await request(server).post('/games').send(game);
         expect(post.status).toBe(201);
     });
-    it('should return a 422 error if a field is missing', () => {
+    it('should return a 422 error if a field is missing', async () => {
         const game = { title: 'Final Fantasy VII', genre: 'JRPG'};
         const post = await request(server).post('/games').send(game);
         expect(post.status).toBe(422);
