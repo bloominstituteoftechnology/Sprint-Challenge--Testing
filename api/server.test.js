@@ -37,5 +37,14 @@ describe('POST /games tests', () => {
       });
     expect(res.status).toBe(422);
   });
-  it('should return status 422 if missing game genre', async () => {});
+  it('should return status 422 if missing game genre', async () => {
+    const res = await request(server)
+      .post('/games')
+      .send({
+        title: 'Pacman',
+        genre: '',
+        releaseYear: 1980
+      });
+    expect(res.status).toBe(422);
+  });
 });
