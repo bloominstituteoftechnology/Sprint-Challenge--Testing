@@ -2,8 +2,10 @@
     A) Describe is used to contain a test suite. A good use for describe is organization of tests it contains. 
 
 1. What is the point of `Test Driven Development`? What do you think about this approach?
-    A) Test Driven Development or TDD practices are used to catch as many possible issues with code before going
-        into production. Untested code should NEVER make it into production.
+    A) Testing is important to ensure we are writing good clean code. Testing ensures our code returns the expected outcome
+       and we catch as many possible issues before our project is deployed. I think this approach may take more time to write
+       code but in the end will save plenty more time on trouble shooting which can be far more time consuming. 
+
 
 1. Mention three types of automated tests.
     A) 1. Unit testing
