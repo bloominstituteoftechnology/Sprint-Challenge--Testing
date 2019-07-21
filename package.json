@@ -4,7 +4,7 @@
 	"description": "Testing Sprint Challenge",
 	"main": "index.js",
 	"scripts": {
-		"test": "cross-env DB_ENV=testing jest --watch --verbose",
+		"test": "cross-env DB_ENV=testing jest --watchAll --verbose",
 		"start": "nodemon index.js"
 	},
 	"jest": {

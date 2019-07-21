@@ -12,28 +12,29 @@ describe('server.js', () => {
 
 describe('GET /', () => {
     afterEach(async () => {
-        await db('games').truncate(); //clean up
+        await db('games').truncate();
     });
 
-    it('should return 200 using async/await', async () => {
+    it('should return 200', async () => {
         const res = await request(server).get('/');
         expect(res.status).toBe(200);
     });
 
-    it('should return JSON using asyc/await', async () => {
+    it('should return JSON', async () => {
         const res = await request(server).get('/');
         expect(res.type).toBe('application/json');
     });
 
-    it('should return api: up usinmg async/await', async () => {
+    it('should return api: up', async () => {
         const res = await request(server).get('/');
         expect(res.body).toEqual({ api: 'up and running!'});
     });
 });
 
 describe('GET /games', () => {
+
     afterEach(async () => {
-        await db('games').truncate(); //clean up
+        await db('games').truncate();
     });
 
     it('should return 200', async () => {
@@ -48,6 +49,7 @@ describe('GET /games', () => {
     });
 
     it('should return all games in db', async () => {
+        // await db('games').truncate();
         const games = [
             {
                 id: 1,
@@ -64,4 +66,3 @@ describe('GET /games', () => {
         expect(res.body).toEqual(games);
     });
 });
-
