@@ -3,12 +3,28 @@
 module.exports = {
   development: {
     client: 'sqlite3',
-    connection: { filename: './database/auth.db3' }, // change this if you want a different name for the database
-    useNullAsDefault: true, // used to avoid warning on console
-    migrations: {
-      directory: './database/migrations',
-      tableName: 'dbmigrations',
+    connection: {
+      filename: './data/games.db3',
     },
-    seeds: { directory: './database/seeds' },
+    useNullAsDefault: true,
+    migrations: {
+      directory: './data/migrations',
+    },
+    seeds: {
+      directory: './data/seeds',
+    },
+  },
+  testing: {
+    client: 'sqlite3',
+    connection: {
+      filename: './data/test.db3',
+    },
+    useNullAsDefault: true,
+    migrations: {
+      directory: './data/migrations',
+    },
+    seeds: {
+      directory: './data/seeds',
+    },
   },
 };

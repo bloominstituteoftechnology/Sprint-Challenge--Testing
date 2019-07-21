@@ -1,34 +1,35 @@
 {
-  "name": "webauth-challenge",
-  "version": "1.0.0",
-  "description": "Authentication Sprint Challenge",
-  "main": "index.js",
-  "scripts": {
-    "server": "nodemon index.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/LambdaSchool/Sprint-Challenge-Authentication.git"
-  },
-  "keywords": [],
-  "author": "Lambda School",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/LambdaSchool/Sprint-Challenge-Authentication/issues"
-  },
-  "homepage": "https://github.com/LambdaSchool/Sprint-Challenge-Authentication#readme",
-  "dependencies": {
-    "axios": "^0.19.0",
-    "bcryptjs": "^2.4.3",
-    "cors": "^2.8.5",
-    "dotenv": "^8.0.0",
-    "express": "^4.17.1",
-    "helmet": "^3.18.0",
-    "jsonwebtoken": "^8.5.1",
-    "knex": "^0.17.0",
-    "sqlite3": "^4.0.8"
-  },
-  "devDependencies": {
-    "nodemon": "^1.19.1"
-  }
+	"name": "testing-challenge",
+	"version": "1.0.0",
+	"description": "Testing Sprint Challenge",
+	"main": "index.js",
+	"scripts": {
+		"test": "cross-env DB_ENV=testing jest --watch --verbose",
+		"start": "nodemon index.js"
+	},
+	"jest": {
+		"testEnvironment": "node"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/LambdaSchool/Sprint-Challenge--Testing.git"
+	},
+	"keywords": [],
+	"author": "Lambda School",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/LambdaSchool/Sprint-Challenge--Testing/issues"
+	},
+	"homepage": "https://github.com/LambdaSchool/Sprint-Challenge--Testing#readme",
+	"dependencies": {
+		"express": "^4.17.1",
+		"knex": "^0.19.0",
+		"sqlite3": "^4.0.9"
+	},
+	"devDependencies": {
+		"cross-env": "^5.2.0",
+		"jest": "^23.6.0",
+		"knex-cleaner": "^1.2.1",
+		"supertest": "^3.3.0"
+	}
 }
