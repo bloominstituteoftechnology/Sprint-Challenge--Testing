@@ -2,7 +2,7 @@ const express = require('express');
 
 const helpers = require('../data/helpers');
 
-const server = require('express');
+const server = express();
 
 server.use(express.json());
 
@@ -21,4 +21,4 @@ server.post('/games', async(req, res) => {
     };
 });
 
-module.exports = (server);
+module.exports = server;
