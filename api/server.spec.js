@@ -9,7 +9,7 @@ afterEach(async () => {
 });
 
 describe('Checking /games GET endpoint', () => {
-    it('Should return the correct staus code', async () => {
+    it('Should return the correct status code', async () => {
         const response = await request(server).get('/games');
         expect(response.status).toBe(200);
     });
