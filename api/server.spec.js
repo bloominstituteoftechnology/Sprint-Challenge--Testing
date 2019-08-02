@@ -37,16 +37,13 @@ describe('In server.js', () => {
 
         it ('should respond with 200 if correct data passed', async () => {
            
-           
-           //games.push('bum')
-           //console.log(games)
-            const response = await request(server).post('/games', {
+            const response = await request(server).post('/games').send( {
                 title: 'Pacman', // required
                 genre: 'Arcade', // required
                 releaseYear: 1980 // not required
             });
 
-            expect(response.status).toBe(422);
+            expect(response.status).toBe(200);
         });
 
         it('should return JSON', async () => {
