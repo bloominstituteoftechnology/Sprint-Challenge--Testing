@@ -23,7 +23,7 @@ server.get('/', (req, res) => {
     res.send('hello mom');
   });
   
- server.get('/games', async (req, res) => {
+ server.get('/games', async(req, res) => {
     
   
     res.status(200).json(games);
@@ -34,9 +34,12 @@ server.post('/games', async (req, res) => {
 
   if( title && genre){
      games.push(req.body);
+     
      res.status(200).json(games);
-  } else
+  } else{
       res.status(422).json( {message: 'required fields missing'} );
+      console.log('no title or data can be seen')
+  }
 })
 
 module.exports = server;
